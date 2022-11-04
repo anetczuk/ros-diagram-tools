@@ -1,0 +1,10 @@
+Type: string
+
+Publishers: 
+ * /node1 (http://127.0.0.1:34759/)
+
+Subscribers: 
+ * /node2 (http://127.0.0.1:37119/)
+ * /node3 (http://127.0.0.1:45091/)
+
+

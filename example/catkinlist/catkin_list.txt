@@ -1,0 +1,23 @@
+package_a:
+  build_depend:
+  - roscpp
+  - tf
+  run_depend:
+  - roscpp
+  - tf
+package_b:
+  build_depend:
+  - std_msgs
+  - sensor_msgs
+  - package_a
+  run_depend:
+  - std_msgs
+  - sensor_msgs
+  - package_a
+roscpp:
+  - package_c
+package_d:
+  - package_a
+package_e:
+  - package_d
+package_f:
