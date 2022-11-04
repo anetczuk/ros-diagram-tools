@@ -12,18 +12,18 @@ package_d [shape=box];
 package_d -> package_a;
 package_e -> package_d;
 {
-rank=min;
-package_b [shape=box];
-package_e [shape=box];
-package_f [shape=box];
-}
-
-{
 rank=max;
 tf [shape=box];
 std_msgs [shape=box];
 sensor_msgs [shape=box];
 package_c [shape=box];
+}
+
+{
+rank=min;
+package_b [shape=box];
+package_e [shape=box];
+package_f [shape=box];
 }
 
 }
