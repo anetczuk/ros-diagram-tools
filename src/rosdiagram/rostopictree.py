@@ -435,32 +435,3 @@ def generate( topic_info_dir ):
     data_dict = read_topics( topic_info_dir )
     graph     = generate_graph( data_dict )
     return graph
-
-
-# ## ============================= main section ===================================
-# 
-# 
-# if __name__ == '__main__':
-#     parser = argparse.ArgumentParser(description='Test runner')
-#     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
-#     # pylint: disable=C0301
-#     parser.add_argument( '-f', '--file', action='store', required=False, default="",
-#                          help="Read 'rostopic list' output from file" )
-#     # parser.add_argument( '--filter', action='store', required=False, default="",
-#     #                      help="Filter packages with items in file" )
-# 
-#     args = parser.parse_args()
-# 
-#     logging.basicConfig()
-#     if args.logall is True:
-#         logging.getLogger().setLevel( logging.DEBUG )
-#     else:
-#         logging.getLogger().setLevel( logging.ERROR )
-# 
-#     topics_dir = os.path.join( SCRIPT_DIR, "info" )
-#     deps_dict  = read_topics( topics_dir )
-#     graph      = generate_graph( deps_dict )
-# 
-#     graph_path = os.path.join( SCRIPT_DIR, "graph.gv" )
-#     with open( graph_path, 'w' ) as graph_file:
-#         graph_file.write( graph )

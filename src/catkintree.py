@@ -37,7 +37,7 @@ _LOGGER = logging.getLogger(__name__)
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(description='catkin deps tree')
+    parser = argparse.ArgumentParser(description='catkin packages tree')
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '-f', '--file', action='store', required=False, default="",
