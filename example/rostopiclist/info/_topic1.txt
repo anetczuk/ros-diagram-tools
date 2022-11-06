@@ -6,5 +6,6 @@ Publishers:
 Subscribers: 
  * /node2 (http://127.0.0.1:37119/)
  * /node3 (http://127.0.0.1:45091/)
+ * /topic1 (http://127.0.0.1:45091/)
 
 
