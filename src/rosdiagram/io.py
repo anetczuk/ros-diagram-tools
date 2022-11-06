@@ -35,7 +35,7 @@ def read_file( file_path=None ):
     if not os.path.isfile( file_path ):
         return None
     _LOGGER.info( "loading content from file: %s", file_path )
-    with open( file_path, 'r' ) as content_file:
+    with open( file_path, 'r', encoding='utf-8' ) as content_file:
         content = content_file.read()
     return content
 
@@ -44,7 +44,7 @@ def read_list( file_path ):
     if not os.path.isfile( file_path ):
         return None
     ret_list = []
-    with open( file_path, 'r' ) as content_file:
+    with open( file_path, 'r', encoding='utf-8' ) as content_file:
         for line in content_file:
             ret_list.append( line.strip() )
     return ret_list

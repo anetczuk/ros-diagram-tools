@@ -38,7 +38,7 @@ class GraphTest(unittest.TestCase):
     def test_getNode_string(self):
         graph = Graph()
         graph.addNode( "xxx" )
-        
+
         node = graph.getNode( "xxx" )
         self.assertTrue( node is not None )
 

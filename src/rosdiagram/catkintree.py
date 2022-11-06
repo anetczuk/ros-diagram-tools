@@ -39,9 +39,8 @@ if __name__ == '__main__':
     sys.path[0] = os.path.join( SCRIPT_DIR, os.pardir )
 
 
-from rosdiagram.graph import Graph, get_nodes_names
+from rosdiagram.graph import Graph
 from rosdiagram.io import read_file
-from pydotplus.graphviz import Subgraph
 
 
 ## ===================================================================
@@ -49,7 +48,7 @@ from pydotplus.graphviz import Subgraph
 
 def parse_content( content, build_deps=True ):
     deps_dict = {}
-    
+
     package = None
     build_packages = True
     for line in content.splitlines():
@@ -71,7 +70,7 @@ def parse_content( content, build_deps=True ):
         if "run_depend" in line:
             build_packages = False
             continue
-        
+
         if build_packages != build_deps:
             continue
 
@@ -80,7 +79,7 @@ def parse_content( content, build_deps=True ):
             deps_list = deps_dict[ package ]
             deps_list.append( line[4:] )
             continue
-        
+
         _LOGGER.warning( "unhandled case: %s", line )
 
     return deps_dict
@@ -143,14 +142,14 @@ def main():
         logging.getLogger().setLevel( logging.WARNING )
 
     graph = generate( args.file )
-    
+
     if len( args.outraw ) > 0:
         graph.writeRAW( args.outraw )
     if len( args.outpng ) > 0:
         graph.writePNG( args.outpng )
-    
+
 
 if __name__ == '__main__':
     import argparse
-    
+
     main()

@@ -39,11 +39,10 @@ if __name__ == '__main__':
     sys.path[0] = os.path.join( SCRIPT_DIR, os.pardir )
 
 
-import argparse
-import re 
+import re
+from typing import Set
 
-from collections import defaultdict
-from rosdiagram.io import read_file, read_list
+from rosdiagram.io import read_list
 from rosdiagram.graph import Graph
 
 
@@ -68,7 +67,7 @@ def read_dependencies( deps_file=None ):
     if os.path.isfile( deps_file ):
         ## read content from file
         _LOGGER.info( "loading dependencies from file: %s", deps_file )
-        with open( deps_file, 'r' ) as content_file:
+        with open( deps_file, 'r', encoding='utf-8' ) as content_file:
             content = content_file.read()
     else:
         ## execute 'catkin list'
@@ -81,7 +80,7 @@ def read_dependencies( deps_file=None ):
 def parse_content( content ):
     publishers  = []
     subscribers = []
-    
+
     publishers_list  = False
     subscribers_list = False
 
@@ -124,7 +123,7 @@ def parse_content( content ):
 
 
 def match_node( line ):
-    matched = re.findall( "^ \* (.*) \(.*$", line )
+    matched = re.findall( r"^ \* (.*) \(.*$", line )
     m_size = len( matched )
     if m_size != 1:
         _LOGGER.warning( "invalid state for line: %s", line )
@@ -146,22 +145,21 @@ def generate_graph( topics_dict ) -> Graph:
     for topic, lists in topics_dict.items():
         pubs_list = lists[ "pubs" ]
         subs_list = lists[ "subs" ]
-        
+
         pSize = len( pubs_list )
         for i in range(0, pSize):
             item = pubs_list[i]
             if topics_list.count( item ) > 0:
                 pubs_list[i] = "n|" + item
                 rename_topics_list.add( item )
-                
+
         pSize = len( subs_list )
         for i in range(0, pSize):
             item = subs_list[i]
             if topics_list.count( item ) > 0:
                 subs_list[i] = "n|" + item
                 rename_topics_list.add( item )
-            
-            
+
     for topic in rename_topics_list:
         topics_dict[ "t|" + topic ] = topics_dict.pop( topic )
 
@@ -171,8 +169,8 @@ def generate_graph( topics_dict ) -> Graph:
         nodes: set = get_topic_nodes( lists )
         for item in nodes:
             dot_graph.addNode( item, shape="box" )
-    
-    ## add edges    
+
+    ## add edges
     for topic, lists in topics_dict.items():
         pubs_list = lists[ "pubs" ]
         subs_list = lists[ "subs" ]
@@ -184,8 +182,8 @@ def generate_graph( topics_dict ) -> Graph:
     return dot_graph
 
 
-def get_topic_nodes( topic_lists ) -> set:
-    ret_nodes = set()
+def get_topic_nodes( topic_lists ) -> Set[ str ]:
+    ret_nodes: Set[ str ] = set()
     pubs_list = topic_lists[ "pubs" ]
     subs_list = topic_lists[ "subs" ]
     ret_nodes.update( pubs_list )
