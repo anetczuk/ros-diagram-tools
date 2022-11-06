@@ -124,23 +124,46 @@ def match_node( line ):
     return matched[0]
 
 
-def generate_graph( topics_dict ):
+## ===================================================================
+
+
+def generate_graph( topics_dict ) -> Graph:
     dot_graph = Graph()
     base_graph = dot_graph.base_graph
     base_graph.set_type( 'digraph' )
+    base_graph.set_rankdir( 'LR' )
 
-    topics_list = topics_dict.keys()
+    rename_topics_list = set()
+    topics_list = list( topics_dict.keys() )
+    for topic, lists in topics_dict.items():
+        pubs_list = lists[ "pubs" ]
+        subs_list = lists[ "subs" ]
+        
+        pSize = len( pubs_list )
+        for i in range(0, pSize):
+            item = pubs_list[i]
+            if topics_list.count( item ) > 0:
+                pubs_list[i] = "n|" + item
+                rename_topics_list.add( item )
+                
+        pSize = len( subs_list )
+        for i in range(0, pSize):
+            item = subs_list[i]
+            if topics_list.count( item ) > 0:
+                subs_list[i] = "n|" + item
+                rename_topics_list.add( item )
+            
+            
+    for topic in rename_topics_list:
+        topics_dict[ "t|" + topic ] = topics_dict.pop( topic )
 
     ## add nodes
     for topic, lists in topics_dict.items():
         dot_graph.addNode( topic, shape="ellipse" )
         nodes: set = get_topic_nodes( lists )
-        nodes.difference_update( topics_list )
         for item in nodes:
             dot_graph.addNode( item, shape="box" )
     
-#     print( dot_graph.toString() )
-
     ## add edges    
     for topic, lists in topics_dict.items():
         pubs_list = lists[ "pubs" ]

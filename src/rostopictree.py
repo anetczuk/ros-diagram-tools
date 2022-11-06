@@ -44,8 +44,6 @@ if __name__ == '__main__':
                          help="Dump directory containing 'rostopic list' output data" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
-#     parser.add_argument( '--filter', action='store', required=False, default="",
-#                          help="Filter packages with items in file" )
 
     args = parser.parse_args()
 
@@ -59,7 +57,6 @@ if __name__ == '__main__':
 
     if len( args.outraw ) > 0:
         graph.writeRAW( args.outraw )
-        
     if len( args.outpng ) > 0:
         graph.writePNG( args.outpng )
 

@@ -59,6 +59,5 @@ if __name__ == '__main__':
     
     if len( args.outraw ) > 0:
         graph.writeRAW( args.outraw )
-        
     if len( args.outpng ) > 0:
         graph.writePNG( args.outpng )
