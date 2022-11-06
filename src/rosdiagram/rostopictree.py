@@ -24,19 +24,27 @@
 #
 
 import os
-
+import sys
 import logging
+
+
+_LOGGER = logging.getLogger(__name__)
+
+SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
+
+
+if __name__ == '__main__':
+    ## allow having executable script inside package and have proper imports
+    ## replace directory of main package (prevent inconsistent imports)
+    sys.path[0] = os.path.join( SCRIPT_DIR, os.pardir )
+
+
 import argparse
 import re 
 
 from collections import defaultdict
 from rosdiagram.io import read_file, read_list
 from rosdiagram.graph import Graph
-
-
-SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
-
-_LOGGER = logging.getLogger(__name__)
 
 
 ## ===================================================================
@@ -189,3 +197,37 @@ def generate( topic_info_dir ):
     data_dict = read_topics( topic_info_dir )
     graph     = generate_graph( data_dict )
     return graph
+
+
+## ===================================================================
+
+
+def main():
+    parser = argparse.ArgumentParser(description='catkin deps tree')
+    parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
+    # pylint: disable=C0301
+    parser.add_argument( '--dump_dir', action='store', required=False, default="",
+                         help="Dump directory containing 'rostopic list' output data" )
+    parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
+    parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
+
+    args = parser.parse_args()
+
+    logging.basicConfig()
+    if args.logall is True:
+        logging.getLogger().setLevel( logging.DEBUG )
+    else:
+        logging.getLogger().setLevel( logging.WARNING )
+
+    graph = generate( args.dump_dir )
+
+    if len( args.outraw ) > 0:
+        graph.writeRAW( args.outraw )
+    if len( args.outpng ) > 0:
+        graph.writePNG( args.outpng )
+
+
+if __name__ == '__main__':
+    import argparse
+
+    main()

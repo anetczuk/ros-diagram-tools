@@ -1,9 +1,9 @@
 digraph G {
 rankdir=LR;
 "/topic2" [shape=ellipse];
-"/node2" [shape=box];
-"/node4" [shape=box];
 "/node5" [shape=box];
+"/node4" [shape=box];
+"/node2" [shape=box];
 "t|/topic1" [shape=ellipse];
 "n|/topic1" [shape=box];
 "/node3" [shape=box];
