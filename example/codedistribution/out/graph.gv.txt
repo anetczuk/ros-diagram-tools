@@ -1,0 +1,4 @@
+digraph G {
+"rosdiagram\n687" [fixedsize=true, shape=circle, width=8.0];
+"testrosdiagram\n139" [fixedsize=true, shape=circle, width=3.5984793812596454];
+}

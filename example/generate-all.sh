@@ -11,3 +11,4 @@ $SCRIPT_DIR/catkinlist/generate.sh
 
 $SCRIPT_DIR/rostopiclist/generate.sh
 
+$SCRIPT_DIR/codedistribution/generate.sh
