@@ -42,7 +42,7 @@ def read_file( file_path=None ):
 
 def read_list( file_path ):
     if not os.path.isfile( file_path ):
-        return None
+        return []
     ret_list = []
     with open( file_path, 'r', encoding='utf-8' ) as content_file:
         for line in content_file:

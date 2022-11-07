@@ -142,6 +142,72 @@ def generate_graph( topics_dict ) -> Graph:
     base_graph.set_type( 'digraph' )
     base_graph.set_rankdir( 'LR' )
 
+    fix_names( topics_dict )
+
+    ## add nodes
+    for topic, lists in topics_dict.items():
+        dot_graph.addNode( topic, shape="ellipse" )
+        nodes: set = get_nodes( lists )
+        for item in nodes:
+            dot_graph.addNode( item, shape="box" )
+
+    ## add edges
+    for topic, lists in topics_dict.items():
+        pubs_list = lists[ "pubs" ]
+        subs_list = lists[ "subs" ]
+        for pub in pubs_list:
+            dot_graph.addEdge( pub, topic )
+        for sub in subs_list:
+            dot_graph.addEdge( topic, sub )
+
+    return dot_graph
+
+
+def generate_nodes_graph( topics_dict ):
+    dot_graph = Graph()
+    base_graph = dot_graph.base_graph
+    base_graph.set_type( 'digraph' )
+    base_graph.set_rankdir( 'LR' )
+
+    fix_names( topics_dict )
+
+    ## add nodes
+    for topic, lists in topics_dict.items():
+        nodes: set = get_nodes( lists )
+        for item in nodes:
+            dot_graph.addNode( item, shape="box" )
+
+    ## create connections dict
+    connections_dict = {}
+    for topic, lists in topics_dict.items():
+        pubs_list = lists[ "pubs" ]
+        subs_list = lists[ "subs" ]
+        for pub in pubs_list:
+            pub_dict = get_create_item( connections_dict, pub, {} )
+            for sub in subs_list:
+                sub_counter = get_create_item( pub_dict, sub, 0 )
+                #edge = dot_graph.addEdge( pub, sub )
+                pub_dict[ sub ] = sub_counter + 1
+
+    ## add edges
+    for pub, subs_dict in connections_dict.items():
+        for sub, counter in subs_dict.items():
+            #edge = dot_graph.addEdge( pub, sub )
+            edge = dot_graph.addEdge( pub, sub )
+            if counter > 1:
+                edge.set( "label", str(counter) )
+
+    return dot_graph
+
+
+def get_create_item( dict_obj, key, default_val ):
+    if key not in dict_obj:
+        dict_obj[ key ] = default_val
+    return dict_obj[ key ]
+
+
+## it happens that topic and node has the same name, so it has to be prefixed
+def fix_names( topics_dict ):
     rename_topics_list = set()
     topics_list = list( topics_dict.keys() )
     for topic, lists in topics_dict.items():
@@ -165,26 +231,8 @@ def generate_graph( topics_dict ) -> Graph:
     for topic in rename_topics_list:
         topics_dict[ "t|" + topic ] = topics_dict.pop( topic )
 
-    ## add nodes
-    for topic, lists in topics_dict.items():
-        dot_graph.addNode( topic, shape="ellipse" )
-        nodes: set = get_topic_nodes( lists )
-        for item in nodes:
-            dot_graph.addNode( item, shape="box" )
 
-    ## add edges
-    for topic, lists in topics_dict.items():
-        pubs_list = lists[ "pubs" ]
-        subs_list = lists[ "subs" ]
-        for pub in pubs_list:
-            dot_graph.addEdge( pub, topic )
-        for sub in subs_list:
-            dot_graph.addEdge( topic, sub )
-
-    return dot_graph
-
-
-def get_topic_nodes( topic_lists ) -> Set[ str ]:
+def get_nodes( topic_lists ) -> Set[ str ]:
     ret_nodes: Set[ str ] = set()
     pubs_list = topic_lists[ "pubs" ]
     subs_list = topic_lists[ "subs" ]

@@ -45,7 +45,8 @@ import math
 import re
 import subprocess
 
-from rosdiagram.graph import Graph
+from rosdiagram.graph import Graph, unquote_name
+from rosdiagram.io import read_list
 
 
 ## ===================================================================
@@ -73,13 +74,21 @@ def read_dirs( dirs_list ):
 
 
 def cloc_directory( sources_dir ):
-    result = subprocess.run( ["cloc", sources_dir], capture_output=True, check=True )
+    _LOGGER.info( "counting code on: %s", sources_dir )
+    if os.path.islink( sources_dir ):
+        result = subprocess.run( ["cloc", "--sum-one", "--follow-links", sources_dir], capture_output=True, check=True )
+    else:
+        result = subprocess.run( ["cloc", "--sum-one", sources_dir], capture_output=True, check=True )
+        
     output = result.stdout.decode("utf-8")
-    return parse_code( output )
-
-#     ret_dict = {}
-#     ret_dict[ language ] = parse_code( output, language )
-#     return ret_dict
+        
+    ## _LOGGER.info( "cloc output:\n%s", output )
+    
+    overall = parse_code( output )
+    json    = parse_code( output, "JSON" )
+    if json < 1:
+        return overall
+    return overall - json
 
 
 def parse_code( content, language="SUM:" ):
@@ -132,10 +141,13 @@ def generate_graph( cloc_dict ):
 
     ## generate main graph
     for name, lines_num in cloc_dict.items():
-        node  = dot_graph.addNode( f"{name}\n{lines_num}", shape="circle" )
+        node  = dot_graph.addNode( name, shape="circle" )
+        node.set( "label", f"{name}\n{lines_num}" )
+        #node  = dot_graph.addNode( f"{name}\n{lines_num}", shape="circle" )
         width = width_dict[ name ]
         node.set( "width", width )
         node.set( "fixedsize", "true" )
+        node.set( "color", "gray" )
 
     return dot_graph
 
@@ -149,6 +161,32 @@ def generate_graph( cloc_dict ):
 #     top_nodes = dot_graph.getNodesTop()
 #     # print( "top:", get_nodes_names( top_nodes ) )
 #     dot_graph.setNodesRank( top_nodes, "min" )
+
+
+def paint_packages( graph: Graph, paint_list ):
+    nodes_list: List[ pydotplus.Node ] = graph.getNodesAll()
+    for node in nodes_list:
+#         if node.get("shape") == "box":
+#             node.set( "style", "filled" )
+#             node.set( "fillcolor", "yellow" )
+
+        node_name = node.get_name()
+        raw_name = unquote_name( node_name )
+
+#         if raw_name.startswith( "/vb" ):
+#             node.set( "style", "filled" )
+#             node.set( "fillcolor", "yellow" )
+
+#         if "_msgs" in raw_name:
+#             node.set( "style", "filled" )
+#             node.set( "fillcolor", "lightgreen" )
+#         if "_srvs" in raw_name:
+#             node.set( "style", "filled" )
+#             node.set( "fillcolor", "lightblue" )
+        if len(paint_list) > 0:
+            if raw_name in paint_list:
+                node.set( "style", "filled" )
+                node.set( "fillcolor", "yellow" )
 
 
 def generate( sources_dir ):
@@ -166,6 +204,8 @@ def main():
     # pylint: disable=C0301
     parser.add_argument( '--dir', action='store', required=False, default="",
                          help="Directory to analyze by 'cloc'" )
+    parser.add_argument( '--highlight', action='store', required=False, default="",
+                         help="List with items to highlight" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
 #     parser.add_argument( '--filter', action='store', required=False, default="",
@@ -179,7 +219,12 @@ def main():
     else:
         logging.getLogger().setLevel( logging.INFO )
 
+    highlight_list = []
+    if len( args.highlight ) > 0:
+        highlight_list = read_list( args.highlight )
+        
     graph = generate( args.dir )
+    paint_packages( graph, highlight_list )
 
     if len( args.outraw ) > 0:
         graph.writeRAW( args.outraw )
