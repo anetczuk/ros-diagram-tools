@@ -252,13 +252,13 @@ class Graph():
         self.base_graph = graph_from_dot_data( content )
 
     def writeRAW( self, file_path ):
-        self.base_graph.write_raw( file_path )
+        self.write( file_path, "raw" )
 
     def writePNG( self, file_path ):
-        self.base_graph.write_png( file_path )
+        self.write( file_path, "png" )
 
     def write( self, file_path, file_format='png'):
-        self.base_graph.write( file_path, format=file_format )
+        self.base_graph.write( file_path, prog=self.base_graph.prog, format=file_format )
 
 
 ### =================================================================

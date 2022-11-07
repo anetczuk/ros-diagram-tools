@@ -96,3 +96,8 @@ class GraphTest(unittest.TestCase):
         self.assertEqual( content, """{
 }
 """ )
+
+#     def test_write(self):
+#         graph = Graph()
+#         graph.setEngine( "neato" )
+#         graph.writePNG( "/tmp/aaa.png" )

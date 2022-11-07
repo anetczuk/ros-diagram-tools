@@ -23,6 +23,8 @@
 # SOFTWARE.
 #
 
+# pylint: disable=C0413
+
 import os
 import sys
 import logging
