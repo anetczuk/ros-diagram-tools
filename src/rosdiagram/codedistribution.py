@@ -108,22 +108,33 @@ def generate_graph( cloc_dict ):
     base_graph.set_type( 'digraph' )
 #     base_graph.set_rankdir( 'LR' )
 
-    max_width = -1
+    max_val = -1
     for key, val in cloc_dict.items():
-        max_width = max( max_width, val )
-    if max_width < 1:
+        max_val = max( max_val, val )
+    if max_val < 1:
         return dot_graph
-
+    
     MAX_SIZE  = 8
-    norm_dict = {}
+    width_dict = {}
     for key, val in cloc_dict.items():
-        norm_dict[ key ] = float( val ) / max_width * MAX_SIZE
+        #### make circles areas proportional
+        ## val / max = PI*r^2 / PI*R^2
+        ## val / max = r^2 / R^2
+        ## val / max = (2w)^2 / (2W)^2
+        ## val / max = 4*w^2 / 4*W^2
+        ## val / max = w^2 / W^2
+        ## val / max = (w/W)^2
+        ## sqrt( val / max ) = w / W
+        ## w = sqrt( val / max ) * W
+        factor = float( val ) / max_val
+        new_val = math.sqrt( factor ) * MAX_SIZE
+        width_dict[ key ] = new_val
 
     ## generate main graph
-    for key, val in norm_dict.items():
-        lines_num = cloc_dict[ key ]
-        node = dot_graph.addNode( f"{key}\n{lines_num}", shape="circle" )
-        node.set( "width", val )
+    for name, lines_num in cloc_dict.items():
+        node  = dot_graph.addNode( f"{name}\n{lines_num}", shape="circle" )
+        width = width_dict[ name ]
+        node.set( "width", width )
         node.set( "fixedsize", "true" )
 
     return dot_graph
