@@ -165,7 +165,7 @@ def main():
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '--dir', action='store', required=False, default="",
-                         help="Read 'cloc' directory" )
+                         help="Directory to analyze by 'cloc'" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
 #     parser.add_argument( '--filter', action='store', required=False, default="",
