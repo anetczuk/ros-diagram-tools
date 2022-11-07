@@ -1,6 +1,6 @@
 # ROS diagram tools
 
-Generate various aspects *ROS* workspace in form of diagrams.
+Generate various aspects of *Robot Operating System* workspace in form of *Graphviz* diagrams.
 
 Package can produce following diagrams:
 - source code distribution chart
