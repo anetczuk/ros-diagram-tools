@@ -18,7 +18,7 @@ Show workspace packages in form of dependency tree.
 
 Execution: `./src/rosdiagram/catkintree.py --help`
 
-[![catkin packages tree](example/catkintree/out/graph-small.png "catkin packages tree")](example/catkintree/out/graph.png)
+[![catkin packages tree](example/catkinlist/out/graph-small.png "catkin packages tree")](example/catkinlist/out/graph.png)
 
 
 ## rostopic tree
@@ -27,7 +27,7 @@ Present dependecy of *ROS* nodes and topics in form of dependency graph.
 
 Execution: `./src/rosdiagram/rostopictree.py --help`
 
-[![ROS nodes and topics graph](example/rostopictree/out/graph-small.png "ROS nodes and topics graph")](example/rostopictree/out/graph.png)
+[![ROS nodes and topics graph](example/rostopiclist/out/graph-small.png "ROS nodes and topics graph")](example/rostopiclist/out/graph.png)
 
 
 ## References
