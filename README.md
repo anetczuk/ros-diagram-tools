@@ -2,6 +2,11 @@
 
 Generate various aspects *ROS* workspace in form of diagrams.
 
+Package can produce following diagrams:
+- source code distribution chart
+- packages dependency tree
+- *ROS* nodes and topics graph
+
 
 ## Code distribution
 
