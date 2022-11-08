@@ -1,0 +1,6 @@
+digraph _topic4 {
+rankdir=LR;
+"/node2" [href="_node2.html", shape=box, tooltip="node: /node2"];
+"/topic4" [fillcolor=yellow, href="_topic4.html", shape=ellipse, style=filled, tooltip="node: /topic4"];
+"/node2" -> "/topic4";
+}

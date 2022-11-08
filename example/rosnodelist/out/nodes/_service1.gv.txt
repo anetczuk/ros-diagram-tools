@@ -1,0 +1,6 @@
+digraph _service1 {
+rankdir=LR;
+"/node1" [href="_node1.html", shape=box, tooltip="node: /node1"];
+"/service1" [fillcolor=yellow, href="_service1.html", shape=hexagon, style=filled, tooltip="node: /service1"];
+"/node1" -> "/service1";
+}
