@@ -1,8 +1,16 @@
 digraph _topic1 {
 rankdir=LR;
 "/node1" [href="_node1.html", shape=box, tooltip="node: /node1"];
+"/topic3" [href="_topic3.html", shape=ellipse, tooltip="node: /topic3"];
 "/topic1" [fillcolor=yellow, href="_topic1.html", shape=ellipse, style=filled, tooltip="node: /topic1"];
 "/node2" [href="_node2.html", shape=box, tooltip="node: /node2"];
+"/topic5" [href="_topic5.html", shape=ellipse, tooltip="node: /topic5"];
+"/topic4" [href="_topic4.html", shape=ellipse, tooltip="node: /topic4"];
+"/service2" [href="_service2.html", shape=hexagon, tooltip="node: /service2"];
 "/node1" -> "/topic1";
+"/topic3" -> "/node1";
+"/node2" -> "/topic4";
+"/node2" -> "/topic5";
 "/topic1" -> "/node2";
+"/node2" -> "/service2";
 }

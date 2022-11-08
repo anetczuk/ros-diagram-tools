@@ -2,5 +2,11 @@ digraph _topic3 {
 rankdir=LR;
 "/node1" [href="_node1.html", shape=box, tooltip="node: /node1"];
 "/topic3" [fillcolor=yellow, href="_topic3.html", shape=ellipse, style=filled, tooltip="node: /topic3"];
+"/topic1" [href="_topic1.html", shape=ellipse, tooltip="node: /topic1"];
+"/topic2" [href="_topic2.html", shape=ellipse, tooltip="node: /topic2"];
+"/service1" [href="_service1.html", shape=hexagon, tooltip="node: /service1"];
+"/node1" -> "/topic1";
+"/node1" -> "/topic2";
 "/topic3" -> "/node1";
+"/node1" -> "/service1";
 }
