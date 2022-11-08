@@ -48,3 +48,8 @@ def read_list( file_path ):
         for line in content_file:
             ret_list.append( line.strip() )
     return ret_list
+
+
+def write_file( file_path, content ):
+    with open( file_path, 'w', encoding='utf-8' ) as content_file:
+        content_file.write( content )

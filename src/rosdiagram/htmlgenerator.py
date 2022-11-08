@@ -30,7 +30,7 @@ import logging
 import re
 from typing import Set
 
-from rosdiagram.io import read_list, read_file
+from rosdiagram.io import read_list, read_file, write_file
 from rosdiagram.graph import Graph, get_nodes_names, preserve_neighbour_nodes,\
     unquote_name
 
@@ -55,103 +55,146 @@ def generate_graph_html( nodes_dict, graph_generator, output_dir ):
 class HtmlGenerator():
 
     def __init__(self):
-        self.graph_factory    = None
-        self.output_root_dir  = None
-        self.output_nodes_dir = None
+        self.graph_factory         = None
+        self.output_root_dir       = None
+        self.output_nodes_rel_dir  = os.path.join( "nodes" )
+
+        self.main_graph            = None
+        self.output_nodes_dir      = None
 
     def generate( self ):
-        self.output_nodes_dir = os.path.join( self.output_root_dir, "nodes" )
-        os.makedirs( self.output_nodes_dir, exist_ok=True )
+        self.generate_main()
+        self.generate_nodes()
         
-        full_graph = self.graph_factory()
-        full_graph.setName( "full_graph" )
-        self.set_node_html_attribs( full_graph, "nodes/" )
-    
-        self.store_graph_html( full_graph, self.output_root_dir )
-        full_graph_name = full_graph.getName()
-        self.prepare_graph_page( self.output_root_dir, full_graph_name )
-        
-        index_html = f"""<body>
-    <a href="{full_graph_name}.html">big graph</a>
-    </body>
-    """
-        index_out = os.path.join( self.output_root_dir, "index.html" )
-        with open( index_out, 'w', encoding='utf-8' ) as content_file:
-            content_file.write( index_html )
-            
-        self.generate_nodes( full_graph )
-        
-    ## generate and store neighbour graphs
-    def generate_nodes( self, full_graph ):
-        full_graph_name = full_graph.getName()
-        all_nodes = full_graph.getNodesAll()
-        all_names = get_nodes_names( all_nodes )
+    def generate_main( self, graph_name: str=None ):
+        self._set_main_graph( graph_name )
 
+        set_node_html_attribs( self.main_graph, self.output_nodes_rel_dir )
+        self.prepare_main_page()
+    
+    ## generate and store neighbour graphs
+    def generate_nodes( self ):
+        self._set_main_graph()
+
+        self.output_nodes_dir = os.path.join( self.output_root_dir, self.output_nodes_rel_dir )
+        os.makedirs( self.output_nodes_dir, exist_ok=True )
+
+        full_graph_name = self.main_graph.getName()
+        main_page_path  = os.path.join( os.pardir, full_graph_name + ".html" )
+        back_link = f"""<a href="{main_page_path}">back to big graph</a>
+<br />"""
+
+        all_nodes = self.main_graph.getNodesAll()
+        all_names = get_nodes_names( all_nodes )
         for item in all_names:
             item_filename = item.replace( "/", "_" )
             
+            ## generate subgraph
             node_graph = self.graph_factory()
             node_graph.setName( item_filename )
-            preserve_neighbour_nodes( node_graph, [item], 0 )
+            preserve_neighbour_nodes( node_graph, [item], 1 )
             paint_nodes( node_graph, [item] )
-            self.set_node_html_attribs( node_graph, "" )
+            set_node_html_attribs( node_graph, "" )
             
-            self.store_graph_html( node_graph, self.output_nodes_dir )
-            self.prepare_node_page( item_filename, "../" + full_graph_name + ".html" )
+            self.prepare_node_page( node_graph, back_link )
     
-    def set_node_html_attribs( self, graph, local_dir ):
-        all_nodes = graph.getNodesAll()
-        for node_obj in all_nodes:
-            node_name = node_obj.get_name()
-            raw_name  = unquote_name( node_name )
-            node_obj.set( "tooltip", "node: " + raw_name )
-            node_url = local_dir + raw_name.replace( "/", "_" ) + ".html"
-            node_obj.set( "href", node_url )
+    def _set_main_graph( self, graph_name: str=None ):
+        if self.main_graph is None:
+            self.main_graph = self.graph_factory()
+
+        if graph_name is None:
+            self.main_graph.setName( "full_graph" )
+        else:
+            self.main_graph.setName( graph_name )
+
+    ## ==================================================================
     
-    def store_graph_html( self, graph, output_dir ):
-        graph_name = graph.getName()
-        data_out = os.path.join( output_dir, graph_name + ".gv.txt" )
-        graph.writeRAW( data_out )
-        data_out = os.path.join( output_dir, graph_name + ".png" )
-        graph.writePNG( data_out )
-        data_out = os.path.join( output_dir, graph_name + ".map" )
-        graph.writeMap( data_out )
+    def prepare_main_page( self ):
+        generator = GraphHtmlGenerator( self.main_graph, self.output_root_dir )
+        generator.type_label = "graph"
+
+        generator.generate()
         
-    def prepare_graph_page( self, output_dir, graph_name ):
-        map_out = os.path.join( output_dir, graph_name + ".map" )
-        graph_map = read_file( map_out )
+        ## index page
+        graph_name = self.main_graph.getName()
+        index_out  = os.path.join( self.output_root_dir, "index.html" )
+        index_html = f"""<body>
+<a href="{graph_name}.html">big graph</a>
+</body>
+"""
+        write_file( index_out, index_html )
+        
+    def prepare_node_page( self, node_graph, back_link="" ):
+        generator = GraphHtmlGenerator( node_graph, self.output_nodes_dir )
+        generator.graph_top_content = back_link
+        generator.type_label = "node"
+        
+        generator.generate()
+
+
+##
+class GraphHtmlGenerator():
+
+    def __init__(self, graph=None, output_dir=None ):
+        self.graph_top_content     = ""
+        self.graph_bottom_content  = ""
+        self.type_label            = "" 
+
+        self.graph                 = graph
+        self.output_dir            = output_dir
+
+    def generate( self ):
+        store_graph_html( self.graph, self.output_dir )
+        
+        graph_name = self.graph.getName()
+        map_out    = os.path.join( self.output_dir, graph_name + ".map" )
+        graph_map  = read_file( map_out )
         if graph_map is None:
             _LOGGER.error( "unable to generate html page" )
             return
 
+        alt_text = graph_name
+        if len(self.type_label) > 0:
+            alt_text = self.type_label + " " + alt_text
+
+        html_out   = os.path.join( self.output_dir, graph_name + ".html" )
         index_html = f"""<body>
-<img src="{graph_name}.png" alt="graph {graph_name}" usemap="#{graph_name}">
+{self.graph_top_content}
+<img src="{graph_name}.png" alt="{alt_text}" usemap="#{graph_name}">
 {graph_map}
+{self.graph_bottom_content}
 </body>
 """
-        html_out = os.path.join( output_dir, graph_name + ".html" )
-        with open( html_out, 'w', encoding='utf-8' ) as content_file:
-            content_file.write( index_html )
+        write_file( html_out, index_html )
+
+
+## ============================================================================
+
+
+def store_graph_html( graph, output_dir ):
+    graph_name = graph.getName()
+    data_out = os.path.join( output_dir, graph_name + ".gv.txt" )
+    graph.writeRAW( data_out )
+    data_out = os.path.join( output_dir, graph_name + ".png" )
+    graph.writePNG( data_out )
+    data_out = os.path.join( output_dir, graph_name + ".map" )
+    graph.writeMap( data_out )
         
-    def prepare_node_page( self, node_name, main_page_path ):
-        map_out = os.path.join( self.output_nodes_dir, node_name + ".map" )
-        graph_map = read_file( map_out )
-        if graph_map is None:
-            _LOGGER.error( "unable to generate html page" )
-            return
 
-        index_html = f"""<body>
-<a href="{main_page_path}">back to big graph</a>
-</br>
-<img src="{node_name}.png" alt="node {node_name}" usemap="#{node_name}">
-{graph_map}
-</body>
-"""
-        html_out = os.path.join( self.output_nodes_dir, node_name + ".html" )
-        with open( html_out, 'w', encoding='utf-8' ) as content_file:
-            content_file.write( index_html )
+def set_node_html_attribs( graph, local_rel_dir ):
+    local_dir = local_rel_dir
+    if len(local_dir) > 0:
+        local_dir = local_dir + os.sep
 
-
+    all_nodes = graph.getNodesAll()
+    for node_obj in all_nodes:
+        node_name = node_obj.get_name()
+        raw_name  = unquote_name( node_name )
+        node_obj.set( "tooltip", "node: " + raw_name )
+        node_url = local_dir + raw_name.replace( "/", "_" ) + ".html"
+        node_obj.set( "href", node_url )
+            
+            
 def paint_nodes( graph: Graph, paint_list ):
     nodes_list: List[ pydotplus.Node ] = graph.getNodesAll()
     for node in nodes_list:
