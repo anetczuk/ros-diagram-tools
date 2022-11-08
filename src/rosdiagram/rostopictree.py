@@ -172,14 +172,14 @@ def generate_nodes_graph( topics_dict ):
     fix_names( topics_dict )
 
     ## add nodes
-    for topic, lists in topics_dict.items():
+    for _, lists in topics_dict.items():
         nodes: set = get_nodes( lists )
         for item in nodes:
             dot_graph.addNode( item, shape="box" )
 
     ## create connections dict
     connections_dict = {}
-    for topic, lists in topics_dict.items():
+    for _, lists in topics_dict.items():
         pubs_list = lists[ "pubs" ]
         subs_list = lists[ "subs" ]
         for pub in pubs_list:

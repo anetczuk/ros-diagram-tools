@@ -45,6 +45,9 @@ import math
 import re
 import subprocess
 
+from typing import List
+import pydotplus
+
 from rosdiagram.graph import Graph, unquote_name
 from rosdiagram.io import read_list
 

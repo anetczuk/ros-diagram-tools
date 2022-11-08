@@ -24,13 +24,12 @@
 #
 
 import os
-import sys
 import logging
 
-import re
-from typing import Set
+from typing import List
+import pydotplus
 
-from rosdiagram.io import read_list, read_file, write_file
+from rosdiagram.io import read_file, write_file
 from rosdiagram.graph import Graph, get_nodes_names, preserve_neighbour_nodes,\
     unquote_name
 
@@ -63,18 +62,18 @@ class HtmlGenerator():
         self.output_nodes_dir      = None
 
     def generate( self ):
-        self.generate_main()
-        self.generate_nodes()
+        self.generateMain()
+        self.generateNodes()
 
-    def generate_main( self, graph_name: str=None ):
-        self._set_main_graph( graph_name )
+    def generateMain( self, graph_name: str = None ):
+        self._setMainGraph( graph_name )
 
         set_node_html_attribs( self.main_graph, self.output_nodes_rel_dir )
-        self.prepare_main_page()
+        self.prepareMainPage()
 
     ## generate and store neighbour graphs
-    def generate_nodes( self ):
-        self._set_main_graph()
+    def generateNodes( self ):
+        self._setMainGraph()
 
         self.output_nodes_dir = os.path.join( self.output_root_dir, self.output_nodes_rel_dir )
         os.makedirs( self.output_nodes_dir, exist_ok=True )
@@ -96,9 +95,9 @@ class HtmlGenerator():
             paint_nodes( node_graph, [item] )
             set_node_html_attribs( node_graph, "" )
 
-            self.prepare_node_page( node_graph, back_link )
+            self.prepareNodePage( node_graph, back_link )
 
-    def _set_main_graph( self, graph_name: str=None ):
+    def _setMainGraph( self, graph_name: str = None ):
         if self.main_graph is None:
             self.main_graph = self.graph_factory()
 
@@ -109,7 +108,7 @@ class HtmlGenerator():
 
     ## ==================================================================
 
-    def prepare_main_page( self ):
+    def prepareMainPage( self ):
         generator = GraphHtmlGenerator( self.main_graph, self.output_root_dir )
         generator.type_label = "graph"
 
@@ -124,7 +123,7 @@ class HtmlGenerator():
 """
         write_file( index_out, index_html )
 
-    def prepare_node_page( self, node_graph, back_link="" ):
+    def prepareNodePage( self, node_graph, back_link="" ):
         generator = GraphHtmlGenerator( node_graph, self.output_nodes_dir )
         generator.graph_top_content = back_link
         generator.type_label = "node"

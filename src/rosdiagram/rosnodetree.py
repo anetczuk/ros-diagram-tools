@@ -44,9 +44,8 @@ if __name__ == '__main__':
 import re
 from typing import Set
 
-from rosdiagram.io import read_list, read_file
-from rosdiagram.graph import Graph, get_nodes_names, preserve_neighbour_nodes,\
-    unquote_name
+from rosdiagram.io import read_list
+from rosdiagram.graph import Graph
 from rosdiagram.htmlgenerator import generate_graph_html
 
 
@@ -110,7 +109,7 @@ def parse_content( content ):
         if section_mode == 0:
             ## initial state
             continue
-        elif section_mode == 1:
+        if section_mode == 1:
             node = match_node( line )
             if node is None:
                 continue
@@ -150,7 +149,7 @@ def match_node( line ):
 ## ===================================================================
 
 
-def generate_graph( nodes_dict, show_services=True ) -> Graph:
+def generate_graph( nodes_dict ) -> Graph:
     dot_graph = Graph()
     dot_graph.setName( "nodes_graph" )
     base_graph = dot_graph.base_graph
@@ -210,7 +209,7 @@ def generate_nodes_graph( nodes_dict, show_services=True ):
 
     ## create connections dict
     connections_dict = {}
-    for topic, lists in topics_dict.items():
+    for _, lists in topics_dict.items():
         pubs_list = lists[ "pubs" ]
         subs_list = lists[ "subs" ]
         for pub in pubs_list:

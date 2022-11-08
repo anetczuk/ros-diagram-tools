@@ -48,8 +48,8 @@ class Graph():
     def setEngine(self, prog):
         self.base_graph.set_prog( prog )
 
-    def set(self, property, value ):
-        self.base_graph.set( property, value )
+    def setProp(self, prop, value ):
+        self.base_graph.set( prop, value )
 
     def getName( self ):
         return self.base_graph.get_name()
