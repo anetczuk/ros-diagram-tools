@@ -163,7 +163,7 @@ def generate_graph( cloc_dict ):
 #     dot_graph.setNodesRank( top_nodes, "min" )
 
 
-def paint_packages( graph: Graph, paint_list ):
+def paint_nodes( graph: Graph, paint_list ):
     nodes_list: List[ pydotplus.Node ] = graph.getNodesAll()
     for node in nodes_list:
 #         if node.get("shape") == "box":
@@ -224,7 +224,7 @@ def main():
         highlight_list = read_list( args.highlight )
         
     graph = generate( args.dir )
-    paint_packages( graph, highlight_list )
+    paint_nodes( graph, highlight_list )
 
     if len( args.outraw ) > 0:
         graph.writeRAW( args.outraw )

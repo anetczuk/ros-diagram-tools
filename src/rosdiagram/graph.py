@@ -48,6 +48,15 @@ class Graph():
     def setEngine(self, prog):
         self.base_graph.set_prog( prog )
 
+    def set(self, property, value ):
+        self.base_graph.set( property, value )
+
+    def getName( self ):
+        return self.base_graph.get_name()
+    
+    def setName( self, new_name ):
+        return self.base_graph.set_name( new_name )
+
     def getNodesCount(self):
         nodes = self.getNodesAll()
         return len( nodes )
@@ -256,6 +265,10 @@ class Graph():
 
     def writePNG( self, file_path ):
         self.write( file_path, "png" )
+
+    def writeMap( self, file_path ):
+        self.write( file_path, "cmapx" )
+        #self.base_graph.write( file_path, prog=self.base_graph.prog, format="cmapx" )
 
     def write( self, file_path, file_format='png'):
         self.base_graph.write( file_path, prog=self.base_graph.prog, format=file_format )

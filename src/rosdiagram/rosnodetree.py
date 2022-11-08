@@ -44,15 +44,17 @@ if __name__ == '__main__':
 import re
 from typing import Set
 
-from rosdiagram.io import read_list
-from rosdiagram.graph import Graph
+from rosdiagram.io import read_list, read_file
+from rosdiagram.graph import Graph, get_nodes_names, preserve_neighbour_nodes,\
+    unquote_name
+from rosdiagram.htmlgenerator import generate_graph_html
 
 
 ## ===================================================================
 
 
 def read_nodes( nodes_dir ):
-    topics_dict = {}
+    nodes_dict = {}
     topics_path = os.path.join( nodes_dir, "list.txt" )
     topics_list = read_list( topics_path )
     for item in topics_list:
@@ -60,8 +62,8 @@ def read_nodes( nodes_dir ):
         node_item_path = os.path.join( nodes_dir, node_filename + ".txt" )
         content   = read_dependencies( node_item_path )
         deps_dict = parse_content( content )
-        topics_dict[ item ] = deps_dict
-    return topics_dict
+        nodes_dict[ item ] = deps_dict
+    return nodes_dict
 
 
 def read_dependencies( deps_file=None ):
@@ -150,6 +152,7 @@ def match_node( line ):
 
 def generate_graph( nodes_dict, show_services=True ) -> Graph:
     dot_graph = Graph()
+    dot_graph.setName( "nodes_graph" )
     base_graph = dot_graph.base_graph
     base_graph.set_type( 'digraph' )
     base_graph.set_rankdir( 'LR' )
@@ -198,9 +201,6 @@ def generate_nodes_graph( nodes_dict, show_services=True ):
             servs_list = lists[ "servs" ]
             label = node + "\n" + str( len(servs_list) ) + " services" 
             node_obj.set( "label", label )
-            node_obj.set( "tooltip", "node: " + node )
-            node_url = "node_" + node.replace( "/", "_" ) + ".html"
-            node_obj.set( "href", node_url )
 
             # for item in servs_list:
             #     dot_graph.addNode( item, shape="hexagon" )
@@ -257,9 +257,6 @@ def get_create_item( dict_obj, key, default_val ):
 
 ## it happens that topic and node has the same name, so it has to be prefixed
 def fix_names( nodes_dict ):
-    rename_topics_list = set()
-    nodes_list = list( nodes_dict.keys() )
-
     all_nodes    = set( nodes_dict.keys() )    
     all_topics   = set()    
     all_services = set()    
@@ -310,7 +307,7 @@ def fix_names( nodes_dict ):
                 rename_node_list.add( item )
                 rename_service_list.add( item )
             if all_topics.count( item ) > 0:
-                rename_topic_list.add( item )
+                rename_topics_list.add( item )
                 rename_service_list.add( item )
 
     for node in rename_node_list:
@@ -361,6 +358,8 @@ def main():
                          help="Dump directory containing 'rostopic list' output data" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
+    parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
+    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 
     args = parser.parse_args()
 
@@ -370,12 +369,15 @@ def main():
     else:
         logging.getLogger().setLevel( logging.WARNING )
 
-    graph = generate( args.dump_dir )
+    nodes_dict = read_nodes( args.dump_dir )
 
-    if len( args.outraw ) > 0:
+    if len( args.outraw ) > 0 or len( args.outpng ) > 0:
+        graph = generate_graph( nodes_dict )
         graph.writeRAW( args.outraw )
-    if len( args.outpng ) > 0:
         graph.writePNG( args.outpng )
+
+    if args.outhtml and len( args.outdir ) > 0:
+        generate_graph_html( nodes_dict, generate_graph, args.outdir )
 
 
 if __name__ == '__main__':
