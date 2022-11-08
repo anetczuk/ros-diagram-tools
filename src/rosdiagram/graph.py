@@ -53,7 +53,7 @@ class Graph():
 
     def getName( self ):
         return self.base_graph.get_name()
-    
+
     def setName( self, new_name ):
         return self.base_graph.set_name( new_name )
 

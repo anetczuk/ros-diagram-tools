@@ -191,15 +191,15 @@ def generate_nodes_graph( nodes_dict, show_services=True ):
     base_graph = dot_graph.base_graph
     base_graph.set_type( 'digraph' )
     base_graph.set_rankdir( 'LR' )
-    
+
     fix_names( nodes_dict )
-    
+
     ## add nodes
     for node, lists in nodes_dict.items():
         node_obj = dot_graph.addNode( node, shape="box" )
         if show_services:
             servs_list = lists[ "servs" ]
-            label = node + "\n" + str( len(servs_list) ) + " services" 
+            label = node + "\n" + str( len(servs_list) ) + " services"
             node_obj.set( "label", label )
 
             # for item in servs_list:
@@ -207,7 +207,7 @@ def generate_nodes_graph( nodes_dict, show_services=True ):
             #     dot_graph.addEdge( node, item )
 
     topics_dict = create_topics_dict( nodes_dict )
-    
+
     ## create connections dict
     connections_dict = {}
     for topic, lists in topics_dict.items():
@@ -257,9 +257,9 @@ def get_create_item( dict_obj, key, default_val ):
 
 ## it happens that topic and node has the same name, so it has to be prefixed
 def fix_names( nodes_dict ):
-    all_nodes    = set( nodes_dict.keys() )    
-    all_topics   = set()    
-    all_services = set()    
+    all_nodes    = set( nodes_dict.keys() )
+    all_topics   = set()
+    all_services = set()
     for node, lists in nodes_dict.items():
         pubs_list  = lists[ "pubs" ]
         subs_list  = lists[ "subs" ]
@@ -267,7 +267,7 @@ def fix_names( nodes_dict ):
         all_topics.update( pubs_list )
         all_topics.update( subs_list )
         all_services.update( servs_list )
-    
+
     all_nodes    = list( all_nodes )
     all_topics   = list( all_topics )
     all_services = list( all_services )
@@ -317,7 +317,7 @@ def fix_names( nodes_dict ):
         pubs_list  = lists[ "pubs" ]
         subs_list  = lists[ "subs" ]
         servs_list = lists[ "servs" ]
-        
+
         for topic in rename_topics_list:
             if topic in pubs_list:
                 pubs_list.append( "t|" + topic )
@@ -325,7 +325,7 @@ def fix_names( nodes_dict ):
             if topic in subs_list:
                 subs_list.append( "t|" + topic )
                 subs_list.remove( topic )
-        
+
         for service in rename_service_list:
             if service in servs_list:
                 servs_list.append( "s|" + service )

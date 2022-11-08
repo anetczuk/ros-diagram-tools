@@ -79,11 +79,11 @@ def cloc_directory( sources_dir ):
         result = subprocess.run( ["cloc", "--sum-one", "--follow-links", sources_dir], capture_output=True, check=True )
     else:
         result = subprocess.run( ["cloc", "--sum-one", sources_dir], capture_output=True, check=True )
-        
+
     output = result.stdout.decode("utf-8")
-        
+
     ## _LOGGER.info( "cloc output:\n%s", output )
-    
+
     overall = parse_code( output )
     json    = parse_code( output, "JSON" )
     if json < 1:
@@ -122,7 +122,7 @@ def generate_graph( cloc_dict ):
         max_val = max( max_val, val )
     if max_val < 1:
         return dot_graph
-    
+
     MAX_SIZE  = 8
     width_dict = {}
     for key, val in cloc_dict.items():
@@ -222,7 +222,7 @@ def main():
     highlight_list = []
     if len( args.highlight ) > 0:
         highlight_list = read_list( args.highlight )
-        
+
     graph = generate( args.dir )
     paint_nodes( graph, highlight_list )
 

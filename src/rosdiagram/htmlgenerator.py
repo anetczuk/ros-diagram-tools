@@ -65,13 +65,13 @@ class HtmlGenerator():
     def generate( self ):
         self.generate_main()
         self.generate_nodes()
-        
+
     def generate_main( self, graph_name: str=None ):
         self._set_main_graph( graph_name )
 
         set_node_html_attribs( self.main_graph, self.output_nodes_rel_dir )
         self.prepare_main_page()
-    
+
     ## generate and store neighbour graphs
     def generate_nodes( self ):
         self._set_main_graph()
@@ -88,16 +88,16 @@ class HtmlGenerator():
         all_names = get_nodes_names( all_nodes )
         for item in all_names:
             item_filename = item.replace( "/", "_" )
-            
+
             ## generate subgraph
             node_graph = self.graph_factory()
             node_graph.setName( item_filename )
             preserve_neighbour_nodes( node_graph, [item], 1 )
             paint_nodes( node_graph, [item] )
             set_node_html_attribs( node_graph, "" )
-            
+
             self.prepare_node_page( node_graph, back_link )
-    
+
     def _set_main_graph( self, graph_name: str=None ):
         if self.main_graph is None:
             self.main_graph = self.graph_factory()
@@ -108,13 +108,13 @@ class HtmlGenerator():
             self.main_graph.setName( graph_name )
 
     ## ==================================================================
-    
+
     def prepare_main_page( self ):
         generator = GraphHtmlGenerator( self.main_graph, self.output_root_dir )
         generator.type_label = "graph"
 
         generator.generate()
-        
+
         ## index page
         graph_name = self.main_graph.getName()
         index_out  = os.path.join( self.output_root_dir, "index.html" )
@@ -123,12 +123,12 @@ class HtmlGenerator():
 </body>
 """
         write_file( index_out, index_html )
-        
+
     def prepare_node_page( self, node_graph, back_link="" ):
         generator = GraphHtmlGenerator( node_graph, self.output_nodes_dir )
         generator.graph_top_content = back_link
         generator.type_label = "node"
-        
+
         generator.generate()
 
 
@@ -138,14 +138,14 @@ class GraphHtmlGenerator():
     def __init__(self, graph=None, output_dir=None ):
         self.graph_top_content     = ""
         self.graph_bottom_content  = ""
-        self.type_label            = "" 
+        self.type_label            = ""
 
         self.graph                 = graph
         self.output_dir            = output_dir
 
     def generate( self ):
         store_graph_html( self.graph, self.output_dir )
-        
+
         graph_name = self.graph.getName()
         map_out    = os.path.join( self.output_dir, graph_name + ".map" )
         graph_map  = read_file( map_out )
@@ -179,7 +179,7 @@ def store_graph_html( graph, output_dir ):
     graph.writePNG( data_out )
     data_out = os.path.join( output_dir, graph_name + ".map" )
     graph.writeMap( data_out )
-        
+
 
 def set_node_html_attribs( graph, local_rel_dir ):
     local_dir = local_rel_dir
@@ -193,8 +193,8 @@ def set_node_html_attribs( graph, local_rel_dir ):
         node_obj.set( "tooltip", "node: " + raw_name )
         node_url = local_dir + raw_name.replace( "/", "_" ) + ".html"
         node_obj.set( "href", node_url )
-            
-            
+
+
 def paint_nodes( graph: Graph, paint_list ):
     nodes_list: List[ pydotplus.Node ] = graph.getNodesAll()
     for node in nodes_list:
