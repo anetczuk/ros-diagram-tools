@@ -44,7 +44,7 @@ if __name__ == '__main__':
 import re
 from typing import Set
 
-from rosdiagram.io import read_list
+from rosdiagram.io import read_list, prepare_filesystem_name
 from rosdiagram.graph import Graph
 from rosdiagram.htmlgenerator import generate_graph_html
 
@@ -57,7 +57,7 @@ def read_nodes( nodes_dir ):
     topics_path = os.path.join( nodes_dir, "list.txt" )
     topics_list = read_list( topics_path )
     for item in topics_list:
-        node_filename = item.replace( "/", "_" )
+        node_filename = prepare_filesystem_name( item )
         node_item_path = os.path.join( nodes_dir, node_filename + ".txt" )
         content   = read_dependencies( node_item_path )
         deps_dict = parse_content( content )

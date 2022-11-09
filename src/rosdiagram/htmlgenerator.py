@@ -29,7 +29,7 @@ import logging
 from typing import List
 import pydotplus
 
-from rosdiagram.io import read_file, write_file
+from rosdiagram.io import read_file, write_file, prepare_filesystem_name
 from rosdiagram.graph import Graph, get_nodes_names, preserve_neighbour_nodes,\
     unquote_name
 
@@ -80,7 +80,8 @@ class HtmlGenerator():
 
         full_graph_name = self.main_graph.getName()
         main_page_path  = os.path.join( os.pardir, full_graph_name + ".html" )
-        back_link = f"""<a href="{main_page_path}">back to big graph</a>
+        back_link = f"""\
+<a href="{main_page_path}">back to big graph</a>
 <br />"""
 
         all_nodes = self.main_graph.getNodesAll()
@@ -117,8 +118,9 @@ class HtmlGenerator():
         ## index page
         graph_name = self.main_graph.getName()
         index_out  = os.path.join( self.output_root_dir, "index.html" )
-        index_html = f"""<body>
-<a href="{graph_name}.html">big graph</a>
+        index_html = f"""\
+<body>
+    <a href="{graph_name}.html">big graph</a>
 </body>
 """
         write_file( index_out, index_html )
@@ -157,7 +159,8 @@ class GraphHtmlGenerator():
             alt_text = self.type_label + " " + alt_text
 
         html_out   = os.path.join( self.output_dir, graph_name + ".html" )
-        index_html = f"""<body>
+        index_html = f"""\
+<body>
 {self.graph_top_content}
 <img src="{graph_name}.png" alt="{alt_text}" usemap="#{graph_name}">
 {graph_map}
@@ -180,8 +183,8 @@ def store_graph_html( graph, output_dir ):
     graph.writeMap( data_out )
 
 
-def set_node_html_attribs( graph, local_rel_dir ):
-    local_dir = local_rel_dir
+def set_node_html_attribs( graph, node_local_dir ):
+    local_dir = node_local_dir
     if len(local_dir) > 0:
         local_dir = local_dir + os.sep
 
@@ -190,7 +193,8 @@ def set_node_html_attribs( graph, local_rel_dir ):
         node_name = node_obj.get_name()
         raw_name  = unquote_name( node_name )
         node_obj.set( "tooltip", "node: " + raw_name )
-        node_url = local_dir + raw_name.replace( "/", "_" ) + ".html"
+        node_filename = prepare_filesystem_name( raw_name )
+        node_url = local_dir + node_filename + ".html"
         node_obj.set( "href", node_url )
 
 

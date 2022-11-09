@@ -34,7 +34,7 @@ _LOGGER = logging.getLogger(__name__)
 def read_file( file_path=None ):
     if not os.path.isfile( file_path ):
         return None
-    _LOGGER.info( "loading content from file: %s", file_path )
+    _LOGGER.debug( "loading content from file: %s", file_path )
     with open( file_path, 'r', encoding='utf-8' ) as content_file:
         content = content_file.read()
     return content
@@ -53,3 +53,10 @@ def read_list( file_path ):
 def write_file( file_path, content ):
     with open( file_path, 'w', encoding='utf-8' ) as content_file:
         content_file.write( content )
+
+
+def prepare_filesystem_name( name ):
+    new_name = name
+    new_name = new_name.replace( "/", "_" )
+    new_name = new_name.replace( "|", "_" )
+    return new_name

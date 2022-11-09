@@ -22,7 +22,7 @@
 #
 
 import logging
-from typing import List
+from typing import List, Set
 
 import pydotplus
 from pydotplus.graphviz import quote_if_necessary, graph_from_dot_data
@@ -178,9 +178,17 @@ class Graph():
         return node
 
     def removeNode(self, node_name, remove_edges=True):
-        removed = remove_nodes_recursive( self.base_graph, node_name )
+        qname = quote_if_necessary( node_name )
+        removed = remove_nodes_recursive( self.base_graph, [qname] )
         if removed and remove_edges:
-            self.removeEdgesFromNode( node_name )
+            self.removeEdgesFromNode( qname )
+        return removed
+
+    def removeNodesByName(self, node_names_list: Set[str], remove_edges=True ):
+        qlist = [ quote_if_necessary( node_name ) for node_name in node_names_list ]
+        removed = remove_nodes_recursive( self.base_graph, qlist )
+        if removed and remove_edges:
+            remove_edges_recursive( self.base_graph, qlist )
         return removed
 
     def removeNodes(self, nodes_list: List[pydotplus.Node] ):
@@ -192,6 +200,7 @@ class Graph():
         return removed
 
     def getEdgesAll(self) -> List[ pydotplus.Edge ]:
+        ## shouldn't be: return get_edges_all( self.base_graph )
         return self.base_graph.get_edges()
 
     def getEdgesFrom( self, name ) -> List[ pydotplus.Edge ]:
@@ -235,7 +244,12 @@ class Graph():
         detach_edge_recursive( self.base_graph, edge )
 
     def removeEdgesFromNode( self, node_name: str ):
-        remove_edges_recursive( self.base_graph, node_name )
+        qname = quote_if_necessary( node_name )
+        remove_edges_recursive( self.base_graph, [qname] )
+
+    def removeEdgesFromNodes( self, node_name_list: List[str] ):
+        qlist = [ quote_if_necessary( node_name ) for node_name in node_name_list ]
+        remove_edges_recursive( self.base_graph, qlist )
 
     def setNodesRank( self, nodes_list: List[ pydotplus.Node ], rank: str ):
         sub_graph = Graph()
@@ -253,6 +267,12 @@ class Graph():
         return detach_node_recursive( self.base_graph, node )
 
     ### =================================================================
+
+    def clone(self):
+        content = self.toString()
+        graph_copy = Graph()
+        graph_copy.fromString( content )
+        return graph_copy
 
     def toString(self):
         return self.base_graph.to_string()
@@ -291,8 +311,8 @@ def preserve_top_subgraph( graph: Graph, top_nodes_list ):
 
 
 ## preserve nodes from 'nodes_list' and nodes in 'level' distance
-def preserve_neighbour_nodes( graph: Graph, nodes_list, level=0 ):
-    found_nodes = graph.getNodesByName( nodes_list )
+def preserve_neighbour_nodes( graph: Graph, nodes_start_list, level=0 ):
+    found_nodes = graph.getNodesByName( nodes_start_list )
     if len( found_nodes ) < 1:
         return
 
@@ -339,8 +359,7 @@ def preserve_neighbour_nodes( graph: Graph, nodes_list, level=0 ):
     all_nodes    = set( get_nodes_names( graph.getNodesAll() ) )
     preserve_set = set( get_nodes_names( preserve_nodes ) )
     rem_names    = all_nodes.difference( preserve_set )
-    for rem_name in rem_names:
-        graph.removeNode( rem_name )
+    graph.removeNodesByName( rem_names )
 
     all_edges = set( graph.getEdgesAll() )
     rem_edges = all_edges.difference( preserve_edges )
@@ -399,15 +418,15 @@ def filter_nodes( nodes_list: List[ pydotplus.Node ], filter_names_list: List[st
     return ret_list
 
 
-def remove_nodes_recursive( graph, node_name ):
-    qname = quote_if_necessary( node_name )
+def remove_nodes_recursive( graph, node_name_list ):
     removed = False
-    if graph.del_node( qname ):
-        removed = True
+    for node_name in node_name_list:
+        if graph.del_node( node_name ):
+            removed = True
     ## go recursive through subgraphs
     sub_list = graph.get_subgraph_list()
     for sub in sub_list:
-        if remove_nodes_recursive( sub, node_name ):
+        if remove_nodes_recursive( sub, node_name_list ):
             removed = True
     return removed
 
@@ -441,18 +460,18 @@ def get_edges_all( graph ):
     return items_list
 
 
-def remove_edges_recursive( graph, node_name ):
-    qname = quote_if_necessary( node_name )
+def remove_edges_recursive( graph, node_names_list ):
     edges_list: List[ pydotplus.Edge ] = graph.get_edges()
     for edge in edges_list:
-        source_node_name = edge.get_source()
-        dest_node_name   = edge.get_destination()
-        if qname in (source_node_name, dest_node_name):
-            remove_edge_raw( graph, source_node_name, dest_node_name )
+        for node_name in node_names_list:
+            source_node_name = edge.get_source()
+            dest_node_name   = edge.get_destination()
+            if node_name in (source_node_name, dest_node_name):
+                remove_edge_raw( graph, source_node_name, dest_node_name )
     ## go recursive through subgraphs
     sub_list = graph.get_subgraph_list()
     for sub in sub_list:
-        remove_edges_recursive( sub, node_name )
+        remove_edges_recursive( sub, node_names_list )
 
 
 def detach_edge_recursive( graph, edge: pydotplus.Edge ):
