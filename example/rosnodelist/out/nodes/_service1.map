@@ -1,5 +1,4 @@
 <map id="_service1" name="_service1">
-<area shape="rect" id="node1" href="_node1.html" title="node: /node1" alt="" coords="166,5,253,53"/>
-<area shape="poly" id="node3" href="_service1.html" title="node: /service1" alt="" coords="463,29,422,5,341,5,301,29,341,53,422,53"/>
-<area shape="poly" id="node2" href="_topic3.html" title="node: /topic3" alt="" coords="118,29,115,22,107,15,95,10,79,7,62,5,44,7,29,10,16,15,8,22,5,29,8,37,16,43,29,49,44,52,62,53,79,52,95,49,107,43,115,37"/>
+<area shape="rect" id="node1" href="_node1.html" title="node: /node1" alt="" coords="5,5,92,53"/>
+<area shape="poly" id="node2" href="_service1.html" title="node: /service1" alt="" coords="302,29,262,5,181,5,140,29,181,53,262,53"/>
 </map>
