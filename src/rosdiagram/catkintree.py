@@ -87,7 +87,7 @@ def parse_content( content, build_deps=True ):
     return deps_dict
 
 
-def generate_graph( deps_dict ):
+def generate_graph( deps_dict, node_shape="box" ):
     dot_graph = Graph()
     base_graph = dot_graph.base_graph
     base_graph.set_type( 'digraph' )
@@ -95,9 +95,9 @@ def generate_graph( deps_dict ):
 
     ## generate main graph
     for key, vals in deps_dict.items():
-        dot_graph.addNode( key, shape="box" )
+        dot_graph.addNode( key, shape=node_shape )
         for dep in vals:
-            dot_graph.addNode( dep, shape="box" )
+            dot_graph.addNode( dep, shape=node_shape )
             dot_graph.addEdge( key, dep )
     return dot_graph
 
@@ -113,10 +113,10 @@ def set_min_max_rank( dot_graph: Graph ):
     dot_graph.setNodesRank( top_nodes, "min" )
 
 
-def generate( catkin_list_file ):
+def generate( catkin_list_file, node_shape="box" ):
     content   = read_file( catkin_list_file )
     data_dict = parse_content( content, build_deps=False )
-    graph     = generate_graph( data_dict )
+    graph     = generate_graph( data_dict, node_shape )
     set_min_max_rank( graph )
     return graph
 

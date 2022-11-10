@@ -26,12 +26,9 @@
 import os
 import logging
 
-from typing import List
-import pydotplus
-
 from rosdiagram.io import read_file, write_file, prepare_filesystem_name
 from rosdiagram.graph import Graph, get_nodes_names, preserve_neighbour_nodes,\
-    unquote_name
+    unquote_name, set_nodes_style
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -42,23 +39,26 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 ## ===================================================================
 
 
-def generate_graph_html( nodes_dict, graph_generator, output_dir ):
-    generator = HtmlGenerator()
-    generator.graph_factory   = lambda: graph_generator( nodes_dict )
+def generate_graph_html( output_dir, params_dict=None ):
+    if params_dict is None:
+        params_dict = {}
+    generator = HtmlGenerator( params_dict )
     generator.output_root_dir = output_dir
-
     generator.generate()
 
 
 ##
 class HtmlGenerator():
 
-    def __init__(self):
-        self.graph_factory         = None
+    def __init__( self, params_dict=None ):
+        self.params = params_dict
+        if self.params is None:
+            self.params = {}
+
         self.output_root_dir       = None
         self.output_nodes_rel_dir  = os.path.join( "nodes" )
 
-        self.main_graph            = None
+        self.main_graph: Graph     = None
         self.output_nodes_dir      = None
 
     def generate( self ):
@@ -67,6 +67,10 @@ class HtmlGenerator():
 
     def generateMain( self, graph_name: str = None ):
         self._setMainGraph( graph_name )
+
+        main_engine = self._getParamValue( "main_engine" )
+        if main_engine is not None:
+            self.main_graph.setEngine( main_engine )
 
         set_node_html_attribs( self.main_graph, self.output_nodes_rel_dir )
         self.prepareMainPage()
@@ -84,29 +88,80 @@ class HtmlGenerator():
 <a href="{main_page_path}">back to big graph</a>
 <br />"""
 
+        neighbours_range  = self.params.get( "neighbours_range", 0 )
+        active_node_style = self.params.get( "active_node_style", DEFAULT_ACTIVE_NODE_STYLE )
+
         all_nodes = self.main_graph.getNodesAll()
         all_names = get_nodes_names( all_nodes )
+        
+        engine_map = self._getNodeEngineMap( all_names )
+        
         for item in all_names:
             _LOGGER.info( "preparing page for node %s", item )
             item_filename = prepare_filesystem_name( item )
 
             ## generate subgraph
-            node_graph = self.graph_factory()
+            node_graph: Graph = self._spawnGraph()
+            
+            engine = engine_map.get( item, None )
+            if engine is not None:
+                node_graph.setEngine( engine )
+            
             node_graph.setName( item_filename )
-            preserve_neighbour_nodes( node_graph, [item], 1 )
-            paint_nodes( node_graph, [item] )
+            preserve_neighbour_nodes( node_graph, [item], neighbours_range )
+            set_nodes_style( node_graph, [item], style_dict=active_node_style )
             set_node_html_attribs( node_graph, "" )
 
             self.prepareNodePage( node_graph, back_link )
 
     def _setMainGraph( self, graph_name: str = None ):
         if self.main_graph is None:
-            self.main_graph = self.graph_factory()
+            self.main_graph = self._spawnGraph()
 
         if graph_name is None:
             self.main_graph.setName( "full_graph" )
         else:
             self.main_graph.setName( graph_name )
+
+    def _spawnGraph( self ) -> Graph:
+        graph_factory = self.params.get( "graph_factory", None )
+        if graph_factory is None:
+            raise RuntimeError( "graph_factory not set" )
+        return graph_factory()
+
+    def _getNodeEngineMap(self, nodes_list):
+        engine_map = {}
+        for node in nodes_list:
+            node_engine = self._getParamNamed( "node_engine", node )
+            if node_engine is None:
+                node_engine = self._getParamValue( "main_engine" )
+            if node_engine is not None:
+                engine_map[ node ] = node_engine
+        return engine_map
+
+    def _getParamValue(self, key ):
+        key_param = self.params.get( key, None )
+        if key_param is None:
+            return None
+        try:
+            return key_param()
+        except:
+            pass
+        return key_param
+
+    def _getParamNamed(self, key, name ):
+        key_param = self.params.get( key, None )
+        if key_param is None:
+            return None
+        try:
+            return key_param( name )
+        except:
+            pass
+        try:
+            return key_param[ name ]
+        except:
+            pass
+        return key_param
 
     ## ==================================================================
 
@@ -146,7 +201,7 @@ class GraphHtmlGenerator():
         self.output_dir            = output_dir
 
     def generate( self ):
-        store_graph_html( self.graph, self.output_dir )
+        self.storeGraphHtml()
 
         graph_name = self.graph.getName()
         map_out    = os.path.join( self.output_dir, graph_name + ".map" )
@@ -170,18 +225,22 @@ class GraphHtmlGenerator():
 """
         write_file( html_out, index_html )
 
+    def storeGraphHtml( self ):
+        graph_name = self.graph.getName()
+    #     data_out = os.path.join( self.output_dir, graph_name + ".gv.txt" )
+    #     self.graph.writeRAW( data_out )
+        data_out = os.path.join( self.output_dir, graph_name + ".png" )
+        self.graph.writePNG( data_out )
+        data_out = os.path.join( self.output_dir, graph_name + ".map" )
+        self.graph.writeMap( data_out )
+
+
+DEFAULT_ACTIVE_NODE_STYLE = { "style": "filled",
+                              "fillcolor": "brown1"
+                              }
+
 
 ## ============================================================================
-
-
-def store_graph_html( graph, output_dir ):
-    graph_name = graph.getName()
-#     data_out = os.path.join( output_dir, graph_name + ".gv.txt" )
-#     graph.writeRAW( data_out )
-    data_out = os.path.join( output_dir, graph_name + ".png" )
-    graph.writePNG( data_out )
-    data_out = os.path.join( output_dir, graph_name + ".map" )
-    graph.writeMap( data_out )
 
 
 def set_node_html_attribs( graph, node_local_dir ):
@@ -197,29 +256,3 @@ def set_node_html_attribs( graph, node_local_dir ):
         node_filename = prepare_filesystem_name( raw_name )
         node_url = local_dir + node_filename + ".html"
         node_obj.set( "href", node_url )
-
-
-def paint_nodes( graph: Graph, paint_list ):
-    nodes_list: List[ pydotplus.Node ] = graph.getNodesAll()
-    for node in nodes_list:
-#         if node.get("shape") == "box":
-#             node.set( "style", "filled" )
-#             node.set( "fillcolor", "yellow" )
-
-        node_name = node.get_name()
-        raw_name  = unquote_name( node_name )
-
-#         if raw_name.startswith( "/vb" ):
-#             node.set( "style", "filled" )
-#             node.set( "fillcolor", "yellow" )
-
-#         if "_msgs" in raw_name:
-#             node.set( "style", "filled" )
-#             node.set( "fillcolor", "lightgreen" )
-#         if "_srvs" in raw_name:
-#             node.set( "style", "filled" )
-#             node.set( "fillcolor", "lightblue" )
-        if len(paint_list) > 0:
-            if raw_name in paint_list:
-                node.set( "style", "filled" )
-                node.set( "fillcolor", "yellow" )

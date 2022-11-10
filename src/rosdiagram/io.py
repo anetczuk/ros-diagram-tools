@@ -24,6 +24,8 @@
 import os
 import logging
 
+import json
+
 
 SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 
@@ -50,6 +52,21 @@ def read_list( file_path ):
     return ret_list
 
 
+def read_dict( file_path ):
+    if not os.path.isfile( file_path ):
+        return {}
+    with open( file_path, 'r', encoding='utf-8' ) as content_file:
+        content = ""
+        for line in content_file:
+            index = line.find( "#" )
+            if index >= 0:
+                line = line[ : index ] + "\n"
+            content += line
+        #content = content_file.read()
+        return json.loads( content )
+    return {}
+
+
 def write_file( file_path, content ):
     with open( file_path, 'w', encoding='utf-8' ) as content_file:
         content_file.write( content )
@@ -59,4 +76,5 @@ def prepare_filesystem_name( name ):
     new_name = name
     new_name = new_name.replace( "/", "_" )
     new_name = new_name.replace( "|", "_" )
+    new_name = new_name.replace( "-", "_" )
     return new_name

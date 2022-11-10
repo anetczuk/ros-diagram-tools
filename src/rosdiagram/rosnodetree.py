@@ -371,7 +371,9 @@ def main():
         graph.writePNG( args.outpng )
 
     if args.outhtml and len( args.outdir ) > 0:
-        generate_graph_html( nodes_dict, generate_graph, args.outdir )
+        params_dict = { "graph_factory": lambda: generate_graph( nodes_dict )
+                        }
+        generate_graph_html( args.outdir, params_dict )
 
 
 if __name__ == '__main__':

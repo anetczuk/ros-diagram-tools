@@ -60,8 +60,8 @@ class Graph():
         return self.base_graph.set_name( new_name )
 
     def getNodesCount(self):
-        nodes = self.getNodesAll()
-        return len( nodes )
+        names = get_node_names_all( self.base_graph )
+        return len( names )
 
     def getEdgesCount(self):
         edges = self.getEdgesAll()
@@ -70,7 +70,7 @@ class Graph():
     def getNodesAll(self) -> List[ pydotplus.Node ]:
         return get_nodes_all( self.base_graph )
 
-    def getNodeNamesAll(self) -> List[ pydotplus.Node ]:
+    def getNodeNamesAll(self) -> Set[ pydotplus.Node ]:
         return get_node_names_all( self.base_graph )
 
     def getNodesByName(self, node_names_list) -> List[ pydotplus.Node ]:
@@ -211,7 +211,7 @@ class Graph():
 
     def getEdgesAll(self) -> List[ pydotplus.Edge ]:
         ## shouldn't be: return get_edges_all( self.base_graph )
-        return self.base_graph.get_edges()
+        return self.base_graph.get_edge_list()
 
     def getEdgesFrom( self, name ) -> List[ pydotplus.Edge ]:
         ret_list = []
@@ -353,7 +353,7 @@ def preserve_neighbour_nodes( graph: Graph, nodes_start_list, level=0 ):
 
     all_edges = graph.getEdgesAll()
     from_edges_dict, to_edges_dict = create_edges_dict( all_edges )
-    
+
     for node_name in found_node_names:
         target_names = graph.getSourceNames( node_name, level )
         target_names.insert( 0, [node_name] )
@@ -386,13 +386,12 @@ def preserve_neighbour_nodes( graph: Graph, nodes_start_list, level=0 ):
         for item in target_names:
             preserve_nodes.extend( item )
 
-    all_node_names = set( all_node_names )
     preserve_set   = set( preserve_nodes )
     rem_names      = all_node_names.difference( preserve_set )
     graph.removeNodesByName( rem_names )
 
-    all_edges = set( all_edges )
-    rem_edges = all_edges.difference( preserve_edges )
+    edges_set = set( all_edges )
+    rem_edges = edges_set.difference( preserve_edges )
     for rem_edge in rem_edges:
         graph.removeEdgeByObject( rem_edge )
 
@@ -411,6 +410,22 @@ def create_edges_dict( edges_list ):
     return ( from_dict, to_dict )
 
 
+def set_nodes_style( graph: Graph, paint_list, style_dict=None ):
+    if len(paint_list) < 1:
+        return
+    if style_dict is None:
+        return
+    if len(style_dict) < 1:
+        return
+    nodes_list: List[ pydotplus.Node ] = graph.getNodesAll()
+    for node in nodes_list:
+        node_name = node.get_name()
+        raw_name  = unquote_name( node_name )
+        if raw_name in paint_list:
+            for key, val in style_dict.items():
+                node.set( key, val )
+
+
 ### =================================================================
 
 
@@ -421,15 +436,14 @@ def unquote_name( node_name ):
 def get_nodes_names( nodes_list: List[ pydotplus.Node ], unquote=True ):
     if unquote:
         return [ unquote_name( node.get_name() ) for node in nodes_list ]
-    else:
-        return [ node.get_name() for node in nodes_list ]
+    return [ node.get_name() for node in nodes_list ]
 
 
 def has_node( graph, node_name ) -> bool:
     qname = quote_if_necessary( node_name )
     if qname in graph.obj_dict['nodes']:
         return True
-    
+
     ## go recursive through subgraphs
     sub_list = graph.get_subgraph_list()
     for sub in sub_list:
@@ -469,15 +483,19 @@ def get_nodes_all( graph ):
     return items_list
 
 
-def get_node_names_all( graph ):
-    items_list = []
-    for key in graph.obj_dict['nodes']:
-        items_list.append( key )
+def get_node_names_all( graph ) -> Set[str]:
+    items_list = set()
+    nodes_dict = graph.obj_dict['nodes']
+    for key in nodes_dict:
+        nodes_list = nodes_dict[ key ]
+        if len( nodes_list ) < 1:
+            continue
+        items_list.add( key )
     ## go recursive through subgraphs
     sub_list = graph.get_subgraph_list()
     for sub in sub_list:
         sub_list = get_node_names_all( sub )
-        items_list.extend( sub_list )
+        items_list.update( sub_list )
     return items_list
 
 
@@ -539,7 +557,7 @@ def get_edges_pairs( graph ):
     ret_list = []
     for key in graph_edges_dict:
         ret_list.append( (key[0], key[1]) )
-        
+
     sub_list = graph.get_subgraph_list()
     for sub in sub_list:
         sub_list = get_edges_pairs( sub )
