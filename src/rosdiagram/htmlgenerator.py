@@ -87,7 +87,8 @@ class HtmlGenerator():
         all_nodes = self.main_graph.getNodesAll()
         all_names = get_nodes_names( all_nodes )
         for item in all_names:
-            item_filename = item.replace( "/", "_" )
+            _LOGGER.info( "preparing page for node %s", item )
+            item_filename = prepare_filesystem_name( item )
 
             ## generate subgraph
             node_graph = self.graph_factory()
@@ -175,8 +176,8 @@ class GraphHtmlGenerator():
 
 def store_graph_html( graph, output_dir ):
     graph_name = graph.getName()
-    data_out = os.path.join( output_dir, graph_name + ".gv.txt" )
-    graph.writeRAW( data_out )
+#     data_out = os.path.join( output_dir, graph_name + ".gv.txt" )
+#     graph.writeRAW( data_out )
     data_out = os.path.join( output_dir, graph_name + ".png" )
     graph.writePNG( data_out )
     data_out = os.path.join( output_dir, graph_name + ".map" )

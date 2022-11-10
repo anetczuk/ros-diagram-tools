@@ -27,6 +27,8 @@ from typing import List, Set
 import pydotplus
 from pydotplus.graphviz import quote_if_necessary, graph_from_dot_data
 
+from rosdiagram.utils import get_create_item
+
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -68,6 +70,9 @@ class Graph():
     def getNodesAll(self) -> List[ pydotplus.Node ]:
         return get_nodes_all( self.base_graph )
 
+    def getNodeNamesAll(self) -> List[ pydotplus.Node ]:
+        return get_node_names_all( self.base_graph )
+
     def getNodesByName(self, node_names_list) -> List[ pydotplus.Node ]:
         if len( node_names_list ) < 1:
             return []
@@ -106,57 +111,62 @@ class Graph():
                 ret_nodes.append( node )
         return ret_nodes
 
-    def getSourceNodes(self, node_name, levels=0) -> List[ pydotplus.Node ]:
-        node = self.getNode( node_name )
-        if node is None:
+    def getSourceNames(self, node_name, levels=0) -> List[ pydotplus.Node ]:
+        if self.hasNode( node_name ) is False:
             return []
-        all_edges = get_edges_all( self.base_graph )
+        all_edges = get_edges_pairs( self.base_graph )
+        #all_edges = get_edges_all( self.base_graph )
         ret_list = []
-        search_list = [ node ]
+        search_list = [ node_name ]
         for _ in range(0, levels + 1):
             neighbour_list = []
-            for search in search_list:
-                curr_name = search.get_name()
-                qname = quote_if_necessary( curr_name )
+            for search_name in search_list:
+                qname = quote_if_necessary( search_name )
                 for edge in all_edges:
-                    port_node_name = edge.get_destination()
+                    port_node_name = edge[1]
+#                     port_node_name = edge.get_destination()
                     if port_node_name != qname:
                         continue
                     ## dst is node_name
-                    target_name = edge.get_source()
-                    target_node = self.getNode( target_name )
-                    if target_node is None:
+                    target_name = edge[0]
+#                     target_name = edge.get_source()
+                    is_node = self.hasNode( target_name )
+                    if is_node is False:
                         continue
-                    neighbour_list.append( target_node )
+                    neighbour_list.append( target_name )
             ret_list.append( neighbour_list )
             search_list = neighbour_list
         return ret_list
 
-    def getDestinationNodes(self, node_name, levels=0) -> List[ pydotplus.Node ]:
-        node = self.getNode( node_name )
-        if node is None:
+    def getDestinationNames(self, node_name, levels=0) -> List[ pydotplus.Node ]:
+        if self.hasNode( node_name ) is False:
             return []
-        all_edges = get_edges_all( self.base_graph )
+        all_edges = get_edges_pairs( self.base_graph )
+        #all_edges = get_edges_all( self.base_graph )
         ret_list = []
-        search_list = [ node ]
+        search_list = [ node_name ]
         for _ in range(0, levels + 1):
             neighbour_list = []
-            for search in search_list:
-                curr_name = search.get_name()
-                qname = quote_if_necessary( curr_name )
+            for search_name in search_list:
+                qname = quote_if_necessary( search_name )
                 for edge in all_edges:
-                    port_node_name = edge.get_source()
+                    port_node_name = edge[0]
+                    #port_node_name = edge.get_source()
                     if port_node_name != qname:
                         continue
                     ## src is node_name
-                    target_name = edge.get_destination()
-                    target_node = self.getNode( target_name )
-                    if target_node is None:
+                    target_name = edge[1]
+                    #target_name = edge.get_destination()
+                    is_node = self.hasNode( target_name )
+                    if is_node is False:
                         continue
-                    neighbour_list.append( target_node )
+                    neighbour_list.append( target_name )
             ret_list.append( neighbour_list )
             search_list = neighbour_list
         return ret_list
+
+    def hasNode( self, node_name ):
+        return has_node( self.base_graph, node_name )
 
     def getNode(self, node_name: str):
         return get_node( self.base_graph, node_name )
@@ -167,8 +177,8 @@ class Graph():
             self.addNode( node_name )
 
     def addNode( self, node_name: str, shape: str = None ) -> pydotplus.Node:
-        found_node = self.getNode( node_name )
-        if found_node is not None:
+        found_node = has_node( self.base_graph, node_name )
+        if found_node is True:
             ## node already added
             return None
         node = pydotplus.Node( node_name )
@@ -212,6 +222,15 @@ class Graph():
                 ret_list.append( item )
         return ret_list
 
+    def getEdgesFromDict(self):
+        ret_dict = {}
+        edges = self.getEdgesAll()
+        for item in edges:
+            port_name = item.get_source()
+            edges_list = get_create_item( ret_dict, port_name, [] )
+            edges_list.append( item )
+        return ret_dict
+
     def getEdgesTo( self, name ) -> List[ pydotplus.Edge ]:
         ret_list = []
         edges = self.getEdgesAll()
@@ -221,22 +240,33 @@ class Graph():
                 ret_list.append( item )
         return ret_list
 
+    def getEdgesToDict(self):
+        ret_dict = {}
+        edges = self.getEdgesAll()
+        for item in edges:
+            port_name = item.get_destination()
+            edges_list = get_create_item( ret_dict, port_name, [] )
+            edges_list.append( item )
+        return ret_dict
+
+    def getEdgesDict(self):
+        edges = self.getEdgesAll()
+        return create_edges_dict( edges )
+
     def addEdge( self, from_node: str, to_node: str, create_nodes=False ):
-        node_from = self.getNode( from_node )
-        if node_from is None:
+        if self.hasNode(from_node) is False:
             if create_nodes is False:
                 _LOGGER.warning( "unable to find from node >%s<", from_node )
                 return None
-            node_from = self.addNode( from_node )
+            self.addNode( from_node )
 
-        node_to   = self.getNode( to_node )
-        if node_to is None:
+        if self.hasNode(to_node) is False:
             if create_nodes is False:
                 _LOGGER.warning( "unable to find to node >%s<", to_node )
                 return None
-            node_to = self.addNode( to_node )
+            self.addNode( to_node )
 
-        new_edge = pydotplus.Edge( node_from, node_to )
+        new_edge = pydotplus.Edge( from_node, to_node )
         self.base_graph.add_edge( new_edge )
         return new_edge
 
@@ -312,59 +342,73 @@ def preserve_top_subgraph( graph: Graph, top_nodes_list ):
 
 ## preserve nodes from 'nodes_list' and nodes in 'level' distance
 def preserve_neighbour_nodes( graph: Graph, nodes_start_list, level=0 ):
-    found_nodes = graph.getNodesByName( nodes_start_list )
-    if len( found_nodes ) < 1:
+    found_node_names = [ quote_if_necessary( node_name ) for node_name in nodes_start_list ]
+    if len( found_node_names ) < 1:
         return
+    all_node_names = graph.getNodeNamesAll()
 
     preserve_edges = set()
     preserve_nodes = []
-    preserve_nodes.extend( found_nodes )
+    preserve_nodes.extend( found_node_names )
 
-    for node in found_nodes:
-        node_name = node.get_name()
-        target_nodes = graph.getSourceNodes( node_name, level )
-        target_nodes.insert( 0, [node] )
-        n_size = len( target_nodes )
+    all_edges = graph.getEdgesAll()
+    from_edges_dict, to_edges_dict = create_edges_dict( all_edges )
+    
+    for node_name in found_node_names:
+        target_names = graph.getSourceNames( node_name, level )
+        target_names.insert( 0, [node_name] )
+        n_size = len( target_names )
         for i in range( 0, n_size - 1 ):
-            from_nodes = target_nodes[i + 1]
-            to_nodes   = target_nodes[i]
-            to_names   = get_nodes_names( to_nodes )
-            for curr_node in from_nodes:
-                curr_name = curr_node.get_name()
-                edges = graph.getEdgesFrom( curr_name )
-                for ed in edges:
-                    port_name = unquote_name( ed.get_destination() )
+            from_nodes = target_names[i + 1]
+            to_names   = target_names[i]
+            for from_name in from_nodes:
+                from_edges = from_edges_dict.get( from_name, [] )
+                #from_edges = graph.getEdgesFrom( from_name )
+                for ed in from_edges:
+                    port_name = ed.get_destination()
                     if port_name in to_names:
                         preserve_edges.add( ed )
-        for item in target_nodes:
+        for item in target_names:
             preserve_nodes.extend( item )
 
-        target_nodes = graph.getDestinationNodes( node_name, level )
-        target_nodes.insert( 0, [node] )
-        n_size = len( target_nodes )
+        target_names = graph.getDestinationNames( node_name, level )
+        target_names.insert( 0, [node_name] )
+        n_size = len( target_names )
         for i in range( 0, n_size - 1 ):
-            from_nodes = target_nodes[i]
-            to_nodes   = target_nodes[i + 1]
-            from_names = get_nodes_names( from_nodes )
-            for curr_node in to_nodes:
-                curr_name = curr_node.get_name()
-                edges = graph.getEdgesTo( curr_name )
-                for ed in edges:
-                    port_name = unquote_name( ed.get_source() )
+            from_names = target_names[i]
+            to_nodes   = target_names[i + 1]
+            for to_name in to_nodes:
+                to_edges = to_edges_dict.get( to_name, [] )
+                for ed in to_edges:
+                    port_name = ed.get_source()
                     if port_name in from_names:
                         preserve_edges.add( ed )
-        for item in target_nodes:
+        for item in target_names:
             preserve_nodes.extend( item )
 
-    all_nodes    = set( get_nodes_names( graph.getNodesAll() ) )
-    preserve_set = set( get_nodes_names( preserve_nodes ) )
-    rem_names    = all_nodes.difference( preserve_set )
+    all_node_names = set( all_node_names )
+    preserve_set   = set( preserve_nodes )
+    rem_names      = all_node_names.difference( preserve_set )
     graph.removeNodesByName( rem_names )
 
-    all_edges = set( graph.getEdgesAll() )
+    all_edges = set( all_edges )
     rem_edges = all_edges.difference( preserve_edges )
     for rem_edge in rem_edges:
         graph.removeEdgeByObject( rem_edge )
+
+
+def create_edges_dict( edges_list ):
+    from_dict = {}
+    to_dict   = {}
+    for item in edges_list:
+        port_name  = item.get_source()
+        edges_list = get_create_item( from_dict, port_name, [] )
+        edges_list.append( item )
+
+        port_name  = item.get_destination()
+        edges_list = get_create_item( to_dict, port_name, [] )
+        edges_list.append( item )
+    return ( from_dict, to_dict )
 
 
 ### =================================================================
@@ -374,8 +418,25 @@ def unquote_name( node_name ):
     return node_name.strip('\"')
 
 
-def get_nodes_names( nodes_list: List[ pydotplus.Node ] ):
-    return [ unquote_name( node.get_name() ) for node in nodes_list ]
+def get_nodes_names( nodes_list: List[ pydotplus.Node ], unquote=True ):
+    if unquote:
+        return [ unquote_name( node.get_name() ) for node in nodes_list ]
+    else:
+        return [ node.get_name() for node in nodes_list ]
+
+
+def has_node( graph, node_name ) -> bool:
+    qname = quote_if_necessary( node_name )
+    if qname in graph.obj_dict['nodes']:
+        return True
+    
+    ## go recursive through subgraphs
+    sub_list = graph.get_subgraph_list()
+    for sub in sub_list:
+        if has_node( sub, node_name ):
+            return True
+
+    return False
 
 
 def get_nodes( graph, node_name ):
@@ -399,11 +460,23 @@ def get_node( graph, node_name ):
 
 
 def get_nodes_all( graph ):
-    items_list = graph.get_nodes()
+    items_list = graph.get_node_list()
     ## go recursive through subgraphs
     sub_list = graph.get_subgraph_list()
     for sub in sub_list:
         sub_list = get_nodes_all( sub )
+        items_list.extend( sub_list )
+    return items_list
+
+
+def get_node_names_all( graph ):
+    items_list = []
+    for key in graph.obj_dict['nodes']:
+        items_list.append( key )
+    ## go recursive through subgraphs
+    sub_list = graph.get_subgraph_list()
+    for sub in sub_list:
+        sub_list = get_node_names_all( sub )
         items_list.extend( sub_list )
     return items_list
 
@@ -460,14 +533,39 @@ def get_edges_all( graph ):
     return items_list
 
 
+## getting edge pairs is cheaper than getting edges
+def get_edges_pairs( graph ):
+    graph_edges_dict = graph.obj_dict['edges']
+    ret_list = []
+    for key in graph_edges_dict:
+        ret_list.append( (key[0], key[1]) )
+        
+    sub_list = graph.get_subgraph_list()
+    for sub in sub_list:
+        sub_list = get_edges_pairs( sub )
+        ret_list.extend( sub_list )
+
+    return ret_list
+
+
 def remove_edges_recursive( graph, node_names_list ):
-    edges_list: List[ pydotplus.Edge ] = graph.get_edges()
-    for edge in edges_list:
+    ##edges_list: List[ pydotplus.Edge ] = graph.get_edge_list()
+    graph_edges_dict = graph.obj_dict['edges']
+    rem_keys = set()
+    for src_dest_pair_key in graph_edges_dict:
+#     for edge in edges_list:
         for node_name in node_names_list:
-            source_node_name = edge.get_source()
-            dest_node_name   = edge.get_destination()
-            if node_name in (source_node_name, dest_node_name):
-                remove_edge_raw( graph, source_node_name, dest_node_name )
+#             source_node_name = edge.get_source()
+#             dest_node_name   = edge.get_destination()
+#             if node_name in (source_node_name, dest_node_name):
+#                 remove_edge_raw( graph, source_node_name, dest_node_name )
+            if node_name in src_dest_pair_key:
+                rem_keys.add( src_dest_pair_key )
+                #remove_edge_raw( graph, src_dest_pair_key[0], src_dest_pair_key[1] )
+
+    for key in rem_keys:
+        del graph_edges_dict[ key ]
+
     ## go recursive through subgraphs
     sub_list = graph.get_subgraph_list()
     for sub in sub_list:

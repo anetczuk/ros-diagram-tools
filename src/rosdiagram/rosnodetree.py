@@ -44,9 +44,10 @@ if __name__ == '__main__':
 import re
 from typing import Set
 
-from rosdiagram.io import read_list, prepare_filesystem_name
-from rosdiagram.graph import Graph
 from rosdiagram.htmlgenerator import generate_graph_html
+from rosdiagram.graph import Graph
+from rosdiagram.io import read_list, prepare_filesystem_name
+from rosdiagram.utils import get_create_item
 
 
 ## ===================================================================
@@ -248,12 +249,6 @@ def create_topics_dict( nodes_dict ):
     return topics_dict
 
 
-def get_create_item( dict_obj, key, default_val ):
-    if key not in dict_obj:
-        dict_obj[ key ] = default_val
-    return dict_obj[ key ]
-
-
 ## it happens that topic and node has the same name, so it has to be prefixed
 def fix_names( nodes_dict ):
     all_nodes    = set( nodes_dict.keys() )
@@ -366,7 +361,7 @@ def main():
     if args.logall is True:
         logging.getLogger().setLevel( logging.DEBUG )
     else:
-        logging.getLogger().setLevel( logging.WARNING )
+        logging.getLogger().setLevel( logging.INFO )
 
     nodes_dict = read_nodes( args.dump_dir )
 

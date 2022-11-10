@@ -44,8 +44,9 @@ if __name__ == '__main__':
 import re
 from typing import Set
 
-from rosdiagram.io import read_list, prepare_filesystem_name
 from rosdiagram.graph import Graph
+from rosdiagram.io import read_list, prepare_filesystem_name
+from rosdiagram.utils import get_create_item
 
 
 ## ===================================================================
@@ -198,12 +199,6 @@ def generate_nodes_graph( topics_dict ):
                 edge.set( "label", str(counter) )
 
     return dot_graph
-
-
-def get_create_item( dict_obj, key, default_val ):
-    if key not in dict_obj:
-        dict_obj[ key ] = default_val
-    return dict_obj[ key ]
 
 
 ## it happens that topic and node has the same name, so it has to be prefixed
