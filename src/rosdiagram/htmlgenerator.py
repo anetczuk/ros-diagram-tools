@@ -51,9 +51,7 @@ def generate_graph_html( output_dir, params_dict=None ):
 class HtmlGenerator():
 
     def __init__( self, params_dict=None ):
-        self.params = params_dict
-        if self.params is None:
-            self.params = {}
+        self.params = ParamsDict( params=params_dict )
 
         self.output_root_dir       = None
         self.output_nodes_rel_dir  = os.path.join( "nodes" )
@@ -68,7 +66,7 @@ class HtmlGenerator():
     def generateMain( self, graph_name: str = None ):
         self._setMainGraph( graph_name )
 
-        main_engine = self._getParamValue( "main_engine" )
+        main_engine = self.params.get( "main_engine" )
         if main_engine is not None:
             self.main_graph.setEngine( main_engine )
 
@@ -89,7 +87,7 @@ class HtmlGenerator():
 <br />"""
 
         neighbours_range  = self.params.get( "neighbours_range", 0 )
-        active_node_style = self.params.get( "active_node_style", DEFAULT_ACTIVE_NODE_STYLE )
+        active_node_style = self.params.getValue( "active_node_style", DEFAULT_ACTIVE_NODE_STYLE )
 
         all_nodes = self.main_graph.getNodesAll()
         all_names = get_nodes_names( all_nodes )
@@ -132,36 +130,12 @@ class HtmlGenerator():
     def _getNodeEngineMap(self, nodes_list):
         engine_map = {}
         for node in nodes_list:
-            node_engine = self._getParamNamed( "node_engine", node )
+            node_engine = self.params.getNamed( "node_engine", node )
             if node_engine is None:
-                node_engine = self._getParamValue( "main_engine" )
+                node_engine = self.params.getValue( "main_engine" )
             if node_engine is not None:
                 engine_map[ node ] = node_engine
         return engine_map
-
-    def _getParamValue(self, key ):
-        key_param = self.params.get( key, None )
-        if key_param is None:
-            return None
-        try:
-            return key_param()
-        except:
-            pass
-        return key_param
-
-    def _getParamNamed(self, key, name ):
-        key_param = self.params.get( key, None )
-        if key_param is None:
-            return None
-        try:
-            return key_param( name )
-        except:
-            pass
-        try:
-            return key_param[ name ]
-        except:
-            pass
-        return key_param
 
     ## ==================================================================
 
@@ -238,6 +212,42 @@ class GraphHtmlGenerator():
 DEFAULT_ACTIVE_NODE_STYLE = { "style": "filled",
                               "fillcolor": "brown1"
                               }
+
+
+##
+class ParamsDict():
+    
+    def __init__( self, params=None ):
+        self.params = params
+        if self.params is None:
+            self.params = {}
+
+    def get(self, key, default=None ):
+        return self.params.get( key, default )
+
+    def getValue(self, key, default=None ):
+        key_value = self.params.get( key, None )
+        if key_value is None:
+            return default
+        try:
+            return key_value()
+        except:
+            pass
+        return key_value
+
+    def getNamed(self, key, name, default=None ):
+        key_value = self.params.get( key, None )
+        if key_value is None:
+            return default
+        try:
+            return key_value( name )
+        except:
+            pass
+        try:
+            return key_value[ name ]
+        except:
+            pass
+        return key_value
 
 
 ## ============================================================================

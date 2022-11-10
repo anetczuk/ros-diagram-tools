@@ -23,10 +23,10 @@
 
 import unittest
 
-from rosdiagram.htmlgenerator import HtmlGenerator
+from rosdiagram.htmlgenerator import ParamsDict
 
 
-class HtmlGeneratorTest(unittest.TestCase):
+class ParamsDictTest(unittest.TestCase):
     def setUp(self):
         ## Called before testfunction is executed
         pass
@@ -35,38 +35,38 @@ class HtmlGeneratorTest(unittest.TestCase):
         ## Called after testfunction was executed
         pass
 
-    def test_getParamNamed_params_None(self):
+    def test_getNamed_params_None(self):
         params = None
-        generator = HtmlGenerator( params_dict=params )
-        value = generator._getParamNamed( "node_engine", "xxx" )
+        params_dict = ParamsDict( params_dict=params )
+        value = params_dict.getNamed( "node_engine", "xxx" )
         self.assertEqual( None, value )
 
-    def test_getParamNamed_params_empty(self):
+    def test_getNamed_params_empty(self):
         params = {}
-        generator = HtmlGenerator( params_dict=params )
-        value = generator._getParamNamed( "node_engine", "xxx" )
+        params_dict = ParamsDict( params_dict=params )
+        value = params_dict.getNamed( "node_engine", "xxx" )
         self.assertEqual( None, value )
 
-    def test_getParamNamed_None(self):
+    def test_getNamed_None(self):
         params = { "node_engine": None }
-        generator = HtmlGenerator( params_dict=params )
-        value = generator._getParamNamed( "node_engine", "xxx" )
+        params_dict = ParamsDict( params_dict=params )
+        value = params_dict.getNamed( "node_engine", "xxx" )
         self.assertEqual( None, value )
 
-    def test_getParamNamed_value(self):
+    def test_getNamed_value(self):
         params = { "node_engine": "aaa" }
-        generator = HtmlGenerator( params_dict=params )
-        value = generator._getParamNamed( "node_engine", "xxx" )
+        params_dict = ParamsDict( params_dict=params )
+        value = params_dict.getNamed( "node_engine", "xxx" )
         self.assertEqual( "aaa", value )
 
-    def test_getParamNamed_callable(self):
+    def test_getNamed_callable(self):
         params = { "node_engine": lambda name: "aaa" }
-        generator = HtmlGenerator( params_dict=params )
-        value = generator._getParamNamed( "node_engine", "xxx" )
+        params_dict = ParamsDict( params_dict=params )
+        value = params_dict.getNamed( "node_engine", "xxx" )
         self.assertEqual( "aaa", value )
 
-    def test_getParamNamed_dict(self):
+    def test_getNamed_dict(self):
         params = { "node_engine": { "xxx": "aaa" } }
-        generator = HtmlGenerator( params_dict=params )
-        value = generator._getParamNamed( "node_engine", "xxx" )
+        params_dict = ParamsDict( params_dict=params )
+        value = params_dict.getNamed( "node_engine", "xxx" )
         self.assertEqual( "aaa", value )
