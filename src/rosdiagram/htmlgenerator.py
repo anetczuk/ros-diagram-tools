@@ -140,23 +140,26 @@ class HtmlGenerator():
     ## ==================================================================
 
     def prepareMainPage( self ):
-        generator = GraphHtmlGenerator( self.main_graph, self.output_root_dir )
+        params_dict = self.params.getDict()
+        generator = GraphHtmlGenerator( self.main_graph, self.output_root_dir, params_dict=params_dict )
+        generator.graph_top_content = "Main graph"
         generator.type_label = "graph"
 
         generator.generate()
 
-        ## index page
-        graph_name = self.main_graph.getName()
-        index_out  = os.path.join( self.output_root_dir, "index.html" )
-        index_html = f"""\
-<body>
-    <a href="{graph_name}.html">big graph</a>
-</body>
-"""
-        write_file( index_out, index_html )
+#         ## index page
+#         graph_name = self.main_graph.getName()
+#         index_out  = os.path.join( self.output_root_dir, "index.html" )
+#         index_html = f"""\
+# <body>
+#     <a href="{graph_name}.html">big graph</a>
+# </body>
+# """
+#         write_file( index_out, index_html )
 
     def prepareNodePage( self, node_graph, back_link="" ):
-        generator = GraphHtmlGenerator( node_graph, self.output_nodes_dir )
+        params_dict = self.params.getDict()
+        generator = GraphHtmlGenerator( node_graph, self.output_nodes_dir, params_dict=params_dict )
         generator.graph_top_content = back_link
         generator.type_label = "node"
 
@@ -166,7 +169,8 @@ class HtmlGenerator():
 ##
 class GraphHtmlGenerator():
 
-    def __init__(self, graph=None, output_dir=None ):
+    def __init__(self, graph=None, output_dir=None, params_dict=None ):
+        self.params                = ParamsDict( params=params_dict )
         self.graph_top_content     = ""
         self.graph_bottom_content  = ""
         self.type_label            = ""
@@ -184,19 +188,25 @@ class GraphHtmlGenerator():
             _LOGGER.error( "unable to generate html page" )
             return
 
+        body_color     = self.params.get( "body_color", "#bbbbbb" )
+        head_css_style = self.params.get( "head_css_style", "" )
+
         alt_text = graph_name
         if len(self.type_label) > 0:
             alt_text = self.type_label + " " + alt_text
+            
+        page_params = { "body_color":       body_color,
+                        "head_css_style":   head_css_style,
+                        "top_content":      self.graph_top_content,
+                        "bottom_content":   self.graph_bottom_content,
+
+                        "graph_name":   graph_name,
+                        "alt_text":     alt_text,
+                        "graph_map":    graph_map
+                        }
 
         html_out   = os.path.join( self.output_dir, graph_name + ".html" )
-        index_html = f"""\
-<body>
-{self.graph_top_content}
-<img src="{graph_name}.png" alt="{alt_text}" usemap="#{graph_name}">
-{graph_map}
-{self.graph_bottom_content}
-</body>
-"""
+        index_html = GRAPH_PAGE_TEMPLATE.format( **page_params )
         write_file( html_out, index_html )
 
     def storeGraphHtml( self ):
@@ -214,6 +224,39 @@ DEFAULT_ACTIVE_NODE_STYLE = { "style": "filled",
                               }
 
 
+GRAPH_PAGE_TEMPLATE = """\
+<html>
+<head>
+<style>
+    body {{ padding: 24; 
+            background-color: {body_color}; 
+         }}
+    .center_content {{ width: 100%; 
+                       margin-right: auto; margin-left: auto; 
+                       text-align: center; 
+                       padding-top: 24; padding-bottom: 24;
+                    }}
+{head_css_style}
+</style>
+</head>
+
+<body>
+    <div class="top_content">
+{top_content}
+    </div>
+    <div class="center_content">
+        <img src="{graph_name}.png" alt="{alt_text}" usemap="#{graph_name}">
+{graph_map}
+    </div>
+    <div class="bottom_content">
+{bottom_content}
+    </div>
+</body>
+
+</html>
+"""
+
+
 ##
 class ParamsDict():
     
@@ -221,6 +264,9 @@ class ParamsDict():
         self.params = params
         if self.params is None:
             self.params = {}
+
+    def getDict(self):
+        return self.params
 
     def get(self, key, default=None ):
         return self.params.get( key, default )
