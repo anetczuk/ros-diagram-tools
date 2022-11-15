@@ -37,36 +37,36 @@ class ParamsDictTest(unittest.TestCase):
 
     def test_getNamed_params_None(self):
         params = None
-        params_dict = ParamsDict( params_dict=params )
+        params_dict = ParamsDict( params=params )
         value = params_dict.getNamed( "node_engine", "xxx" )
         self.assertEqual( None, value )
 
     def test_getNamed_params_empty(self):
         params = {}
-        params_dict = ParamsDict( params_dict=params )
+        params_dict = ParamsDict( params=params )
         value = params_dict.getNamed( "node_engine", "xxx" )
         self.assertEqual( None, value )
 
     def test_getNamed_None(self):
         params = { "node_engine": None }
-        params_dict = ParamsDict( params_dict=params )
+        params_dict = ParamsDict( params=params )
         value = params_dict.getNamed( "node_engine", "xxx" )
         self.assertEqual( None, value )
 
     def test_getNamed_value(self):
         params = { "node_engine": "aaa" }
-        params_dict = ParamsDict( params_dict=params )
+        params_dict = ParamsDict( params=params )
         value = params_dict.getNamed( "node_engine", "xxx" )
         self.assertEqual( "aaa", value )
 
     def test_getNamed_callable(self):
         params = { "node_engine": lambda name: "aaa" }
-        params_dict = ParamsDict( params_dict=params )
+        params_dict = ParamsDict( params=params )
         value = params_dict.getNamed( "node_engine", "xxx" )
         self.assertEqual( "aaa", value )
 
     def test_getNamed_dict(self):
         params = { "node_engine": { "xxx": "aaa" } }
-        params_dict = ParamsDict( params_dict=params )
+        params_dict = ParamsDict( params=params )
         value = params_dict.getNamed( "node_engine", "xxx" )
         self.assertEqual( "aaa", value )

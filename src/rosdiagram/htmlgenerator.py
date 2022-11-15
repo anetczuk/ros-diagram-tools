@@ -260,7 +260,7 @@ GRAPH_PAGE_TEMPLATE = """\
 ##
 class ParamsDict():
     
-    def __init__( self, params=None ):
+    def __init__( self, params:dict=None ):
         self.params = params
         if self.params is None:
             self.params = {}
