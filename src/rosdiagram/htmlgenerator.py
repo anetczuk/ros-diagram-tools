@@ -91,20 +91,20 @@ class HtmlGenerator():
 
         all_nodes = self.main_graph.getNodesAll()
         all_names = get_nodes_names( all_nodes )
-        
+
         engine_map = self._getNodeEngineMap( all_names )
-        
+
         for item in all_names:
             _LOGGER.info( "preparing page for node %s", item )
             item_filename = prepare_filesystem_name( item )
 
             ## generate subgraph
             node_graph: Graph = self._spawnGraph()
-            
+
             engine = engine_map.get( item, None )
             if engine is not None:
                 node_graph.setEngine( engine )
-            
+
             node_graph.setName( item_filename )
             preserve_neighbour_nodes( node_graph, [item], neighbours_range )
             set_nodes_style( node_graph, [item], style_dict=active_node_style )
@@ -194,7 +194,7 @@ class GraphHtmlGenerator():
         alt_text = graph_name
         if len(self.type_label) > 0:
             alt_text = self.type_label + " " + alt_text
-            
+
         page_params = { "body_color":       body_color,
                         "head_css_style":   head_css_style,
                         "top_content":      self.graph_top_content,
@@ -228,12 +228,12 @@ GRAPH_PAGE_TEMPLATE = """\
 <html>
 <head>
 <style>
-    body {{ padding: 24; 
-            background-color: {body_color}; 
+    body {{ padding: 24;
+            background-color: {body_color};
          }}
-    .center_content {{ width: 100%; 
-                       margin-right: auto; margin-left: auto; 
-                       text-align: center; 
+    .center_content {{ width: 100%;
+                       margin-right: auto; margin-left: auto;
+                       text-align: center;
                        padding-top: 24; padding-bottom: 24;
                     }}
 {head_css_style}
@@ -259,8 +259,8 @@ GRAPH_PAGE_TEMPLATE = """\
 
 ##
 class ParamsDict():
-    
-    def __init__( self, params:dict=None ):
+
+    def __init__( self, params: dict = None ):
         self.params = params
         if self.params is None:
             self.params = {}
@@ -277,7 +277,7 @@ class ParamsDict():
             return default
         try:
             return key_value()
-        except:
+        except TypeError:
             pass
         return key_value
 
@@ -287,11 +287,11 @@ class ParamsDict():
             return default
         try:
             return key_value( name )
-        except:
+        except TypeError:
             pass
         try:
             return key_value[ name ]
-        except:
+        except TypeError:
             pass
         return key_value
 
