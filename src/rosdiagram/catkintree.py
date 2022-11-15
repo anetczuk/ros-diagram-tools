@@ -130,6 +130,7 @@ def main():
     # pylint: disable=C0301
     parser.add_argument( '-f', '--file', action='store', required=False, default="",
                          help="Read 'catkin list' output from file" )
+    parser.add_argument( '--node_shape', action='store', required=False, default=None, help="Graph RAW output" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
 #     parser.add_argument( '--filter', action='store', required=False, default="",
@@ -143,7 +144,11 @@ def main():
     else:
         logging.getLogger().setLevel( logging.WARNING )
 
-    graph = generate( args.file )
+    node_shape = args.node_shape
+    if node_shape is None:
+        node_shape = "octagon"
+
+    graph = generate( args.file, node_shape )
 
     if len( args.outraw ) > 0:
         graph.writeRAW( args.outraw )

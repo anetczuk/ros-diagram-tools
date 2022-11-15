@@ -1,29 +1,29 @@
 digraph G {
 rankdir=LR;
-package_a [shape=box];
-roscpp [shape=box];
+package_a [shape=octagon];
+roscpp [shape=octagon];
 package_a -> roscpp;
 package_a -> tf;
 package_b -> std_msgs;
 package_b -> sensor_msgs;
 package_b -> package_a;
 roscpp -> package_c;
-package_d [shape=box];
+package_d [shape=octagon];
 package_d -> package_a;
 package_e -> package_d;
 {
 rank=max;
-tf [shape=box];
-std_msgs [shape=box];
-sensor_msgs [shape=box];
-package_c [shape=box];
+tf [shape=octagon];
+std_msgs [shape=octagon];
+sensor_msgs [shape=octagon];
+package_c [shape=octagon];
 }
 
 {
 rank=min;
-package_b [shape=box];
-package_e [shape=box];
-package_f [shape=box];
+package_b [shape=octagon];
+package_e [shape=octagon];
+package_f [shape=octagon];
 }
 
 }
