@@ -70,8 +70,11 @@ class Graph():
     def getNodesAll(self) -> List[ pydotplus.Node ]:
         return get_nodes_all( self.base_graph )
 
-    def getNodeNamesAll(self) -> Set[ str ]:
-        return get_node_names_all( self.base_graph )
+    def getNodeNamesAll(self, unquote=False) -> Set[ str ]:
+        names_list = get_node_names_all( self.base_graph )
+        if unquote:
+            names_list = unquote_name_list( names_list )
+        return names_list
 
     def getNodesByName(self, node_names_list) -> List[ pydotplus.Node ]:
         if len( node_names_list ) < 1:

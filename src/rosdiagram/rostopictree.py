@@ -135,28 +135,13 @@ def match_node( line ):
     return matched[0]
 
 
-def join_data_dicts( data1_dict, data2_dict ):
-    ret_dict = copy.deepcopy( data1_dict )
-    
-    for topic, items in data2_dict.items():
-        ret_lists = get_create_item( ret_dict, topic, [] )
-
-        ret_pubs  = get_create_item( ret_lists, "pubs", [] )
-        from_pubs = get_create_item( items, "pubs", [] )
-        for item in from_pubs:
-            if item not in ret_pubs:
-                ret_pubs.append( item )
-        
-        ret_subs  = get_create_item( ret_lists, "subs", [] )
-        from_subs = get_create_item( items, "subs", [] )
-        for item in from_subs:
-            if item not in ret_subs:
-                ret_subs.append( item )
-
-    return ret_dict
-
-
 ## ===================================================================
+
+
+def generate( topic_info_dir ):
+    data_dict = read_topics( topic_info_dir )
+    graph     = generate_graph( data_dict )
+    return graph
 
 
 def generate_graph( topics_dict ) -> Graph:
@@ -266,10 +251,49 @@ def get_nodes_all( topics_dict ) -> Set[ str ]:
     return ret_set
 
 
-def generate( topic_info_dir ):
-    data_dict = read_topics( topic_info_dir )
-    graph     = generate_graph( data_dict )
-    return graph
+def common_topics( data1_dict, data2_dict ):
+    data1_topics = set()
+    for topic in data1_dict:
+        data1_topics.add( topic )
+    data2_topics = set()
+    for topic in data2_dict:
+        data2_topics.add( topic )
+    return data1_topics.intersection( data2_topics )
+
+
+def preserve_common_topics( data1_dict, data2_dict ):
+    common_set = common_topics( data1_dict, data2_dict )
+    
+    for key in data1_dict.copy():
+        if key not in common_set:
+            del data1_dict[ key ]
+
+    for key in data2_dict.copy():
+        if key not in common_set:
+            del data2_dict[ key ]
+            
+    return common_set
+
+
+def join_data_dicts( data1_dict, data2_dict ):
+    ret_dict = copy.deepcopy( data1_dict )
+    
+    for topic, items in data2_dict.items():
+        ret_lists = get_create_item( ret_dict, topic, [] )
+
+        ret_pubs  = get_create_item( ret_lists, "pubs", [] )
+        from_pubs = get_create_item( items, "pubs", [] )
+        for item in from_pubs:
+            if item not in ret_pubs:
+                ret_pubs.append( item )
+        
+        ret_subs  = get_create_item( ret_lists, "subs", [] )
+        from_subs = get_create_item( items, "subs", [] )
+        for item in from_subs:
+            if item not in ret_subs:
+                ret_subs.append( item )
+
+    return ret_dict
 
 
 ## ===================================================================
