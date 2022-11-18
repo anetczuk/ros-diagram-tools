@@ -25,15 +25,18 @@ mkdir -p $INFO_DIR
 echo "Dumping data to $INFO_DIR"
 
 
-rostopic list > "$INFO_DIR/list.txt"
-
-items_list=$(rostopic list)
-
-
-for item in $items_list; do
-    out_file="$INFO_DIR/"$(echo "$item" | sed "s/\//_/g")".txt"
-    echo "Writing $out_file"
-    rostopic info $item > $out_file
-done
+rospack list-names > "$INFO_DIR/list.txt"
 
 echo -e "\nDone.\n"
+
+
+#items_list=$(rospack list-names)
+#
+#
+#for item in $items_list; do
+#    out_file="$INFO_DIR/"$(echo "$item" | sed "s/\//_/g")".txt"
+#    echo "Writing $out_file"
+#    rospack info $item > $out_file
+#done
+#
+#echo -e "\nDone.\n"

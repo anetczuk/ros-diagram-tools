@@ -35,3 +35,5 @@ for item in $items_list; do
     echo "Writing $out_file"
     rosnode info $item > $out_file
 done
+
+echo -e "\nDone.\n"

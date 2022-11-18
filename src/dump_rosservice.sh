@@ -25,15 +25,15 @@ mkdir -p $INFO_DIR
 echo "Dumping data to $INFO_DIR"
 
 
-rostopic list > "$INFO_DIR/list.txt"
+rosservice list > "$INFO_DIR/list.txt"
 
-items_list=$(rostopic list)
+items_list=$(rosservice list)
 
 
 for item in $items_list; do
     out_file="$INFO_DIR/"$(echo "$item" | sed "s/\//_/g")".txt"
     echo "Writing $out_file"
-    rostopic info $item > $out_file
+    rosservice info $item > $out_file
 done
 
 echo -e "\nDone.\n"

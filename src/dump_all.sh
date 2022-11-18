@@ -22,18 +22,11 @@ INFO_DIR="$1"
 mkdir -p $INFO_DIR
 
 
-echo "Dumping data to $INFO_DIR"
+$SCRIPT_DIR/dump_rospack.sh "$INFO_DIR/packinfo"
+$SCRIPT_DIR/dump_rosnode.sh "$INFO_DIR/nodeinfo"
+$SCRIPT_DIR/dump_rostopic.sh "$INFO_DIR/topicinfo"
+$SCRIPT_DIR/dump_rosservice.sh "$INFO_DIR/serviceinfo"
+$SCRIPT_DIR/dump_rosmsg.sh "$INFO_DIR/msginfo"
 
 
-rostopic list > "$INFO_DIR/list.txt"
-
-items_list=$(rostopic list)
-
-
-for item in $items_list; do
-    out_file="$INFO_DIR/"$(echo "$item" | sed "s/\//_/g")".txt"
-    echo "Writing $out_file"
-    rostopic info $item > $out_file
-done
-
-echo -e "\nDone.\n"
+echo -e "\nDone."
