@@ -48,7 +48,7 @@ import subprocess
 from typing import List
 import pydotplus
 
-from rosdiagram.graph import Graph, unquote_name
+from rosdiagram.graph import Graph, unquote_name, set_nodes_style
 from rosdiagram.io import read_list
 
 
@@ -167,29 +167,10 @@ def generate_graph( cloc_dict ):
 
 
 def paint_nodes( graph: Graph, paint_list ):
-    nodes_list: List[ pydotplus.Node ] = graph.getNodesAll()
-    for node in nodes_list:
-#         if node.get("shape") == "box":
-#             node.set( "style", "filled" )
-#             node.set( "fillcolor", "yellow" )
-
-        node_name = node.get_name()
-        raw_name = unquote_name( node_name )
-
-#         if raw_name.startswith( "/vb" ):
-#             node.set( "style", "filled" )
-#             node.set( "fillcolor", "yellow" )
-
-#         if "_msgs" in raw_name:
-#             node.set( "style", "filled" )
-#             node.set( "fillcolor", "lightgreen" )
-#         if "_srvs" in raw_name:
-#             node.set( "style", "filled" )
-#             node.set( "fillcolor", "lightblue" )
-        if len(paint_list) > 0:
-            if raw_name in paint_list:
-                node.set( "style", "filled" )
-                node.set( "fillcolor", "yellow" )
+    style = { "style": "filled",
+              "fillcolor": "yellow"
+        }
+    set_nodes_style( graph, paint_list, style )
 
 
 def generate( sources_dir ):

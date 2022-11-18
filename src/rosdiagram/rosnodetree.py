@@ -45,7 +45,7 @@ import re
 from typing import Set
 
 from rosdiagram.htmlgenerator import generate_graph_html
-from rosdiagram.graph import Graph
+from rosdiagram.graph import Graph, unquote_name_list
 from rosdiagram.io import read_list, prepare_filesystem_name
 from rosdiagram.utils import get_create_item
 
@@ -341,6 +341,18 @@ def generate( node_info_dir ):
     return graph
 
 
+def remove_ros( graph: Graph ):
+    all_names = graph.getNodeNamesAll()
+    unquoted_names = unquote_name_list( all_names )
+    for name in unquoted_names:
+        if name in ( "/rosout", "n|/rosout", "t|/rosout" ):
+            graph.removeNode( name )
+        if name.startswith( "/rostopic_" ):
+            graph.removeNode( name )
+        if name.startswith( "/record_" ):
+            graph.removeNode( name )
+
+
 ## ===================================================================
 
 
@@ -364,6 +376,9 @@ def main():
         logging.getLogger().setLevel( logging.INFO )
 
     nodes_dict = read_nodes( args.dump_dir )
+    if len(nodes_dict) < 1:
+        _LOGGER.warning( "no data found in %s", args.dump_dir )
+        return
 
     if len( args.outraw ) > 0 or len( args.outpng ) > 0:
         graph = generate_graph( nodes_dict )
@@ -371,7 +386,11 @@ def main():
         graph.writePNG( args.outpng )
 
     if args.outhtml and len( args.outdir ) > 0:
-        params_dict = { "graph_factory": lambda: generate_graph( nodes_dict )
+        main_graph = generate_nodes_graph( nodes_dict )
+        remove_ros( main_graph )
+        params_dict = { "graph_factory": lambda: generate_graph( nodes_dict ),
+                        "main_graph": main_graph,
+                        "neighbours_range": 1
                         }
         generate_graph_html( args.outdir, params_dict )
 

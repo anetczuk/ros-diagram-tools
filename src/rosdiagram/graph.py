@@ -70,7 +70,7 @@ class Graph():
     def getNodesAll(self) -> List[ pydotplus.Node ]:
         return get_nodes_all( self.base_graph )
 
-    def getNodeNamesAll(self) -> Set[ pydotplus.Node ]:
+    def getNodeNamesAll(self) -> Set[ str ]:
         return get_node_names_all( self.base_graph )
 
     def getNodesByName(self, node_names_list) -> List[ pydotplus.Node ]:
@@ -281,6 +281,7 @@ class Graph():
         qlist = [ quote_if_necessary( node_name ) for node_name in node_name_list ]
         remove_edges_recursive( self.base_graph, qlist )
 
+    ## rank: same min max
     def setNodesRank( self, nodes_list: List[ pydotplus.Node ], rank: str ):
         sub_graph = Graph()
         sub_graph.setAsSubgraph()
@@ -291,6 +292,10 @@ class Graph():
         self.base_graph.add_subgraph( sub_base )
         sub_base.set_rank( rank )
         return sub_graph
+    
+    def setNodesRankByName( self, names_list: List[ str ], rank: str ):
+        nodes_list = self.getNodesByName( names_list )
+        self.setNodesRank( nodes_list, rank )
 
     ## remove node from graph, do not edit edges
     def detachNodeRaw( self, node: pydotplus.Node ):
@@ -410,8 +415,8 @@ def create_edges_dict( edges_list ):
     return ( from_dict, to_dict )
 
 
-def set_nodes_style( graph: Graph, paint_list, style_dict=None ):
-    if len(paint_list) < 1:
+def set_nodes_style( graph: Graph, names_list, style_dict=None ):
+    if len(names_list) < 1:
         return
     if style_dict is None:
         return
@@ -421,7 +426,7 @@ def set_nodes_style( graph: Graph, paint_list, style_dict=None ):
     for node in nodes_list:
         node_name = node.get_name()
         raw_name  = unquote_name( node_name )
-        if raw_name in paint_list:
+        if raw_name in names_list:
             for key, val in style_dict.items():
                 node.set( key, val )
 
@@ -431,6 +436,10 @@ def set_nodes_style( graph: Graph, paint_list, style_dict=None ):
 
 def unquote_name( node_name ):
     return node_name.strip('\"')
+
+
+def unquote_name_list( name_list ):
+    return [ unquote_name( name ) for name in name_list ]
 
 
 def get_nodes_names( nodes_list: List[ pydotplus.Node ], unquote=True ):

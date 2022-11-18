@@ -114,6 +114,8 @@ class HtmlGenerator():
 
     def _setMainGraph( self, graph_name: str = None ):
         if self.main_graph is None:
+            self.main_graph = self.params.get( "main_graph", None )
+        if self.main_graph is None:
             self.main_graph = self._spawnGraph()
 
         if graph_name is None:

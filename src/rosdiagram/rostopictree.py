@@ -43,6 +43,7 @@ if __name__ == '__main__':
 
 import re
 from typing import Set
+import copy
 
 from rosdiagram.graph import Graph
 from rosdiagram.io import read_list, prepare_filesystem_name
@@ -132,6 +133,27 @@ def match_node( line ):
         _LOGGER.warning( "invalid state for line: %s", line )
         return None
     return matched[0]
+
+
+def join_data_dicts( data1_dict, data2_dict ):
+    ret_dict = copy.deepcopy( data1_dict )
+    
+    for topic, items in data2_dict.items():
+        ret_lists = get_create_item( ret_dict, topic, [] )
+
+        ret_pubs  = get_create_item( ret_lists, "pubs", [] )
+        from_pubs = get_create_item( items, "pubs", [] )
+        for item in from_pubs:
+            if item not in ret_pubs:
+                ret_pubs.append( item )
+        
+        ret_subs  = get_create_item( ret_lists, "subs", [] )
+        from_subs = get_create_item( items, "subs", [] )
+        for item in from_subs:
+            if item not in ret_subs:
+                ret_subs.append( item )
+
+    return ret_dict
 
 
 ## ===================================================================
@@ -234,6 +256,14 @@ def get_nodes( topic_lists ) -> Set[ str ]:
     ret_nodes.update( pubs_list )
     ret_nodes.update( subs_list )
     return ret_nodes
+
+
+def get_nodes_all( topics_dict ) -> Set[ str ]:
+    ret_set = set()
+    for _, lists in topics_dict.items():
+        nodes: set = get_nodes( lists )
+        ret_set.update( nodes )
+    return ret_set
 
 
 def generate( topic_info_dir ):
