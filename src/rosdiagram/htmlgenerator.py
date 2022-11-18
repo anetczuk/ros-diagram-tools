@@ -181,7 +181,7 @@ class GraphHtmlGenerator():
         self.output_dir            = output_dir
 
     def generate( self ):
-        self.storeGraphHtml()
+        self.storeDataForHtml()
 
         graph_name = self.graph.getName()
         map_out    = os.path.join( self.output_dir, graph_name + ".map" )
@@ -197,10 +197,23 @@ class GraphHtmlGenerator():
         if len(self.type_label) > 0:
             alt_text = self.type_label + " " + alt_text
 
+        allNodes = self.graph.getNodesAll()
+        if len( allNodes ) > 0:
+            bottom_content  = "\nGraph nodes:\n"
+            bottom_content += "<ul>\n"
+            for node in allNodes:
+                raw_name = unquote_name( node.get_name() )
+                node_url = node.get( "href" )
+                if node_url is not None:
+                    bottom_content += f"""<li><a href="{node_url}">{raw_name}</a></li>\n"""
+            bottom_content += "</ul>\n"
+
+        bottom_content += self.graph_bottom_content
+
         page_params = { "body_color":       body_color,
                         "head_css_style":   head_css_style,
                         "top_content":      self.graph_top_content,
-                        "bottom_content":   self.graph_bottom_content,
+                        "bottom_content":   bottom_content,
 
                         "graph_name":   graph_name,
                         "alt_text":     alt_text,
@@ -211,7 +224,7 @@ class GraphHtmlGenerator():
         index_html = GRAPH_PAGE_TEMPLATE.format( **page_params )
         write_file( html_out, index_html )
 
-    def storeGraphHtml( self ):
+    def storeDataForHtml( self ):
         graph_name = self.graph.getName()
     #     data_out = os.path.join( self.output_dir, graph_name + ".gv.txt" )
     #     self.graph.writeRAW( data_out )
