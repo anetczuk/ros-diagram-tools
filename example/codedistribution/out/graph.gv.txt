@@ -1,4 +1,4 @@
 digraph G {
-rosdiagram [color=gray, fixedsize=true, label="rosdiagram\n1346", shape=circle, width=8.0];
-testrosdiagram [color=gray, fillcolor=yellow, fixedsize=true, label="testrosdiagram\n176", shape=circle, style=filled, width=2.8928358503478813];
+rosdiagram [color=gray, fixedsize=true, label="rosdiagram\n1375", shape=circle, width=8.0];
+testrosdiagram [color=gray, fillcolor=yellow, fixedsize=true, label="testrosdiagram\n176", shape=circle, style=filled, width=2.862167011199731];
 }
