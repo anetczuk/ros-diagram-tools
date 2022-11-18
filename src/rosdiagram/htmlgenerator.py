@@ -83,7 +83,7 @@ class HtmlGenerator():
         full_graph_name = self.main_graph.getName()
         main_page_path  = os.path.join( os.pardir, full_graph_name + ".html" )
         back_link = f"""\
-<a href="{main_page_path}">back to big graph</a>
+<a href="{main_page_path}">back to Main graph</a>
 <br />"""
 
         neighbours_range  = self.params.get( "neighbours_range", 0 )
@@ -108,7 +108,7 @@ class HtmlGenerator():
             node_graph.setName( item_filename )
             preserve_neighbour_nodes( node_graph, [item], neighbours_range )
             set_nodes_style( node_graph, [item], style_dict=active_node_style )
-            set_node_html_attribs( node_graph, "" )
+            set_node_html_attribs( node_graph, "", filter_nodes=all_names )
 
             self.prepareNodePage( node_graph, back_link )
 
@@ -299,7 +299,7 @@ class ParamsDict():
 ## ============================================================================
 
 
-def set_node_html_attribs( graph, node_local_dir ):
+def set_node_html_attribs( graph, node_local_dir, filter_nodes=None ):
     local_dir = node_local_dir
     if len(local_dir) > 0:
         local_dir = local_dir + os.sep
@@ -308,6 +308,9 @@ def set_node_html_attribs( graph, node_local_dir ):
     for node_obj in all_nodes:
         node_name = node_obj.get_name()
         raw_name  = unquote_name( node_name )
+        if filter_nodes is not None:
+            if raw_name not in filter_nodes:
+                continue
         node_obj.set( "tooltip", "node: " + raw_name )
         node_filename = prepare_filesystem_name( raw_name )
         node_url = local_dir + node_filename + ".html"
