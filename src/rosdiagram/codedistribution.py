@@ -45,10 +45,7 @@ import math
 import re
 import subprocess
 
-from typing import List
-import pydotplus
-
-from rosdiagram.graph import Graph, unquote_name, set_nodes_style
+from rosdiagram.graph import Graph, set_nodes_style
 from rosdiagram.io import read_list
 
 
@@ -169,7 +166,7 @@ def generate_graph( cloc_dict ):
 def paint_nodes( graph: Graph, paint_list ):
     style = { "style": "filled",
               "fillcolor": "yellow"
-        }
+              }
     set_nodes_style( graph, paint_list, style )
 
 
