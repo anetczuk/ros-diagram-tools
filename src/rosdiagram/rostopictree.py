@@ -208,6 +208,37 @@ def generate_nodes_graph( topics_dict ):
     return dot_graph
 
 
+def generate_common_graph( left_topics_dict, right_topics_dict, left_label: str = "", right_label: str = "" ) -> Graph:
+    join_dict = join_common_topics( left_topics_dict, right_topics_dict )
+    
+    common_topics = []
+    for item in join_dict:
+        common_topics.append( item )
+
+    fix_names( left_topics_dict )
+    fix_names( right_topics_dict )
+    fix_names( join_dict )
+    
+    join_graph: Graph = generate_graph( join_dict )
+    join_graph.set( "newrank", "true" )
+    join_graph.setNodesRankByName( common_topics, "same" )
+    
+    left_nodes  = get_nodes_all( left_topics_dict )
+    right_nodes = get_nodes_all( right_topics_dict )
+    
+    left_subgraph: Graph = join_graph.setNodesRankByName( left_nodes, "min" )
+    left_subgraph.setAsCluster( "left")
+    if left_label:
+        left_subgraph.set( "label", left_label )
+    
+    right_subgraph: Graph = join_graph.setNodesRankByName( right_nodes, "max" )   
+    right_subgraph.setAsCluster( "right")
+    if right_label:
+        right_subgraph.set( "label", right_label )
+    
+    return join_graph
+
+
 ## it happens that topic and node has the same name, so it has to be prefixed
 def fix_names( topics_dict ):
     rename_topics_list = set()
@@ -294,6 +325,13 @@ def join_data_dicts( data1_dict, data2_dict ):
                 ret_subs.append( item )
 
     return ret_dict
+
+
+def join_common_topics( data1_dict, data2_dict ):
+    copy1_dict = copy.deepcopy( data1_dict )
+    copy2_dict = copy.deepcopy( data2_dict )
+    preserve_common_topics( copy1_dict, copy2_dict )
+    return join_data_dicts( copy1_dict, copy2_dict )
 
 
 ## ===================================================================

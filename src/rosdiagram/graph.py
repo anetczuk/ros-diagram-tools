@@ -50,14 +50,21 @@ class Graph():
     def setEngine(self, prog):
         self.base_graph.set_prog( prog )
 
-    def setProp(self, prop, value ):
+    def set(self, prop, value ):
         self.base_graph.set( prop, value )
+
+    def setProp(self, prop, value ):
+        ## alias
+        self.set( prop, value )
 
     def getName( self ):
         return self.base_graph.get_name()
 
     def setName( self, new_name ):
         return self.base_graph.set_name( new_name )
+    
+    def setAsCluster(self, name):
+        self.setName( f"cluster_{name}" )
 
     def getNodesCount(self):
         names = get_node_names_all( self.base_graph )
@@ -285,7 +292,7 @@ class Graph():
         remove_edges_recursive( self.base_graph, qlist )
 
     ## rank: same min max
-    def setNodesRank( self, nodes_list: List[ pydotplus.Node ], rank: str ):
+    def setNodesRank( self, nodes_list: List[ pydotplus.Node ], rank: str ) -> "Graph":
         sub_graph = Graph()
         sub_graph.setAsSubgraph()
         sub_base = sub_graph.base()
@@ -296,9 +303,9 @@ class Graph():
         sub_base.set_rank( rank )
         return sub_graph
 
-    def setNodesRankByName( self, names_list: List[ str ], rank: str ):
+    def setNodesRankByName( self, names_list: List[ str ], rank: str ) -> "Graph":
         nodes_list = self.getNodesByName( names_list )
-        self.setNodesRank( nodes_list, rank )
+        return self.setNodesRank( nodes_list, rank )
 
     ## remove node from graph, do not edit edges
     def detachNodeRaw( self, node: pydotplus.Node ):
