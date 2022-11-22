@@ -112,11 +112,20 @@ class GraphTest(unittest.TestCase):
         graph = Graph()
         graph.setAsSubgraph()
         content = graph.toString()
-        self.assertEqual( content, """{
+        self.assertEqual( content, """\
+{
 }
 """ )
 
-#     def test_write(self):
-#         graph = Graph()
-#         graph.setEngine( "neato" )
-#         graph.writePNG( "/tmp/aaa.png" )
+    def test_toString(self):
+        graph = Graph()
+        graph.addEdge( "node_1", "node_2", True )
+
+        content = graph.toString()
+        self.assertEqual( """\
+digraph G {
+node_1;
+node_2;
+node_1 -> node_2;
+}
+""", content )
