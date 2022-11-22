@@ -24,6 +24,7 @@
 import unittest
 
 from rosdiagram.graph import Graph
+import pydotplus
 
 
 class GraphTest(unittest.TestCase):
@@ -34,6 +35,13 @@ class GraphTest(unittest.TestCase):
     def tearDown(self):
         ## Called after testfunction was executed
         pass
+
+    def test_addNodeObject(self):
+        graph = Graph()
+        node = pydotplus.Node( "xxx" )
+        node.set( "label", "aaa")
+        node_obj = graph.addNodeObject( node )
+        self.assertEqual( "aaa", node_obj.get("label") )
 
     def test_getNode_string(self):
         graph = Graph()
@@ -48,6 +56,17 @@ class GraphTest(unittest.TestCase):
 
         node = graph.getNode( "/xxx" )
         self.assertTrue( node is not None )
+
+    def test_getNodesByLabels(self):
+        graph = Graph()
+        node_1: pydotplus.Node = graph.addNode( "xxx1" )
+        node_1.set( "label", "aaa" )
+        node_2: pydotplus.Node = graph.addNode( "xxx2" )
+        node_2.set( "label", "aaa" )
+        graph.addNode( "aaa" )
+
+        nodes_list = graph.getNodesByLabels( ["aaa"] )
+        self.assertEqual( 3, len(nodes_list) )
 
     def test_removeNode_slash(self):
         graph = Graph()

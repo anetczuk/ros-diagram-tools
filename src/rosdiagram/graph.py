@@ -43,6 +43,19 @@ class Graph():
     def base(self) -> pydotplus.Graph:
         return self.base_graph
 
+    def parent(self) -> pydotplus.Graph:
+        return self.base_graph.get_parent_graph()
+
+    def topGraph(self) -> pydotplus.Graph:
+        curr_graph = self.base_graph
+        while True:
+            parent_graph = curr_graph.get_parent_graph()
+            if parent_graph is None:
+                return curr_graph
+            if parent_graph is curr_graph:
+                return curr_graph
+            curr_graph = parent_graph
+
     def setAsSubgraph(self):
         self.base_graph = pydotplus.Subgraph()
         self.base_graph.set_name('')
@@ -73,6 +86,8 @@ class Graph():
     def getEdgesCount(self):
         edges = self.getEdgesAll()
         return len( edges )
+    
+    ## ===================================================
 
     def getNodesAll(self) -> List[ pydotplus.Node ]:
         return get_nodes_all( self.base_graph )
@@ -88,6 +103,23 @@ class Graph():
             return []
         nodes_list = get_nodes_all( self.base_graph )
         return filter_nodes( nodes_list, node_names_list )
+
+    def getNodesByLabels( self, node_labels_list: List[str]) -> List[ pydotplus.Node ]:
+        if len( node_labels_list ) < 1:
+            return []
+        ret_list = []
+        nodes_list = get_nodes_all( self.base_graph )
+        for node in nodes_list:
+            node_label = node.get("label")
+            if node_label is None or node_label == "":
+                node_label = unquote_name( node.get_name() )
+            if node_label in node_labels_list:
+                ret_list.append( node )
+        return ret_list
+
+    def getNodeNamesByLabels( self, node_labels_list: List[str] ) -> List[ pydotplus.Node ]:
+        nodes_list = self.getNodesByLabels( node_labels_list )
+        return get_nodes_names( nodes_list )
 
     ## get nodes without destination edge
     def getNodesTop(self) -> List[ pydotplus.Node ]:
@@ -183,8 +215,7 @@ class Graph():
 
     def addNodes(self, nodes_list: List[pydotplus.Node] ):
         for node in nodes_list:
-            node_name = node.get_name()
-            self.addNode( node_name )
+            self.addNodeObject( node )
 
     def addNode( self, node_name: str, shape: str = None ) -> pydotplus.Node:
         found_node = has_node( self.base_graph, node_name )
@@ -194,6 +225,10 @@ class Graph():
         node = pydotplus.Node( node_name )
         if shape is not None:
             node.set( "shape", shape )
+        self.base_graph.add_node( node )
+        return node
+
+    def addNodeObject(self, node: pydotplus.Node ):
         self.base_graph.add_node( node )
         return node
 
@@ -218,10 +253,42 @@ class Graph():
             if self.removeNode( node_name ):
                 removed = True
         return removed
+    
+    ## remove node from graph, do not edit edges
+    def detachNodeRaw( self, node: pydotplus.Node ):
+        return detach_node_recursive( self.base_graph, node )
+    
+    def detachNodesByName( self, names_list: List[ str ] ):
+        nodes_list = self.getNodesByName( names_list )
+        for node in nodes_list:
+            self.detachNodeRaw( node )
+        return nodes_list
+    
+    def takeNodes(self, names_list: List[ str ]):
+        top_graph     = self.topGraph()
+        wrapped_top   = Graph( top_graph )
+        detached_list = wrapped_top.detachNodesByName( names_list )
+        self.addNodes( detached_list )
+        return detached_list
+
+    ## ===================================================
 
     def getEdgesAll(self) -> List[ pydotplus.Edge ]:
         ## shouldn't be: return get_edges_all( self.base_graph )
         return self.base_graph.get_edge_list()
+
+    def getEdges( self, name_from, name_to ) -> List[ pydotplus.Edge ]:
+        ret_list = []
+        edges = self.getEdgesAll()
+        for item in edges:
+            port_name = item.get_source()
+            if port_name != name_from:
+                continue
+            port_name = item.get_destination()
+            if port_name != name_to:
+                continue
+            ret_list.append( item )
+        return ret_list
 
     def getEdgesFrom( self, name ) -> List[ pydotplus.Edge ]:
         ret_list = []
@@ -291,7 +358,16 @@ class Graph():
         qlist = [ quote_if_necessary( node_name ) for node_name in node_name_list ]
         remove_edges_recursive( self.base_graph, qlist )
 
-    ## rank: same min max
+    ## ===================================================
+
+    def createSubGraph( self ) -> "Graph":
+        sub_graph = Graph()
+        sub_graph.setAsSubgraph()
+        sub_base = sub_graph.base()
+        self.base_graph.add_subgraph( sub_base )
+        return sub_graph
+
+    ## rank: same min max <integer>
     def setNodesRank( self, nodes_list: List[ pydotplus.Node ], rank: str ) -> "Graph":
         sub_graph = Graph()
         sub_graph.setAsSubgraph()
@@ -306,10 +382,6 @@ class Graph():
     def setNodesRankByName( self, names_list: List[ str ], rank: str ) -> "Graph":
         nodes_list = self.getNodesByName( names_list )
         return self.setNodesRank( nodes_list, rank )
-
-    ## remove node from graph, do not edit edges
-    def detachNodeRaw( self, node: pydotplus.Node ):
-        return detach_node_recursive( self.base_graph, node )
 
     ### =================================================================
 
