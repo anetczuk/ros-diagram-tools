@@ -49,6 +49,10 @@ Execution: `./src/rosdiagram/rosnodetree.py --help`
 
 In addition, for given graph interactive web page can be generated, [example here](example/rosnodelist/out/full_graph.html).
 
+Following animation shows navigation thorough nodes of graph:
+
+![HTML graph](doc/html_graph.gif "HTML graph")
+
 
 
 ## Dumping information
