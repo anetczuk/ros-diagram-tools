@@ -217,7 +217,7 @@ class Graph():
         for node in nodes_list:
             self.addNodeObject( node )
 
-    def addNode( self, node_name: str, shape: str = None ) -> pydotplus.Node:
+    def addNode( self, node_name: str, shape: str = None, label: str = None ) -> pydotplus.Node:
         found_node = has_node( self.base_graph, node_name )
         if found_node is True:
             ## node already added
@@ -225,6 +225,8 @@ class Graph():
         node = pydotplus.Node( node_name )
         if shape is not None:
             node.set( "shape", shape )
+        if label is not None:
+            node.set( "label", label )
         self.base_graph.add_node( node )
         return node
 

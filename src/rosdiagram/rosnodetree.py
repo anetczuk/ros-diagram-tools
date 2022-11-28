@@ -181,7 +181,7 @@ def generate_graph( nodes_dict ) -> Graph:
         for sub in subs_list:
             dot_graph.addEdge( sub, node )
         for serv in servs_list:
-            dot_graph.addEdge( node, serv )
+            dot_graph.addEdge( serv, node )
 
     return dot_graph
 
