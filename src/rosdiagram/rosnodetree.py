@@ -249,45 +249,7 @@ def create_topics_dict( nodes_dict ):
 ## it happens that topic and node has the same name, so it has to be prefixed
 def fix_names( nodes_dict ):
     label_dict = {}
-    all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
-
-#     rename_node_list    = set()
-#     rename_topics_list  = set()
-#     rename_service_list = set()
-#     for node, lists in nodes_dict.items():
-#         pubs_list  = lists[ "pubs" ]
-#         subs_list  = lists[ "subs" ]
-#         servs_list = lists[ "servs" ]
-# 
-#         pSize = len( pubs_list )
-#         for i in range(0, pSize):
-#             item = pubs_list[i]
-#             if all_nodes.count( item ) > 0:
-#                 rename_node_list.add( item )
-#                 rename_topics_list.add( item )
-#             if all_services.count( item ) > 0:
-#                 rename_topics_list.add( item )
-#                 rename_service_list.add( item )
-# 
-#         pSize = len( subs_list )
-#         for i in range(0, pSize):
-#             item = subs_list[i]
-#             if all_nodes.count( item ) > 0:
-#                 rename_node_list.add( item )
-#                 rename_topics_list.add( item )
-#             if all_services.count( item ) > 0:
-#                 rename_topics_list.add( item )
-#                 rename_service_list.add( item )
-# 
-#         pSize = len( servs_list )
-#         for i in range(0, pSize):
-#             item = servs_list[i]
-#             if all_nodes.count( item ) > 0:
-#                 rename_node_list.add( item )
-#                 rename_service_list.add( item )
-#             if all_topics.count( item ) > 0:
-#                 rename_topics_list.add( item )
-#                 rename_service_list.add( item )
+    all_nodes = set( nodes_dict.keys() )
 
     for node in all_nodes:
         item_id = "n_" + node
