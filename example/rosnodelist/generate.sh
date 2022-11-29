@@ -15,7 +15,7 @@ OUT_DIR="$SCRIPT_DIR/out"
 mkdir -p $OUT_DIR
 
 
-$TOOL_DIR/rosnodetree.py --dump_dir $SCRIPT_DIR/info --outdir $OUT_DIR --outhtml $@
+$TOOL_DIR/rosnodetree.py --dump_dir $SCRIPT_DIR/info --outdir $OUT_DIR --outpng "$OUT_DIR/graph.png" --outhtml $@
 
 
 ## dot -Tpng graph.gv.txt -o graph2.png

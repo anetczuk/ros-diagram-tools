@@ -1,0 +1,9 @@
+--------------------------------------------------------------------------------
+Node [/topic5]
+Publications: 
+
+Subscriptions: 
+ * /topic5 [xxx3]
+
+Services: 
+ * /service3

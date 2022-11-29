@@ -1,8 +1,0 @@
-digraph _service1 {
-rankdir=LR;
-"/node1" [href="_node1.html", shape=box, tooltip="node: /node1"];
-"/topic3" [href="_topic3.html", shape=ellipse, tooltip="node: /topic3"];
-"/service1" [fillcolor=yellow, href="_service1.html", shape=hexagon, style=filled, tooltip="node: /service1"];
-"/topic3" -> "/node1";
-"/node1" -> "/service1";
-}
