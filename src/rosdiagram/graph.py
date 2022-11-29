@@ -71,11 +71,13 @@ class Graph():
         self.set( prop, value )
 
     def getName( self ):
-        return self.base_graph.get_name()
+        graph_name = self.base_graph.get_name()
+        return unquote_name( graph_name )
 
     def setName( self, new_name ):
-        return self.base_graph.set_name( new_name )
-    
+        graph_name = quote_if_necessary( new_name )
+        return self.base_graph.set_name( graph_name )
+
     def setAsCluster(self, name):
         self.setName( f"cluster_{name}" )
 
@@ -530,7 +532,7 @@ def get_node_label( node_obj: pydotplus.Node ):
 
 
 def set_node_labels( graph, labels_dict, override=True ):
-    if labels_dict is None:
+    if labels_dict is None or len( labels_dict ) < 1:
         return
     all_nodes = graph.getNodesAll()
     for node_obj in all_nodes:

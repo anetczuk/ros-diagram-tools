@@ -46,7 +46,7 @@ from typing import Set
 
 from rosdiagram.htmlgenerator import generate_graph_html
 from rosdiagram.graph import Graph, unquote_name_list, set_node_labels
-from rosdiagram.io import read_list, prepare_filesystem_name
+from rosdiagram.io import read_list, prepare_filesystem_name, read_file
 from rosdiagram.utils import get_create_item
 
 
@@ -303,6 +303,52 @@ def fix_names( nodes_dict ):
     return label_dict
 
 
+def get_node_info_dict( nodes_dict, label_dict, msgs_dump_dir, srvs_dump_dir ):
+    info_dict = {}
+    
+    for _, lists in nodes_dict.items():
+        pubs_list  = lists[ "pubs" ]
+        subs_list  = lists[ "subs" ]
+        servs_list = lists[ "servs" ]
+
+        all_topics = pubs_list + subs_list
+        for topic_pair in all_topics.copy():
+            topic         = topic_pair[0]
+            message_name  = topic_pair[1]
+            content_file  = prepare_filesystem_name( message_name )
+            content_path  = os.path.join( msgs_dump_dir, content_file + ".txt" )
+            item_info     = prepare_code_content( message_name, content_path )
+            info_dict[ topic ] = item_info
+
+        for service_pair in servs_list.copy():
+            service      = service_pair[0]
+            service_name = label_dict.get( service, None )
+            if service_name is None:
+                continue
+            content_file = prepare_filesystem_name( service_name )
+            content_path = os.path.join( srvs_dump_dir, content_file + ".txt" )
+            item_info    = prepare_code_content( service_name, content_path )
+            info_dict[ service ] = item_info
+
+    return info_dict
+
+
+def prepare_code_content( code_title, code_path ):
+    file_content = read_file( code_path )
+    
+    code_content = ""
+    if file_content is None:
+        code_content = f"""Message: <code>{code_title}</code>
+"""
+    else:
+        file_content = file_content.strip()
+        code_content = f"""\
+Message: <code>{code_title}</code><br/>
+<pre><code>{file_content}</code></pre>
+"""
+    return code_content
+
+
 def get_topics( node_lists ) -> Set[ str ]:
     ret_set: Set[ str ] = set()
     pubs_list = node_lists[ "pubs" ]
@@ -366,7 +412,11 @@ def main():
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '--dump_dir', action='store', required=False, default="",
-                         help="Dump directory containing 'rostopic list' output data" )
+                         help="Dump directory containing 'rostopic' output data" )
+    parser.add_argument( '--msgs_dump_dir', action='store', required=False, default="",
+                         help="Dump directory containing 'rosmsg' output data" )
+    parser.add_argument( '--srvs_dump_dir', action='store', required=False, default="",
+                         help="Dump directory containing 'rosservice' output data" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
     parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
@@ -386,6 +436,7 @@ def main():
         return
 
     label_dict = fix_names( nodes_dict )
+    info_dict  = get_node_info_dict( nodes_dict, label_dict, args.msgs_dump_dir, args.srvs_dump_dir )
 
     if len( args.outraw ) > 0 or len( args.outpng ) > 0:
         graph = generate_full_graph( nodes_dict )
@@ -417,6 +468,7 @@ def main():
                         "main_graph": main_graph,
                         "label_dict": label_dict,
                         "groups": nodes_groups,
+                        "graph_info_dict": info_dict,
                         "neighbours_range": 1
                         }
         generate_graph_html( args.outdir, params_dict )

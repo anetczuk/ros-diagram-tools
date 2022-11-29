@@ -93,12 +93,14 @@ class BaseHtmlGenerator():
         return ret_groups
 
     def storeDataForHtml( self ):
-        graph_name = self.graph.getName()
-#         data_out = os.path.join( self.output_dir, graph_name + ".gv.txt" )
+        graph_name    = self.graph.getName()
+        item_filename = prepare_filesystem_name( graph_name )
+
+#         data_out = os.path.join( self.output_dir, item_filename + ".gv.txt" )
 #         self.graph.writeRAW( data_out )
-        data_out = os.path.join( self.output_dir, graph_name + ".png" )
+        data_out = os.path.join( self.output_dir, item_filename + ".png" )
         self.graph.writePNG( data_out )
-        data_out = os.path.join( self.output_dir, graph_name + ".map" )
+        data_out = os.path.join( self.output_dir, item_filename + ".map" )
         self.graph.writeMap( data_out )
 
 
@@ -155,7 +157,6 @@ class HtmlGenerator( BaseHtmlGenerator ):
 
         for item in all_names:
             _LOGGER.info( "preparing page for item %s", item )
-            item_filename = prepare_filesystem_name( item )
 
             ## generate subgraph
             node_graph: Graph = self._spawnGraph()
@@ -166,7 +167,7 @@ class HtmlGenerator( BaseHtmlGenerator ):
 
             item_group = groups_dict.get( item, {} )
             n_range    = item_group.get( NEIGHBOURS_RANGE_KEY, def_neighbours_range )
-            node_graph.setName( item_filename )
+            node_graph.setName( item )
             preserve_neighbour_nodes( node_graph, [item], n_range )
 
             ### set rank for neighbour nodes
@@ -258,8 +259,14 @@ class GraphHtmlGenerator( BaseHtmlGenerator ):
     def generate( self ):
         self.storeDataForHtml()
 
-        graph_name = self.graph.getName()
-        map_out    = os.path.join( self.output_dir, graph_name + ".map" )
+        label_dict = self.params.get( LABEL_DICT_KEY, {} )
+
+        graph_name     = self.graph.getName()
+        graph_filename = prepare_filesystem_name( graph_name )
+
+        graph_label    = label_dict.get( graph_name, graph_name )
+
+        map_out    = os.path.join( self.output_dir, graph_filename + ".map" )
         graph_map  = read_file( map_out )
         if graph_map is None:
             _LOGGER.error( "unable to generate html page" )
@@ -268,11 +275,10 @@ class GraphHtmlGenerator( BaseHtmlGenerator ):
         body_color     = self.params.get( "body_color", "#bbbbbb" )
         head_css_style = self.params.get( "head_css_style", "" )
 
-        alt_text = graph_name
+        alt_text = graph_label
         if len(self.type_label) > 0:
             alt_text = self.type_label + " " + alt_text
 
-        label_dict = self.params.get( LABEL_DICT_KEY, {} )
 
         nodes_dict     = self.graph.getNodeNamesDict()
         all_names_list = list( nodes_dict.keys() )
@@ -283,8 +289,10 @@ class GraphHtmlGenerator( BaseHtmlGenerator ):
             all_grp[ 'items' ] = all_names_list
             nodes_groups = []
 
-        bottom_content = ""
+        info_dict = self.params.get( "graph_info_dict", {} )
+        info_content = info_dict.get( graph_name, "" )
 
+        bottom_content = ""
         for grp in nodes_groups:
             grp_names = grp.get( "items", [] )
             if len( grp_names ) < 1:
@@ -303,20 +311,21 @@ class GraphHtmlGenerator( BaseHtmlGenerator ):
                 if node_url is not None:
                     bottom_content += f"""<li><a href="{node_url}">{node_label}</a></li>\n"""
             bottom_content += "</ul><br />\n"
-
         bottom_content += self.graph_bottom_content
 
         page_params = { "body_color":       body_color,
                         "head_css_style":   head_css_style,
                         "top_content":      self.graph_top_content,
+                        "info_content":     info_content,
                         "bottom_content":   bottom_content,
 
-                        "graph_name":   graph_name,
-                        "alt_text":     alt_text,
-                        "graph_map":    graph_map
+                        "graph_name":     graph_name,
+                        "graph_filename": graph_filename,
+                        "alt_text":       alt_text,
+                        "graph_map":      graph_map
                         }
 
-        html_out   = os.path.join( self.output_dir, graph_name + ".html" )
+        html_out   = os.path.join( self.output_dir, graph_filename + ".html" )
         index_html = GRAPH_PAGE_TEMPLATE.format( **page_params )
         write_file( html_out, index_html )
 
@@ -336,11 +345,22 @@ GRAPH_PAGE_TEMPLATE = """\
     body {{ padding: 24;
             background-color: {body_color};
          }}
+    pre {{ background-color: rgb(226, 226, 226);
+           margin: 0px;
+           margin-top: 24px;
+           padding: 16px;
+        }}
+    pre code {{ margin: 0px;
+                padding: 0px;
+             }}
+
     .center_content {{ width: 100%;
                        margin-right: auto; margin-left: auto;
                        text-align: center;
                        padding-top: 24; padding-bottom: 24;
                     }}
+    .info_content {{ margin-bottom: 36;
+                  }}
 {head_css_style}
 </style>
 </head>
@@ -350,8 +370,11 @@ GRAPH_PAGE_TEMPLATE = """\
 {top_content}
     </div>
     <div class="center_content">
-        <img src="{graph_name}.png" alt="{alt_text}" usemap="#{graph_name}">
+        <img src="{graph_filename}.png" alt="{alt_text}" usemap="#{graph_name}">
 {graph_map}
+    </div>
+    <div class="info_content">
+{info_content}
     </div>
     <div class="bottom_content">
 {bottom_content}
