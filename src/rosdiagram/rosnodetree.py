@@ -45,7 +45,7 @@ import re
 from typing import Set
 
 from rosdiagram.htmlgenerator import generate_graph_html
-from rosdiagram.graph import Graph, unquote_name_list
+from rosdiagram.graph import Graph, unquote_name_list, set_node_labels
 from rosdiagram.io import read_list, prepare_filesystem_name
 from rosdiagram.utils import get_create_item
 
@@ -150,14 +150,12 @@ def match_node( line ):
 ## ===================================================================
 
 
-def generate_graph( nodes_dict ) -> Graph:
+def generate_full_graph( nodes_dict ) -> Graph:
     dot_graph = Graph()
     dot_graph.setName( "nodes_graph" )
     base_graph = dot_graph.base_graph
     base_graph.set_type( 'digraph' )
     base_graph.set_rankdir( 'LR' )
-
-    fix_names( nodes_dict )
 
     ## add nodes
     for node, lists in nodes_dict.items():
@@ -186,21 +184,20 @@ def generate_graph( nodes_dict ) -> Graph:
     return dot_graph
 
 
-def generate_nodes_graph( nodes_dict, show_services=True ):
+def generate_main_graph( nodes_dict, show_services=True, labels_dict={} ):
     dot_graph = Graph()
     base_graph = dot_graph.base_graph
     base_graph.set_type( 'digraph' )
     base_graph.set_rankdir( 'LR' )
 
-    fix_names( nodes_dict )
-
     ## add nodes
-    for node, lists in nodes_dict.items():
-        node_obj = dot_graph.addNode( node, shape="box" )
+    for node_name, lists in nodes_dict.items():
+        node_label = labels_dict.get( node_name, node_name )
+        node_obj   = dot_graph.addNode( node_name, shape="box", label=node_label )
         if show_services:
             servs_list = lists[ "servs" ]
-            label = node + "\n" + str( len(servs_list) ) + " services"
-            node_obj.set( "label", label )
+            node_label = node_label + "\n" + str( len(servs_list) ) + " services"
+            node_obj.set( "label", node_label )
 
             # for item in servs_list:
             #     dot_graph.addNode( item, shape="hexagon" )
@@ -251,79 +248,76 @@ def create_topics_dict( nodes_dict ):
 
 ## it happens that topic and node has the same name, so it has to be prefixed
 def fix_names( nodes_dict ):
-    all_nodes    = set( nodes_dict.keys() )
-    all_topics   = set()
-    all_services = set()
-    for node, lists in nodes_dict.items():
-        pubs_list  = lists[ "pubs" ]
-        subs_list  = lists[ "subs" ]
-        servs_list = lists[ "servs" ]
-        all_topics.update( pubs_list )
-        all_topics.update( subs_list )
-        all_services.update( servs_list )
+    label_dict = {}
+    all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
 
-    all_nodes    = list( all_nodes )
-    all_topics   = list( all_topics )
-    all_services = list( all_services )
+#     rename_node_list    = set()
+#     rename_topics_list  = set()
+#     rename_service_list = set()
+#     for node, lists in nodes_dict.items():
+#         pubs_list  = lists[ "pubs" ]
+#         subs_list  = lists[ "subs" ]
+#         servs_list = lists[ "servs" ]
+# 
+#         pSize = len( pubs_list )
+#         for i in range(0, pSize):
+#             item = pubs_list[i]
+#             if all_nodes.count( item ) > 0:
+#                 rename_node_list.add( item )
+#                 rename_topics_list.add( item )
+#             if all_services.count( item ) > 0:
+#                 rename_topics_list.add( item )
+#                 rename_service_list.add( item )
+# 
+#         pSize = len( subs_list )
+#         for i in range(0, pSize):
+#             item = subs_list[i]
+#             if all_nodes.count( item ) > 0:
+#                 rename_node_list.add( item )
+#                 rename_topics_list.add( item )
+#             if all_services.count( item ) > 0:
+#                 rename_topics_list.add( item )
+#                 rename_service_list.add( item )
+# 
+#         pSize = len( servs_list )
+#         for i in range(0, pSize):
+#             item = servs_list[i]
+#             if all_nodes.count( item ) > 0:
+#                 rename_node_list.add( item )
+#                 rename_service_list.add( item )
+#             if all_topics.count( item ) > 0:
+#                 rename_topics_list.add( item )
+#                 rename_service_list.add( item )
 
-    rename_node_list    = set()
-    rename_topics_list  = set()
-    rename_service_list = set()
-    for node, lists in nodes_dict.items():
-        pubs_list  = lists[ "pubs" ]
-        subs_list  = lists[ "subs" ]
-        servs_list = lists[ "servs" ]
-
-        pSize = len( pubs_list )
-        for i in range(0, pSize):
-            item = pubs_list[i]
-            if all_nodes.count( item ) > 0:
-                rename_node_list.add( item )
-                rename_topics_list.add( item )
-            if all_services.count( item ) > 0:
-                rename_topics_list.add( item )
-                rename_service_list.add( item )
-
-        pSize = len( subs_list )
-        for i in range(0, pSize):
-            item = subs_list[i]
-            if all_nodes.count( item ) > 0:
-                rename_node_list.add( item )
-                rename_topics_list.add( item )
-            if all_services.count( item ) > 0:
-                rename_topics_list.add( item )
-                rename_service_list.add( item )
-
-        pSize = len( servs_list )
-        for i in range(0, pSize):
-            item = servs_list[i]
-            if all_nodes.count( item ) > 0:
-                rename_node_list.add( item )
-                rename_service_list.add( item )
-            if all_topics.count( item ) > 0:
-                rename_topics_list.add( item )
-                rename_service_list.add( item )
-
-    for node in rename_node_list:
-        nodes_dict[ "n|" + node ] = nodes_dict.pop( node )
+    for node in all_nodes:
+        item_id = "n_" + node
+        nodes_dict[ item_id ] = nodes_dict.pop( node )
+        label_dict[ item_id ] = node
 
     for node, lists in nodes_dict.items():
         pubs_list  = lists[ "pubs" ]
         subs_list  = lists[ "subs" ]
         servs_list = lists[ "servs" ]
 
-        for topic in rename_topics_list:
-            if topic in pubs_list:
-                pubs_list.append( "t|" + topic )
-                pubs_list.remove( topic )
-            if topic in subs_list:
-                subs_list.append( "t|" + topic )
-                subs_list.remove( topic )
+        for topic in pubs_list.copy():
+            item_id = "t_" + topic
+            pubs_list.append( item_id )
+            pubs_list.remove( topic )
+            label_dict[ item_id ] = topic
+                
+        for topic in subs_list.copy():
+            item_id = "t_" + topic
+            subs_list.append( item_id )
+            subs_list.remove( topic )
+            label_dict[ item_id ] = topic
 
-        for service in rename_service_list:
-            if service in servs_list:
-                servs_list.append( "s|" + service )
-                servs_list.remove( service )
+        for service in servs_list.copy():
+            item_id = "s_" + service
+            servs_list.append( item_id )
+            servs_list.remove( service )
+            label_dict[ item_id ] = service
+                
+    return label_dict
 
 
 def get_topics( node_lists ) -> Set[ str ]:
@@ -335,21 +329,40 @@ def get_topics( node_lists ) -> Set[ str ]:
     return ret_topics
 
 
+def split_to_groups( nodes_dict ):
+    all_nodes    = set( nodes_dict.keys() )
+    all_topics   = set()
+    all_services = set()
+    for _, lists in nodes_dict.items():
+        pubs_list  = lists[ "pubs" ]
+        subs_list  = lists[ "subs" ]
+        servs_list = lists[ "servs" ]
+        all_topics.update( pubs_list )
+        all_topics.update( subs_list )
+        all_services.update( servs_list )
+
+    all_nodes    = list( all_nodes )
+    all_topics   = list( all_topics )
+    all_services = list( all_services )
+
+    return [ all_nodes, all_topics, all_services ]
+
+
 def generate( node_info_dir ):
     data_dict = read_nodes( node_info_dir )
-    graph     = generate_graph( data_dict )
+    graph     = generate_full_graph( data_dict )
     return graph
 
 
-def remove_ros( graph: Graph ):
+def remove_ros_items( graph: Graph ):
     all_names = graph.getNodeNamesAll()
     unquoted_names = unquote_name_list( all_names )
     for name in unquoted_names:
-        if name in ( "/rosout", "n|/rosout", "t|/rosout" ):
+        if name in ( "/rosout", "n_/rosout", "t_/rosout" ):
             graph.removeNode( name )
-        if name.startswith( "/rostopic_" ):
+        if name.startswith( "/rostopic_" ) or name.startswith( "n_/rostopic_" ):
             graph.removeNode( name )
-        if name.startswith( "/record_" ):
+        if name.startswith( "/record_" ) or name.startswith( "n_/record_" ):
             graph.removeNode( name )
 
 
@@ -380,16 +393,38 @@ def main():
         _LOGGER.warning( "no data found in %s", args.dump_dir )
         return
 
+    label_dict = fix_names( nodes_dict )
+
     if len( args.outraw ) > 0 or len( args.outpng ) > 0:
-        graph = generate_graph( nodes_dict )
-        graph.writeRAW( args.outraw )
-        graph.writePNG( args.outpng )
+        graph = generate_full_graph( nodes_dict )
+        set_node_labels( graph, label_dict )
+        if len( args.outraw ) > 0:
+            graph.writeRAW( args.outraw )
+        if len( args.outpng ) > 0:
+            graph.writePNG( args.outpng )
+
+    data_groups  = split_to_groups( nodes_dict )
+    nodes_groups = [ { "title": "ROS nodes",
+                       "items": data_groups[0],
+                       "neighbours_range": 1 
+                      },
+                      { "title": "ROS topics",
+                       "items": data_groups[1],
+                       "neighbours_range": 0 
+                      },
+                      { "title": "ROS services",
+                       "items": data_groups[2],
+                       "neighbours_range": 0 
+                      }
+                    ]
 
     if args.outhtml and len( args.outdir ) > 0:
-        main_graph = generate_nodes_graph( nodes_dict )
-        remove_ros( main_graph )
-        params_dict = { "graph_factory": lambda: generate_graph( nodes_dict ),
+        main_graph = generate_main_graph( nodes_dict, show_services=True, labels_dict=label_dict )
+        remove_ros_items( main_graph )
+        params_dict = { "graph_factory": lambda: generate_full_graph( nodes_dict ),
                         "main_graph": main_graph,
+                        "label_dict": label_dict,
+                        "groups": nodes_groups,
                         "neighbours_range": 1
                         }
         generate_graph_html( args.outdir, params_dict )

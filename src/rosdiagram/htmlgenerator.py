@@ -28,7 +28,8 @@ import logging
 
 from rosdiagram.io import read_file, write_file, prepare_filesystem_name
 from rosdiagram.graph import Graph, get_nodes_names, preserve_neighbour_nodes,\
-    unquote_name, set_nodes_style
+    unquote_name, set_nodes_style, unquote_name_list, set_node_labels,\
+    get_node_label, nodes_to_dict
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -39,24 +40,75 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 ## ===================================================================
 
 
+LABEL_DICT_KEY       = "label_dict"
+NEIGHBOURS_RANGE_KEY = "neighbours_range"
+
+
 def generate_graph_html( output_dir, params_dict=None ):
     if params_dict is None:
         params_dict = {}
     generator = HtmlGenerator( params_dict )
-    generator.output_root_dir = output_dir
+    generator.output_dir = output_dir
     generator.generate()
 
 
 ##
-class HtmlGenerator():
+class BaseHtmlGenerator():
+    
+    def __init__(self, graph=None, output_dir=None, params_dict=None):
+        self.params       = ParamsDict( params=params_dict )
+        self.graph: Graph = graph
+        self.output_dir   = output_dir
+        self._node_group_dict = None
+
+    def getNodeGroupDict(self):
+        if self._node_group_dict is not None:
+            return self._node_group_dict
+        groups_dict = {}
+        def_neighbours_range = self.params.get( NEIGHBOURS_RANGE_KEY, 0 )
+        groups_list          = self.params.get( "groups", [] )
+        for grp in groups_list:
+            items_list = grp.get( "items", [] )
+            n_range    = grp.get( NEIGHBOURS_RANGE_KEY, def_neighbours_range )
+            for itm in items_list:
+                groups_dict[ itm ] = { NEIGHBOURS_RANGE_KEY: n_range }
+        self._node_group_dict = groups_dict
+        return self._node_group_dict
+
+    def splitNodesToGroups( self, names_list ):
+        groups_list = self.params.get( "groups", [] )
+        if len( groups_list ) < 1:
+            return None
+        ret_groups = []
+        for grp in groups_list:
+            items = grp.get( "items", [] )
+            grp_dict  = {}
+            grp_dict[ "title" ] = grp.get("title", "")
+            grp_items = []
+            for node_name in names_list:
+                if node_name in items:
+                    grp_items.append( node_name )
+            grp_dict[ "items" ] = grp_items
+            ret_groups.append( grp_dict )
+        return ret_groups
+
+    def storeDataForHtml( self ):
+        graph_name = self.graph.getName()
+#         data_out = os.path.join( self.output_dir, graph_name + ".gv.txt" )
+#         self.graph.writeRAW( data_out )
+        data_out = os.path.join( self.output_dir, graph_name + ".png" )
+        self.graph.writePNG( data_out )
+        data_out = os.path.join( self.output_dir, graph_name + ".map" )
+        self.graph.writeMap( data_out )
+
+
+##
+class HtmlGenerator( BaseHtmlGenerator ):
+
+    OUTPUT_NODES_REL_DIR = os.path.join( "nodes" )
 
     def __init__( self, params_dict=None ):
-        self.params = ParamsDict( params=params_dict )
-
-        self.output_root_dir       = None
-        self.output_nodes_rel_dir  = os.path.join( "nodes" )
-
-        self.main_graph: Graph     = None
+        super().__init__( params_dict=params_dict )
         self.output_nodes_dir      = None
 
     def generate( self ):
@@ -68,34 +120,41 @@ class HtmlGenerator():
 
         main_engine = self.params.get( "main_engine" )
         if main_engine is not None:
-            self.main_graph.setEngine( main_engine )
+            self.graph.setEngine( main_engine )
 
-        set_node_html_attribs( self.main_graph, self.output_nodes_rel_dir )
+        label_dict = self.params.get( LABEL_DICT_KEY, None )
+        set_node_labels( self.graph, label_dict, override=False )
+
+        set_node_html_attribs( self.graph, self.OUTPUT_NODES_REL_DIR )
         self.prepareMainPage()
 
     ## generate and store neighbour graphs
     def generateNodes( self ):
         self._setMainGraph()
 
-        self.output_nodes_dir = os.path.join( self.output_root_dir, self.output_nodes_rel_dir )
+        self.output_nodes_dir = os.path.join( self.output_dir, self.OUTPUT_NODES_REL_DIR )
         os.makedirs( self.output_nodes_dir, exist_ok=True )
 
-        full_graph_name = self.main_graph.getName()
+        full_graph_name = self.graph.getName()
         main_page_path  = os.path.join( os.pardir, full_graph_name + ".html" )
         back_link = f"""\
 <a href="{main_page_path}">back to Main graph</a>
 <br />"""
 
-        neighbours_range  = self.params.get( "neighbours_range", 0 )
-        active_node_style = self.params.getValue( "active_node_style", DEFAULT_ACTIVE_NODE_STYLE )
-
-        all_nodes = self.main_graph.getNodesAll()
-        all_names = get_nodes_names( all_nodes )
+        def_neighbours_range  = self.params.get( NEIGHBOURS_RANGE_KEY, 0 )
+        active_node_style     = self.params.getValue( "active_node_style", DEFAULT_ACTIVE_NODE_STYLE )
+        label_dict            = self.params.get( LABEL_DICT_KEY, None )
+        
+        groups_dict = self.getNodeGroupDict()
+        all_names   = list( groups_dict.keys() )
+        if len(all_names) < 1:
+            all_nodes = self.graph.getNodesAll()
+            all_names = get_nodes_names( all_nodes )
 
         engine_map = self._getNodeEngineMap( all_names )
 
         for item in all_names:
-            _LOGGER.info( "preparing page for node %s", item )
+            _LOGGER.info( "preparing page for item %s", item )
             item_filename = prepare_filesystem_name( item )
 
             ## generate subgraph
@@ -105,23 +164,41 @@ class HtmlGenerator():
             if engine is not None:
                 node_graph.setEngine( engine )
 
+            item_group = groups_dict.get( item, {} )
+            n_range    = item_group.get( NEIGHBOURS_RANGE_KEY, def_neighbours_range )
             node_graph.setName( item_filename )
-            preserve_neighbour_nodes( node_graph, [item], neighbours_range )
+            preserve_neighbour_nodes( node_graph, [item], n_range )
+
+            ### set rank for neighbour nodes
+            node_graph.setNodesRankByName( [item], 100 )
+            
+            source_layers = node_graph.getSourceNames( item, 0 )
+            source_names = source_layers[0]
+            source_names = unquote_name_list( source_names )
+            node_graph.setNodesRankByName( source_names, 50 )
+            
+            destination_layers = node_graph.getDestinationNames( item, 0 )
+            destination_names = destination_layers[0]
+            destination_names = unquote_name_list( destination_names )
+            node_graph.setNodesRankByName( destination_names, 150 )
+            
+            set_node_labels( node_graph, label_dict )
+            
             set_nodes_style( node_graph, [item], style_dict=active_node_style )
             set_node_html_attribs( node_graph, "", filter_nodes=all_names )
 
             self.prepareNodePage( node_graph, back_link )
 
     def _setMainGraph( self, graph_name: str = None ):
-        if self.main_graph is None:
-            self.main_graph = self.params.get( "main_graph", None )
-        if self.main_graph is None:
-            self.main_graph = self._spawnGraph()
+        if self.graph is None:
+            self.graph = self.params.get( "main_graph", None )
+        if self.graph is None:
+            self.graph = self._spawnGraph()
 
         if graph_name is None:
-            self.main_graph.setName( "full_graph" )
+            self.graph.setName( "full_graph" )
         else:
-            self.main_graph.setName( graph_name )
+            self.graph.setName( graph_name )
 
     def _spawnGraph( self ) -> Graph:
         graph_factory = self.params.get( "graph_factory", None )
@@ -143,15 +220,15 @@ class HtmlGenerator():
 
     def prepareMainPage( self ):
         params_dict = self.params.getDict()
-        generator = GraphHtmlGenerator( self.main_graph, self.output_root_dir, params_dict=params_dict )
+        generator = GraphHtmlGenerator( self.graph, self.output_dir, params_dict=params_dict )
         generator.graph_top_content = "Main graph"
         generator.type_label = "graph"
 
         generator.generate()
 
 #         ## index page
-#         graph_name = self.main_graph.getName()
-#         index_out  = os.path.join( self.output_root_dir, "index.html" )
+#         graph_name = self.graph.getName()
+#         index_out  = os.path.join( self.output_dir, "index.html" )
 #         index_html = f"""\
 # <body>
 #     <a href="{graph_name}.html">big graph</a>
@@ -169,16 +246,14 @@ class HtmlGenerator():
 
 
 ##
-class GraphHtmlGenerator():
+class GraphHtmlGenerator( BaseHtmlGenerator ):
 
     def __init__(self, graph=None, output_dir=None, params_dict=None ):
-        self.params                = ParamsDict( params=params_dict )
+        super().__init__( graph=graph, output_dir=output_dir, params_dict=params_dict )
+
         self.graph_top_content     = ""
         self.graph_bottom_content  = ""
         self.type_label            = ""
-
-        self.graph                 = graph
-        self.output_dir            = output_dir
 
     def generate( self ):
         self.storeDataForHtml()
@@ -197,16 +272,37 @@ class GraphHtmlGenerator():
         if len(self.type_label) > 0:
             alt_text = self.type_label + " " + alt_text
 
-        allNodes = self.graph.getNodesAll()
-        if len( allNodes ) > 0:
-            bottom_content  = "\nGraph nodes:\n"
+        label_dict = self.params.get( LABEL_DICT_KEY, {} )
+
+        nodes_dict     = self.graph.getNodeNamesDict()
+        all_names_list = list( nodes_dict.keys() )
+        nodes_groups   = self.splitNodesToGroups( all_names_list )
+        if nodes_groups is None:
+            all_grp = {}
+            all_grp[ 'title' ] = "Graph items"
+            all_grp[ 'items' ] = all_names_list
+            nodes_groups = []
+
+        bottom_content = ""
+
+        for grp in nodes_groups:
+            grp_names = grp.get( "items", [] )
+            if len( grp_names ) < 1:
+                continue
+            grp_title = grp.get("title", "" )
+            bottom_content += f"\n{grp_title}:\n"
             bottom_content += "<ul>\n"
-            for node in allNodes:
-                raw_name = unquote_name( node.get_name() )
-                node_url = node.get( "href" )
+            for itm_name in grp_names:
+                node = nodes_dict.get( itm_name, None )
+                if node is None:
+                    continue
+                node_label = label_dict.get( itm_name, None )
+                if node_label is None:
+                    node_label = get_node_label( node )
+                node_url   = node.get( "href" )
                 if node_url is not None:
-                    bottom_content += f"""<li><a href="{node_url}">{raw_name}</a></li>\n"""
-            bottom_content += "</ul>\n"
+                    bottom_content += f"""<li><a href="{node_url}">{node_label}</a></li>\n"""
+            bottom_content += "</ul><br />\n"
 
         bottom_content += self.graph_bottom_content
 
@@ -224,14 +320,8 @@ class GraphHtmlGenerator():
         index_html = GRAPH_PAGE_TEMPLATE.format( **page_params )
         write_file( html_out, index_html )
 
-    def storeDataForHtml( self ):
-        graph_name = self.graph.getName()
-    #     data_out = os.path.join( self.output_dir, graph_name + ".gv.txt" )
-    #     self.graph.writeRAW( data_out )
-        data_out = os.path.join( self.output_dir, graph_name + ".png" )
-        self.graph.writePNG( data_out )
-        data_out = os.path.join( self.output_dir, graph_name + ".map" )
-        self.graph.writeMap( data_out )
+
+## =============================================================
 
 
 DEFAULT_ACTIVE_NODE_STYLE = { "style": "filled",
@@ -326,7 +416,8 @@ def set_node_html_attribs( graph, node_local_dir, filter_nodes=None ):
         if filter_nodes is not None:
             if raw_name not in filter_nodes:
                 continue
-        node_obj.set( "tooltip", "node: " + raw_name )
+        node_label = get_node_label( node_obj )
+        node_obj.set( "tooltip", "node: " + node_label )
         node_filename = prepare_filesystem_name( raw_name )
         node_url = local_dir + node_filename + ".html"
         node_obj.set( "href", node_url )

@@ -98,6 +98,10 @@ class Graph():
             names_list = unquote_name_list( names_list )
         return names_list
 
+    def getNodeNamesDict(self):
+        all_nodes = self.getNodesAll()
+        return nodes_to_dict( all_nodes )
+
     def getNodesByName(self, node_names_list) -> List[ pydotplus.Node ]:
         if len( node_names_list ) < 1:
             return []
@@ -153,7 +157,7 @@ class Graph():
                 ret_nodes.append( node )
         return ret_nodes
 
-    def getSourceNames(self, node_name, levels=0) -> List[ pydotplus.Node ]:
+    def getSourceNames(self, node_name, levels=0) -> List[ List[str] ]:
         if self.hasNode( node_name ) is False:
             return []
         all_edges = get_edges_pairs( self.base_graph )
@@ -180,7 +184,7 @@ class Graph():
             search_list = neighbour_list
         return ret_list
 
-    def getDestinationNames(self, node_name, levels=0) -> List[ pydotplus.Node ]:
+    def getDestinationNames(self, node_name, levels=0) -> List[ List[str] ]:
         if self.hasNode( node_name ) is False:
             return []
         all_edges = get_edges_pairs( self.base_graph )
@@ -430,7 +434,7 @@ def preserve_top_subgraph( graph: Graph, top_nodes_list ):
 
 
 ## preserve nodes from 'nodes_list' and nodes in 'level' distance
-def preserve_neighbour_nodes( graph: Graph, nodes_start_list, level=0 ):
+def preserve_neighbour_nodes( graph: Graph, nodes_start_list: List[str], level=0 ):
     found_node_names = [ quote_if_necessary( node_name ) for node_name in nodes_start_list ]
     if len( found_node_names ) < 1:
         return
@@ -518,6 +522,30 @@ def set_nodes_style( graph: Graph, names_list, style_dict=None ):
 ### =================================================================
 
 
+def get_node_label( node_obj: pydotplus.Node ):
+    node_label = node_obj.get( "label" )
+    if node_label is not None:
+        return node_label
+    return unquote_name( node_obj.get_name() )
+
+
+def set_node_labels( graph, labels_dict, override=True ):
+    if labels_dict is None:
+        return
+    all_nodes = graph.getNodesAll()
+    for node_obj in all_nodes:
+        if override is False:
+            curr_label = node_obj.get( "label" )
+            if curr_label is not None:
+                continue
+        node_name = node_obj.get_name()
+        raw_name  = unquote_name( node_name )
+        label = labels_dict.get( raw_name, None )
+        if label is None:
+            continue
+        node_obj.set( "label", label )
+
+
 def unquote_name( node_name ):
     return node_name.strip('\"')
 
@@ -600,6 +628,15 @@ def filter_nodes( nodes_list: List[ pydotplus.Node ], filter_names_list: List[st
         if raw_name in filter_names_list:
             ret_list.append( node )
     return ret_list
+
+
+def nodes_to_dict( nodes_list ):
+    nodes_dict = {}
+    for node in nodes_list:
+        node_name = node.get_name()
+        node_name = unquote_name( node_name )
+        nodes_dict[ node_name ] = node
+    return nodes_dict
 
 
 def remove_nodes_recursive( graph, node_name_list ):
