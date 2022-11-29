@@ -60,13 +60,13 @@ def read_nodes( nodes_dir ):
     for item in topics_list:
         node_filename = prepare_filesystem_name( item )
         node_item_path = os.path.join( nodes_dir, node_filename + ".txt" )
-        content   = read_dependencies( node_item_path )
-        deps_dict = parse_content( content )
+        content   = get_node_info( node_item_path )
+        deps_dict = parse_node_info( content )
         nodes_dict[ item ] = deps_dict
     return nodes_dict
 
 
-def read_dependencies( deps_file=None ):
+def get_node_info( deps_file=None ):
     content = ""
     if os.path.isfile( deps_file ):
         ## read content from file
@@ -81,7 +81,7 @@ def read_dependencies( deps_file=None ):
     return content
 
 
-def parse_content( content ):
+def parse_node_info( content ):
     publications  = []
     subscribtions = []
     services      = []
@@ -111,20 +111,23 @@ def parse_content( content ):
             ## initial state
             continue
         if section_mode == 1:
-            node = match_node( line )
+            ## pubs
+            node = match_topic( line )
             if node is None:
                 continue
             publications.append( node )
         elif section_mode == 2:
-            node = match_node( line )
+            ## subs
+            node = match_topic( line )
             if node is None:
                 continue
             subscribtions.append( node )
         elif section_mode == 3:
-            node = match_node( line )
+            ## servs
+            node = match_service( line )
             if node is None:
                 continue
-            services.append( node )
+            services.append( (node, None) )
         else:
             print( "forbidden state", section_mode )
             continue
@@ -132,13 +135,23 @@ def parse_content( content ):
     # print( publishers, subscribers )
 
     deps_dict = {}
-    deps_dict['pubs']  = publications
-    deps_dict['subs']  = subscribtions
-    deps_dict['servs'] = services
+    deps_dict["pubs"]  = publications
+    deps_dict["subs"]  = subscribtions
+    deps_dict["servs"] = services
     return deps_dict
 
 
-def match_node( line ):
+def match_topic( line ):
+    matched = re.findall( r"^ \* (\S+)\s*\[(.*)\]\s*$", line )
+#     matched = re.findall( r"^ \* (\S+)\s*[.*]\s*$", line )
+    if len( matched ) != 1 and len( matched[0] ) != 2:
+        _LOGGER.warning( "invalid state for line: %s %s", line, matched )
+        return None
+    match_data = matched[0]
+    return ( match_data[0], match_data[1] )
+
+
+def match_service( line ):
     matched = re.findall( r"^ \* (\S+).*$", line )
     m_size = len( matched )
     if m_size != 1:
@@ -165,8 +178,8 @@ def generate_full_graph( nodes_dict ) -> Graph:
         for item in topics:
             dot_graph.addNode( item, shape="ellipse" )
 
-        servs_list = lists[ "servs" ]
-        for item in servs_list:
+        services: set = get_services( lists )
+        for item in services:
             dot_graph.addNode( item, shape="hexagon" )
 
     ## add edges
@@ -174,6 +187,9 @@ def generate_full_graph( nodes_dict ) -> Graph:
         pubs_list  = lists[ "pubs" ]
         subs_list  = lists[ "subs" ]
         servs_list = lists[ "servs" ]
+        pubs_list  = get_names_from_list( pubs_list )
+        subs_list  = get_names_from_list( subs_list )
+        servs_list = get_names_from_list( servs_list )
         for pub in pubs_list:
             dot_graph.addEdge( node, pub )
         for sub in subs_list:
@@ -233,6 +249,8 @@ def create_topics_dict( nodes_dict ):
     for node, lists in nodes_dict.items():
         pubs_list = lists[ "pubs" ]
         subs_list = lists[ "subs" ]
+        pubs_list = get_names_from_list( pubs_list )
+        subs_list = get_names_from_list( subs_list )
         for pub in pubs_list:
             topic_lists = get_create_item( topics_dict, pub, {} )
             items_list = get_create_item( topic_lists, "pubs", [] )
@@ -261,34 +279,48 @@ def fix_names( nodes_dict ):
         subs_list  = lists[ "subs" ]
         servs_list = lists[ "servs" ]
 
-        for topic in pubs_list.copy():
+        for topic_pair in pubs_list.copy():
+            topic = topic_pair[0]
             item_id = "t_" + topic
-            pubs_list.append( item_id )
-            pubs_list.remove( topic )
+            pubs_list.append( (item_id, topic_pair[1]) )
+            pubs_list.remove( topic_pair )
             label_dict[ item_id ] = topic
                 
-        for topic in subs_list.copy():
+        for topic_pair in subs_list.copy():
+            topic = topic_pair[0]
             item_id = "t_" + topic
-            subs_list.append( item_id )
-            subs_list.remove( topic )
+            subs_list.append( (item_id, topic_pair[1]) )
+            subs_list.remove( topic_pair )
             label_dict[ item_id ] = topic
 
-        for service in servs_list.copy():
+        for service_pair in servs_list.copy():
+            service = service_pair[0]
             item_id = "s_" + service
-            servs_list.append( item_id )
-            servs_list.remove( service )
+            servs_list.append( (item_id, service_pair[1]) )
+            servs_list.remove( service_pair )
             label_dict[ item_id ] = service
                 
     return label_dict
 
 
 def get_topics( node_lists ) -> Set[ str ]:
-    ret_topics: Set[ str ] = set()
+    ret_set: Set[ str ] = set()
     pubs_list = node_lists[ "pubs" ]
     subs_list = node_lists[ "subs" ]
-    ret_topics.update( pubs_list )
-    ret_topics.update( subs_list )
-    return ret_topics
+    pubs_list = get_names_from_list( pubs_list )
+    subs_list = get_names_from_list( subs_list )
+    ret_set.update( pubs_list )
+    ret_set.update( subs_list )
+    return ret_set
+
+
+def get_names_from_list( items_list ) -> Set[ str ]:
+    return set( item[0] for item in items_list )
+
+
+def get_services( node_lists ) -> Set[ str ]:
+    servs_list = node_lists[ "servs" ]
+    return get_names_from_list( servs_list )
 
 
 def split_to_groups( nodes_dict ):
@@ -296,12 +328,10 @@ def split_to_groups( nodes_dict ):
     all_topics   = set()
     all_services = set()
     for _, lists in nodes_dict.items():
-        pubs_list  = lists[ "pubs" ]
-        subs_list  = lists[ "subs" ]
-        servs_list = lists[ "servs" ]
-        all_topics.update( pubs_list )
-        all_topics.update( subs_list )
-        all_services.update( servs_list )
+        topics: set = get_topics( lists )
+        all_topics.update( topics )
+        services: set = get_services( lists )
+        all_services.update( services )
 
     all_nodes    = list( all_nodes )
     all_topics   = list( all_topics )
