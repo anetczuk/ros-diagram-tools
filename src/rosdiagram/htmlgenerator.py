@@ -297,6 +297,7 @@ class GraphHtmlGenerator( BaseHtmlGenerator ):
             grp_names = grp.get( "items", [] )
             if len( grp_names ) < 1:
                 continue
+            grp_names.sort()
             grp_title = grp.get("title", "" )
             bottom_content += f"\n{grp_title}:\n"
             bottom_content += "<ul>\n"
