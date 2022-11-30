@@ -88,7 +88,7 @@ class Graph():
     def getEdgesCount(self):
         edges = self.getEdgesAll()
         return len( edges )
-    
+
     ## ===================================================
 
     def getNodesAll(self) -> List[ pydotplus.Node ]:
@@ -261,17 +261,17 @@ class Graph():
             if self.removeNode( node_name ):
                 removed = True
         return removed
-    
+
     ## remove node from graph, do not edit edges
     def detachNodeRaw( self, node: pydotplus.Node ):
         return detach_node_recursive( self.base_graph, node )
-    
+
     def detachNodesByName( self, names_list: List[ str ] ):
         nodes_list = self.getNodesByName( names_list )
         for node in nodes_list:
             self.detachNodeRaw( node )
         return nodes_list
-    
+
     def takeNodes(self, names_list: List[ str ]):
         top_graph     = self.topGraph()
         wrapped_top   = Graph( top_graph )
@@ -387,7 +387,7 @@ class Graph():
         sub_base.set_rank( rank )
         return sub_graph
 
-    def setNodesRankByName( self, names_list: List[ str ], rank: str ) -> "Graph":
+    def setNodesRankByName( self, names_list: Set[ str ], rank: str ) -> "Graph":
         nodes_list = self.getNodesByName( names_list )
         return self.setNodesRank( nodes_list, rank )
 

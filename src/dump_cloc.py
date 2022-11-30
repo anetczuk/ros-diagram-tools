@@ -46,7 +46,7 @@ def read_data( cloc_dir, out_path ):
         sub_path = os.path.join( cloc_dir, subdir )
         dirs_list.append( sub_path )
     data_dir = read_dirs( dirs_list )
-    with open(out_path, 'w', encoding ='utf8') as json_file:
+    with open(out_path, 'w', encoding='utf8') as json_file:
         json.dump( data_dir, json_file, allow_nan=False )
 
 
@@ -73,11 +73,11 @@ def cloc_directory( sources_dir ):
 
     ## _LOGGER.info( "cloc output:\n%s", output )
 
-    overall = parse_code( output )
-    json    = parse_code( output, "JSON" )
-    if json < 1:
-        return overall
-    return overall - json
+    overall_code = parse_code( output )
+    json_code    = parse_code( output, "JSON" )
+    if json_code < 1:
+        return overall_code
+    return overall_code - json_code
 
 
 def parse_code( content, language="SUM:" ):

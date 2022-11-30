@@ -29,7 +29,7 @@ import logging
 from rosdiagram.io import read_file, write_file, prepare_filesystem_name
 from rosdiagram.graph import Graph, get_nodes_names, preserve_neighbour_nodes,\
     unquote_name, set_nodes_style, unquote_name_list, set_node_labels,\
-    get_node_label, nodes_to_dict
+    get_node_label
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -54,7 +54,7 @@ def generate_graph_html( output_dir, params_dict=None ):
 
 ##
 class BaseHtmlGenerator():
-    
+
     def __init__(self, graph=None, output_dir=None, params_dict=None):
         self.params       = ParamsDict( params=params_dict )
         self.graph: Graph = graph
@@ -146,7 +146,7 @@ class HtmlGenerator( BaseHtmlGenerator ):
         def_neighbours_range  = self.params.get( NEIGHBOURS_RANGE_KEY, 0 )
         active_node_style     = self.params.getValue( "active_node_style", DEFAULT_ACTIVE_NODE_STYLE )
         label_dict            = self.params.get( LABEL_DICT_KEY, None )
-        
+
         groups_dict = self.getNodeGroupDict()
         all_names   = list( groups_dict.keys() )
         if len(all_names) < 1:
@@ -172,19 +172,19 @@ class HtmlGenerator( BaseHtmlGenerator ):
 
             ### set rank for neighbour nodes
             node_graph.setNodesRankByName( [item], 100 )
-            
+
             source_layers = node_graph.getSourceNames( item, 0 )
             source_names = source_layers[0]
             source_names = unquote_name_list( source_names )
             node_graph.setNodesRankByName( source_names, 50 )
-            
+
             destination_layers = node_graph.getDestinationNames( item, 0 )
             destination_names = destination_layers[0]
             destination_names = unquote_name_list( destination_names )
             node_graph.setNodesRankByName( destination_names, 150 )
-            
+
             set_node_labels( node_graph, label_dict )
-            
+
             set_nodes_style( node_graph, [item], style_dict=active_node_style )
             set_node_html_attribs( node_graph, "", filter_nodes=all_names )
 
@@ -278,7 +278,6 @@ class GraphHtmlGenerator( BaseHtmlGenerator ):
         alt_text = graph_label
         if len(self.type_label) > 0:
             alt_text = self.type_label + " " + alt_text
-
 
         nodes_dict     = self.graph.getNodeNamesDict()
         all_names_list = list( nodes_dict.keys() )

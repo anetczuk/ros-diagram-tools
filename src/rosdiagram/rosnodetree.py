@@ -200,7 +200,9 @@ def generate_full_graph( nodes_dict ) -> Graph:
     return dot_graph
 
 
-def generate_main_graph( nodes_dict, show_services=True, labels_dict={} ):
+def generate_main_graph( nodes_dict, show_services=True, labels_dict=None ):
+    if labels_dict is None:
+        labels_dict = {}
     dot_graph = Graph()
     base_graph = dot_graph.base_graph
     base_graph.set_type( 'digraph' )
@@ -285,7 +287,7 @@ def fix_names( nodes_dict ):
             pubs_list.append( (item_id, topic_pair[1]) )
             pubs_list.remove( topic_pair )
             label_dict[ item_id ] = topic
-                
+
         for topic_pair in subs_list.copy():
             topic = topic_pair[0]
             item_id = "t_" + topic
@@ -299,13 +301,13 @@ def fix_names( nodes_dict ):
             servs_list.append( (item_id, service_pair[1]) )
             servs_list.remove( service_pair )
             label_dict[ item_id ] = service
-                
+
     return label_dict
 
 
 def get_node_info_dict( nodes_dict, label_dict, msgs_dump_dir, srvs_dump_dir ):
     info_dict = {}
-    
+
     for _, lists in nodes_dict.items():
         pubs_list  = lists[ "pubs" ]
         subs_list  = lists[ "subs" ]
@@ -335,7 +337,7 @@ def get_node_info_dict( nodes_dict, label_dict, msgs_dump_dir, srvs_dump_dir ):
 
 def prepare_code_content( code_title, code_path ):
     file_content = read_file( code_path )
-    
+
     code_content = ""
     if file_content is None:
         code_content = f"""Message: <code>{code_title}</code>
@@ -449,17 +451,17 @@ def main():
     data_groups  = split_to_groups( nodes_dict )
     nodes_groups = [ { "title": "ROS nodes",
                        "items": data_groups[0],
-                       "neighbours_range": 1 
-                      },
-                      { "title": "ROS topics",
+                       "neighbours_range": 1
+                       },
+                     { "title": "ROS topics",
                        "items": data_groups[1],
-                       "neighbours_range": 0 
-                      },
-                      { "title": "ROS services",
+                       "neighbours_range": 0
+                       },
+                     { "title": "ROS services",
                        "items": data_groups[2],
-                       "neighbours_range": 0 
-                      }
-                    ]
+                       "neighbours_range": 0
+                       }
+                     ]
 
     if args.outhtml and len( args.outdir ) > 0:
         main_graph = generate_main_graph( nodes_dict, show_services=True, labels_dict=label_dict )

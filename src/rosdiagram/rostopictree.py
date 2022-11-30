@@ -210,32 +210,32 @@ def generate_nodes_graph( topics_dict ):
 
 def generate_common_graph( left_topics_dict, right_topics_dict, left_label: str = "", right_label: str = "" ) -> Graph:
     join_dict = join_common_topics( left_topics_dict, right_topics_dict )
-    
-    common_topics = []
+
+    common_topics_set = set()
     for item in join_dict:
-        common_topics.append( item )
+        common_topics_set.add( item )
 
     fix_names( left_topics_dict )
     fix_names( right_topics_dict )
     fix_names( join_dict )
-    
+
     join_graph: Graph = generate_graph( join_dict )
     join_graph.set( "newrank", "true" )
-    join_graph.setNodesRankByName( common_topics, "same" )
-    
+    join_graph.setNodesRankByName( common_topics_set, "same" )
+
     left_nodes  = get_nodes_all( left_topics_dict )
     right_nodes = get_nodes_all( right_topics_dict )
-    
+
     left_subgraph: Graph = join_graph.setNodesRankByName( left_nodes, "min" )
     left_subgraph.setAsCluster( "left")
     if left_label:
         left_subgraph.set( "label", left_label )
-    
-    right_subgraph: Graph = join_graph.setNodesRankByName( right_nodes, "max" )   
+
+    right_subgraph: Graph = join_graph.setNodesRankByName( right_nodes, "max" )
     right_subgraph.setAsCluster( "right")
     if right_label:
         right_subgraph.set( "label", right_label )
-    
+
     return join_graph
 
 
