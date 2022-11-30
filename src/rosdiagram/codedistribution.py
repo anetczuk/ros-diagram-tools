@@ -42,8 +42,7 @@ if __name__ == '__main__':
 
 
 import math
-import re
-import subprocess
+import json
 
 from rosdiagram.graph import Graph, set_nodes_style
 from rosdiagram.io import read_list
@@ -52,62 +51,10 @@ from rosdiagram.io import read_list
 ## ===================================================================
 
 
-def read_dir( sources_dir ):
-    sub_dirs = next(os.walk( sources_dir ))[1]
-    dirs_list = []
-    for subdir in sub_dirs:
-        sub_path = os.path.join( sources_dir, subdir )
-        dirs_list.append( sub_path )
-    return read_dirs( dirs_list )
-
-
-def read_dirs( dirs_list ):
-    _LOGGER.info( "checking directories: %s", dirs_list )
-    ret_dict = {}
-    for dir_path in dirs_list:
-        dir_name = os.path.basename( dir_path )
-        lines = cloc_directory( dir_path )
-        if lines < 1:
-            continue
-        ret_dict[ dir_name ] = lines
-    return ret_dict
-
-
-def cloc_directory( sources_dir ):
-    _LOGGER.info( "counting code on: %s", sources_dir )
-    if os.path.islink( sources_dir ):
-        result = subprocess.run( ["cloc", "--sum-one", "--follow-links", sources_dir], capture_output=True, check=True )
-    else:
-        result = subprocess.run( ["cloc", "--sum-one", sources_dir], capture_output=True, check=True )
-
-    output = result.stdout.decode("utf-8")
-
-    ## _LOGGER.info( "cloc output:\n%s", output )
-
-    overall = parse_code( output )
-    json    = parse_code( output, "JSON" )
-    if json < 1:
-        return overall
-    return overall - json
-
-
-def parse_code( content, language="SUM:" ):
-    for line in content.splitlines():
-        if len(line) < 1:
-            continue
-        if line.startswith( language ):
-            ## dependency
-            pattern = "^" + language + r"\D*(\d*)\s*(\d*)\s*(\d*)\s*(\d*)\s*$"
-            matched = re.findall( pattern, line )
-            if len(matched) != 1:
-                _LOGGER.warning( "invalid state for line: %s", line )
-                continue
-            result = matched[0]
-            if len(result) != 4:
-                _LOGGER.warning( "invalid state for line: %s", line )
-                continue
-            return int( result[3] )
-    return -1
+def read_data( cloc_path ):
+    with open( cloc_path, 'r', encoding='utf-8' ) as content_file:
+        content = content_file.read()
+        return json.loads( content )
 
 
 def generate_graph( cloc_dict ):
@@ -152,17 +99,6 @@ def generate_graph( cloc_dict ):
     return dot_graph
 
 
-# def set_min_max_rank( dot_graph: Graph ):
-#     ## set nodes rank
-#     bottom_nodes = dot_graph.getNodesBottom()
-#     # print( "bottom:", get_nodes_names( bottom_nodes ) )
-#     dot_graph.setNodesRank( bottom_nodes, "max" )
-#
-#     top_nodes = dot_graph.getNodesTop()
-#     # print( "top:", get_nodes_names( top_nodes ) )
-#     dot_graph.setNodesRank( top_nodes, "min" )
-
-
 def paint_nodes( graph: Graph, paint_list ):
     style = { "style": "filled",
               "fillcolor": "yellow"
@@ -170,8 +106,8 @@ def paint_nodes( graph: Graph, paint_list ):
     set_nodes_style( graph, paint_list, style )
 
 
-def generate( sources_dir ):
-    data_dict = read_dir( sources_dir )
+def generate( cloc_path ):
+    data_dict = read_data( cloc_path )
     graph     = generate_graph( data_dict )
     return graph
 
@@ -183,8 +119,8 @@ def main():
     parser = argparse.ArgumentParser(description='code distribution')
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
-    parser.add_argument( '--dir', action='store', required=False, default="",
-                         help="Directory to analyze by 'cloc'" )
+    parser.add_argument( '--cloc_path', action='store', required=False, default="",
+                         help="File with 'cloc' results" )
     parser.add_argument( '--highlight', action='store', required=False, default="",
                          help="List with items to highlight" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
@@ -204,7 +140,7 @@ def main():
     if len( args.highlight ) > 0:
         highlight_list = read_list( args.highlight )
 
-    graph = generate( args.dir )
+    graph = generate( args.cloc_path )
     paint_nodes( graph, highlight_list )
 
     if len( args.outraw ) > 0:
