@@ -56,7 +56,9 @@ def generate_graph_html( output_dir, params_dict=None ):
 class BaseHtmlGenerator():
 
     def __init__(self, graph=None, output_dir=None, params_dict=None):
-        self.params       = ParamsDict( params=params_dict )
+        if isinstance( params_dict, ParamsDict ) is False:
+            params_dict   = ParamsDict( params=params_dict )
+        self.params       = params_dict
         self.graph: Graph = graph
         self.output_dir   = output_dir
         self._node_group_dict = None
@@ -220,10 +222,14 @@ class HtmlGenerator( BaseHtmlGenerator ):
     ## ==================================================================
 
     def prepareMainPage( self ):
-        params_dict = self.params.getDict()
-        generator = GraphHtmlGenerator( self.graph, self.output_dir, params_dict=params_dict )
+        _LOGGER.info( "generating main page" )
+        generator = GraphHtmlGenerator( self.graph, self.output_dir, params_dict=self.params )
         generator.graph_top_content = "Main graph"
         generator.type_label = "graph"
+
+        full_graph = self._spawnGraph()
+        set_node_html_attribs( full_graph, self.OUTPUT_NODES_REL_DIR )
+        generator.custom_bottom_content = generator.generateIndexContent( full_graph )
 
         generator.generate()
 
@@ -238,8 +244,7 @@ class HtmlGenerator( BaseHtmlGenerator ):
 #         write_file( index_out, index_html )
 
     def prepareNodePage( self, node_graph, back_link="" ):
-        params_dict = self.params.getDict()
-        generator = GraphHtmlGenerator( node_graph, self.output_nodes_dir, params_dict=params_dict )
+        generator = GraphHtmlGenerator( node_graph, self.output_nodes_dir, params_dict=self.params )
         generator.graph_top_content = back_link
         generator.type_label = "node"
 
@@ -253,18 +258,14 @@ class GraphHtmlGenerator( BaseHtmlGenerator ):
         super().__init__( graph=graph, output_dir=output_dir, params_dict=params_dict )
 
         self.graph_top_content     = ""
-        self.graph_bottom_content  = ""
+        self.custom_bottom_content = ""
         self.type_label            = ""
 
     def generate( self ):
         self.storeDataForHtml()
 
-        label_dict = self.params.get( LABEL_DICT_KEY, {} )
-
         graph_name     = self.graph.getName()
         graph_filename = prepare_filesystem_name( graph_name )
-
-        graph_label    = label_dict.get( graph_name, graph_name )
 
         map_out    = os.path.join( self.output_dir, graph_filename + ".map" )
         graph_map  = read_file( map_out )
@@ -275,43 +276,20 @@ class GraphHtmlGenerator( BaseHtmlGenerator ):
         body_color     = self.params.get( "body_color", "#bbbbbb" )
         head_css_style = self.params.get( "head_css_style", "" )
 
+        label_dict  = self.params.get( LABEL_DICT_KEY, {} )
+        graph_label = label_dict.get( graph_name, graph_name )
+
         alt_text = graph_label
         if len(self.type_label) > 0:
             alt_text = self.type_label + " " + alt_text
 
-        nodes_dict     = self.graph.getNodeNamesDict()
-        all_names_list = list( nodes_dict.keys() )
-        nodes_groups   = self.splitNodesToGroups( all_names_list )
-        if nodes_groups is None:
-            all_grp = {}
-            all_grp[ 'title' ] = "Graph items"
-            all_grp[ 'items' ] = all_names_list
-            nodes_groups = []
-
         info_dict = self.params.get( "graph_info_dict", {} )
         info_content = info_dict.get( graph_name, "" )
 
-        bottom_content = ""
-        for grp in nodes_groups:
-            grp_names = grp.get( "items", [] )
-            if len( grp_names ) < 1:
-                continue
-            grp_names.sort()
-            grp_title = grp.get("title", "" )
-            bottom_content += f"\n{grp_title}:\n"
-            bottom_content += "<ul>\n"
-            for itm_name in grp_names:
-                node = nodes_dict.get( itm_name, None )
-                if node is None:
-                    continue
-                node_label = label_dict.get( itm_name, None )
-                if node_label is None:
-                    node_label = get_node_label( node )
-                node_url   = node.get( "href" )
-                if node_url is not None:
-                    bottom_content += f"""<li><a href="{node_url}">{node_label}</a></li>\n"""
-            bottom_content += "</ul><br />\n"
-        bottom_content += self.graph_bottom_content
+        if self.custom_bottom_content:
+            bottom_content = self.custom_bottom_content
+        else:
+            bottom_content = self.generateIndexContent( self.graph )
 
         page_params = { "body_color":       body_color,
                         "head_css_style":   head_css_style,
@@ -328,6 +306,43 @@ class GraphHtmlGenerator( BaseHtmlGenerator ):
         html_out   = os.path.join( self.output_dir, graph_filename + ".html" )
         index_html = GRAPH_PAGE_TEMPLATE.format( **page_params )
         write_file( html_out, index_html )
+
+    def generateIndexContent( self, graph ):
+        label_dict = self.params.get( LABEL_DICT_KEY, {} )
+
+        nodes_dict     = graph.getNodeNamesDict()
+        all_names_list = list( nodes_dict.keys() )
+
+        nodes_groups = self.splitNodesToGroups( all_names_list )
+        if nodes_groups is None:
+            all_grp = {}
+            all_grp[ 'title' ] = "Graph items"
+            all_grp[ 'items' ] = all_names_list
+            nodes_groups = [ all_grp ]
+
+        bottom_content = ""
+        for grp in nodes_groups:
+            grp_names = grp.get( "items", [] )
+            grp_size = len( grp_names )
+            if grp_size < 1:
+                continue
+            grp_names.sort()
+            grp_title = grp.get("title", "" )
+            bottom_content += f"\n{grp_title} ({grp_size}):\n"
+            bottom_content += "<ul>\n"
+            for itm_name in grp_names:
+                node = nodes_dict.get( itm_name, None )
+                if node is None:
+                    continue
+                node_label = label_dict.get( itm_name, None )
+                if node_label is None:
+                    node_label = get_node_label( node )
+                node_url   = node.get( "href" )
+                if node_url is not None:
+                    bottom_content += f"""<li><a href="{node_url}"><code>{node_label}</code></a></li>\n"""
+            bottom_content += "</ul><br />\n"
+
+        return bottom_content
 
 
 ## =============================================================

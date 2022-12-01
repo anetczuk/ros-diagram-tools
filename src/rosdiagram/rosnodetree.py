@@ -466,6 +466,7 @@ def main():
     if args.outhtml and len( args.outdir ) > 0:
         main_graph = generate_main_graph( nodes_dict, show_services=True, labels_dict=label_dict )
         remove_ros_items( main_graph )
+
         params_dict = { "graph_factory": lambda: generate_full_graph( nodes_dict ),
                         "main_graph": main_graph,
                         "label_dict": label_dict,
