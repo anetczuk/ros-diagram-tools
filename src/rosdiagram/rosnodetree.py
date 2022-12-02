@@ -45,7 +45,7 @@ import re
 from typing import Set
 
 from rosdiagram.htmlgenerator import generate_graph_html
-from rosdiagram.graph import Graph, unquote_name_list, set_node_labels
+from rosdiagram.graphviz import Graph, unquote_name_list, set_node_labels
 from rosdiagram.io import read_list, prepare_filesystem_name, read_file
 from rosdiagram.utils import get_create_item
 

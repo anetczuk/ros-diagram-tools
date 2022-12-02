@@ -44,7 +44,7 @@ if __name__ == '__main__':
 import math
 import json
 
-from rosdiagram.graph import Graph, set_nodes_style
+from rosdiagram.graphviz import Graph, set_nodes_style
 from rosdiagram.io import read_list
 
 

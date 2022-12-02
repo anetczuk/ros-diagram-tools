@@ -45,7 +45,7 @@ import re
 from typing import Set
 import copy
 
-from rosdiagram.graph import Graph
+from rosdiagram.graphviz import Graph
 from rosdiagram.io import read_list, prepare_filesystem_name
 from rosdiagram.utils import get_create_item
 
@@ -53,13 +53,20 @@ from rosdiagram.utils import get_create_item
 ## ===================================================================
 
 
-def read_topics( topics_dir ):
+def read_topics( topic_dir ):
+    """ Returns dict with following structure:
+        { "<topic_id>": {                   ## topic id
+                          "pubs": [],       ## list of publishers of topic
+                          "subs": []        ## list of subscribers of topic
+                         }
+          }
+    """
     topics_dict = {}
-    topics_path = os.path.join( topics_dir, "list.txt" )
+    topics_path = os.path.join( topic_dir, "list.txt" )
     topics_list = read_list( topics_path )
     for item in topics_list:
         topic_filename = prepare_filesystem_name( item )
-        topic_item_path = os.path.join( topics_dir, topic_filename + ".txt" )
+        topic_item_path = os.path.join( topic_dir, topic_filename + ".txt" )
         content   = read_dependencies( topic_item_path )
         deps_dict = parse_content( content )
         topics_dict[ item ] = deps_dict
@@ -133,6 +140,17 @@ def match_node( line ):
         _LOGGER.warning( "invalid state for line: %s", line )
         return None
     return matched[0]
+
+
+def split_topic_dicts( topic_data ):
+    ret_pubs = {}
+    ret_subs = {}
+    for topic, lists_dict in topic_data.items():
+        pubs: List[str] = lists_dict[ "pubs" ]
+        subs: List[str] = lists_dict[ "subs" ]
+        ret_pubs[ topic ] = pubs
+        ret_subs[ topic ] = subs
+    return ( ret_pubs, ret_subs )
 
 
 ## ===================================================================

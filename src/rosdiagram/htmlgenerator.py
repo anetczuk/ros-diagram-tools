@@ -27,7 +27,7 @@ import os
 import logging
 
 from rosdiagram.io import read_file, write_file, prepare_filesystem_name
-from rosdiagram.graph import Graph, get_nodes_names, preserve_neighbour_nodes,\
+from rosdiagram.graphviz import Graph, get_nodes_names, preserve_neighbour_nodes,\
     unquote_name, set_nodes_style, unquote_name_list, set_node_labels,\
     get_node_label
 

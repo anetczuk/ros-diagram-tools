@@ -41,7 +41,7 @@ if __name__ == '__main__':
     sys.path[0] = os.path.join( SCRIPT_DIR, os.pardir )
 
 
-from rosdiagram.graph import Graph
+from rosdiagram.graphviz import Graph
 from rosdiagram.io import read_file
 
 

@@ -23,7 +23,7 @@
 
 import unittest
 
-from rosdiagram.graph import Graph
+from rosdiagram.graphviz import Graph
 import pydotplus
 
 
