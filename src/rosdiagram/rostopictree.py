@@ -142,7 +142,7 @@ def match_node( line ):
     return matched[0]
 
 
-def split_topic_dicts( topic_data ):
+def get_topic_subs_dict( topic_data ):
     ret_pubs = {}
     ret_subs = {}
     for topic, lists_dict in topic_data.items():
@@ -150,7 +150,7 @@ def split_topic_dicts( topic_data ):
         subs: List[str] = lists_dict[ "subs" ]
         ret_pubs[ topic ] = pubs
         ret_subs[ topic ] = subs
-    return ( ret_pubs, ret_subs )
+    return ret_subs
 
 
 ## ===================================================================
