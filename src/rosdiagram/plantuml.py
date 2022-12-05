@@ -57,7 +57,8 @@ skinparam backgroundColor #FEFEFE
         actors = seq_graph.actors()
         for item in actors:
             item_id = self._getItemId( item )
-            content += f"""participant "{item}" as {item_id} [[http://www.google.pl]]\n"""
+            ## content += f"""participant "{item}" as {item_id} [[http://www.google.pl]]\n"""
+            content += f"""participant "{item}" as {item_id}\n"""
             
         content += "\n"
     
@@ -103,12 +104,17 @@ skinparam backgroundColor #FEFEFE
                 time_unit = "s"
     
             call_label = f"""**{time_value}{time_unit}**: {label}"""
-            msg_url    = f" [[http://www.onet.pl message data]]"
+            msg_url    = ""
             indent     = ""
             
+            data_url = None
             if grouped_topics or looped:
                 ## topics grouped -- no message link
-                msg_url = ""
+                pass
+            else:
+                data_url = call.getProp( "url", None )
+            if data_url is not None:
+                msg_url = f" [[{data_url} message data]]"
             
             use_subs_group = len( receivers ) > 1 and group_subs
             if use_subs_group:

@@ -34,6 +34,23 @@ class GraphItem():
         self.subs   = subs
         self.index  = index
         self.labels = labels
+        
+        self.msgtype = None
+        self.msgdef  = None
+        self.msgdata = None
+
+        self.props = {}
+
+    def setMessageData( self, msgtype, msgdef, msgdata ):
+        self.msgtype = msgtype
+        self.msgdef  = msgdef
+        self.msgdata = msgdata
+
+    def getProp(self, key, def_value=None):
+        return self.props.get( key, def_value )
+
+    def setProp(self, key, value):
+        self.props[ key ] = value
 
     def sameActors( self, other_item: 'GraphItem' ):
         if self.pub != other_item.pub:
@@ -58,7 +75,7 @@ class SeqItems():
     
     def __init__( self, items, repeat=1 ):
         self.items: List[ GraphItem ] = items
-        self.repeats                  = repeat
+        self.repeats: int             = repeat
     
     def zipSeqs(self):
         pass
@@ -85,13 +102,15 @@ class SequenceGraph():
                 return True
         return False
 
-    def addCall(self, publisher, subscriber, index, label):
+    def addCall(self, publisher, subscriber, index, label) -> GraphItem:
         item = GraphItem( publisher, set(subscriber,), index, set([label]) )
         self.callings.append( item )
+        return item
 
-    def addCallSeq(self, publisher, subscribers_list, index, label):
+    def addCallSubs(self, publisher, subscribers_list, index, label) -> GraphItem:
         item = GraphItem( publisher, set(subscribers_list), index, set([label]) )
         self.callings.append( item )
+        return item
 
     def process(self, group_topics=True, detect_loops=True ):
         if group_topics:
