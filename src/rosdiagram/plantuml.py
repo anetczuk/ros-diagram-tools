@@ -23,20 +23,24 @@
 
 from rosdiagram.io import write_file
 from rosdiagram.seqgraph import SequenceGraph, SeqItems
+import datetime
 
 
-def generate_seq_diagram( seq_graph: SequenceGraph, out_path, group_subs=True ):
-    genrator = SequenceDiagramGenerator()
-    genrator.generate( seq_graph, out_path, group_subs )
+def generate_seq_diagram( seq_graph: SequenceGraph, out_path, params: dict=None ):
+    genrator = SequenceDiagramGenerator( params )
+    genrator.generate( seq_graph, out_path )
 
 
 ##
 class SequenceDiagramGenerator():
     
-    def __init__(self):
-        self.name_dict = {}
+    def __init__(self, params: dict=None):
+        self.name_dict   = {}
+        self.params_dict = params
+        if self.params_dict is None:
+            self.params_dict = {}
 
-    def generate( self, seq_graph: SequenceGraph, out_path, group_subs=True ):
+    def generate( self, seq_graph: SequenceGraph, out_path ):
         call_len = seq_graph.size()
         if call_len < 1:
             content = """\
@@ -55,6 +59,7 @@ skinparam backgroundColor #FEFEFE
 
         ## add actors
         actors = seq_graph.actors()
+        actors = sorted( actors )
         for item in actors:
             item_id = self._getItemId( item )
             ## content += f"""participant "{item}" as {item_id} [[http://www.google.pl]]\n"""
@@ -75,7 +80,7 @@ skinparam backgroundColor #FEFEFE
                 content += f"""\nloop {seq.repeats} times\n"""
                 indent = "    "
     
-            loop_content = self.generateLoop( seq, indent, group_subs )
+            loop_content = self.generateLoop( seq, indent )
     
             content += loop_content
             if use_msg_loop:
@@ -85,36 +90,28 @@ skinparam backgroundColor #FEFEFE
         
         write_file( out_path, content )
 
-    def generateLoop( self, seq: SeqItems, loop_indent, group_subs=True ):
+    def generateLoop( self, seq: SeqItems, loop_indent ):
         content = ""
     
-        looped = len( loop_indent ) > 0
+        group_subs = self.params_dict.get( "group_subs", False )
     
         calls = seq.items
         for call in calls:
-            receivers = call.subs
+            receivers = sorted( call.subs, reverse=True )
             
-            grouped_topics = len( call.labels ) > 1
-
             label = " | ".join( call.labels )
-            time_unit = "ms"
-            time_value = call.index / 1000000     ## in milliseconds
-            if time_value > 10000.0:
-                time_value = time_value / 1000
-                time_unit = "s"
-    
-            call_label = f"""**{time_value}{time_unit}**: {label}"""
+            
+            timestamp_dt     = datetime.datetime.fromtimestamp( call.timestamp / 1000000000 )
+            timestamp_string = timestamp_dt.strftime('%H:%M:%S.%f')
+
+            call_label = f"""**{timestamp_string}**: {label}"""
             msg_url    = ""
             indent     = ""
             
-            data_url = None
-            if grouped_topics or looped:
-                ## topics grouped -- no message link
-                pass
-            else:
+            if call.isMessageSet():
                 data_url = call.getProp( "url", None )
-            if data_url is not None:
-                msg_url = f" [[{data_url} message data]]"
+                if data_url is not None:
+                    msg_url  = f" [[{data_url} message data]]"
             
             use_subs_group = len( receivers ) > 1 and group_subs
             if use_subs_group:
@@ -142,3 +139,12 @@ skinparam backgroundColor #FEFEFE
         name = item_name.replace( "/", "_" )
         self.name_dict[ item_name ] = name
         return name
+
+
+def convert_time_index( index_value ):
+    time_unit = "ms"
+    time_value = index_value / 1000000     ## in milliseconds
+    if time_value > 10000.0:
+        time_value = time_value / 1000
+        time_unit = "s"
+    return ( time_value, time_unit )

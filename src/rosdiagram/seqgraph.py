@@ -29,11 +29,12 @@ from rosdiagram.io import write_file
 ##
 class GraphItem():
     
-    def __init__(self, pub: str, subs: Set[str], index: int, labels: Set[str] ):
-        self.pub    = pub
-        self.subs   = subs
-        self.index  = index
-        self.labels = labels
+    def __init__(self, pub: str, subs: Set[str], index: int, timestamp, labels: Set[str] ):
+        self.pub       = pub
+        self.subs      = subs
+        self.index     = index
+        self.timestamp = timestamp
+        self.labels    = labels
         
         self.msgtype = None
         self.msgdef  = None
@@ -45,6 +46,20 @@ class GraphItem():
         self.msgtype = msgtype
         self.msgdef  = msgdef
         self.msgdata = msgdata
+
+    def clearMessageaData(self):
+        self.msgtype = None
+        self.msgdef  = None
+        self.msgdata = None
+        
+    def isMessageSet(self):
+        if self.msgtype is None:
+            return False
+        if self.msgdef is None:
+            return False
+        if self.msgdata is None:
+            return False
+        return True
 
     def getProp(self, key, def_value=None):
         return self.props.get( key, def_value )
@@ -58,6 +73,9 @@ class GraphItem():
         if self.subs != other_item.subs:
             return False
         return True
+
+    def sameLabels( self, other_item: 'GraphItem' ):
+        return self.labels == other_item.labels
     
     def addLabels(self, labels: Set[str] ):
         self.labels = self.labels.union( labels )
@@ -76,20 +94,30 @@ class SeqItems():
     def __init__( self, items, repeat=1 ):
         self.items: List[ GraphItem ] = items
         self.repeats: int             = repeat
-    
-    def zipSeqs(self):
-        pass
+        if repeat > 1:
+            for item in self.items:
+                item.clearMessageaData()
 
+    def size(self):
+        return len( self.items )
 
 ##
 class SequenceGraph():
     
     def __init__(self):
-        self.callings                = []
-        self.loops: List[ SeqItems ] = []
+        self.callings: List[ GraphItem ] = []
+        self.loops: List[ SeqItems ]     = []
 
     def size(self):
         return len( self.callings )
+
+    def itemsNum(self):
+        if len( self.loops ) < 1:
+            return len( self.callings )
+        counter = 0
+        for seq in self.loops:
+            counter += seq.size()
+        return counter
 
     def getLoops(self) -> List[ SeqItems ]:
         if len( self.loops ) < 1:
@@ -102,20 +130,27 @@ class SequenceGraph():
                 return True
         return False
 
-    def addCall(self, publisher, subscriber, index, label) -> GraphItem:
-        item = GraphItem( publisher, set(subscriber,), index, set([label]) )
+    def addCall(self, publisher, subscriber, index, timestamp, label) -> GraphItem:
+        item = GraphItem( publisher, set(subscriber,), index, timestamp, set([label]) )
         self.callings.append( item )
         return item
 
-    def addCallSubs(self, publisher, subscribers_list, index, label) -> GraphItem:
-        item = GraphItem( publisher, set(subscribers_list), index, set([label]) )
+    def addCallSubs(self, publisher, subscribers_list, index, timestamp, label) -> GraphItem:
+        item = GraphItem( publisher, set(subscribers_list), index, timestamp, set([label]) )
         self.callings.append( item )
         return item
 
-    def process(self, group_topics=True, detect_loops=True ):
-        if group_topics:
+    def process(self, params: dict = None ):
+        if params is None:
+            params = {}
+
+        if params.get( "group_calls", False ):
+            self.groupTopics()
+
+        if params.get( "group_topics", False ):
             self.groupCalls()
-        if detect_loops:
+
+        if params.get( "detect_loops", False ):
             self.zipSeqs()
 
     def groupCalls(self):
@@ -129,6 +164,23 @@ class SequenceGraph():
             if prev_call.sameActors( call ):
                 ## same pub and subs
                 prev_call.addLabels( call.labels )
+                prev_call.clearMessageaData()
+                continue
+            groups.append( prev_call )
+            prev_call = call
+        groups.append( prev_call )
+        self.callings = groups
+
+    def groupTopics(self):
+        call_len = len(self.callings)
+        if call_len < 2:
+            return self.callings
+        groups = []
+        prev_call = self.callings[0]
+        for i in range(1, call_len ):
+            call = self.callings[i]
+            if prev_call.sameActors( call ) and prev_call.sameLabels( call ):
+                prev_call.clearMessageaData()
                 continue
             groups.append( prev_call )
             prev_call = call
@@ -141,17 +193,17 @@ class SequenceGraph():
         while improved:
             improved  = False
             new_loops: List[ SeqItems ] = []
-            for loop in curr_loops:
-                if loop.repeats > 1:
-                    new_loops.append( loop )
+            for items_seq in curr_loops:
+                if items_seq.repeats > 1:
+                    new_loops.append( items_seq )
                     continue
-                callings = loop.items
+                callings = items_seq.items
                 item_hash_function = lambda item: item.hashValue()
                 seq_detector = SequenceDetector( callings, item_hash_function )
                 best_seq     = seq_detector.detect()
                 seq_gain     = calculate_seq_gain( best_seq )
                 if seq_gain < 2:
-                    new_loops.append( loop )
+                    new_loops.append( items_seq )
                     continue
 
                 print( "best loop detected:", best_seq )                
@@ -209,7 +261,8 @@ class SequenceDetector():
     def detect(self):
         self.best_seq  = [0, 0, 0]
         self.best_gain = 0
-        for seq_len in range( 1, self.list_len ):
+        max_seq_len = min( 100, self.list_len )
+        for seq_len in range( 1, max_seq_len ):
             seq      = self.detectSeq( seq_len )
             seq_gain = calculate_seq_gain( seq )
             if seq_gain > self.best_gain:

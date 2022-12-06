@@ -77,7 +77,7 @@ def read_dependencies( deps_file=None ):
     content = ""
     if os.path.isfile( deps_file ):
         ## read content from file
-        _LOGGER.info( "loading dependencies from file: %s", deps_file )
+        _LOGGER.debug( "loading dependencies from file: %s", deps_file )
         with open( deps_file, 'r', encoding='utf-8' ) as content_file:
             content = content_file.read()
     else:
