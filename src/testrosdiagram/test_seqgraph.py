@@ -36,9 +36,9 @@ class GraphItemTest(unittest.TestCase):
         pass
 
     def test_hashValue(self):
-        item1 = GraphItem( "aaa", ["bbb"], 0, ["ccc"] )
+        item1 = GraphItem( "aaa", ["bbb"], 0, 0, ["ccc"] )
         val1  = item1.hashValue()
-        item2 = GraphItem( "aaa", ["bbb"], 0, ["ccc"] )
+        item2 = GraphItem( "aaa", ["bbb"], 0, 0, ["ccc"] )
         val2  = item2.hashValue()
         self.assertEqual( val1, val2 )
 
@@ -57,9 +57,9 @@ class SequenceGraphTest(unittest.TestCase):
 
     def test_groupCalls(self):
         graph = SequenceGraph()
-        graph.addCall( "A", "B", 0, "c1" )
-        graph.addCall( "A", "B", 0, "c2" )
-        graph.addCall( "A", "B", 0, "c3" )
+        graph.addCall( "A", "B", 0, 0, "c1" )
+        graph.addCall( "A", "B", 0, 0, "c2" )
+        graph.addCall( "A", "B", 0, 0, "c3" )
         self.assertEqual( 3, graph.size() )
         
         graph.groupCalls()
