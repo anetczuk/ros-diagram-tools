@@ -101,6 +101,10 @@ class SeqItems():
     def size(self):
         return len( self.items )
 
+
+## =============================================================
+
+
 ##
 class SequenceGraph():
     
@@ -129,6 +133,13 @@ class SequenceGraph():
             if loop.repeats > 1:
                 return True
         return False
+
+    def actors(self) -> Set[str]:
+        ret_set = set()
+        for calls in self.callings:
+            ret_set.add( calls.pub )
+            ret_set.update( calls.subs )
+        return ret_set
 
     def addCall(self, publisher, subscriber, index, timestamp, label) -> GraphItem:
         item = GraphItem( publisher, set(subscriber,), index, timestamp, set([label]) )
@@ -224,13 +235,6 @@ class SequenceGraph():
                     new_loops.append( SeqItems( after ) )
             curr_loops = new_loops
         self.loops = curr_loops
-
-    def actors(self) -> Set[str]:
-        ret_set = set()
-        for calls in self.callings:
-            ret_set.add( calls.pub )
-            ret_set.update( calls.subs )
-        return ret_set
 
     def write(self, out_path):
         content = self.generate()

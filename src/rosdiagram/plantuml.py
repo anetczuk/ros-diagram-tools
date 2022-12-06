@@ -21,9 +21,11 @@
 # SOFTWARE.
 #
 
-from rosdiagram.io import write_file
-from rosdiagram.seqgraph import SequenceGraph, SeqItems
 import datetime
+import itertools
+
+from rosdiagram.io import write_file
+from rosdiagram.seqgraph import SequenceGraph, SeqItems, GraphItem
 
 
 def generate_seq_diagram( seq_graph: SequenceGraph, out_path, params: dict=None ):
@@ -57,10 +59,12 @@ skinparam backgroundColor #FEFEFE
 
 """
 
+        graph_actors = seq_graph.actors()
+        labels_dict  = self.calculateLabelsDict( seq_graph )
+        actors_order = calculate_actors_optimized_order( graph_actors, labels_dict )
+
         ## add actors
-        actors = seq_graph.actors()
-        actors = sorted( actors )
-        for item in actors:
+        for item in actors_order:
             item_id = self._getItemId( item )
             ## content += f"""participant "{item}" as {item_id} [[http://www.google.pl]]\n"""
             content += f"""participant "{item}" as {item_id}\n"""
@@ -71,7 +75,6 @@ skinparam backgroundColor #FEFEFE
     
         ## add calls
         loops = seq_graph.getLoops()
-    
         for seq in loops:
             use_msg_loop = seq.repeats > 1 and detect_loops
             indent = ""
@@ -99,12 +102,7 @@ skinparam backgroundColor #FEFEFE
         for call in calls:
             receivers = sorted( call.subs, reverse=True )
             
-            label = " | ".join( call.labels )
-            
-            timestamp_dt     = datetime.datetime.fromtimestamp( call.timestamp / 1000000000 )
-            timestamp_string = timestamp_dt.strftime('%H:%M:%S.%f')
-
-            call_label = f"""**{timestamp_string}**: {label}"""
+            call_label = self.calculateLabel( call )
             msg_url    = ""
             indent     = ""
             
@@ -132,6 +130,22 @@ skinparam backgroundColor #FEFEFE
     
         return content
 
+    def calculateLabel(self, item: GraphItem ):
+        label            = " | ".join( item.labels )
+        timestamp_dt     = datetime.datetime.fromtimestamp( item.timestamp / 1000000000 )
+        timestamp_string = timestamp_dt.strftime('%H:%M:%S.%f')
+        call_label       = f"""**{timestamp_string}**: {label}"""
+        return call_label
+
+    def calculateLabelsDict(self, seq_graph: SequenceGraph ):
+        labels_dict = {}
+        loops: List[ SeqItems ] = seq_graph.getLoops()
+        for seq in loops:
+            calls: List[ GraphItem ] = seq.items
+            for call in calls:
+                labels_dict[ call ] = self.calculateLabel( call ) + " message data"
+        return labels_dict
+
     def _getItemId(self, item_name):
         proper = self.name_dict.get( item_name, None )
         if proper is not None:
@@ -139,6 +153,80 @@ skinparam backgroundColor #FEFEFE
         name = item_name.replace( "/", "_" )
         self.name_dict[ item_name ] = name
         return name
+
+
+## ========================================================================
+
+
+def calculate_actors_optimized_order( graph_actors, labels_dict ):
+    distance_dict = {}
+    for item, label in labels_dict.items():
+        pub = item.pub
+        receivers = sorted( item.subs, reverse=True )
+        if len( receivers ) < 1:
+            ## set non-empty label for first subscriber
+            continue
+        key = tuple( sorted( [ pub, receivers[0] ] ) )
+        distance_dict[ key ] = len( label )
+
+    sorted_actors = list( sorted( graph_actors ) )
+    sorted_width  = calculate_width( sorted_actors, distance_dict )
+    best_order = sorted_actors
+    best_width = sorted_width
+
+    a_size = len( sorted_actors )
+    for curr_list in itertools.permutations( graph_actors, a_size ):
+        curr_width = calculate_width( curr_list, distance_dict )
+        if curr_width < best_width:
+            best_order = curr_list
+            best_width = curr_width
+
+    print( "best order:", best_order, best_width, sorted_width )
+    return best_order
+
+#     found_best = True
+#     while found_best:
+#         found_best = False
+#         for actor in sorted_actors:
+#             index        = best_order.index( actor )
+#             combinations = calculate_combinations( best_order, index )
+#             for curr_list in combinations:
+#                 curr_width = calculate_width( curr_list, distance_dict )
+#                 if curr_width < best_width:
+#                     best_order = curr_list
+#                     best_width = curr_width
+#                     found_best = True
+#     print( "best order:", best_order, best_width, sorted_width )
+#     return best_order
+
+
+def calculate_width( actors_list, distance_dict ):
+    a_size = len( actors_list )
+    index_distance = [ 0.0 ] * a_size
+    for i in range(1, a_size):
+        curr_actor = actors_list[ i ]
+        max_dist = 0.0
+        for j in range(i-1, -1, -1):
+            prev_actor = actors_list[ j ]
+            key  = tuple( sorted( [prev_actor, curr_actor] ) )
+            dist = distance_dict.get( key, 0.0 )
+            curr_dist = index_distance[ j ] + dist
+            max_dist  = max( max_dist, curr_dist )
+        index_distance[ i ] = max_dist
+    return index_distance[ a_size - 1 ]
+
+
+def calculate_combinations( actors_list, index ):
+    ret_list = []
+    list_size = len( actors_list )
+    item = actors_list[ index ]
+    reduced_list = actors_list.copy()
+    del reduced_list[ index ]
+    for i in range(0, list_size):
+        curr_actor = reduced_list.copy()
+        curr_actor.insert( i, item )
+        ret_list.append( curr_actor )
+    return ret_list
 
 
 def convert_time_index( index_value ):
