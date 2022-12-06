@@ -366,8 +366,11 @@ def main():
     else:
         logging.getLogger().setLevel( logging.INFO )
 
-    exclude_list = read_list( args.exclude_list_path )
-    exclude_list = set( exclude_list )
+    try:
+        exclude_list = read_list( args.exclude_list_path )
+        exclude_list = set( exclude_list )
+    except:
+        exclude_list = set()
 
     params = { "group_calls": args.group_calls,
                "group_topics": args.group_topics,
