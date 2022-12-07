@@ -105,26 +105,40 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set = None, params: dict
         items_count = seq_diagram.itemsNum()
         print( "diagram items num:", items_count )
 
-#         ## generating actors pages
-#         if True:
-#             out_dir = os.path.join( outdir, "node" )
-#             os.makedirs( out_dir, exist_ok=True )
-#             graph_actors = seq_diagram.actors()
-#             for actor in graph_actors:
-#                 actor_filename = prepare_filesystem_name( actor )
-#                 sub_diagram: SequenceGraph = seq_diagram.copyCallings( actor )
-#                 sub_diagram.process( params )
-#         
-#                 svg_path = actor_filename + ".svg"
-#                 out_path = os.path.join( out_dir, actor_filename + ".html" )        
-#                 write_main_page( "bag_path", svg_path, "", out_path )
-#                 
-#                 out_path = os.path.join( out_dir, f"{actor_filename}.puml" )
-#                 generate_seq_diagram( sub_diagram, out_path, params )
+        ## generating actors pages
+        nodes_subdir = "nodes"
+        if True:
+            nodes_out_dir = os.path.join( outdir, nodes_subdir )
+            os.makedirs( nodes_out_dir, exist_ok=True )
+            graph_actors = seq_diagram.actors()
+            for actor in graph_actors:
+                actor_filename = prepare_filesystem_name( actor )
+                sub_diagram: SequenceGraph = seq_diagram.copyCallings( actor )
+                sub_diagram.process( params )
+
+                if params.get( "write_messages", False ):
+                    out_dir = os.path.join( outdir, "msgs" )
+                    os.makedirs( out_dir, exist_ok=True )
+                    loops = sub_diagram.getLoops()
+                    for loop in loops:
+                        if loop.repeats > 1:
+                            pass
+                        for item in loop.items:
+                            if item.isMessageSet() is False:
+                                continue
+                            out_name = f"{item.index}_msg.html"
+                            item.setProp( "url", "../msgs/" + out_name )
+
+                out_path = os.path.join( nodes_out_dir, f"{actor_filename}.puml" )
+                generate_seq_diagram( sub_diagram, out_path, params, nodes_subdir="" )
+
+                svg_path = actor_filename + ".svg"
+                out_path = os.path.join( nodes_out_dir, actor_filename + ".html" )        
+                write_main_page( "bag_path", svg_path, "", out_path )
 
         ## generating message pages
         if params.get( "write_messages", False ):
-            out_dir = os.path.join( outdir, "msg" )
+            out_dir = os.path.join( outdir, "msgs" )
             os.makedirs( out_dir, exist_ok=True )
             loops = seq_diagram.getLoops()
             for loop in loops:
@@ -134,7 +148,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set = None, params: dict
                     if item.isMessageSet() is False:
                         continue
                     out_name = f"{item.index}_msg.html"
-                    item.setProp( "url", "msg/" + out_name )
+                    item.setProp( "url", "msgs/" + out_name )
                     out_path = os.path.join( out_dir, out_name )
                     write_message_page( item, out_path )
 
@@ -150,14 +164,17 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set = None, params: dict
             topics_content += f"<li><code>{item[0]}</code>: {item[1]}</li>\n"
         topics_content += "</ul>\n"
 
+        ## write main diagram
         bag_name = os.path.basename( bag_path )
-        svg_path = f"flow_{bag_name}.svg"
-        out_path = os.path.join( outdir, "full_graph.html" )
-        write_main_page( bag_path, svg_path, topics_content, out_path )
 
-        ## write diagram
         out_path = os.path.join( outdir, f"flow_{bag_name}.puml" )
-        generate_seq_diagram( seq_diagram, out_path, params )
+        generate_seq_diagram( seq_diagram, out_path, params, nodes_subdir=nodes_subdir )
+
+        svg_path = f"flow_{bag_name}.svg"
+        main_out_path = os.path.join( outdir, "full_graph.html" )
+        write_main_page( bag_path, svg_path, topics_content, main_out_path )
+        
+        print( "generated main page: file://%s" % main_out_path )
 
 
 def generate_basic_graph( reader, topic_subs, exclude_set ):
@@ -264,7 +281,7 @@ def write_main_page( bag_file, svg_name, bottom_content, out_path ):
 </html>
 """
 
-    print( "generating page:", out_path )
+    print( "generating page: file://%s" % out_path )
     write_file( out_path, content )
 
 

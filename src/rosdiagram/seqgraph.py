@@ -248,10 +248,11 @@ class SequenceGraph():
         self.loops = curr_loops
 
     def copyCallings(self, actor ):
-        new_calls = []
+        new_calls: List[ GraphItem ] = []
         for call in self.callings:
             if call.haveActor( actor ):
-                new_calls.append( call.copy() )
+                new_call = call.copy()
+                new_calls.append( new_call )
         graph = SequenceGraph()
         graph.callings = new_calls
         return graph

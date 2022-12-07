@@ -29,9 +29,9 @@ from rosdiagram.io import write_file, prepare_filesystem_name
 from rosdiagram.seqgraph import SequenceGraph, SeqItems, GraphItem
 
 
-def generate_seq_diagram( seq_graph: SequenceGraph, out_path, params: dict=None ):
+def generate_seq_diagram( seq_graph: SequenceGraph, out_path, params: dict=None, nodes_subdir="nodes" ):
     genrator = SequenceDiagramGenerator( params )
-    genrator.generate( seq_graph, out_path )
+    genrator.generate( seq_graph, out_path, nodes_subdir )
 
 
 ##
@@ -43,7 +43,7 @@ class SequenceDiagramGenerator():
         if self.params_dict is None:
             self.params_dict = {}
 
-    def generate( self, seq_graph: SequenceGraph, out_path ):
+    def generate( self, seq_graph: SequenceGraph, out_path, nodes_subdir="nodes" ):
         call_len = seq_graph.size()
         if call_len < 1:
             content = """\
@@ -67,12 +67,12 @@ skinparam backgroundColor #FEFEFE
         ## add actors
         for item in actors_order:
             item_id = self._getItemId( item )
-            content += f"""participant "{item}" as {item_id}\n"""
+#             content += f"""participant "{item}" as {item_id}\n"""
 
-#             item_filename = prepare_filesystem_name( item )
-#             item_path = item_filename + ".html"
-#             item_path = os.path.join( "node", item_path )
-#             content += f"""participant "{item}" as {item_id} [[{item_path}]]\n"""
+            item_filename = prepare_filesystem_name( item )
+            item_path = item_filename + ".html"
+            item_path = os.path.join( nodes_subdir, item_path )
+            content += f"""participant "{item}" as {item_id} [[{item_path}]]\n"""
             
         content += "\n"
     
