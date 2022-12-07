@@ -42,7 +42,7 @@ if __name__ == '__main__':
 
 
 import re
-from typing import Set
+from typing import Set, List
 import copy
 
 from rosdiagram.graphviz import Graph

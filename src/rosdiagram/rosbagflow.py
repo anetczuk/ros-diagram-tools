@@ -70,7 +70,7 @@ from rosdiagram.seqgraph import GraphItem
 ## ===================================================================
 
 
-def generate( bag_path, topic_dump_dir, outdir, exclude_set = None, params: dict = None ):
+def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict = None ):
     if exclude_set is None:
         exclude_set = set()
     if params is None:
@@ -89,7 +89,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set = None, params: dict
                 subs.remove( name )
             if name.startswith( "/record_" ):
                 subs.remove( name )
-    
+
     # create reader instance and open for reading
     with Reader( bag_path ) as reader:
         print( "bag statistics:" )
@@ -107,34 +107,33 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set = None, params: dict
 
         ## generating actors pages
         nodes_subdir = "nodes"
-        if True:
-            nodes_out_dir = os.path.join( outdir, nodes_subdir )
-            os.makedirs( nodes_out_dir, exist_ok=True )
-            graph_actors = seq_diagram.actors()
-            for actor in graph_actors:
-                actor_filename = prepare_filesystem_name( actor )
-                sub_diagram: SequenceGraph = seq_diagram.copyCallings( actor )
-                sub_diagram.process( params )
+        nodes_out_dir = os.path.join( outdir, nodes_subdir )
+        os.makedirs( nodes_out_dir, exist_ok=True )
+        graph_actors = seq_diagram.actors()
+        for actor in graph_actors:
+            actor_filename = prepare_filesystem_name( actor )
+            sub_diagram: SequenceGraph = seq_diagram.copyCallings( actor )
+            sub_diagram.process( params )
 
-                if params.get( "write_messages", False ):
-                    out_dir = os.path.join( outdir, "msgs" )
-                    os.makedirs( out_dir, exist_ok=True )
-                    loops = sub_diagram.getLoops()
-                    for loop in loops:
-                        if loop.repeats > 1:
-                            pass
-                        for item in loop.items:
-                            if item.isMessageSet() is False:
-                                continue
-                            out_name = f"{item.index}_msg.html"
-                            item.setProp( "url", "../msgs/" + out_name )
+            if params.get( "write_messages", False ):
+                out_dir = os.path.join( outdir, "msgs" )
+                os.makedirs( out_dir, exist_ok=True )
+                loops = sub_diagram.getLoops()
+                for loop in loops:
+                    if loop.repeats > 1:
+                        pass
+                    for item in loop.items:
+                        if item.isMessageSet() is False:
+                            continue
+                        out_name = f"{item.index}_msg.html"
+                        item.setProp( "url", "../msgs/" + out_name )
 
-                out_path = os.path.join( nodes_out_dir, f"{actor_filename}.puml" )
-                generate_seq_diagram( sub_diagram, out_path, params, nodes_subdir="" )
+            out_path = os.path.join( nodes_out_dir, f"{actor_filename}.puml" )
+            generate_seq_diagram( sub_diagram, out_path, params, nodes_subdir="" )
 
-                svg_path = actor_filename + ".svg"
-                out_path = os.path.join( nodes_out_dir, actor_filename + ".html" )        
-                write_main_page( "bag_path", svg_path, "", out_path )
+            svg_path = actor_filename + ".svg"
+            out_path = os.path.join( nodes_out_dir, actor_filename + ".html" )
+            write_main_page( "bag_path", svg_path, "", out_path )
 
         ## generating message pages
         if params.get( "write_messages", False ):
@@ -160,8 +159,8 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set = None, params: dict
 
         topics_content = "Topics list:<br/>"
         topics_content += "<ul>\n"
-        for item in topics_data:
-            topics_content += f"<li><code>{item[0]}</code>: {item[1]}</li>\n"
+        for topic_item in topics_data:
+            topics_content += f"<li><code>{topic_item[0]}</code>: {topic_item[1]}</li>\n"
         topics_content += "</ul>\n"
 
         ## write main diagram
@@ -173,44 +172,44 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set = None, params: dict
         svg_path = f"flow_{bag_name}.svg"
         main_out_path = os.path.join( outdir, "full_graph.html" )
         write_main_page( bag_path, svg_path, topics_content, main_out_path )
-        
-        print( "generated main page: file://%s" % main_out_path )
+
+        print( f"generated main page: file://{main_out_path}" )
 
 
 def generate_basic_graph( reader, topic_subs, exclude_set ):
-    seq_diagram = SequenceGraph()
-    
     # iterate over messages
     ## iterates items in timestamp order
     messages = reader.messages()
     if not messages:
         print( "no message found" )
-        return
+        return None
+
+    seq_diagram = SequenceGraph()
     first_item = next( messages )
     first_timestamp = first_item[1]
-    
+
     messages = reader.messages()
     for connection, timestamp, rawdata in messages:
         if connection.topic in exclude_set:
             continue
-    
+
         subscribers = topic_subs[ connection.topic ]
         if not subscribers:
             ## topic without subscribers
-            continue 
-    
+            continue
+
         ext = connection.ext
         topic_publisher = ext.callerid
-    
+
         time_diff = timestamp - first_timestamp
         graph_item = seq_diagram.addCallSubs( topic_publisher, subscribers, time_diff, timestamp, connection.topic )
-    
+
         valid, msg = deserialize_msg( rawdata, connection )
         if valid is False:
             print( "unable to deserialize:", timestamp, connection.topic, connection.msgtype )
         else:
             graph_item.setMessageData( connection.msgtype, connection.msgdef, msg )
-    
+
     return seq_diagram
 
 
@@ -251,7 +250,7 @@ def write_main_page( bag_file, svg_name, bottom_content, out_path ):
             pre code {{ margin: 0px;
                         padding: 0px;
                      }}
-        
+
             .center_content {{ width: 100%;
                                margin-right: auto; margin-left: auto;
                                text-align: center;
@@ -259,7 +258,7 @@ def write_main_page( bag_file, svg_name, bottom_content, out_path ):
                             }}
             .info_content {{ margin-bottom: 36;
                           }}
-        
+
         </style>
     </head>
 
@@ -270,7 +269,7 @@ def write_main_page( bag_file, svg_name, bottom_content, out_path ):
         <div class="center_content">
             <object type="image/svg+xml" data="{svg_name}">missing image</object>
         </div>
-        
+
     <div class="info_content">
     </div>
     <div class="bottom_content">
@@ -281,17 +280,17 @@ def write_main_page( bag_file, svg_name, bottom_content, out_path ):
 </html>
 """
 
-    print( "generating page: file://%s" % out_path )
+    print( f"generating page: file://{out_path}" )
     write_file( out_path, content )
 
 
 def write_message_page( item: GraphItem, out_path ):
     timestamp_dt = datetime.datetime.fromtimestamp( item.timestamp / 1000000000 )
-    
+
     time_value, time_unit = convert_time_index( item.index )
-    
+
     msg_data = data_to_dict( item.msgdata )
-    msg_data = pprint.pformat( msg_data, indent=1, width=1, sort_dicts=False )
+    msg_data = pprint.pformat( msg_data, indent=1, width=1, sort_dicts=False )              # type: ignore
 
     content = f"""\
 <html>
@@ -308,7 +307,7 @@ def write_message_page( item: GraphItem, out_path ):
             pre code {{ margin: 0px;
                         padding: 0px;
                      }}
-        
+
             .center_content {{ width: 100%;
                                margin-right: auto; margin-left: auto;
                                text-align: center;
@@ -316,7 +315,7 @@ def write_message_page( item: GraphItem, out_path ):
                             }}
             .info_content {{ margin-bottom: 36;
                           }}
-        
+
         </style>
     </head>
 
@@ -411,7 +410,7 @@ def main():
     try:
         exclude_list = read_list( args.exclude_list_path )
         exclude_list = set( exclude_list )
-    except:
+    except Exception:
         exclude_list = set()
 
     params = { "group_calls": args.group_calls,
@@ -419,7 +418,7 @@ def main():
                "group_subs": args.group_subs,
                "detect_loops": args.detect_loops,
                "write_messages": args.write_messages
-        }
+               }
     generate( args.bag_path, args.topic_dump_dir, args.outdir, exclude_list, params )
 
 

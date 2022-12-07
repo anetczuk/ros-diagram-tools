@@ -24,21 +24,22 @@
 import os
 import datetime
 import itertools
+from typing import List, Dict
 
 from rosdiagram.io import write_file, prepare_filesystem_name
 from rosdiagram.seqgraph import SequenceGraph, SeqItems, GraphItem
 
 
-def generate_seq_diagram( seq_graph: SequenceGraph, out_path, params: dict=None, nodes_subdir="nodes" ):
+def generate_seq_diagram( seq_graph: SequenceGraph, out_path, params: dict = None, nodes_subdir="nodes" ):
     genrator = SequenceDiagramGenerator( params )
     genrator.generate( seq_graph, out_path, nodes_subdir )
 
 
 ##
 class SequenceDiagramGenerator():
-    
-    def __init__(self, params: dict=None):
-        self.name_dict   = {}
+
+    def __init__(self, params: dict = None):
+        self.name_dict: Dict[str, str] = {}
         self.params_dict = params
         if self.params_dict is None:
             self.params_dict = {}
@@ -52,8 +53,8 @@ class SequenceDiagramGenerator():
 """
             write_file( out_path, content )
             return
-    
-        content = f"""\
+
+        content = """\
 @startuml
 
 skinparam backgroundColor #FEFEFE
@@ -73,56 +74,56 @@ skinparam backgroundColor #FEFEFE
             item_path = item_filename + ".html"
             item_path = os.path.join( nodes_subdir, item_path )
             content += f"""participant "{item}" as {item_id} [[{item_path}]]\n"""
-            
+
         content += "\n"
-    
+
         detect_loops = seq_graph.loopsFound()
-    
+
         ## add calls
         loops = seq_graph.getLoops()
         for seq in loops:
             use_msg_loop = seq.repeats > 1 and detect_loops
             indent = ""
-            
+
             if use_msg_loop:
                 content += f"""\nloop {seq.repeats} times\n"""
                 indent = "    "
-    
+
             loop_content = self.generateLoop( seq, indent )
-    
+
             content += loop_content
             if use_msg_loop:
-                content += f"""end\n"""
-    
+                content += "end\n"
+
         content += "\n@enduml\n"
-        
+
         write_file( out_path, content )
 
     def generateLoop( self, seq: SeqItems, loop_indent ):
         content = ""
-    
+
         group_subs = self.params_dict.get( "group_subs", False )
-    
+
         calls = seq.items
         for call in calls:
             receivers = sorted( call.subs, reverse=True )
-            
+
             call_label = self.calculateLabel( call )
             msg_url    = ""
             indent     = ""
-            
+
             if call.isMessageSet():
                 data_url = call.getProp( "url", None )
                 if data_url is not None:
                     msg_url  = f" [[{data_url} message data]]"
-            
+
             use_subs_group = len( receivers ) > 1 and group_subs
             if use_subs_group:
                 ## grouping topic subscribers
                 content += f"""{loop_indent}group {call_label}\n"""
                 call_label = ""
                 indent = "    "
-            
+
             pub_id = self._getItemId( call.pub )
             for rec in receivers:
                 rec_id = self._getItemId( rec )
@@ -132,7 +133,7 @@ skinparam backgroundColor #FEFEFE
 
             if use_subs_group:
                 content += f"""{loop_indent}end\n"""
-    
+
         return content
 
     def calculateLabel(self, item: GraphItem ):
@@ -213,7 +214,7 @@ def calculate_width( actors_list, distance_dict ):
     for i in range(1, a_size):
         curr_actor = actors_list[ i ]
         max_dist = 0.0
-        for j in range(i-1, -1, -1):
+        for j in range(i - 1, -1, -1):
             prev_actor = actors_list[ j ]
             key  = tuple( sorted( [prev_actor, curr_actor] ) )
             dist = distance_dict.get( key, 0.0 )

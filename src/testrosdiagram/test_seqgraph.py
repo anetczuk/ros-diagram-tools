@@ -61,7 +61,7 @@ class SequenceGraphTest(unittest.TestCase):
         graph.addCall( "A", "B", 0, 0, "c2" )
         graph.addCall( "A", "B", 0, 0, "c3" )
         self.assertEqual( 3, graph.size() )
-        
+
         graph.groupCalls()
         self.assertEqual( 1, graph.size() )
 
@@ -70,8 +70,7 @@ class SequenceGraphTest(unittest.TestCase):
 
 
 def detect_string_sequence( string_data: str ):
-    hash_function = lambda data_char: ord(data_char)
-    seq_detector  = SequenceDetector( string_data, hash_function )
+    seq_detector  = SequenceDetector( string_data, lambda data_char: ord(data_char) )
     return seq_detector.detect()
 
 

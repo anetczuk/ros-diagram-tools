@@ -22,27 +22,25 @@
 #
 
 import copy
-from typing import Set, List
-
-from rosdiagram.io import write_file
+from typing import Set, List, Any, Dict
 
 
 ##
 class GraphItem():
-    
+
     def __init__(self, pub: str, subs: Set[str], index: int, timestamp, labels: Set[str] ):
         self.pub       = pub
         self.subs      = subs
         self.index     = index
         self.timestamp = timestamp
         self.labels    = labels
-        
+
         self.msgtype = None
         self.msgdef  = None
         self.msgdata = None
 
-        self.props = {}
-        
+        self.props: Dict[ str, Any ] = {}
+
     def copy(self):
         return copy.deepcopy( self )
 
@@ -55,7 +53,7 @@ class GraphItem():
         self.msgtype = None
         self.msgdef  = None
         self.msgdata = None
-        
+
     def isMessageSet(self):
         if self.msgtype is None:
             return False
@@ -87,7 +85,7 @@ class GraphItem():
 
     def sameLabels( self, other_item: 'GraphItem' ):
         return self.labels == other_item.labels
-    
+
     def addLabels(self, labels: Set[str] ):
         self.labels = self.labels.union( labels )
 
@@ -101,7 +99,7 @@ class GraphItem():
 
 ##
 class SeqItems():
-    
+
     def __init__( self, items, repeat=1 ):
         self.items: List[ GraphItem ] = items
         self.repeats: int             = repeat
@@ -118,7 +116,7 @@ class SeqItems():
 
 ##
 class SequenceGraph():
-    
+
     def __init__(self):
         self.callings: List[ GraphItem ] = []
         self.loops: List[ SeqItems ]     = []
@@ -192,6 +190,7 @@ class SequenceGraph():
             prev_call = call
         groups.append( prev_call )
         self.callings = groups
+        return self.callings
 
     def groupTopics(self):
         call_len = len(self.callings)
@@ -208,6 +207,7 @@ class SequenceGraph():
             prev_call = call
         groups.append( prev_call )
         self.callings = groups
+        return self.callings
 
     def zipSeqs(self):
         improved = True
@@ -220,28 +220,27 @@ class SequenceGraph():
                     new_loops.append( items_seq )
                     continue
                 callings = items_seq.items
-                item_hash_function = lambda item: item.hashValue()
-                seq_detector = SequenceDetector( callings, item_hash_function )
+                seq_detector = SequenceDetector( callings, lambda item: item.hashValue() )
                 best_seq     = seq_detector.detect()
                 seq_gain     = calculate_seq_gain( best_seq )
                 if seq_gain < 2:
                     new_loops.append( items_seq )
                     continue
 
-                print( "best loop detected:", best_seq )                
+                print( "best loop detected:", best_seq )
                 improved = True
                 start_index = best_seq[0]
                 next_index  = best_seq[0] + best_seq[1]
                 after_index = best_seq[0] + best_seq[1] * best_seq[2]
-    
+
                 prev = callings[ : start_index ]
                 if len( prev ) > 0:
                     new_loops.append( SeqItems( prev ) )
-    
-                repeat = callings[ start_index : next_index ]
+
+                repeat = callings[ start_index: next_index ]
                 new_loops.append( SeqItems( repeat, best_seq[2] ) )
-    
-                after = callings[ after_index : ]
+
+                after = callings[ after_index: ]
                 if len( after ) > 0:
                     new_loops.append( SeqItems( after ) )
             curr_loops = new_loops
@@ -257,10 +256,6 @@ class SequenceGraph():
         graph.callings = new_calls
         return graph
 
-    def write(self, out_path):
-        content = self.generate()
-        write_file( out_path, content )
-
 
 ## =============================================================
 
@@ -272,7 +267,7 @@ def detect_sequence( data_list, item_hash_function ):
 
 ##
 class SequenceDetector():
-    
+
     def __init__( self, data_list, item_hash_function ):
         self.hash_list = []
         for item in data_list:
