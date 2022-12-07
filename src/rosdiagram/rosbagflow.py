@@ -312,6 +312,7 @@ def write_message_page( item: GraphItem, out_path ):
             <br/>
             Timestamp: {timestamp_dt}<br/>
             Delta time: {time_value} {time_unit}<br/>
+            Topic: {item.labels}<br/>
             Publisher: {item.pub}<br/>
             Subscribers: {item.subs}<br/>
             <br/>
