@@ -21,6 +21,7 @@
 # SOFTWARE.
 #
 
+import copy
 from typing import Set, List
 
 from rosdiagram.io import write_file
@@ -41,6 +42,9 @@ class GraphItem():
         self.msgdata = None
 
         self.props = {}
+        
+    def copy(self):
+        return copy.deepcopy( self )
 
     def setMessageData( self, msgtype, msgdef, msgdata ):
         self.msgtype = msgtype
@@ -66,6 +70,13 @@ class GraphItem():
 
     def setProp(self, key, value):
         self.props[ key ] = value
+
+    def haveActor(self, actor):
+        if self.pub == actor:
+            return True
+        if actor in self.subs:
+            return True
+        return False
 
     def sameActors( self, other_item: 'GraphItem' ):
         if self.pub != other_item.pub:
@@ -235,6 +246,15 @@ class SequenceGraph():
                     new_loops.append( SeqItems( after ) )
             curr_loops = new_loops
         self.loops = curr_loops
+
+    def copyCallings(self, actor ):
+        new_calls = []
+        for call in self.callings:
+            if call.haveActor( actor ):
+                new_calls.append( call.copy() )
+        graph = SequenceGraph()
+        graph.callings = new_calls
+        return graph
 
     def write(self, out_path):
         content = self.generate()

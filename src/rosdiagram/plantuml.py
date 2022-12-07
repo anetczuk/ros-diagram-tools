@@ -21,10 +21,11 @@
 # SOFTWARE.
 #
 
+import os
 import datetime
 import itertools
 
-from rosdiagram.io import write_file
+from rosdiagram.io import write_file, prepare_filesystem_name
 from rosdiagram.seqgraph import SequenceGraph, SeqItems, GraphItem
 
 
@@ -66,8 +67,12 @@ skinparam backgroundColor #FEFEFE
         ## add actors
         for item in actors_order:
             item_id = self._getItemId( item )
-            ## content += f"""participant "{item}" as {item_id} [[http://www.google.pl]]\n"""
             content += f"""participant "{item}" as {item_id}\n"""
+
+#             item_filename = prepare_filesystem_name( item )
+#             item_path = item_filename + ".html"
+#             item_path = os.path.join( "node", item_path )
+#             content += f"""participant "{item}" as {item_id} [[{item_path}]]\n"""
             
         content += "\n"
     
@@ -159,6 +164,8 @@ skinparam backgroundColor #FEFEFE
 
 
 def calculate_actors_optimized_order( graph_actors, labels_dict ):
+#     return sorted( graph_actors )
+
     distance_dict = {}
     for item, label in labels_dict.items():
         pub = item.pub
@@ -175,7 +182,7 @@ def calculate_actors_optimized_order( graph_actors, labels_dict ):
     best_width = sorted_width
 
     a_size = len( sorted_actors )
-    for curr_list in itertools.permutations( graph_actors, a_size ):
+    for curr_list in itertools.permutations( sorted_actors, a_size ):
         curr_width = calculate_width( curr_list, distance_dict )
         if curr_width < best_width:
             best_order = curr_list

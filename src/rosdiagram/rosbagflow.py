@@ -60,7 +60,7 @@ from rosbags.rosbag1 import Reader
 from rosbags.serde import deserialize_ros1
 from rosbags.typesys import get_types_from_msg, register_types
 
-from rosdiagram.io import write_file, read_list
+from rosdiagram.io import write_file, read_list, prepare_filesystem_name
 from rosdiagram.rostopictree import read_topics, get_topic_subs_dict
 from rosdiagram.plantuml import SequenceGraph, generate_seq_diagram,\
     convert_time_index
@@ -98,61 +98,29 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set = None, params: dict
 
         # topic and msgtype information is available on .connections list
 
-        topics_data = []
-        for connection in reader.connections:
-            topics_data.append( ( connection.topic, connection.msgcount ) )
-        topics_data = sorted( topics_data, key=lambda x: (-x[1], x[0]) )
-
-        topics_content = "Topics list:<br/>"
-        topics_content += "<ul>\n"
-        for item in topics_data:
-            topics_content += f"<li><code>{item[0]}</code>: {item[1]}</li>\n"
-        topics_content += "</ul>\n"
-
         ## generating sequence diagram
-        seq_diagram = SequenceGraph()
-
-        # iterate over messages
-        ## iterates items in timestamp order
-        messages = reader.messages()
-        if not messages:
-            print( "no message found" )
-            return
-        first_item = next( messages )
-        first_timestamp = first_item[1]
-
-        for connection, timestamp, rawdata in reader.messages():
-#             if connection.topic == '/namespace1/topic1':
-#                 continue
-            if connection.topic in exclude_set:
-                continue
- 
-            subscribers = topic_subs[ connection.topic ]
-            if not subscribers:
-                ## topic without subscribers
-                continue 
-
-            ext = connection.ext
-            topic_publisher = ext.callerid
-
-            time_diff = timestamp - first_timestamp
-            graph_item = seq_diagram.addCallSubs( topic_publisher, subscribers, time_diff, timestamp, connection.topic )
-
-            valid, msg = deserialize_msg( rawdata, connection )
-            if valid is False:
-                print( "unable to deserialize:", timestamp, connection.topic, connection.msgtype )
-            else:
-                graph_item.setMessageData( connection.msgtype, connection.msgdef, msg )
-
+        seq_diagram: SequenceGraph = generate_basic_graph( reader, topic_subs, exclude_set )
         seq_diagram.process( params )
 
-        items_count    = seq_diagram.itemsNum()
+        items_count = seq_diagram.itemsNum()
         print( "diagram items num:", items_count )
 
-        bag_name = os.path.basename( bag_path )
-        svg_path = f"flow_{bag_name}.svg"
-        out_path = os.path.join( outdir, "full_graph.html" )
-        write_main_page( bag_path, svg_path, topics_content, out_path )
+#         ## generating actors pages
+#         if True:
+#             out_dir = os.path.join( outdir, "node" )
+#             os.makedirs( out_dir, exist_ok=True )
+#             graph_actors = seq_diagram.actors()
+#             for actor in graph_actors:
+#                 actor_filename = prepare_filesystem_name( actor )
+#                 sub_diagram: SequenceGraph = seq_diagram.copyCallings( actor )
+#                 sub_diagram.process( params )
+#         
+#                 svg_path = actor_filename + ".svg"
+#                 out_path = os.path.join( out_dir, actor_filename + ".html" )        
+#                 write_main_page( "bag_path", svg_path, "", out_path )
+#                 
+#                 out_path = os.path.join( out_dir, f"{actor_filename}.puml" )
+#                 generate_seq_diagram( sub_diagram, out_path, params )
 
         ## generating message pages
         if params.get( "write_messages", False ):
@@ -170,9 +138,63 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set = None, params: dict
                     out_path = os.path.join( out_dir, out_name )
                     write_message_page( item, out_path )
 
+        ## write main page
+        topics_data = []
+        for connection in reader.connections:
+            topics_data.append( ( connection.topic, connection.msgcount ) )
+        topics_data = sorted( topics_data, key=lambda x: (-x[1], x[0]) )
+
+        topics_content = "Topics list:<br/>"
+        topics_content += "<ul>\n"
+        for item in topics_data:
+            topics_content += f"<li><code>{item[0]}</code>: {item[1]}</li>\n"
+        topics_content += "</ul>\n"
+
+        bag_name = os.path.basename( bag_path )
+        svg_path = f"flow_{bag_name}.svg"
+        out_path = os.path.join( outdir, "full_graph.html" )
+        write_main_page( bag_path, svg_path, topics_content, out_path )
+
         ## write diagram
         out_path = os.path.join( outdir, f"flow_{bag_name}.puml" )
         generate_seq_diagram( seq_diagram, out_path, params )
+
+
+def generate_basic_graph( reader, topic_subs, exclude_set ):
+    seq_diagram = SequenceGraph()
+    
+    # iterate over messages
+    ## iterates items in timestamp order
+    messages = reader.messages()
+    if not messages:
+        print( "no message found" )
+        return
+    first_item = next( messages )
+    first_timestamp = first_item[1]
+    
+    messages = reader.messages()
+    for connection, timestamp, rawdata in messages:
+        if connection.topic in exclude_set:
+            continue
+    
+        subscribers = topic_subs[ connection.topic ]
+        if not subscribers:
+            ## topic without subscribers
+            continue 
+    
+        ext = connection.ext
+        topic_publisher = ext.callerid
+    
+        time_diff = timestamp - first_timestamp
+        graph_item = seq_diagram.addCallSubs( topic_publisher, subscribers, time_diff, timestamp, connection.topic )
+    
+        valid, msg = deserialize_msg( rawdata, connection )
+        if valid is False:
+            print( "unable to deserialize:", timestamp, connection.topic, connection.msgtype )
+        else:
+            graph_item.setMessageData( connection.msgtype, connection.msgdef, msg )
+    
+    return seq_diagram
 
 
 def deserialize_msg( rawdata, connection ):
@@ -241,6 +263,8 @@ def write_main_page( bag_file, svg_name, bottom_content, out_path ):
 
 </html>
 """
+
+    print( "generating page:", out_path )
     write_file( out_path, content )
 
 
