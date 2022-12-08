@@ -1,13 +1,13 @@
 digraph G {
 rankdir=LR;
 "/topic2" [shape=ellipse];
+"/node5" [shape=box];
 "/node2" [shape=box];
 "/node4" [shape=box];
-"/node5" [shape=box];
 "t|/topic1" [shape=ellipse];
-"n|/topic1" [shape=box];
 "/node1" [shape=box];
 "/node3" [shape=box];
+"n|/topic1" [shape=box];
 "/node2" -> "/topic2";
 "/topic2" -> "/node4";
 "/topic2" -> "/node5";
