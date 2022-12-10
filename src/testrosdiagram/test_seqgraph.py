@@ -70,7 +70,7 @@ class SequenceGraphTest(unittest.TestCase):
 
 
 def detect_string_sequence( string_data: str ):
-    seq_detector  = SequenceDetector( string_data, lambda data_char: ord(data_char) )
+    seq_detector = SequenceDetector( string_data, lambda data_char: ord(data_char) )
     return seq_detector.detect()
 
 

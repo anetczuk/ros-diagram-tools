@@ -26,10 +26,11 @@
 import os
 import logging
 
-from rosdiagram.io import read_file, write_file, prepare_filesystem_name
+from rosdiagram.io import read_file, prepare_filesystem_name
 from rosdiagram.graphviz import Graph, get_nodes_names, preserve_neighbour_nodes,\
     unquote_name, set_nodes_style, unquote_name_list, set_node_labels,\
     get_node_label
+from rosdiagram import texttemplate
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -303,9 +304,12 @@ class GraphHtmlGenerator( BaseHtmlGenerator ):
                         "graph_map":      graph_map
                         }
 
-        html_out   = os.path.join( self.output_dir, graph_filename + ".html" )
-        index_html = GRAPH_PAGE_TEMPLATE.format( **page_params )
-        write_file( html_out, index_html )
+        template_path = os.path.join( SCRIPT_DIR, "template", "nodegraph_page.html.tmpl" )
+        html_out      = os.path.join( self.output_dir, graph_filename + ".html" )
+#         index_html    = GRAPH_PAGE_TEMPLATE.format( **page_params )
+#         write_file( html_out, index_html )
+
+        texttemplate.generate( template_path, html_out, INPUT_DICT=page_params )
 
     def generateIndexContent( self, graph ):
         label_dict = self.params.get( LABEL_DICT_KEY, {} )

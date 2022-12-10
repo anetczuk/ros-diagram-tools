@@ -22,7 +22,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-import datetime
 
 try:
     ## following import success only when file is directly executed from command line
@@ -40,6 +39,7 @@ import os
 import sys
 import logging
 import pprint
+import datetime
 # import json
 
 import numpy
@@ -60,11 +60,12 @@ from rosbags.rosbag1 import Reader
 from rosbags.serde import deserialize_ros1
 from rosbags.typesys import get_types_from_msg, register_types
 
-from rosdiagram.io import write_file, read_list, prepare_filesystem_name
+from rosdiagram.io import read_list, prepare_filesystem_name
 from rosdiagram.rostopictree import read_topics, get_topic_subs_dict
 from rosdiagram.plantuml import SequenceGraph, generate_seq_diagram,\
     convert_time_index
 from rosdiagram.seqgraph import GraphItem
+from rosdiagram import texttemplate
 
 
 ## ===================================================================
@@ -235,53 +236,15 @@ def deserialize_raw( rawdata, msgtype ):
 
 
 def write_main_page( bag_file, svg_name, bottom_content, out_path ):
-    content = f"""\
-<html>
-    <head>
-        <style>
-            body {{ padding: 24;
-                    background-color: #bbbbbb;
-                 }}
-            pre {{ background-color: rgb(226, 226, 226);
-                   margin: 0px;
-                   margin-top: 24px;
-                   padding: 16px;
-                }}
-            pre code {{ margin: 0px;
-                        padding: 0px;
-                     }}
-
-            .center_content {{ width: 100%;
-                               margin-right: auto; margin-left: auto;
-                               text-align: center;
-                               padding-top: 24; padding-bottom: 24;
-                            }}
-            .info_content {{ margin-bottom: 36;
-                          }}
-
-        </style>
-    </head>
-
-    <body>
-        <div class="top_content">Main graph</div>
-        <div class="top_content">Bag file: {bag_file}</div>
-
-        <div class="center_content">
-            <object type="image/svg+xml" data="{svg_name}">missing image</object>
-        </div>
-
-    <div class="info_content">
-    </div>
-    <div class="bottom_content">
-{bottom_content}
-    </div>
-    </body>
-
-</html>
-"""
-
     print( f"generating page: file://{out_path}" )
-    write_file( out_path, content )
+
+    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_main_page.html.tmpl" )
+
+    page_params = { 'bag_file': bag_file,
+                    'svg_name': svg_name,
+                    'bottom_content': bottom_content
+                    }
+    texttemplate.generate( template_path, out_path, INPUT_DICT=page_params )
 
 
 def write_message_page( item: GraphItem, out_path ):
@@ -292,58 +255,15 @@ def write_message_page( item: GraphItem, out_path ):
     msg_data = data_to_dict( item.msgdata )
     msg_data = pprint.pformat( msg_data, indent=1, width=1, sort_dicts=False )              # type: ignore
 
-    content = f"""\
-<html>
-    <head>
-        <style>
-            body {{ padding: 24;
-                    background-color: #bbbbbb;
-                 }}
-            pre {{ background-color: rgb(226, 226, 226);
-                   margin: 0px;
-                   margin-top: 24px;
-                   padding: 16px;
-                }}
-            pre code {{ margin: 0px;
-                        padding: 0px;
-                     }}
+    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_page.html.tmpl" )
 
-            .center_content {{ width: 100%;
-                               margin-right: auto; margin-left: auto;
-                               text-align: center;
-                               padding-top: 24; padding-bottom: 24;
-                            }}
-            .info_content {{ margin-bottom: 36;
-                          }}
-
-        </style>
-    </head>
-
-    <body>
-        <div class="top_content">
-            <a href="../full_graph.html">back to Main graph</a>
-            <br />
-        </div>
-        <div class="info_content">
-            <br/>
-            Timestamp: {timestamp_dt}<br/>
-            Delta time: {time_value} {time_unit}<br/>
-            Topic: {item.labels}<br/>
-            Publisher: {item.pub}<br/>
-            Subscribers: {item.subs}<br/>
-            <br/>
-            Message: <code>{item.msgtype}</code><br/>
-            <pre><code>{item.msgdef}</code></pre>
-        </div>
-        <div class="info_content">
-            Data:
-            <pre><code>{msg_data}</code></pre>
-        </div>
-    </body>
-
-</html>
-"""
-    write_file( out_path, content )
+    page_params = { 'timestamp_dt': timestamp_dt,
+                    'time_value': time_value,
+                    'time_unit': time_unit,
+                    'item': item,
+                    'msg_data': msg_data
+                    }
+    texttemplate.generate( template_path, out_path, INPUT_DICT=page_params )
 
 
 def data_to_dict( data_obj ):
@@ -410,7 +330,8 @@ def main():
     try:
         exclude_list = read_list( args.exclude_list_path )
         exclude_list = set( exclude_list )
-    except Exception:
+    except Exception as ex:
+        _LOGGER.warning( "uanble to load exception list: %s", ex )
         exclude_list = set()
 
     params = { "group_calls": args.group_calls,
