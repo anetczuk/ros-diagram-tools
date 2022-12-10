@@ -37,31 +37,32 @@
                             }
             .info_content { margin-bottom: 36;
                           }
-
         </style>
     </head>
 
     <body>
         <div class="top_content">
+#!
+#! bag_file_path = DATA_DICT.get('bag_file')
+#{ if bag_file_path:
+            Main graph<br />
+            Bag file: $bag_file_path
+#}
+#{ else:
             <a href="../full_graph.html">back to Main graph</a>
+#}
+#!
             <br />
         </div>
-        <div class="info_content">
-            <br/>
-            Timestamp: ${DATA_DICT.get('timestamp_dt', '')}<br/>
-            Delta time: ${DATA_DICT.get('time_value', '')} ${DATA_DICT.get('time_unit', '')}<br/>
-#! item = DATA_DICT.get('item')
-            Topic: ${item.labels}<br/>
-            Publisher: ${item.pub}<br/>
-            Subscribers: ${item.subs}<br/>
-            <br/>
-            Message: <code>${item.msgtype}</code><br/>
-            <pre><code>${item.msgdef}</code></pre>
+        <div class="center_content">
+            <object type="image/svg+xml" data="${DATA_DICT.get('svg_name')}">missing image</object>
         </div>
-        <div class="info_content">
-            Data:
-            <pre><code>${DATA_DICT.get('msg_data')}</code></pre>
-        </div>
+
+    <div class="info_content">
+    </div>
+    <div class="bottom_content">
+${DATA_DICT.get('bottom_content')}
+    </div>
     </body>
 
 </html>

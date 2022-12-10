@@ -134,7 +134,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
 
             svg_path = actor_filename + ".svg"
             out_path = os.path.join( nodes_out_dir, actor_filename + ".html" )
-            write_main_page( "bag_path", svg_path, "", out_path )
+            write_seq_page( None, svg_path, "", out_path )
 
         ## generating message pages
         if params.get( "write_messages", False ):
@@ -172,7 +172,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
 
         svg_path = f"flow_{bag_name}.svg"
         main_out_path = os.path.join( outdir, "full_graph.html" )
-        write_main_page( bag_path, svg_path, topics_content, main_out_path )
+        write_seq_page( bag_path, svg_path, topics_content, main_out_path )
 
         print( f"generated main page: file://{main_out_path}" )
 
@@ -235,10 +235,10 @@ def deserialize_raw( rawdata, msgtype ):
 ## ===================================================================
 
 
-def write_main_page( bag_file, svg_name, bottom_content, out_path ):
+def write_seq_page( bag_file, svg_name, bottom_content, out_path ):
     print( f"generating page: file://{out_path}" )
 
-    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_main_page.html.tmpl" )
+    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_seq_page.html.tmpl" )
 
     page_params = { 'bag_file': bag_file,
                     'svg_name': svg_name,
@@ -255,7 +255,7 @@ def write_message_page( item: GraphItem, out_path ):
     msg_data = data_to_dict( item.msgdata )
     msg_data = pprint.pformat( msg_data, indent=1, width=1, sort_dicts=False )              # type: ignore
 
-    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_page.html.tmpl" )
+    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_message.html.tmpl" )
 
     page_params = { 'timestamp_dt': timestamp_dt,
                     'time_value': time_value,
