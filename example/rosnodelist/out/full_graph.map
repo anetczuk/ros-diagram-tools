@@ -1,8 +1,8 @@
 <map id="full_graph" name="full_graph">
-<area shape="rect" id="node1" href="nodes/n__node2.html" title="node: /node2
-1 services" alt="" coords="185,5,304,56"/>
-<area shape="rect" id="node3" href="nodes/n__topic5.html" title="node: /topic5
+<area shape="rect" id="node1" href="nodes/n__topic5.html" title="node: /topic5
 1 services" alt="" coords="365,5,484,56"/>
-<area shape="rect" id="node2" href="nodes/n__node1.html" title="node: /node1
+<area shape="rect" id="node2" href="nodes/n__node2.html" title="node: /node2
+1 services" alt="" coords="185,5,304,56"/>
+<area shape="rect" id="node3" href="nodes/n__node1.html" title="node: /node1
 1 services" alt="" coords="5,5,124,56"/>
 </map>
