@@ -40,9 +40,11 @@ import sys
 import logging
 import pprint
 import datetime
-# import json
+import copy
 
 import numpy
+
+import argparse
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -56,6 +58,7 @@ if __name__ == '__main__':
     sys.path[0] = os.path.join( SCRIPT_DIR, os.pardir )
 
 
+import rosbags
 from rosbags.rosbag1 import Reader
 from rosbags.serde import deserialize_ros1
 from rosbags.typesys import get_types_from_msg, register_types
@@ -71,7 +74,38 @@ from rosdiagram import texttemplate
 ## ===================================================================
 
 
-def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict = None ):
+def get_msg_value_name( data, attribute, enum_prefix="" ):
+    attr_val  = getattr( data, attribute )
+    enum_name = get_msg_name_enum( data, attribute, enum_prefix )
+    if enum_name is None:
+        message = format_note_error( "???" )
+        return f"""'{attr_val}' ({message})"""
+    return f"'{attr_val}' ({enum_name})"
+
+
+def get_msg_name_enum( data, attribute, enum_prefix ):
+    value = getattr( data, attribute )
+    name = None
+    data_items = dir( data )
+    for attr in data_items:
+        if attr == attribute:
+            continue
+        if attr.startswith( enum_prefix ) is False:
+            continue
+        attr_val = getattr(data, attr)
+        if attr_val == value:
+            name = attr
+    return name
+
+
+def format_note_error( message: str ):
+    return f"""<b><back:salmon>{message}</back></b>"""
+    
+
+## ===================================================================
+
+
+def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict = None, notes_functor=None ):
     if exclude_set is None:
         exclude_set = set()
     if params is None:
@@ -91,35 +125,57 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
             if name.startswith( "/record_" ):
                 subs.remove( name )
 
-    # create reader instance and open for reading
-    with Reader( bag_path ) as reader:
-        print( "bag statistics:" )
-        print( "total messages:", reader.message_count )
-        print( "time span:", str( reader.duration / 1000000000 / 60 ) + "m" )
+    try:
+        # create reader instance and open for reading
+        with Reader( bag_path ) as reader:
+            print( "bag statistics:" )
+            print( "total messages:", reader.message_count )
+            print( "time span:", str( reader.duration / 1000000000 / 60 ) + "m" )
+    
+            # topic and msgtype information is available on .connections list
+    
+            ## generating sequence diagram
+            seq_diagram: SequenceGraph = generate_basic_graph( reader, topic_subs, exclude_set )
+            seq_diagram.process( params )
+            
+            items_count = seq_diagram.itemsNum()
+            print( "diagram items num:", items_count )
+    
+            ## generating actors pages
+            nodes_subdir = "nodes"
+            nodes_out_dir = os.path.join( outdir, nodes_subdir )
+            os.makedirs( nodes_out_dir, exist_ok=True )
+            graph_actors = seq_diagram.actors()
+            for actor in graph_actors:
+                actor_filename = prepare_filesystem_name( actor )
+                sub_diagram: SequenceGraph = seq_diagram.copyCallings( actor )
+                sub_diagram.process( params )
+    
+                if params.get( "write_messages", False ):
+                    out_dir = os.path.join( outdir, "msgs" )
+                    os.makedirs( out_dir, exist_ok=True )
+                    loops = sub_diagram.getLoops()
+                    for loop in loops:
+                        if loop.repeats > 1:
+                            pass
+                        for item in loop.items:
+                            if item.isMessageSet() is False:
+                                continue
+                            out_name = f"{item.index}_msg.html"
+                            item.setProp( "url", "../msgs/" + out_name )
+    
+                out_path = os.path.join( nodes_out_dir, f"{actor_filename}.puml" )
+                generate_seq_diagram( sub_diagram, out_path, params, nodes_subdir="", notes_functor=notes_functor )
+    
+                svg_path = actor_filename + ".svg"
+                out_path = os.path.join( nodes_out_dir, actor_filename + ".html" )
+                write_seq_page( None, svg_path, "", out_path )
 
-        # topic and msgtype information is available on .connections list
-
-        ## generating sequence diagram
-        seq_diagram: SequenceGraph = generate_basic_graph( reader, topic_subs, exclude_set )
-        seq_diagram.process( params )
-
-        items_count = seq_diagram.itemsNum()
-        print( "diagram items num:", items_count )
-
-        ## generating actors pages
-        nodes_subdir = "nodes"
-        nodes_out_dir = os.path.join( outdir, nodes_subdir )
-        os.makedirs( nodes_out_dir, exist_ok=True )
-        graph_actors = seq_diagram.actors()
-        for actor in graph_actors:
-            actor_filename = prepare_filesystem_name( actor )
-            sub_diagram: SequenceGraph = seq_diagram.copyCallings( actor )
-            sub_diagram.process( params )
-
+            ## generating message pages
             if params.get( "write_messages", False ):
                 out_dir = os.path.join( outdir, "msgs" )
                 os.makedirs( out_dir, exist_ok=True )
-                loops = sub_diagram.getLoops()
+                loops: List[ SeqItems ] = seq_diagram.getLoops()
                 for loop in loops:
                     if loop.repeats > 1:
                         pass
@@ -127,54 +183,35 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
                         if item.isMessageSet() is False:
                             continue
                         out_name = f"{item.index}_msg.html"
-                        item.setProp( "url", "../msgs/" + out_name )
-
-            out_path = os.path.join( nodes_out_dir, f"{actor_filename}.puml" )
-            generate_seq_diagram( sub_diagram, out_path, params, nodes_subdir="" )
-
-            svg_path = actor_filename + ".svg"
-            out_path = os.path.join( nodes_out_dir, actor_filename + ".html" )
-            write_seq_page( None, svg_path, "", out_path )
-
-        ## generating message pages
-        if params.get( "write_messages", False ):
-            out_dir = os.path.join( outdir, "msgs" )
-            os.makedirs( out_dir, exist_ok=True )
-            loops = seq_diagram.getLoops()
-            for loop in loops:
-                if loop.repeats > 1:
-                    pass
-                for item in loop.items:
-                    if item.isMessageSet() is False:
-                        continue
-                    out_name = f"{item.index}_msg.html"
-                    item.setProp( "url", "msgs/" + out_name )
-                    out_path = os.path.join( out_dir, out_name )
-                    write_message_page( item, out_path )
-
-        ## write main page
-        topics_data = []
-        for connection in reader.connections:
-            topics_data.append( ( connection.topic, connection.msgcount ) )
-        topics_data = sorted( topics_data, key=lambda x: (-x[1], x[0]) )
-
-        topics_content = "Topics list:<br/>"
-        topics_content += "<ul>\n"
-        for topic_item in topics_data:
-            topics_content += f"<li><code>{topic_item[0]}</code>: {topic_item[1]}</li>\n"
-        topics_content += "</ul>\n"
-
-        ## write main diagram
-        bag_name = os.path.basename( bag_path )
-
-        out_path = os.path.join( outdir, f"flow_{bag_name}.puml" )
-        generate_seq_diagram( seq_diagram, out_path, params, nodes_subdir=nodes_subdir )
-
-        svg_path = f"flow_{bag_name}.svg"
-        main_out_path = os.path.join( outdir, "full_graph.html" )
-        write_seq_page( bag_path, svg_path, topics_content, main_out_path )
-
-        print( f"generated main page: file://{main_out_path}" )
+                        item.setProp( "url", "msgs/" + out_name )
+                        out_path = os.path.join( out_dir, out_name )
+                        write_message_page( item, out_path )
+    
+            ## write main page
+            topics_data = []
+            for connection in reader.connections:
+                topics_data.append( ( connection.topic, connection.msgcount ) )
+            topics_data = sorted( topics_data, key=lambda x: (-x[1], x[0]) )
+    
+            topics_content = "Topics list:<br/>"
+            topics_content += "<ul>\n"
+            for topic_item in topics_data:
+                topics_content += f"<li><code>{topic_item[0]}</code>: {topic_item[1]}</li>\n"
+            topics_content += "</ul>\n"
+    
+            ## write main diagram
+            bag_name = os.path.basename( bag_path )
+    
+            out_path = os.path.join( outdir, f"flow_{bag_name}.puml" )
+            generate_seq_diagram( seq_diagram, out_path, params, nodes_subdir=nodes_subdir, notes_functor=notes_functor )
+    
+            svg_path = f"flow_{bag_name}.svg"
+            main_out_path = os.path.join( outdir, "full_graph.html" )
+            write_seq_page( bag_path, svg_path, topics_content, main_out_path )
+    
+            print( f"generated main page: file://{main_out_path}" )
+    except rosbags.rosbag1.reader.ReaderError as ex:
+        _LOGGER.error( "unable to parse bag file: %s", ex )
 
 
 def generate_basic_graph( reader, topic_subs, exclude_set ):
@@ -208,8 +245,8 @@ def generate_basic_graph( reader, topic_subs, exclude_set ):
         valid, msg = deserialize_msg( rawdata, connection )
         if valid is False:
             print( "unable to deserialize:", timestamp, connection.topic, connection.msgtype )
-        else:
-            graph_item.setMessageData( connection.msgtype, connection.msgdef, msg )
+            continue
+        graph_item.setMessageData( connection.msgtype, connection.msgdef, msg )
 
     return seq_diagram
 
@@ -276,9 +313,9 @@ def data_to_dict( data_obj ):
     try:
         data_dict = None
         if isinstance( data_obj, dict ):
-            data_dict = data_obj
+            data_dict = copy.copy( data_obj )
         else:
-            data_dict = data_obj.__dict__
+            data_dict = copy.copy( data_obj.__dict__ )
         for key, val in data_dict.copy().items():
             data_dict[ key ] = data_to_dict( val )
 
@@ -303,11 +340,11 @@ def data_to_dict( data_obj ):
 ## ===================================================================
 
 
-def main():
+def main( notes_functor=None ):
     parser = argparse.ArgumentParser(description='catkin deps tree')
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
-    parser.add_argument( '--bag_path', action='store', required=False, default="",
+    parser.add_argument( '--bag_path', action='store', required=True, default="",
                          help="Path to rosbag file" )
     parser.add_argument( '--topic_dump_dir', action='store', required=False, default="",
                          help="Dump directory containing 'rostopic' output data" )
@@ -330,8 +367,8 @@ def main():
     try:
         exclude_list = read_list( args.exclude_list_path )
         exclude_list = set( exclude_list )
-    except Exception as ex:
-        _LOGGER.warning( "uanble to load exception list: %s", ex )
+    except TypeError as ex:
+        _LOGGER.warning( "unable to load exception list: %s", ex )
         exclude_list = set()
 
     params = { "group_calls": args.group_calls,
@@ -340,10 +377,8 @@ def main():
                "detect_loops": args.detect_loops,
                "write_messages": args.write_messages
                }
-    generate( args.bag_path, args.topic_dump_dir, args.outdir, exclude_list, params )
+    generate( args.bag_path, args.topic_dump_dir, args.outdir, exclude_list, params, notes_functor )
 
 
 if __name__ == '__main__':
-    import argparse
-
     main()

@@ -24,15 +24,19 @@
 import os
 import datetime
 import itertools
+import logging
 from typing import List, Dict
 
 from rosdiagram.io import write_file, prepare_filesystem_name
 from rosdiagram.seqgraph import SequenceGraph, SeqItems, GraphItem
 
 
-def generate_seq_diagram( seq_graph: SequenceGraph, out_path, params: dict = None, nodes_subdir="nodes" ):
+_LOGGER = logging.getLogger(__name__)
+
+
+def generate_seq_diagram( seq_graph: SequenceGraph, out_path, params: dict = None, nodes_subdir="nodes", notes_functor=None ):
     genrator = SequenceDiagramGenerator( params )
-    genrator.generate( seq_graph, out_path, nodes_subdir )
+    genrator.generate( seq_graph, out_path, nodes_subdir, notes_functor=notes_functor )
 
 
 ##
@@ -43,8 +47,10 @@ class SequenceDiagramGenerator():
         self.params_dict = params
         if self.params_dict is None:
             self.params_dict = {}
+            
+        self.actors_order = []
 
-    def generate( self, seq_graph: SequenceGraph, out_path, nodes_subdir="nodes" ):
+    def generate( self, seq_graph: SequenceGraph, out_path, nodes_subdir="nodes", notes_functor=None ):
         call_len = seq_graph.size()
         if call_len < 1:
             content = """\
@@ -61,12 +67,12 @@ skinparam backgroundColor #FEFEFE
 
 """
 
-        graph_actors = seq_graph.actors()
-        labels_dict  = self.calculateLabelsDict( seq_graph )
-        actors_order = calculate_actors_optimized_order( graph_actors, labels_dict )
+        graph_actors      = seq_graph.actors()
+        labels_dict       = self.calculateLabelsDict( seq_graph )
+        self.actors_order = calculate_actors_optimized_order( graph_actors, labels_dict )
 
         ## add actors
-        for item in actors_order:
+        for item in self.actors_order:
             item_id = self._getItemId( item )
 #             content += f"""participant "{item}" as {item_id}\n"""
 
@@ -89,7 +95,7 @@ skinparam backgroundColor #FEFEFE
                 content += f"""\nloop {seq.repeats} times\n"""
                 indent = "    "
 
-            loop_content = self.generateLoop( seq, indent )
+            loop_content = self.generateLoop( seq, indent, notes_functor )
 
             content += loop_content
             if use_msg_loop:
@@ -99,7 +105,7 @@ skinparam backgroundColor #FEFEFE
 
         write_file( out_path, content )
 
-    def generateLoop( self, seq: SeqItems, loop_indent ):
+    def generateLoop( self, seq: SeqItems, loop_indent, notes_functor=None ):
         content = ""
 
         group_subs = self.params_dict.get( "group_subs", False )
@@ -108,14 +114,12 @@ skinparam backgroundColor #FEFEFE
         for call in calls:
             receivers = sorted( call.subs, reverse=True )
 
-            call_label = self.calculateLabel( call )
-            msg_url    = ""
-            indent     = ""
-
+            data_url = None
             if call.isMessageSet():
                 data_url = call.getProp( "url", None )
-                if data_url is not None:
-                    msg_url  = f" [[{data_url} message data]]"
+
+            call_label = self.calculateLabel( call, data_url )
+            indent     = ""
 
             use_subs_group = len( receivers ) > 1 and group_subs
             if use_subs_group:
@@ -127,20 +131,43 @@ skinparam backgroundColor #FEFEFE
             pub_id = self._getItemId( call.pub )
             for rec in receivers:
                 rec_id = self._getItemId( rec )
-                content   += f"""{loop_indent}{indent}{pub_id} o-> {rec_id} : {call_label}{msg_url}\n"""
+                content   += f"""{loop_indent}{indent}{pub_id} o-> {rec_id} : {call_label}\n"""
+                if call_label and notes_functor is not None:
+                    try:
+                        note_content = notes_functor( call.labels, call.msgtype, call.msgdata )
+                        if note_content is not None:
+                            content += f"""\
+note left
+{note_content}
+end note
+"""
+#                             content += f""" x note left:
+# {note_content}
+# end note
+# """
+                    except AttributeError:
+                        timestamp_string = self.callTime( call )
+                        _LOGGER.error( "xxx %s", timestamp_string )
+                        raise
                 call_label = ""     ## clear label after first item
-                msg_url    = ""
 
             if use_subs_group:
                 content += f"""{loop_indent}end\n"""
 
         return content
 
-    def calculateLabel(self, item: GraphItem ):
-        label            = " | ".join( item.labels )
+    def callTime(self, item: GraphItem):
         timestamp_dt     = datetime.datetime.fromtimestamp( item.timestamp / 1000000000 )
         timestamp_string = timestamp_dt.strftime('%H:%M:%S.%f')
-        call_label       = f"""**{timestamp_string}**: {label}"""
+        return timestamp_string
+
+    def calculateLabel(self, item: GraphItem, url=None ):
+        label            = " | ".join( item.labels )
+        timestamp_string = self.callTime( item )
+        if url is None:
+            call_label       = f"""**{timestamp_string}**: {label}"""
+        else:
+            call_label       = f"""**[[{url} {{message data}} {timestamp_string}]]**: {label}"""
         return call_label
 
     def calculateLabelsDict(self, seq_graph: SequenceGraph ):
@@ -149,7 +176,7 @@ skinparam backgroundColor #FEFEFE
         for seq in loops:
             calls: List[ GraphItem ] = seq.items
             for call in calls:
-                labels_dict[ call ] = self.calculateLabel( call ) + " message data"
+                labels_dict[ call ] = self.calculateLabel( call )
         return labels_dict
 
     def _getItemId(self, item_name):
@@ -159,6 +186,11 @@ skinparam backgroundColor #FEFEFE
         name = item_name.replace( "/", "_" )
         self.name_dict[ item_name ] = name
         return name
+
+    def _isToRight(self, from_actor, to_actor):
+        from_index = self.actors_order.index( from_actor )
+        to_index   = self.actors_order.index( to_actor )
+        return from_index < to_index
 
 
 ## ========================================================================
