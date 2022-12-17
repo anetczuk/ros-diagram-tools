@@ -34,9 +34,9 @@ from rosdiagram.seqgraph import SequenceGraph, SeqItems, GraphItem
 _LOGGER = logging.getLogger(__name__)
 
 
-def generate_seq_diagram( seq_graph: SequenceGraph, out_path, params: dict = None, nodes_subdir="nodes", notes_functor=None ):
+def generate_seq_diagram( seq_graph: SequenceGraph, out_path, params: dict = None, nodes_subdir="nodes" ):
     genrator = SequenceDiagramGenerator( params )
-    genrator.generate( seq_graph, out_path, nodes_subdir, notes_functor=notes_functor )
+    genrator.generate( seq_graph, out_path, nodes_subdir )
 
 
 ##
@@ -50,7 +50,7 @@ class SequenceDiagramGenerator():
             
         self.actors_order = []
 
-    def generate( self, seq_graph: SequenceGraph, out_path, nodes_subdir="nodes", notes_functor=None ):
+    def generate( self, seq_graph: SequenceGraph, out_path, nodes_subdir="nodes" ):
         call_len = seq_graph.size()
         if call_len < 1:
             content = """\
@@ -95,7 +95,7 @@ skinparam backgroundColor #FEFEFE
                 content += f"""\nloop {seq.repeats} times\n"""
                 indent = "    "
 
-            loop_content = self.generateLoop( seq, indent, notes_functor )
+            loop_content = self.generateLoop( seq, indent )
 
             content += loop_content
             if use_msg_loop:
@@ -105,10 +105,11 @@ skinparam backgroundColor #FEFEFE
 
         write_file( out_path, content )
 
-    def generateLoop( self, seq: SeqItems, loop_indent, notes_functor=None ):
+    def generateLoop( self, seq: SeqItems, loop_indent ):
         content = ""
 
-        group_subs = self.params_dict.get( "group_subs", False )
+        group_subs    = self.params_dict.get( "group_subs", False )
+        notes_functor = self.params_dict.get( "notes_functor", None )
 
         calls = seq.items
         for call in calls:

@@ -1,0 +1,83 @@
+#*
+#* Python is accessible by following methods:
+#* - $variable -- printing value of variable to document
+#* - ${ <expression> } -- single expression to evaluate and print to document
+#* - #! -- general purpose line of any Python code
+#* 
+#* Any non-python content and non-template content is treated as text. 
+#* 
+
+
+#import rosdiagram.datadict as data_dict
+
+
+#template main( INPUT_DICT )
+#!
+#! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+#!
+<html>
+    <head>
+        <style>
+            body { padding: 24;
+                    background-color: #bbbbbb;
+                 }
+            pre { background-color: rgb(226, 226, 226);
+                   margin: 0px;
+                   margin-top: 24px;
+                   padding: 16px;
+                }
+            pre code { margin: 0px;
+                        padding: 0px;
+                     }
+
+            .center_content { width: 100%;
+                               margin-right: auto; margin-left: auto;
+                               text-align: center;
+                               padding-top: 24; padding-bottom: 24;
+                            }
+            .info_content { margin-bottom: 36;
+                          }
+        </style>
+    </head>
+
+    <body>
+        <div class="top_content">
+            Main graph<br />
+            Bag file: ${DATA_DICT.get('bag_file')}
+            <br />
+        </div>
+        <div class="center_content">
+            <object type="image/svg+xml" data="${DATA_DICT.get('svg_name')}">missing image</object>
+        </div>
+
+        <div class="bottom_content">
+#!
+#! nodes_data = DATA_DICT.get('nodes_data', [])
+#!
+            Nodes (${len(nodes_data)}):<br/>
+            <ul>
+#!
+#{ for item in nodes_data:
+#!     name = item[0]
+#!     url  = item[1]
+                <li><a href="${url}"><code>${name}</code></a></li>
+#}
+            </ul>
+            <br />
+#!
+#! topics_data = DATA_DICT.get('topics_data', [])
+#!
+            Topics (${len(topics_data)}):<br/>
+            <ul>
+#!
+#{ for item in topics_data:
+#!     name  = item[0]
+#!     count = item[1]
+                <li><code>${name}</code>: ${count}</li>
+#}
+            </ul>
+        </div>
+    </body>
+
+</html>
+#end template

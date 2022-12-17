@@ -21,48 +21,23 @@
             body { padding: 24;
                     background-color: #bbbbbb;
                  }
-            pre { background-color: rgb(226, 226, 226);
-                   margin: 0px;
-                   margin-top: 24px;
-                   padding: 16px;
-                }
-            pre code { margin: 0px;
-                        padding: 0px;
-                     }
 
             .center_content { width: 100%;
                                margin-right: auto; margin-left: auto;
                                text-align: center;
                                padding-top: 24; padding-bottom: 24;
                             }
-            .info_content { margin-bottom: 36;
-                          }
         </style>
     </head>
 
     <body>
         <div class="top_content">
-#!
-#! bag_file_path = DATA_DICT.get('bag_file')
-#{ if bag_file_path:
-            Main graph<br />
-            Bag file: $bag_file_path
-#}
-#{ else:
             <a href="../full_graph.html">back to Main graph</a>
-#}
-#!
             <br />
         </div>
         <div class="center_content">
             <object type="image/svg+xml" data="${DATA_DICT.get('svg_name')}">missing image</object>
         </div>
-
-    <div class="info_content">
-    </div>
-    <div class="bottom_content">
-${DATA_DICT.get('bottom_content')}
-    </div>
     </body>
 
 </html>

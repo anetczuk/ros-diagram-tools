@@ -78,7 +78,7 @@ def get_msg_value_name( data, attribute, enum_prefix="" ):
     attr_val  = getattr( data, attribute )
     enum_name = get_msg_name_enum( data, attribute, enum_prefix )
     if enum_name is None:
-        message = format_note_error( "???" )
+        message = format_note_error( "unknown enum" )
         return f"""'{attr_val}' ({message})"""
     return f"'{attr_val}' ({enum_name})"
 
@@ -105,7 +105,7 @@ def format_note_error( message: str ):
 ## ===================================================================
 
 
-def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict = None, notes_functor=None ):
+def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict = None ):
     if exclude_set is None:
         exclude_set = set()
     if params is None:
@@ -134,6 +134,11 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
     
             # topic and msgtype information is available on .connections list
     
+            topics_data = []
+            for connection in reader.connections:
+                topics_data.append( ( connection.topic, connection.msgcount ) )
+            topics_data = sorted( topics_data, key=lambda x: (-x[1], x[0]) )
+    
             ## generating sequence diagram
             seq_diagram: SequenceGraph = generate_basic_graph( reader, topic_subs, exclude_set )
             seq_diagram.process( params )
@@ -142,6 +147,8 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
             print( "diagram items num:", items_count )
     
             ## generating actors pages
+            nodes_data = []
+
             nodes_subdir = "nodes"
             nodes_out_dir = os.path.join( outdir, nodes_subdir )
             os.makedirs( nodes_out_dir, exist_ok=True )
@@ -150,7 +157,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
                 actor_filename = prepare_filesystem_name( actor )
                 sub_diagram: SequenceGraph = seq_diagram.copyCallings( actor )
                 sub_diagram.process( params )
-    
+
                 if params.get( "write_messages", False ):
                     out_dir = os.path.join( outdir, "msgs" )
                     os.makedirs( out_dir, exist_ok=True )
@@ -165,11 +172,15 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
                             item.setProp( "url", "../msgs/" + out_name )
     
                 out_path = os.path.join( nodes_out_dir, f"{actor_filename}.puml" )
-                generate_seq_diagram( sub_diagram, out_path, params, nodes_subdir="", notes_functor=notes_functor )
+                generate_seq_diagram( sub_diagram, out_path, params, nodes_subdir="" )
     
-                svg_path = actor_filename + ".svg"
-                out_path = os.path.join( nodes_out_dir, actor_filename + ".html" )
-                write_seq_page( None, svg_path, "", out_path )
+                svg_path    = actor_filename + ".svg"
+                actors_page = actor_filename + ".html"
+                out_path    = os.path.join( nodes_out_dir, actors_page )
+
+                nodes_data.append( (actor, os.path.join( nodes_subdir, actors_page ) ) )
+
+                write_seq_node_page( svg_path, out_path )
 
             ## generating message pages
             if params.get( "write_messages", False ):
@@ -187,27 +198,16 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
                         out_path = os.path.join( out_dir, out_name )
                         write_message_page( item, out_path )
     
-            ## write main page
-            topics_data = []
-            for connection in reader.connections:
-                topics_data.append( ( connection.topic, connection.msgcount ) )
-            topics_data = sorted( topics_data, key=lambda x: (-x[1], x[0]) )
-    
-            topics_content = "Topics list:<br/>"
-            topics_content += "<ul>\n"
-            for topic_item in topics_data:
-                topics_content += f"<li><code>{topic_item[0]}</code>: {topic_item[1]}</li>\n"
-            topics_content += "</ul>\n"
-    
+            ## write main page   
             ## write main diagram
             bag_name = os.path.basename( bag_path )
     
             out_path = os.path.join( outdir, f"flow_{bag_name}.puml" )
-            generate_seq_diagram( seq_diagram, out_path, params, nodes_subdir=nodes_subdir, notes_functor=notes_functor )
+            generate_seq_diagram( seq_diagram, out_path, params, nodes_subdir=nodes_subdir )
     
             svg_path = f"flow_{bag_name}.svg"
             main_out_path = os.path.join( outdir, "full_graph.html" )
-            write_seq_page( bag_path, svg_path, topics_content, main_out_path )
+            write_seq_main_page( bag_path, svg_path, nodes_data, topics_data, main_out_path )
     
             print( f"generated main page: file://{main_out_path}" )
     except rosbags.rosbag1.reader.ReaderError as ex:
@@ -272,14 +272,25 @@ def deserialize_raw( rawdata, msgtype ):
 ## ===================================================================
 
 
-def write_seq_page( bag_file, svg_name, bottom_content, out_path ):
-    print( f"generating page: file://{out_path}" )
+def write_seq_main_page( bag_file, svg_name, nodes_data, topics_data, out_path ):
+    print( f"generating main page: file://{out_path}" )
 
-    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_seq_page.html.tmpl" )
+    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_seq_main_page.html.tmpl" )
 
     page_params = { 'bag_file': bag_file,
                     'svg_name': svg_name,
-                    'bottom_content': bottom_content
+                    'nodes_data': nodes_data,
+                    'topics_data': topics_data
+                    }
+    texttemplate.generate( template_path, out_path, INPUT_DICT=page_params )
+
+
+def write_seq_node_page( svg_name, out_path ):
+    print( f"generating node page: file://{out_path}" )
+
+    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_seq_node_page.html.tmpl" )
+
+    page_params = { 'svg_name': svg_name
                     }
     texttemplate.generate( template_path, out_path, INPUT_DICT=page_params )
 
@@ -375,9 +386,10 @@ def main( notes_functor=None ):
                "group_topics": args.group_topics,
                "group_subs": args.group_subs,
                "detect_loops": args.detect_loops,
-               "write_messages": args.write_messages
+               "write_messages": args.write_messages,
+               "notes_functor": notes_functor
                }
-    generate( args.bag_path, args.topic_dump_dir, args.outdir, exclude_list, params, notes_functor )
+    generate( args.bag_path, args.topic_dump_dir, args.outdir, exclude_list, params )
 
 
 if __name__ == '__main__':
