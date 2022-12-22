@@ -16,71 +16,74 @@
 #! DATA_DICT = data_dict.DataDict( INPUT_DICT )
 #!
 <html>
-    <head>
-        <style>
-            body {  padding: 24;
-                    background-color: #bbbbbb;
+<head>
+<!--
+File was automatically generated using 'ros-diagram-tools' project.
+-->
+    <style>
+        body {  padding: 24;
+                background-color: #bbbbbb;
+             }
+        pre {  background-color: rgb(226, 226, 226);
+               margin: 0px;
+               margin-top: 24px;
+               padding: 16px;
+            }
+        pre code {  margin: 0px;
+                    padding: 0px;
                  }
-            pre {  background-color: rgb(226, 226, 226);
-                   margin: 0px;
-                   margin-top: 24px;
-                   padding: 16px;
-                }
-            pre code {  margin: 0px;
-                        padding: 0px;
-                     }
 
-            .center_content {  width: 100%;
-                               margin-right: auto; margin-left: auto;
-                               text-align: center;
-                               padding-top: 24; padding-bottom: 24;
-                            }
+        .center_content {  width: 100%;
+                           margin-right: auto; margin-left: auto;
+                           text-align: center;
+                           padding-top: 24; padding-bottom: 24;
+                        }
 
-            .info_content { margin-bottom: 36; }
+        .info_content { margin-bottom: 36; }
 
-            .info_content td { padding-right: 24; }
+        .info_content td { padding-right: 24; }
 
-        </style>
-    </head>
-    <body>
-        <div class="info_content">
-            <a href="../full_graph.html">back to Main graph</a>
-        </div>
-        <div class="info_content">
+    </style>
+</head>
+<body>
+    <div class="info_content">
+        <a href="../full_graph.html">back to Main graph</a>
+    </div>
+    <div class="info_content">
 #!
 #! item = DATA_DICT.get('item')
 #!
-            <table>
-                <tr>
-                    <td>Timestamp:</td>
-                    <td>${DATA_DICT.get('timestamp_dt', '')}</td>
-                </tr>
-                <tr>
-                    <td>Delta time:</td>
-                    <td>${DATA_DICT.get('time_value', '')} ${DATA_DICT.get('time_unit', '')}</td>
-                </tr>
-                <tr>
-                    <td>Topic:</td>
-                    <td>${ ", ".join(item.labels) }</td>
-                </tr>
-                <tr>
-                    <td>Publisher:</td>
-                    <td>${ item.pub }</td>
-                </tr>
-                <tr>
-                    <td>Subscribers:</td>
-                    <td>${ ", ".join(item.subs) }</td>
-                </tr>
-            </table>
-        </div>
-        <div class="info_content">
-            Data:
-            <pre><code>${DATA_DICT.get('msg_data')}</code></pre>
-        </div>
-        <div class="info_content">
-            Message: <code>${item.msgtype}</code><br/>
-            <pre><code>${item.msgdef}</code></pre>
-        </div>
-    </body>
+        <table>
+            <tr>
+                <td>Timestamp:</td>
+                <td>${DATA_DICT.get('timestamp_dt', '')}</td>
+            </tr>
+            <tr>
+                <td>Delta time:</td>
+                <td>${DATA_DICT.get('time_value', '')} ${DATA_DICT.get('time_unit', '')}</td>
+            </tr>
+            <tr>
+                <td>Topic:</td>
+                <td>${ ", ".join(item.labels) }</td>
+            </tr>
+            <tr>
+                <td>Publisher:</td>
+                <td>${ item.pub }</td>
+            </tr>
+            <tr>
+                <td>Subscribers:</td>
+                <td>${ ", ".join(item.subs) }</td>
+            </tr>
+        </table>
+    </div>
+    <div class="info_content">
+        Data:
+        <pre><code>${DATA_DICT.get('msg_data')}</code></pre>
+    </div>
+    <div class="info_content">
+        Message: <code>${item.msgtype}</code><br/>
+        <pre><code>${item.msgdef}</code></pre>
+    </div>
+</body>
 </html>
 #end template
