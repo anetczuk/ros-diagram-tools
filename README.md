@@ -72,7 +72,7 @@ that dump *ROS* data for further processing. It can be usefull, e.g. if one does
 
 
 
-### License
+## License
 
 BSD 3-Clause License
 
