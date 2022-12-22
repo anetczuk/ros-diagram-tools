@@ -25,6 +25,7 @@ import logging
 import pprint
 import datetime
 import copy
+import re
 
 import numpy
 
@@ -97,17 +98,10 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
 
     print( "exclude set:", exclude_set )
 
+    exclude_filter = ExcludeFilter( exclude_set )
+
     topic_data = read_topics( topic_dump_dir )
     topic_subs = get_topic_subs_dict( topic_data )
-
-    for _, subs in topic_subs.items():
-        for name in subs.copy():
-            if name in ( "/rosout" ):
-                subs.remove( name )
-            if name.startswith( "/rostopic_" ):
-                subs.remove( name )
-            if name.startswith( "/record_" ):
-                subs.remove( name )
 
     try:
         # create reader instance and open for reading
@@ -118,13 +112,19 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
     
             # topic and msgtype information is available on .connections list
     
+            excluded_topics = set()
+
             topics_data = []
             for connection in reader.connections:
-                topics_data.append( ( connection.topic, connection.msgcount ) )
+                curr_topic  = connection.topic
+                is_excluded = exclude_filter.excluded( curr_topic )
+                if is_excluded:
+                    excluded_topics.add( curr_topic )
+                topics_data.append( ( curr_topic, connection.msgcount, is_excluded ) )
             topics_data = sorted( topics_data, key=lambda x: (-x[1], x[0]) )
     
             ## generating sequence diagram
-            seq_diagram: SequenceGraph = generate_basic_graph( reader, topic_subs, exclude_set )
+            seq_diagram: SequenceGraph = generate_basic_graph( reader, topic_subs, excluded_topics )
             seq_diagram.process( params )
             
             items_count = seq_diagram.itemsNum()
@@ -251,6 +251,32 @@ def deserialize_raw( rawdata, msgtype ):
         return (True, msg)
     except KeyError:
         return (False, None)
+
+
+##
+class ExcludeFilter():
+    
+    def __init__(self, exclude_set=None):
+        self.exclude_set = set()
+        self.regex_set   = set()
+
+        for excl in exclude_set:
+            if "*" in excl:
+                ## wildcard found
+                pattern = excl
+                pattern = pattern.replace( "*", ".*" )
+                regex_obj = re.compile( pattern )
+                self.regex_set.add( regex_obj )
+            else:
+                self.exclude_set.add( excl )
+
+    def excluded(self, item):
+        if item in self.exclude_set:
+            return True
+        for regex in self.regex_set:
+            if regex.match( item ):
+                return True
+        return False
 
 
 ## ===================================================================

@@ -74,7 +74,8 @@ File was automatically generated using 'ros-diagram-tools' project.
 #{ for item in topics_data:
 #!     name  = item[0]
 #!     count = item[1]
-            <li><code>${name}</code>: ${count}</li>
+#!     excl  = "(excluded)" if item[2] is True else ""
+            <li><code>${name}</code>: ${count} ${excl}</li>
 #}
         </ul>
     </div>
