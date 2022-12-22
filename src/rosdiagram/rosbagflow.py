@@ -168,6 +168,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
 
             ## generating message pages
             if params.get( "write_messages", False ):
+                notes_functor = params.get( 'notes_functor' )
                 out_dir = os.path.join( outdir, "msgs" )
                 os.makedirs( out_dir, exist_ok=True )
                 loops: List[ SeqItems ] = seq_diagram.getLoops()
@@ -180,7 +181,12 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
                         out_name = f"{item.index}_msg.html"
                         item.setProp( "url", "msgs/" + out_name )
                         out_path = os.path.join( out_dir, out_name )
-                        write_message_page( item, out_path )
+                        note_content = None
+                        if notes_functor is not None:
+                            note_content = notes_functor( item.labels, item.msgtype, item.msgdata )
+                        if note_content is not None:
+                            note_content = note_content.replace( "\n", "<br />\n" )
+                        write_message_page( item, out_path, note_content )
     
             ## write main page   
             ## write main diagram
@@ -305,7 +311,7 @@ def write_seq_node_page( svg_name, out_path ):
     texttemplate.generate( template_path, out_path, INPUT_DICT=page_params )
 
 
-def write_message_page( item: GraphItem, out_path ):
+def write_message_page( item: GraphItem, out_path, notes_data=None ):
     timestamp_dt = datetime.datetime.fromtimestamp( item.timestamp / 1000000000 )
 
     time_value, time_unit = convert_time_index( item.index )
@@ -319,7 +325,8 @@ def write_message_page( item: GraphItem, out_path ):
                     'time_value': time_value,
                     'time_unit': time_unit,
                     'item': item,
-                    'msg_data': msg_data
+                    'msg_data': msg_data,
+                    'notes_data': notes_data
                     }
     texttemplate.generate( template_path, out_path, INPUT_DICT=page_params )
 

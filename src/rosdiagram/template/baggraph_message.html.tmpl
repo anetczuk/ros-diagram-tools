@@ -20,6 +20,7 @@
 <!--
 File was automatically generated using 'ros-diagram-tools' project.
 -->
+    <title>rosbag diagram -- message page</title>
     <style>
         body {  padding: 24;
                 background-color: #bbbbbb;
@@ -42,6 +43,11 @@ File was automatically generated using 'ros-diagram-tools' project.
         .info_content { margin-bottom: 36; }
 
         .info_content td { padding-right: 24; }
+        
+        .notes { display: inline-block;
+                 background-color: #FBFB77;
+                 padding: 12;
+               }
 
     </style>
 </head>
@@ -76,6 +82,16 @@ File was automatically generated using 'ros-diagram-tools' project.
             </tr>
         </table>
     </div>
+#!
+#! notes = DATA_DICT.get('notes_data')
+#{ if notes is not None:
+    <div class="info_content">
+        Notes:<br /><br />
+        <div class="notes"> 
+${notes}
+        </div> 
+    </div>
+#}
     <div class="info_content">
         Data:
         <pre><code>${DATA_DICT.get('msg_data')}</code></pre>
