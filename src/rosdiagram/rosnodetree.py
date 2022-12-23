@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-#
 # Copyright (c) 2022, Arkadiusz Netczuk <dev.arnet@gmail.com>
 # All rights reserved.
 #
@@ -13,25 +11,19 @@ import os
 import sys
 import logging
 
-
-_LOGGER = logging.getLogger(__name__)
-
-SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
-
-
-if __name__ == '__main__':
-    ## allow having executable script inside package and have proper imports
-    ## replace directory of main package (prevent inconsistent imports)
-    sys.path[0] = os.path.join( SCRIPT_DIR, os.pardir )
-
-
 import re
 from typing import Set
+import argparse
 
 from rosdiagram.htmlgenerator import generate_graph_html
 from rosdiagram.graphviz import Graph, unquote_name_list, set_node_labels
 from rosdiagram.io import read_list, prepare_filesystem_name, read_file
 from rosdiagram.utils import get_create_item
+
+
+_LOGGER = logging.getLogger(__name__)
+
+SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 
 
 ## ===================================================================
@@ -394,7 +386,7 @@ def remove_ros_items( graph: Graph ):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='catkin deps tree')
+    parser = argparse.ArgumentParser(description='rosnode flow graph')
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '--dump_dir', action='store', required=False, default="",
@@ -459,9 +451,3 @@ def main():
                         "neighbours_range": 1
                         }
         generate_graph_html( args.outdir, params_dict )
-
-
-if __name__ == '__main__':
-    import argparse
-
-    main()

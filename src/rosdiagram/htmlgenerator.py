@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-#
 # Copyright (c) 2022, Arkadiusz Netczuk <dev.arnet@gmail.com>
 # All rights reserved.
 #

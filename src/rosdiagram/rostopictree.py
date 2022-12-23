@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-#
 # Copyright (c) 2022, Arkadiusz Netczuk <dev.arnet@gmail.com>
 # All rights reserved.
 #
@@ -13,25 +11,19 @@ import os
 import sys
 import logging
 
-
-_LOGGER = logging.getLogger(__name__)
-
-SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
-
-
-if __name__ == '__main__':
-    ## allow having executable script inside package and have proper imports
-    ## replace directory of main package (prevent inconsistent imports)
-    sys.path[0] = os.path.join( SCRIPT_DIR, os.pardir )
-
-
 import re
 from typing import Set, List
 import copy
+import argparse
 
 from rosdiagram.graphviz import Graph
 from rosdiagram.io import read_list, prepare_filesystem_name
 from rosdiagram.utils import get_create_item
+
+
+_LOGGER = logging.getLogger(__name__)
+
+SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 
 
 ## ===================================================================
@@ -340,7 +332,7 @@ def join_common_topics( data1_dict, data2_dict ):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='catkin deps tree')
+    parser = argparse.ArgumentParser(description='rostopic flow graph')
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '--dump_dir', action='store', required=False, default="",
@@ -362,9 +354,3 @@ def main():
         graph.writeRAW( args.outraw )
     if len( args.outpng ) > 0:
         graph.writePNG( args.outpng )
-
-
-if __name__ == '__main__':
-    import argparse
-
-    main()

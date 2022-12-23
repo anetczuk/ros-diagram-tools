@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-#
 # Copyright (c) 2022, Arkadiusz Netczuk <dev.arnet@gmail.com>
 # All rights reserved.
 #
@@ -31,19 +29,8 @@ import numpy
 
 import argparse
 
-
-_LOGGER = logging.getLogger(__name__)
-
-SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
-
-
-if __name__ == '__main__':
-    ## allow having executable script inside package and have proper imports
-    ## replace directory of main package (prevent inconsistent imports)
-    sys.path[0] = os.path.join( SCRIPT_DIR, os.pardir )
-
-
 import rosbags
+
 from rosbags.rosbag1 import Reader
 from rosbags.serde import deserialize_ros1
 from rosbags.typesys import get_types_from_msg, register_types
@@ -54,6 +41,11 @@ from rosdiagram.plantuml import SequenceGraph, generate_seq_diagram,\
     convert_time_index
 from rosdiagram.seqgraph import GraphItem
 from rosdiagram import texttemplate
+
+
+_LOGGER = logging.getLogger(__name__)
+
+SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 
 
 ## ===================================================================
@@ -388,7 +380,7 @@ def data_to_dict( data_obj ):
 
 
 def main( notes_functor=None ):
-    parser = argparse.ArgumentParser(description='catkin deps tree')
+    parser = argparse.ArgumentParser(description='rosbag sequence diagram')
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '--bag_path', action='store', required=True, default="",
@@ -426,7 +418,3 @@ def main( notes_functor=None ):
                "notes_functor": notes_functor
                }
     generate( args.bag_path, args.topic_dump_dir, args.outdir, exclude_list, params )
-
-
-if __name__ == '__main__':
-    main()
