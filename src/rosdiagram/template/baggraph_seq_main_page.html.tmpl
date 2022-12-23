@@ -79,6 +79,17 @@ File was automatically generated using 'ros-diagram-tools' project.
             <li><code>${name}</code>: ${count} ${excl}</li>
 #}
         </ul>
+#!
+#! exclude_set = DATA_DICT.get('exclude_set')
+#{ if exclude_set is not None:
+        Exclude set:<br />
+        <ul>
+#{     for item in exclude_set:
+            <li><code>${item}</code></li>
+#}
+        </ul>
+        <br />
+#}
     </div>
 </body>
 </html>

@@ -93,6 +93,11 @@ def format_note_error( message: str ):
 def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict = None ):
     if exclude_set is None:
         exclude_set = set()
+    else:
+        for item in exclude_set.copy():
+            if len(item) < 1:
+                exclude_set.remove( item )
+
     if params is None:
         params = {}
 
@@ -197,7 +202,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
     
             svg_path = f"flow_{bag_name}.svg"
             main_out_path = os.path.join( outdir, "full_graph.html" )
-            write_seq_main_page( bag_path, svg_path, nodes_data, topics_data, main_out_path )
+            write_seq_main_page( bag_path, svg_path, nodes_data, topics_data, exclude_set, main_out_path )
     
             print( f"generated main page: file://{main_out_path}" )
     except rosbags.rosbag1.reader.ReaderError as ex:
@@ -288,7 +293,7 @@ class ExcludeFilter():
 ## ===================================================================
 
 
-def write_seq_main_page( bag_file, svg_name, nodes_data, topics_data, out_path ):
+def write_seq_main_page( bag_file, svg_name, nodes_data, topics_data, exclude_set, out_path ):
     print( f"generating main page: file://{out_path}" )
 
     template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_seq_main_page.html.tmpl" )
@@ -296,7 +301,8 @@ def write_seq_main_page( bag_file, svg_name, nodes_data, topics_data, out_path )
     page_params = { 'bag_file': bag_file,
                     'svg_name': svg_name,
                     'nodes_data': nodes_data,
-                    'topics_data': topics_data
+                    'topics_data': topics_data,
+                    'exclude_set': exclude_set
                     }
     texttemplate.generate( template_path, out_path, INPUT_DICT=page_params )
 
@@ -394,7 +400,7 @@ def main( notes_functor=None ):
 
     try:
         exclude_list = read_list( args.exclude_list_path )
-        exclude_list = set( exclude_list )
+        exclude_list = exclude_list
     except TypeError as ex:
         _LOGGER.warning( "unable to load exception list: %s", ex )
         exclude_list = set()
