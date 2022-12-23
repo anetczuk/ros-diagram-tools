@@ -108,6 +108,16 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
     topic_data = read_topics( topic_dump_dir )
     topic_subs = get_topic_subs_dict( topic_data )
 
+    excluded_nodes = set()
+
+    for _, subs in topic_subs.items():
+        for node in subs.copy():
+            is_excluded = exclude_filter.excluded( node )
+            if is_excluded is False:
+                continue
+            subs.remove( node  )
+            excluded_nodes.add( node  )
+
     try:
         # create reader instance and open for reading
         with Reader( bag_path ) as reader:
@@ -167,9 +177,12 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
                 actors_page = actor_filename + ".html"
                 out_path    = os.path.join( nodes_out_dir, actors_page )
 
-                nodes_data.append( (actor, os.path.join( nodes_subdir, actors_page ) ) )
+                nodes_data.append( (actor, os.path.join( nodes_subdir, actors_page ), False ) )
 
                 write_seq_node_page( svg_path, out_path )
+
+            for excluded in excluded_nodes:
+                nodes_data.append( (excluded, None, True ) )
 
             ## generating message pages
             if params.get( "write_messages", False ):
@@ -209,7 +222,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
         _LOGGER.error( "unable to parse bag file: %s", ex )
 
 
-def generate_basic_graph( reader, topic_subs, exclude_set ):
+def generate_basic_graph( reader, topic_subs, excluded_topics ):
     # iterate over messages
     ## iterates items in timestamp order
     messages = reader.messages()
@@ -223,7 +236,7 @@ def generate_basic_graph( reader, topic_subs, exclude_set ):
 
     messages = reader.messages()
     for connection, timestamp, rawdata in messages:
-        if connection.topic in exclude_set:
+        if connection.topic in excluded_topics:
             continue
 
         subscribers = topic_subs[ connection.topic ]
@@ -388,7 +401,7 @@ def main( notes_functor=None ):
     parser.add_argument( '--group_subs', action='store_true', help="Group topic's subscribers in one UML group" )
     parser.add_argument( '--detect_loops', action='store_true', help="Detect message loops and group in one UML loop" )
     parser.add_argument( '--write_messages', action='store_true', help="Write message subpages" )
-    parser.add_argument( '--exclude_list_path', action='store', help="Topics exclude list path" )
+    parser.add_argument( '--exclude_list_path', action='store', help="Exclude list path" )
 
     args = parser.parse_args()
 
