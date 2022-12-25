@@ -288,8 +288,6 @@ class GraphHtmlGenerator( BaseHtmlGenerator ):
 
         template_path = os.path.join( SCRIPT_DIR, "template", "nodegraph_page.html.tmpl" )
         html_out      = os.path.join( self.output_dir, graph_filename + ".html" )
-#         index_html    = GRAPH_PAGE_TEMPLATE.format( **page_params )
-#         write_file( html_out, index_html )
 
         texttemplate.generate( template_path, html_out, INPUT_DICT=page_params )
 
@@ -337,53 +335,6 @@ class GraphHtmlGenerator( BaseHtmlGenerator ):
 DEFAULT_ACTIVE_NODE_STYLE = { "style": "filled",
                               "fillcolor": "brown1"
                               }
-
-
-GRAPH_PAGE_TEMPLATE = """\
-<html>
-<head>
-<style>
-    body {{ padding: 24;
-            background-color: {body_color};
-         }}
-    pre {{ background-color: rgb(226, 226, 226);
-           margin: 0px;
-           margin-top: 24px;
-           padding: 16px;
-        }}
-    pre code {{ margin: 0px;
-                padding: 0px;
-             }}
-
-    .center_content {{ width: 100%;
-                       margin-right: auto; margin-left: auto;
-                       text-align: center;
-                       padding-top: 24; padding-bottom: 24;
-                    }}
-    .info_content {{ margin-bottom: 36;
-                  }}
-{head_css_style}
-</style>
-</head>
-
-<body>
-    <div class="top_content">
-{top_content}
-    </div>
-    <div class="center_content">
-        <img src="{graph_filename}.png" alt="{alt_text}" usemap="#{graph_name}">
-{graph_map}
-    </div>
-    <div class="info_content">
-{info_content}
-    </div>
-    <div class="bottom_content">
-{bottom_content}
-    </div>
-</body>
-
-</html>
-"""
 
 
 ##
