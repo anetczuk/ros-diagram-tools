@@ -9,7 +9,7 @@ import os
 import logging
 
 import re
-from typing import Set, List
+from typing import List
 import copy
 import argparse
 
@@ -146,7 +146,7 @@ def generate_graph( topics_dict ) -> Graph:
     ## add nodes
     for topic, lists in topics_dict.items():
         dot_graph.addNode( topic, shape="ellipse" )
-        nodes: set = get_nodes( lists )
+        nodes: list = get_nodes( lists )
         for item in nodes:
             dot_graph.addNode( item, shape="box" )
 
@@ -172,7 +172,7 @@ def generate_nodes_graph( topics_dict ):
 
     ## add nodes
     for _, lists in topics_dict.items():
-        nodes: set = get_nodes( lists )
+        nodes: list = get_nodes( lists )
         for item in nodes:
             dot_graph.addNode( item, shape="box" )
 
@@ -256,21 +256,21 @@ def fix_names( topics_dict ):
         topics_dict[ "t|" + topic ] = topics_dict.pop( topic )
 
 
-def get_nodes( topic_lists ) -> Set[ str ]:
-    ret_nodes: Set[ str ] = set()
+def get_nodes( topic_lists ) -> List[ str ]:
+    ret_nodes: List[ str ] = []
     pubs_list = topic_lists[ "pubs" ]
     subs_list = topic_lists[ "subs" ]
-    ret_nodes.update( pubs_list )
-    ret_nodes.update( subs_list )
-    return ret_nodes
+    ret_nodes.extend( pubs_list )
+    ret_nodes.extend( subs_list )
+    return list( dict.fromkeys(ret_nodes) )
 
 
-def get_nodes_all( topics_dict ) -> Set[ str ]:
-    ret_set = set()
+def get_nodes_all( topics_dict ) -> List[ str ]:
+    ret_set = []
     for _, lists in topics_dict.items():
-        nodes: set = get_nodes( lists )
-        ret_set.update( nodes )
-    return ret_set
+        nodes: list = get_nodes( lists )
+        ret_set.extend( nodes )
+    return list( dict.fromkeys(ret_set) )
 
 
 def common_topics( data1_dict, data2_dict ):
