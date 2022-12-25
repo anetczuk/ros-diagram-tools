@@ -202,9 +202,10 @@ def generate_nodes_graph( topics_dict ):
 def generate_common_graph( left_topics_dict, right_topics_dict, left_label: str = "", right_label: str = "" ) -> Graph:
     join_dict = join_common_topics( left_topics_dict, right_topics_dict )
 
-    common_topics_set = set()
+    common_topics_set: List[str] = []
     for item in join_dict:
-        common_topics_set.add( item )
+        common_topics_set.append( item )
+    common_topics_set = list( dict.fromkeys(common_topics_set) )
 
     fix_names( left_topics_dict )
     fix_names( right_topics_dict )

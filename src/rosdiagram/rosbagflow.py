@@ -69,32 +69,16 @@ def format_note_error( message: str ):
 
 
 def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict = None ):
-    if exclude_set is None:
-        exclude_set = set()
-    else:
-        for item in exclude_set.copy():
-            if len(item) < 1:
-                exclude_set.remove( item )
-
     if params is None:
         params = {}
 
-    print( "exclude set:", exclude_set )
-
     exclude_filter = ExcludeItemFilter( exclude_set )
 
-    topic_data = read_topics( topic_dump_dir )
-    topic_subs = get_topic_subs_dict( topic_data )
+    print( "exclude set:", exclude_filter.raw_exclude )
 
-    excluded_nodes = set()
-
-    for _, subs in topic_subs.items():
-        for node in subs.copy():
-            is_excluded = exclude_filter.excluded( node )
-            if is_excluded is False:
-                continue
-            subs.remove( node  )
-            excluded_nodes.add( node  )
+    topic_data     = read_topics( topic_dump_dir )
+    topic_subs     = get_topic_subs_dict( topic_data )
+    excluded_nodes = get_excluded_nodes( topic_subs, exclude_filter )
 
     try:
         # create reader instance and open for reading
@@ -235,6 +219,18 @@ def generate_basic_graph( reader, topic_subs, excluded_topics ):
     return seq_diagram
 
 
+def get_excluded_nodes( topic_subs, exclude_filter ):
+    excluded_nodes = set()
+    for _, subs in topic_subs.items():
+        for node in subs.copy():
+            is_excluded = exclude_filter.excluded( node )
+            if is_excluded is False:
+                continue
+            subs.remove( node  )
+            excluded_nodes.add( node  )
+    return excluded_nodes
+
+
 def deserialize_msg( rawdata, connection ):
     ret_data = deserialize_raw( rawdata, connection.msgtype )
     if ret_data[0] is True:
@@ -255,13 +251,19 @@ def deserialize_raw( rawdata, msgtype ):
 
 ##
 class ExcludeItemFilter():
-    """ aaa """
 
     def __init__(self, exclude_set=None):
+        self.raw_exclude = exclude_set
+        if self.raw_exclude is None:
+            self.raw_exclude = set()
+        for item in self.raw_exclude.copy():
+            if len(item) < 1:
+                self.raw_exclude.remove( item )
+
         self.exclude_set = set()
         self.regex_set   = set()
 
-        for excl in exclude_set:
+        for excl in self.raw_exclude:
             if "*" in excl:
                 ## wildcard found
                 pattern = excl

@@ -371,7 +371,7 @@ class Graph():
         sub_base.set_rank( rank )
         return sub_graph
 
-    def setNodesRankByName( self, names_list: Set[ str ], rank: str ) -> "Graph":
+    def setNodesRankByName( self, names_list: List[ str ], rank: str ) -> "Graph":
         nodes_list = self.getNodesByName( names_list )
         return self.setNodesRank( nodes_list, rank )
 
