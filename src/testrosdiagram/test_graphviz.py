@@ -101,7 +101,24 @@ class GraphTest(unittest.TestCase):
 }
 """ )
 
-    def test_toString(self):
+    def test_toString_nodes(self):
+        graph = Graph()
+        graph.addNode( "node_1" )
+        graph.addNode( "node_2" )
+        graph.addNode( "node_3" )
+        graph.addNode( "node_4" )
+
+        content = graph.toString()
+        self.assertEqual( """\
+digraph G {
+node_1;
+node_2;
+node_3;
+node_4;
+}
+""", content )
+
+    def test_toString_edge(self):
         graph = Graph()
         graph.addEdge( "node_1", "node_2", True )
 

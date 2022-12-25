@@ -12,7 +12,7 @@ import sys
 import logging
 
 import re
-from typing import Set
+from typing import Set, List
 import argparse
 
 from rosdiagram.htmlgenerator import generate_graph_html
@@ -150,11 +150,11 @@ def generate_full_graph( nodes_dict ) -> Graph:
     for node, lists in nodes_dict.items():
         dot_graph.addNode( node, shape="box" )
 
-        topics: set = get_topics( lists )
+        topics: list = get_topics( lists )
         for item in topics:
             dot_graph.addNode( item, shape="ellipse" )
 
-        services: set = get_services( lists )
+        services: list = get_services( lists )
         for item in services:
             dot_graph.addNode( item, shape="hexagon" )
 
@@ -245,7 +245,7 @@ def create_topics_dict( nodes_dict ):
 ## it happens that topic and node has the same name, so it has to be prefixed
 def fix_names( nodes_dict ):
     label_dict = {}
-    all_nodes = set( nodes_dict.keys() )
+    all_nodes = list( nodes_dict.keys() )
 
     for node in all_nodes:
         item_id = "n_" + node
@@ -327,22 +327,23 @@ Message: <code>{code_title}</code><br/>
     return code_content
 
 
-def get_topics( node_lists ) -> Set[ str ]:
-    ret_set: Set[ str ] = set()
+def get_topics( node_lists ) -> List[ str ]:
+    ret_set: List[ str ] = []
     pubs_list = node_lists[ "pubs" ]
     subs_list = node_lists[ "subs" ]
     pubs_list = get_names_from_list( pubs_list )
     subs_list = get_names_from_list( subs_list )
-    ret_set.update( pubs_list )
-    ret_set.update( subs_list )
-    return ret_set
+    ret_set.extend( pubs_list )
+    ret_set.extend( subs_list )
+    return list( dict.fromkeys(ret_set) )
 
 
-def get_names_from_list( items_list ) -> Set[ str ]:
-    return set( item[0] for item in items_list )
+def get_names_from_list( items_list ) -> List[ str ]:
+    ret_list = [ item[0] for item in items_list ]
+    return list( dict.fromkeys( ret_list ) )
 
 
-def get_services( node_lists ) -> Set[ str ]:
+def get_services( node_lists ) -> List[ str ]:
     servs_list = node_lists[ "servs" ]
     return get_names_from_list( servs_list )
 
