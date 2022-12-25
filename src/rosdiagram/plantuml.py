@@ -2,7 +2,7 @@
 # All rights reserved.
 #
 # This source code is licensed under the BSD 3-Clause license found in the
-# LICENSE file in the root directory of this source tree. 
+# LICENSE file in the root directory of this source tree.
 #
 
 import os
@@ -31,7 +31,7 @@ class SequenceDiagramGenerator():
         self.params_dict = params
         if self.params_dict is None:
             self.params_dict = {}
-            
+
         self.actors_order = []
 
     def generate( self, seq_graph: SequenceGraph, out_path, nodes_subdir="nodes" ):

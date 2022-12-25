@@ -2,7 +2,7 @@
 # All rights reserved.
 #
 # This source code is licensed under the BSD 3-Clause license found in the
-# LICENSE file in the root directory of this source tree. 
+# LICENSE file in the root directory of this source tree.
 #
 
 try:
@@ -77,7 +77,7 @@ def get_msg_name_enum( data, attribute, enum_prefix ):
 
 def format_note_error( message: str ):
     return f"""<b><back:salmon>{message}</back></b>"""
-    
+
 
 ## ===================================================================
 
@@ -116,9 +116,9 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
             print( "bag statistics:" )
             print( "total messages:", reader.message_count )
             print( "time span:", str( reader.duration / 1000000000 / 60 ) + "m" )
-    
+
             # topic and msgtype information is available on .connections list
-    
+
             excluded_topics = set()
 
             topics_data = []
@@ -129,14 +129,14 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
                     excluded_topics.add( curr_topic )
                 topics_data.append( ( curr_topic, connection.msgcount, is_excluded ) )
             topics_data = sorted( topics_data, key=lambda x: (-x[1], x[0]) )
-    
+
             ## generating sequence diagram
             seq_diagram: SequenceGraph = generate_basic_graph( reader, topic_subs, excluded_topics )
             seq_diagram.process( params )
-            
+
             items_count = seq_diagram.itemsNum()
             print( "diagram items num:", items_count )
-    
+
             ## generating actors pages
             nodes_data = []
 
@@ -161,10 +161,10 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
                                 continue
                             out_name = f"{item.index}_msg.html"
                             item.setProp( "url", "../msgs/" + out_name )
-    
+
                 out_path = os.path.join( nodes_out_dir, f"{actor_filename}.puml" )
                 generate_seq_diagram( sub_diagram, out_path, params, nodes_subdir="" )
-    
+
                 svg_path    = actor_filename + ".svg"
                 actors_page = actor_filename + ".html"
                 out_path    = os.path.join( nodes_out_dir, actors_page )
@@ -197,18 +197,18 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
                         if note_content is not None:
                             note_content = note_content.replace( "\n", "<br />\n" )
                         write_message_page( item, out_path, note_content )
-    
-            ## write main page   
+
+            ## write main page
             ## write main diagram
             bag_name = os.path.basename( bag_path )
-    
+
             out_path = os.path.join( outdir, f"flow_{bag_name}.puml" )
             generate_seq_diagram( seq_diagram, out_path, params, nodes_subdir=nodes_subdir )
-    
+
             svg_path = f"flow_{bag_name}.svg"
             main_out_path = os.path.join( outdir, "full_graph.html" )
             write_seq_main_page( bag_path, svg_path, nodes_data, topics_data, exclude_set, main_out_path )
-    
+
             print( f"generated main page: file://{main_out_path}" )
     except rosbags.rosbag1.reader.ReaderError as ex:
         _LOGGER.error( "unable to parse bag file: %s", ex )
@@ -271,7 +271,7 @@ def deserialize_raw( rawdata, msgtype ):
 
 ##
 class ExcludeFilter():
-    
+
     def __init__(self, exclude_set=None):
         self.exclude_set = set()
         self.regex_set   = set()

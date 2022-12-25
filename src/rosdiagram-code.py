@@ -4,7 +4,7 @@
 # All rights reserved.
 #
 # This source code is licensed under the BSD 3-Clause license found in the
-# LICENSE file in the root directory of this source tree. 
+# LICENSE file in the root directory of this source tree.
 #
 
 # pylint: disable=C0413
@@ -17,7 +17,7 @@ from rosdiagram.codedistribution import main
 
 
 # _LOGGER = logging.getLogger(__name__)
-# 
+#
 # SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 
 
