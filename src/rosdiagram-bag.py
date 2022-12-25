@@ -7,9 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-import os
-import sys
-
 from rosdiagram.rosbagflow import main
 
 

@@ -80,9 +80,8 @@ def get_test_cases( run_test ):
     if run_test:
         ## not empty
         return match_tests( run_test )
-    else:
-        testsLoader = unittest.TestLoader()
-        return testsLoader.discover( SCRIPT_DIR )
+    testsLoader = unittest.TestLoader()
+    return testsLoader.discover( SCRIPT_DIR )
 
 
 ## ============================= main section ===================================

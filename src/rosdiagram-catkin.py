@@ -7,12 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-# pylint: disable=C0413
-
-import os
-import sys
-import logging
-
 from rosdiagram.catkintree import main
 
 

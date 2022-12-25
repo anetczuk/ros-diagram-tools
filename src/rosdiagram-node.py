@@ -7,19 +7,12 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-# pylint: disable=C0413
-
-import os
-import sys
-import logging
+from rosdiagram.rosnodetree import main
 
 
 # _LOGGER = logging.getLogger(__name__)
 #
 # SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
-
-
-from rosdiagram.rosnodetree import main
 
 
 if __name__ == '__main__':

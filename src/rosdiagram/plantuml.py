@@ -9,7 +9,7 @@ import os
 import datetime
 import itertools
 import logging
-from typing import List, Dict
+from typing import Set, List, Dict
 
 from rosdiagram.io import write_file, prepare_filesystem_name
 from rosdiagram.seqgraph import SequenceGraph, SeqItems, GraphItem
@@ -32,7 +32,7 @@ class SequenceDiagramGenerator():
         if self.params_dict is None:
             self.params_dict = {}
 
-        self.actors_order = []
+        self.actors_order: List[str] = []
 
     def generate( self, seq_graph: SequenceGraph, out_path, nodes_subdir="nodes" ):
         call_len = seq_graph.size()
@@ -51,9 +51,9 @@ skinparam backgroundColor #FEFEFE
 
 """
 
-        graph_actors      = seq_graph.actors()
-        labels_dict       = self.calculateLabelsDict( seq_graph )
-        self.actors_order = calculate_actors_optimized_order( graph_actors, labels_dict )
+        graph_actors: Set[str] = seq_graph.actors()
+        labels_dict            = self.calculateLabelsDict( seq_graph )
+        self.actors_order      = calculate_actors_optimized_order( graph_actors, labels_dict )
 
         ## add actors
         for item in self.actors_order:
@@ -181,7 +181,7 @@ end note
 ## ========================================================================
 
 
-def calculate_actors_optimized_order( graph_actors, labels_dict ):
+def calculate_actors_optimized_order( graph_actors, labels_dict ) -> List[str]:
 #     return sorted( graph_actors )
 
     distance_dict = {}
@@ -203,7 +203,7 @@ def calculate_actors_optimized_order( graph_actors, labels_dict ):
     for curr_list in itertools.permutations( sorted_actors, a_size ):
         curr_width = calculate_width( curr_list, distance_dict )
         if curr_width < best_width:
-            best_order = curr_list
+            best_order = list( curr_list )
             best_width = curr_width
 
     print( "best order:", best_order, best_width, sorted_width )

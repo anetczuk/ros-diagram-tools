@@ -5,14 +5,11 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-# pylint: disable=C0413
-
 import os
-import sys
 import logging
 
 import re
-from typing import Set, List
+from typing import List
 import argparse
 
 from rosdiagram.htmlgenerator import generate_graph_html

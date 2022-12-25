@@ -5,29 +5,15 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-try:
-    ## following import success only when file is directly executed from command line
-    ## otherwise will throw exception when executing as parameter for "python -m"
-    # pylint: disable=W0611
-    import __init__
-except ImportError:
-    ## when import fails then it means that the script was imported
-    ## in this case __init__ is already loaded
-    pass
-
-# pylint: disable=C0413
-
 import os
-import sys
 import logging
 import pprint
 import datetime
 import copy
 import re
 
-import numpy
-
 import argparse
+import numpy
 
 import rosbags
 
@@ -95,7 +81,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
 
     print( "exclude set:", exclude_set )
 
-    exclude_filter = ExcludeFilter( exclude_set )
+    exclude_filter = ExcludeItemFilter( exclude_set )
 
     topic_data = read_topics( topic_dump_dir )
     topic_subs = get_topic_subs_dict( topic_data )
@@ -152,8 +138,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
                 if params.get( "write_messages", False ):
                     out_dir = os.path.join( outdir, "msgs" )
                     os.makedirs( out_dir, exist_ok=True )
-                    loops = sub_diagram.getLoops()
-                    for loop in loops:
+                    for loop in sub_diagram.getLoops():
                         if loop.repeats > 1:
                             pass
                         for item in loop.items:
@@ -181,8 +166,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
                 notes_functor = params.get( 'notes_functor' )
                 out_dir = os.path.join( outdir, "msgs" )
                 os.makedirs( out_dir, exist_ok=True )
-                loops: List[ SeqItems ] = seq_diagram.getLoops()
-                for loop in loops:
+                for loop in seq_diagram.getLoops():
                     if loop.repeats > 1:
                         pass
                     for item in loop.items:
@@ -270,7 +254,8 @@ def deserialize_raw( rawdata, msgtype ):
 
 
 ##
-class ExcludeFilter():
+class ExcludeItemFilter():
+    """ aaa """
 
     def __init__(self, exclude_set=None):
         self.exclude_set = set()
@@ -405,10 +390,9 @@ def main( notes_functor=None ):
 
     try:
         exclude_list = read_list( args.exclude_list_path )
-        exclude_list = exclude_list
     except TypeError as ex:
         _LOGGER.warning( "unable to load exception list: %s", ex )
-        exclude_list = set()
+        exclude_list = []
 
     params = { "group_calls": args.group_calls,
                "group_topics": args.group_topics,
