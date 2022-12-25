@@ -1,49 +1,51 @@
 # ROS diagram tools
 
-Generate various aspects of *Robot Operating System* workspace in form of *Graphviz* diagrams.
+Generate various aspects of *Robot Operating System* workspace in form of diagrams and graphs.
+To produce results package uses *Grpahviz* and *PlanutUML* diagram tools.
 
 Package can produce following diagrams:
 - source code distribution chart
-- packages dependency tree
+- source packages dependency tree
 - *ROS* nodes and topics graphs
+- *rosbag* sequence graph
 
 
 
-## code distribution diagram
+## `rosdiagramcode.py` - code distribution diagram
 
 Tool presents distribution of code in source subdirectories.
 
-Execution: `./src/rosdiagram/codedistribution.py --help`
+Execution: `./src/rosdiagramcode.py --help`
 
 [![code distribution chart](example/codedistribution/out/graph-small.png "code distribution chart")](example/codedistribution/out/graph.png)
 
 
 
-## catkin packages tree
+## `rosdiagramcatkin.py` - catkin packages tree
 
 Show workspace packages in form of dependency tree.
 
-Execution: `./src/rosdiagram/catkintree.py --help`
+Execution: `./src/rosdiagramcatkin.py --help`
 
 [![catkin packages tree](example/catkinlist/out/graph-small.png "catkin packages tree")](example/catkinlist/out/graph.png)
 
 
 
-## rostopic tree
+## `rosdiagramtopic.py` - rostopic tree
 
 Present dependecy of *ROS* nodes and topics in form of dependency graph.
 
-Execution: `./src/rosdiagram/rostopictree.py --help`
+Execution: `./src/rosdiagramtopic.py --help`
 
 [![ROS nodes and topics graph](example/rostopiclist/out/graph-small.png "ROS nodes and topics graph")](example/rostopiclist/out/graph.png)
 
 
 
-## rosnode tree
+## `rosdiagramnode.py` - rosnode tree
 
 Presents dependecy of *ROS* nodes, topics and services in form of data flow graph.
 
-Execution: `./src/rosdiagram/rosnodetree.py --help`
+Execution: `./src/rosdiagramnode.py --help`
 
 [![ROS nodes, topics and services graph](example/rosnodelist/out/full_graph-small.png "ROS nodes, topics and services graph")](example/rosnodelist/out/full_graph.png)
 
@@ -57,17 +59,16 @@ Following animation shows navigation thorough nodes of graph:
 
 ## Dumping information
 
-There are additional scripts:
-- `./src/dump_rostopic.sh`
-- `./src/dump_rosnode.sh`
-
-that dump *ROS* data for further processing. It can be usefull, e.g. if one does not have unrestricted access to *ROS* workspace (Docker container for example).
+Dumping required data is split into two scripts:
+- `./src/dump_cloc.py` using `cloc` to dump source code info
+- `./src/dump_ros.sh` using *ROS* tools and running `rosmaster` to collect data
 
 
 
 ## References
 
 - [pydotplus](https://pypi.org/project/pydotplus/)
+- [PlantUML](https://plantuml.com/)
 - [Texthon](texthon.chipsforbrain.org/)
 
 
