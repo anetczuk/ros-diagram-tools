@@ -11,6 +11,17 @@ Package can produce following diagrams:
 
 
 
+## How to use?
+
+1. run *dump* scripts to collect data
+2. run diagram tool
+
+Depending on desired tool, user can run subset of *dump* scripts. 
+
+Examples of provided diagrams can be seen in `/example/` repo directory.
+
+
+
 ## `rosdiagramcode.py` - code distribution diagram
 
 Tool presents distribution of code in source subdirectories.
