@@ -27,9 +27,9 @@ import re
 import argparse
 
 
-script_dir = os.path.dirname(os.path.abspath(__file__))
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# src_dir = os.path.abspath(os.path.join(script_dir, ".."))
+# src_dir = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
 # sys.path.insert(0, src_dir)
 
 
@@ -51,7 +51,7 @@ def match_tests( pattern: str ):
     ## rePattern = "^" + rePattern + "$"
     _LOGGER.info( "searching test cases with pattern: %s", rePattern )
     loader = unittest.TestLoader()
-    testsSuite = loader.discover( script_dir )
+    testsSuite = loader.discover( SCRIPT_DIR )
     return match_test_suites(testsSuite, rePattern)
 
 
@@ -74,6 +74,15 @@ def match_test_suites( testsList, rePattern: str ):
             continue
         _LOGGER.warning("unknown type: %s", type( testObject ))
     return retSuite
+
+
+def get_test_cases( run_test ):
+    if run_test:
+        ## not empty
+        return match_tests( run_test )
+    else:
+        testsLoader = unittest.TestLoader()
+        return testsLoader.discover( SCRIPT_DIR )
 
 
 ## ============================= main section ===================================
@@ -101,13 +110,6 @@ if __name__ == '__main__':
     if args.verbose:
         verbosity = 2
 
-    if args.run_test:
-        ## not empty
-        suite = match_tests( args.run_test )
-    else:
-        testsLoader = unittest.TestLoader()
-        suite = testsLoader.discover( script_dir )
-
     testsRepeats = int(args.repeat)
 
     ## run proper tests
@@ -116,6 +118,7 @@ if __name__ == '__main__':
         while True:
             print( "Tests iteration:", counter )
             counter += 1
+            suite = get_test_cases( args.run_test )
             testResult = unittest.TextTestRunner(verbosity=verbosity).run(suite)
             if testResult.wasSuccessful() is False:
                 break
@@ -123,9 +126,11 @@ if __name__ == '__main__':
     elif testsRepeats > 0:
         for counter in range(1, testsRepeats + 1):
             print( "Tests iteration:", counter )
+            suite = get_test_cases( args.run_test )
             testResult = unittest.TextTestRunner(verbosity=verbosity).run(suite)
             if testResult.wasSuccessful() is False:
                 break
             print( "\n" )
     else:
+        suite = get_test_cases( args.run_test )
         unittest.TextTestRunner(verbosity=verbosity).run(suite)
