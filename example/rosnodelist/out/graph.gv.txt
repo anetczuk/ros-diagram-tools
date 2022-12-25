@@ -1,0 +1,24 @@
+digraph nodes_graph {
+rankdir=LR;
+"n_/node1" [label="/node1", shape=box];
+"t_/topic1" [label="/topic1", shape=ellipse];
+"t_/topic2" [label="/topic2", shape=ellipse];
+"t_/topic3" [label="/topic3", shape=ellipse];
+"s_/service1" [label="/service1", shape=hexagon];
+"n_/node2" [label="/node2", shape=box];
+"t_/topic4" [label="/topic4", shape=ellipse];
+"t_/topic5" [label="/topic5", shape=ellipse];
+"s_/service2" [label="/service2", shape=hexagon];
+"n_/topic5" [label="/topic5", shape=box];
+"s_/service3" [label="/service3", shape=hexagon];
+"n_/node1" -> "t_/topic1";
+"n_/node1" -> "t_/topic2";
+"t_/topic3" -> "n_/node1";
+"s_/service1" -> "n_/node1";
+"n_/node2" -> "t_/topic4";
+"n_/node2" -> "t_/topic5";
+"t_/topic1" -> "n_/node2";
+"s_/service2" -> "n_/node2";
+"t_/topic5" -> "n_/topic5";
+"s_/service3" -> "n_/topic5";
+}
