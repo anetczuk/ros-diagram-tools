@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-from rosdiagram.codedistribution import main
+from rosdiagram.tool.codedistribution import main
 
 
 # _LOGGER = logging.getLogger(__name__)

@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-from rosdiagram.catkintree import main
+from rosdiagram.tool.catkintree import main
 
 
 # _LOGGER = logging.getLogger(__name__)

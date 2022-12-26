@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-from rosdiagram.rosbagflow import main
+from rosdiagram.tool.rosbagflow import main
 
 
 # _LOGGER = logging.getLogger(__name__)
