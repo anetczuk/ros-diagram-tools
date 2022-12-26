@@ -22,7 +22,7 @@ from rosbags.serde import deserialize_ros1
 from rosbags.typesys import get_types_from_msg, register_types
 
 from rosdiagram.io import read_list, prepare_filesystem_name
-from rosdiagram.rostopictree import read_topics, get_topic_subs_dict
+from rosdiagram.tool.rostopictree import read_topics, get_topic_subs_dict
 from rosdiagram.plantuml import SequenceGraph, generate_seq_diagram,\
     convert_time_index
 from rosdiagram.seqgraph import GraphItem
@@ -107,67 +107,17 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
             items_count = seq_diagram.itemsNum()
             print( "diagram items num:", items_count )
 
-            ## generating actors pages
-            nodes_data = []
-
+            ## generating nodes pages
             nodes_subdir = "nodes"
-            nodes_out_dir = os.path.join( outdir, nodes_subdir )
-            os.makedirs( nodes_out_dir, exist_ok=True )
-            graph_actors = seq_diagram.actors()
-            for actor in graph_actors:
-                actor_filename = prepare_filesystem_name( actor )
-                sub_diagram: SequenceGraph = seq_diagram.copyCallings( actor )
-                sub_diagram.process( params )
-
-                if params.get( "write_messages", False ):
-                    out_dir = os.path.join( outdir, "msgs" )
-                    os.makedirs( out_dir, exist_ok=True )
-                    for loop in sub_diagram.getLoops():
-                        if loop.repeats > 1:
-                            pass
-                        for item in loop.items:
-                            if item.isMessageSet() is False:
-                                continue
-                            out_name = f"{item.index}_msg.html"
-                            item.setProp( "url", "../msgs/" + out_name )
-
-                out_path = os.path.join( nodes_out_dir, f"{actor_filename}.puml" )
-                generate_seq_diagram( sub_diagram, out_path, params, nodes_subdir="" )
-
-                svg_path    = actor_filename + ".svg"
-                actors_page = actor_filename + ".html"
-                out_path    = os.path.join( nodes_out_dir, actors_page )
-
-                nodes_data.append( (actor, os.path.join( nodes_subdir, actors_page ), False ) )
-
-                write_seq_node_page( svg_path, out_path )
+            nodes_data = generate_nodes_pages( seq_diagram, params, nodes_subdir, outdir )
 
             for excluded in excluded_nodes:
                 nodes_data.append( (excluded, None, True ) )
 
             ## generating message pages
-            if params.get( "write_messages", False ):
-                notes_functor = params.get( 'notes_functor' )
-                out_dir = os.path.join( outdir, "msgs" )
-                os.makedirs( out_dir, exist_ok=True )
-                for loop in seq_diagram.getLoops():
-                    if loop.repeats > 1:
-                        pass
-                    for item in loop.items:
-                        if item.isMessageSet() is False:
-                            continue
-                        out_name = f"{item.index}_msg.html"
-                        item.setProp( "url", "msgs/" + out_name )
-                        out_path = os.path.join( out_dir, out_name )
-                        note_content = None
-                        if notes_functor is not None:
-                            note_content = notes_functor( item.labels, item.msgtype, item.msgdata )
-                        if note_content is not None:
-                            note_content = note_content.replace( "\n", "<br />\n" )
-                        write_message_page( item, out_path, note_content )
+            generate_messages_pages( seq_diagram, params, outdir )
 
             ## write main page
-            ## write main diagram
             bag_name = os.path.basename( bag_path )
 
             out_path = os.path.join( outdir, f"flow_{bag_name}.puml" )
@@ -178,8 +128,68 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
             write_seq_main_page( bag_path, svg_path, nodes_data, topics_data, exclude_set, main_out_path )
 
             print( f"generated main page: file://{main_out_path}" )
+
     except rosbags.rosbag1.reader.ReaderError as ex:
         _LOGGER.error( "unable to parse bag file: %s", ex )
+
+
+def generate_nodes_pages( seq_diagram: SequenceGraph, params: dict, nodes_subdir, outdir ):
+    nodes_data = []
+    nodes_out_dir = os.path.join( outdir, nodes_subdir )
+    os.makedirs( nodes_out_dir, exist_ok=True )
+    graph_actors = seq_diagram.actors()
+    for actor in graph_actors:
+        actor_filename = prepare_filesystem_name( actor )
+        sub_diagram: SequenceGraph = seq_diagram.copyCallings( actor )
+        sub_diagram.process( params )
+
+        if params.get( "write_messages", False ):
+            out_dir = os.path.join( outdir, "msgs" )
+            os.makedirs( out_dir, exist_ok=True )
+            for loop in sub_diagram.getLoops():
+                if loop.repeats > 1:
+                    pass
+                for item in loop.items:
+                    if item.isMessageSet() is False:
+                        continue
+                    out_name = f"{item.index}_msg.html"
+                    item.setProp( "url", "../msgs/" + out_name )
+
+        out_path = os.path.join( nodes_out_dir, f"{actor_filename}.puml" )
+        generate_seq_diagram( sub_diagram, out_path, params, nodes_subdir="" )
+
+        svg_path    = actor_filename + ".svg"
+        actors_page = actor_filename + ".html"
+        out_path    = os.path.join( nodes_out_dir, actors_page )
+
+        nodes_data.append( (actor, os.path.join( nodes_subdir, actors_page ), False ) )
+
+        write_seq_node_page( svg_path, out_path )
+
+    return nodes_data
+
+
+def generate_messages_pages( seq_diagram: SequenceGraph, params: dict, outdir ):
+    if params.get( "write_messages", False ) is False:
+        return
+    notes_functor = params.get( 'notes_functor' )
+    out_dir = os.path.join( outdir, "msgs" )
+    os.makedirs( out_dir, exist_ok=True )
+    for loop in seq_diagram.getLoops():
+        if loop.repeats > 1:
+            pass
+        for item in loop.items:
+            if item.isMessageSet() is False:
+                continue
+            out_name = f"{item.index}_msg.html"
+            item.setProp( "url", "msgs/" + out_name )
+            out_path = os.path.join( out_dir, out_name )
+            note_content = None
+            if notes_functor is not None:
+                note_content = notes_functor( item.labels, item.msgtype, item.msgdata )
+            if note_content is not None:
+                note_content = note_content.replace( "\n", "<br />\n" )
+            write_message_page( item, out_path, note_content )
 
 
 def generate_basic_graph( reader, topic_subs, excluded_topics ):
@@ -288,7 +298,7 @@ class ExcludeItemFilter():
 def write_seq_main_page( bag_file, svg_name, nodes_data, topics_data, exclude_set, out_path ):
     print( f"generating main page: file://{out_path}" )
 
-    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_seq_main_page.html.tmpl" )
+    template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "baggraph_seq_main_page.html.tmpl" )
 
     page_params = { 'bag_file': bag_file,
                     'svg_name': svg_name,
@@ -302,7 +312,7 @@ def write_seq_main_page( bag_file, svg_name, nodes_data, topics_data, exclude_se
 def write_seq_node_page( svg_name, out_path ):
     print( f"generating node page: file://{out_path}" )
 
-    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_seq_node_page.html.tmpl" )
+    template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "baggraph_seq_node_page.html.tmpl" )
 
     page_params = { 'svg_name': svg_name
                     }
@@ -317,7 +327,7 @@ def write_message_page( item: GraphItem, out_path, notes_data=None ):
     msg_data = data_to_dict( item.msgdata )
     msg_data = pprint.pformat( msg_data, indent=1, width=1, sort_dicts=False )              # type: ignore
 
-    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_message.html.tmpl" )
+    template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "baggraph_message.html.tmpl" )
 
     page_params = { 'timestamp_dt': timestamp_dt,
                     'time_value': time_value,
