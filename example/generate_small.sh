@@ -21,6 +21,5 @@ for filename in $(find $SCRIPT_DIR -name "*.png"); do
     ##small_name=${filename/$big_suffix/$small_suffix}
 
     echo "converting: $filename -> $small_name"
-    convert $filename -resize 400 $small_name
-    #convert $filename -resize 200x100 $small_name
+    convert $filename -strip -resize 400 $small_name
 done
