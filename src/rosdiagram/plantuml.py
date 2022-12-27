@@ -12,7 +12,7 @@ import logging
 from typing import Set, List, Dict
 
 from rosdiagram.io import write_file, prepare_filesystem_name
-from rosdiagram.seqgraph import SequenceGraph, SeqItems, GraphItem, DiagramData
+from rosdiagram.seqgraph import SequenceGraph, SeqItems, MsgData, DiagramData
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -151,12 +151,12 @@ end note
 
         return content
 
-    def callTime(self, item: GraphItem):
+    def callTime(self, item: MsgData):
         timestamp_dt     = datetime.datetime.fromtimestamp( item.timestamp / 1000000000 )
         timestamp_string = timestamp_dt.strftime('%H:%M:%S.%f')
         return timestamp_string
 
-    def calculateLabel(self, item: GraphItem, url=None ):
+    def calculateLabel(self, item: MsgData, url=None ):
         label            = " | ".join( item.labels )
         timestamp_string = self.callTime( item )
         if url is None:
@@ -169,7 +169,7 @@ end note
         labels_dict = {}
         loops: List[ SeqItems ] = seq_graph.getLoops()
         for seq in loops:
-            calls: List[ GraphItem ] = seq.items
+            calls: List[ MsgData ] = seq.items
             for call in calls:
                 labels_dict[ call ] = self.calculateLabel( call )
         return labels_dict

@@ -27,7 +27,7 @@ from rosdiagram.io import read_list, prepare_filesystem_name
 from rosdiagram.tool.rostopictree import read_topics, get_topic_subs_dict
 from rosdiagram.plantuml import SequenceGraph, generate_diagram,\
     convert_time_index
-from rosdiagram.seqgraph import GraphItem, DiagramData, NodeData, TopicData
+from rosdiagram.seqgraph import MsgData, DiagramData, NodeData, TopicData
 from rosdiagram import texttemplate
 
 
@@ -98,9 +98,6 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
             diagram_data.msgs_subdir   = "msgs"
 
             seq_diagram  = diagram_data.seq_diagram
-            nodes_data   = diagram_data.nodes
-            topics_data  = diagram_data.topics
-
             items_count = seq_diagram.itemsNum()
             print( "diagram items num:", items_count )
 
@@ -113,24 +110,8 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
             ## generating nodes pages
             generate_nodes_pages( diagram_data, outdir )
 
-            ## write main page
-            bag_name = os.path.basename( bag_path )
-
-            out_path = os.path.join( outdir, f"flow_{bag_name}.puml" )
-            generate_diagram( diagram_data, out_path  )
-
-            for node in nodes_data:
-                if node.suburl is not None:
-                    node.suburl = os.path.join( diagram_data.nodes_subdir, node.suburl )
-            for topic in topics_data:
-                if topic.suburl is not None:
-                    topic.suburl = os.path.join( diagram_data.topics_subdir, topic.suburl )
-
-            svg_path = f"flow_{bag_name}.svg"
-            main_out_path = os.path.join( outdir, "full_graph.html" )
-            write_seq_main_page( bag_path, svg_path, nodes_data, topics_data, exclude_set, main_out_path )
-
-            print( f"generated main page: file://{main_out_path}" )
+            ## generating main page
+            generate_main_page( diagram_data, bag_path, exclude_set, outdir )
 
     except rosbags.rosbag1.reader.ReaderError as ex:
         _LOGGER.error( "unable to parse bag file: %s", ex )
@@ -180,6 +161,29 @@ def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> Diag
     ret_data.topics      = topics_data
     ret_data.params      = params
     return ret_data
+
+
+def generate_main_page( diagram_data: DiagramData, bag_path, exclude_set, outdir ):
+    nodes_data  = diagram_data.nodes
+    topics_data = diagram_data.topics
+    
+    bag_name = os.path.basename( bag_path )
+
+    out_path = os.path.join( outdir, f"flow_{bag_name}.puml" )
+    generate_diagram( diagram_data, out_path  )
+
+    for node in nodes_data:
+        if node.suburl is not None:
+            node.suburl = os.path.join( diagram_data.nodes_subdir, node.suburl )
+    for topic in topics_data:
+        if topic.suburl is not None:
+            topic.suburl = os.path.join( diagram_data.topics_subdir, topic.suburl )
+
+    svg_path = f"flow_{bag_name}.svg"
+    main_out_path = os.path.join( outdir, "full_graph.html" )
+    write_seq_main_page( bag_path, svg_path, nodes_data, topics_data, exclude_set, main_out_path )
+
+    print( f"generated main page: file://{main_out_path}" )
 
 
 def generate_nodes_pages( diagram_data: DiagramData, outdir ):
@@ -405,7 +409,7 @@ def write_seq_node_page( svg_name, out_path ):
     texttemplate.generate( template_path, out_path, INPUT_DICT=page_params )
 
 
-def write_message_page( item: GraphItem, out_path, notes_data=None ):
+def write_message_page( item: MsgData, out_path, notes_data=None ):
     timestamp_dt = datetime.datetime.fromtimestamp( item.timestamp / 1000000000 )
 
     time_value, time_unit = convert_time_index( item.index )

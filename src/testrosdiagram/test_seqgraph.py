@@ -7,10 +7,10 @@
 
 import unittest
 
-from rosdiagram.seqgraph import SequenceGraph, SequenceDetector, GraphItem
+from rosdiagram.seqgraph import SequenceGraph, SequenceDetector, MsgData
 
 
-class GraphItemTest(unittest.TestCase):
+class MsgDataTest(unittest.TestCase):
     def setUp(self):
         ## Called before testfunction is executed
         pass
@@ -20,9 +20,9 @@ class GraphItemTest(unittest.TestCase):
         pass
 
     def test_hashValue(self):
-        item1 = GraphItem( "aaa", ["bbb"], 0, 0, ["ccc"] )
+        item1 = MsgData( "aaa", ["bbb"], 0, 0, ["ccc"] )
         val1  = item1.hashValue()
-        item2 = GraphItem( "aaa", ["bbb"], 0, 0, ["ccc"] )
+        item2 = MsgData( "aaa", ["bbb"], 0, 0, ["ccc"] )
         val2  = item2.hashValue()
         self.assertEqual( val1, val2 )
 

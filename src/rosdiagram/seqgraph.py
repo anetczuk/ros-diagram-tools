@@ -11,7 +11,7 @@ from typing import Set, List, Any, Dict
 
 
 ##
-class GraphItem():
+class MsgData():
 
     def __init__(self, pub: str, subs: Set[str], index: int, timestamp, labels: Set[str] ):
         self.pub       = pub
@@ -64,14 +64,14 @@ class GraphItem():
     def haveLabel(self, label):
         return label in self.labels
 
-    def sameActors( self, other_item: 'GraphItem' ):
+    def sameActors( self, other_item: 'MsgData' ):
         if self.pub != other_item.pub:
             return False
         if self.subs != other_item.subs:
             return False
         return True
 
-    def sameLabels( self, other_item: 'GraphItem' ):
+    def sameLabels( self, other_item: 'MsgData' ):
         return self.labels == other_item.labels
 
     def addLabels(self, labels: Set[str] ):
@@ -89,7 +89,7 @@ class GraphItem():
 class SeqItems():
 
     def __init__( self, items, repeat=1 ):
-        self.items: List[ GraphItem ] = items
+        self.items: List[ MsgData ] = items
         self.repeats: int             = repeat
         if repeat > 1:
             for item in self.items:
@@ -106,7 +106,7 @@ class SeqItems():
 class SequenceGraph():
 
     def __init__(self):
-        self.callings: List[ GraphItem ] = []
+        self.callings: List[ MsgData ] = []
         self.loops: List[ SeqItems ]     = []
 
     def size(self):
@@ -138,13 +138,13 @@ class SequenceGraph():
             ret_set.update( calls.subs )
         return ret_set
 
-    def addCall(self, publisher, subscriber, index, timestamp, label) -> GraphItem:
-        item = GraphItem( publisher, set(subscriber,), index, timestamp, set([label]) )
+    def addCall(self, publisher, subscriber, index, timestamp, label) -> MsgData:
+        item = MsgData( publisher, set(subscriber,), index, timestamp, set([label]) )
         self.callings.append( item )
         return item
 
-    def addCallSubs(self, publisher, subscribers_list, index, timestamp, label) -> GraphItem:
-        item = GraphItem( publisher, set(subscribers_list), index, timestamp, set([label]) )
+    def addCallSubs(self, publisher, subscribers_list, index, timestamp, label) -> MsgData:
+        item = MsgData( publisher, set(subscribers_list), index, timestamp, set([label]) )
         self.callings.append( item )
         return item
 
@@ -235,7 +235,7 @@ class SequenceGraph():
         self.loops = curr_loops
 
     def copyCallingsActors(self, actor ):
-        new_calls: List[ GraphItem ] = []
+        new_calls: List[ MsgData ] = []
         for call in self.callings:
             if call.haveActor( actor ):
                 new_call = call.copy()
@@ -245,7 +245,7 @@ class SequenceGraph():
         return graph
 
     def copyCallingsLabels(self, label ):
-        new_calls: List[ GraphItem ] = []
+        new_calls: List[ MsgData ] = []
         for call in self.callings:
             if call.haveLabel( label ):
                 new_call = call.copy()
@@ -294,9 +294,9 @@ class TopicData():
 @dataclass
 class DiagramData():
     seq_diagram: SequenceGraph  = None
+    params: Dict[ str, Any ]    = field(default_factory=lambda: {})
     nodes: List[ NodeData ]     = field(default_factory=lambda: [])
     topics: List[ TopicData ]   = field(default_factory=lambda: [])
-    params: Dict[ str, Any ]    = {}
 
     nodes_subdir                = "nodes"
     topics_subdir               = "topics"
