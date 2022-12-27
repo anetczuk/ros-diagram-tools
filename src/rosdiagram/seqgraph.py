@@ -6,6 +6,7 @@
 #
 
 import copy
+from dataclasses import dataclass, field
 from typing import Set, List, Any, Dict
 
 
@@ -59,6 +60,9 @@ class GraphItem():
         if actor in self.subs:
             return True
         return False
+
+    def haveLabel(self, label):
+        return label in self.labels
 
     def sameActors( self, other_item: 'GraphItem' ):
         if self.pub != other_item.pub:
@@ -230,7 +234,7 @@ class SequenceGraph():
             curr_loops = new_loops
         self.loops = curr_loops
 
-    def copyCallings(self, actor ):
+    def copyCallingsActors(self, actor ):
         new_calls: List[ GraphItem ] = []
         for call in self.callings:
             if call.haveActor( actor ):
@@ -239,6 +243,64 @@ class SequenceGraph():
         graph = SequenceGraph()
         graph.callings = new_calls
         return graph
+
+    def copyCallingsLabels(self, label ):
+        new_calls: List[ GraphItem ] = []
+        for call in self.callings:
+            if call.haveLabel( label ):
+                new_call = call.copy()
+                new_calls.append( new_call )
+        graph = SequenceGraph()
+        graph.callings = new_calls
+        return graph
+
+
+## ===================================================================
+
+
+@dataclass
+class NodeData():
+    name: str       = None
+    suburl: str     = None
+    excluded: bool  = False
+
+    def __getitem__(self, key):
+        if key == 0:
+            return self.name
+        if key == 1:
+            return self.suburl
+        if key == 2:
+            return self.excluded
+        raise IndexError( f"invalid index: {key}" )
+
+
+@dataclass
+class TopicData():
+    name: str       = None
+    msgcount: int   = 0
+    excluded: bool  = False
+    suburl: str     = None
+
+    def __getitem__(self, key):
+        if key == 0:
+            return self.name
+        if key == 1:
+            return self.msgcount
+        if key == 2:
+            return self.excluded
+        raise IndexError( f"invalid index: {key}" )
+
+
+@dataclass
+class DiagramData():
+    seq_diagram: SequenceGraph  = None
+    nodes: List[ NodeData ]     = field(default_factory=lambda: [])
+    topics: List[ TopicData ]   = field(default_factory=lambda: [])
+    params: Dict[ str, Any ]    = {}
+
+    nodes_subdir                = "nodes"
+    topics_subdir               = "topics"
+    msgs_subdir                 = "msgs"
 
 
 ## =============================================================

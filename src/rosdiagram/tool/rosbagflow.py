@@ -12,6 +12,8 @@ import datetime
 import copy
 import re
 
+from typing import List
+
 import argparse
 import numpy
 
@@ -23,9 +25,9 @@ from rosbags.typesys import get_types_from_msg, register_types
 
 from rosdiagram.io import read_list, prepare_filesystem_name
 from rosdiagram.tool.rostopictree import read_topics, get_topic_subs_dict
-from rosdiagram.plantuml import SequenceGraph, generate_seq_diagram,\
+from rosdiagram.plantuml import SequenceGraph, generate_diagram,\
     convert_time_index
-from rosdiagram.seqgraph import GraphItem
+from rosdiagram.seqgraph import GraphItem, DiagramData, NodeData, TopicData
 from rosdiagram import texttemplate
 
 
@@ -68,6 +70,7 @@ def format_note_error( message: str ):
 ## ===================================================================
 
 
+##
 def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict = None ):
     if params is None:
         params = {}
@@ -76,9 +79,8 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
 
     print( "exclude set:", exclude_filter.raw_exclude )
 
-    topic_data     = read_topics( topic_dump_dir )
-    topic_subs     = get_topic_subs_dict( topic_data )
-    excluded_nodes = get_excluded_nodes( topic_subs, exclude_filter )
+    topic_data  = read_topics( topic_dump_dir )
+    topic_subs  = get_topic_subs_dict( topic_data )
 
     try:
         # create reader instance and open for reading
@@ -89,39 +91,40 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
 
             # topic and msgtype information is available on .connections list
 
-            excluded_topics = set()
+            diagram_data: DiagramData = calculate_diagram_data( reader, params, topic_subs, exclude_filter )
 
-            topics_data = []
-            for connection in reader.connections:
-                curr_topic  = connection.topic
-                is_excluded = exclude_filter.excluded( curr_topic )
-                if is_excluded:
-                    excluded_topics.add( curr_topic )
-                topics_data.append( ( curr_topic, connection.msgcount, is_excluded ) )
-            topics_data = sorted( topics_data, key=lambda x: (-x[1], x[0]) )
+            diagram_data.nodes_subdir  = "nodes"
+            diagram_data.topics_subdir = "topics"
+            diagram_data.msgs_subdir   = "msgs"
 
-            ## generating sequence diagram
-            seq_diagram: SequenceGraph = generate_basic_graph( reader, topic_subs, excluded_topics )
-            seq_diagram.process( params )
+            seq_diagram  = diagram_data.seq_diagram
+            nodes_data   = diagram_data.nodes
+            topics_data  = diagram_data.topics
 
             items_count = seq_diagram.itemsNum()
             print( "diagram items num:", items_count )
 
-            ## generating nodes pages
-            nodes_subdir = "nodes"
-            nodes_data = generate_nodes_pages( seq_diagram, params, nodes_subdir, outdir )
-
-            for excluded in excluded_nodes:
-                nodes_data.append( (excluded, None, True ) )
-
             ## generating message pages
-            generate_messages_pages( seq_diagram, params, outdir )
+            generate_messages_pages( diagram_data, outdir )
+
+            ## generating topic pages
+            generate_topics_pages( diagram_data, outdir )
+
+            ## generating nodes pages
+            generate_nodes_pages( diagram_data, outdir )
 
             ## write main page
             bag_name = os.path.basename( bag_path )
 
             out_path = os.path.join( outdir, f"flow_{bag_name}.puml" )
-            generate_seq_diagram( seq_diagram, out_path, params, nodes_subdir=nodes_subdir )
+            generate_diagram( diagram_data, out_path  )
+
+            for node in nodes_data:
+                if node.suburl is not None:
+                    node.suburl = os.path.join( diagram_data.nodes_subdir, node.suburl )
+            for topic in topics_data:
+                if topic.suburl is not None:
+                    topic.suburl = os.path.join( diagram_data.topics_subdir, topic.suburl )
 
             svg_path = f"flow_{bag_name}.svg"
             main_out_path = os.path.join( outdir, "full_graph.html" )
@@ -133,45 +136,128 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
         _LOGGER.error( "unable to parse bag file: %s", ex )
 
 
-def generate_nodes_pages( seq_diagram: SequenceGraph, params: dict, nodes_subdir, outdir ):
-    nodes_data = []
+def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> DiagramData:
+    excluded_nodes = get_excluded_nodes( topic_subs, exclude_filter )
+
+    excluded_topics = set()
+
+    topics_data: List[ TopicData ] = []
+    for connection in reader.connections:
+        curr_topic  = connection.topic
+        topic_obj = TopicData( curr_topic, connection.msgcount )
+
+        is_excluded = exclude_filter.excluded( curr_topic )
+        if is_excluded:
+            excluded_topics.add( curr_topic )
+        else:
+            topic_filename = prepare_filesystem_name( curr_topic )
+            topic_obj.suburl = topic_filename + ".html"
+
+        topic_obj.excluded = is_excluded
+        topics_data.append( topic_obj )
+    topics_data = sorted( topics_data, key=lambda x: (-x[1], x[0]) )
+
+    ## generating sequence diagram
+    seq_diagram: SequenceGraph = generate_basic_graph( reader, topic_subs, excluded_topics )
+    seq_diagram.process( params )
+
+    nodes_data: List[ NodeData ] = []
+    graph_actors = seq_diagram.actors()
+    for node in graph_actors:
+        node_filename = prepare_filesystem_name( node )
+        node_obj          = NodeData( node )
+        node_obj.suburl   = node_filename + ".html"
+        node_obj.excluded = False
+        nodes_data.append( node_obj )
+    for node in excluded_nodes:
+        node_obj          = NodeData( node )
+        node_obj.excluded = True
+        nodes_data.append( node_obj )
+
+    ret_data = DiagramData()
+    ret_data.seq_diagram = seq_diagram
+    ret_data.nodes       = nodes_data
+    ret_data.topics      = topics_data
+    ret_data.params      = params
+    return ret_data
+
+
+def generate_nodes_pages( diagram_data: DiagramData, outdir ):
+    seq_diagram   = diagram_data.seq_diagram
+    nodes_data    = diagram_data.nodes
+    params        = diagram_data.params
+    nodes_subdir  = diagram_data.nodes_subdir
+
     nodes_out_dir = os.path.join( outdir, nodes_subdir )
     os.makedirs( nodes_out_dir, exist_ok=True )
-    graph_actors = seq_diagram.actors()
-    for actor in graph_actors:
+
+    for node_data in nodes_data:
+        if node_data.excluded:
+            continue
+
+        actor = node_data.name
         actor_filename = prepare_filesystem_name( actor )
-        sub_diagram: SequenceGraph = seq_diagram.copyCallings( actor )
+        sub_diagram: SequenceGraph = seq_diagram.copyCallingsActors( actor )
         sub_diagram.process( params )
 
-        if params.get( "write_messages", False ):
-            out_dir = os.path.join( outdir, "msgs" )
-            os.makedirs( out_dir, exist_ok=True )
-            for loop in sub_diagram.getLoops():
-                if loop.repeats > 1:
-                    pass
-                for item in loop.items:
-                    if item.isMessageSet() is False:
-                        continue
-                    out_name = f"{item.index}_msg.html"
-                    item.setProp( "url", "../msgs/" + out_name )
+        subdiagram_data = copy.copy( diagram_data )
+        subdiagram_data.seq_diagram  = sub_diagram
+        subdiagram_data.nodes_subdir = ""
+        subdiagram_data.msgs_subdir  = os.path.join( os.pardir, subdiagram_data.msgs_subdir )
 
         out_path = os.path.join( nodes_out_dir, f"{actor_filename}.puml" )
-        generate_seq_diagram( sub_diagram, out_path, params, nodes_subdir="" )
+        generate_diagram( subdiagram_data, out_path )
 
         svg_path    = actor_filename + ".svg"
         actors_page = actor_filename + ".html"
         out_path    = os.path.join( nodes_out_dir, actors_page )
 
-        nodes_data.append( (actor, os.path.join( nodes_subdir, actors_page ), False ) )
+        write_seq_node_page( svg_path, out_path )
+
+
+def generate_topics_pages( diagram_data: DiagramData, outdir ):
+    seq_diagram   = diagram_data.seq_diagram
+    topics_data   = diagram_data.topics
+    params        = diagram_data.params
+    topics_subdir = diagram_data.topics_subdir
+
+    topics_out_dir = os.path.join( outdir, topics_subdir )
+    os.makedirs( topics_out_dir, exist_ok=True )
+
+    for topic_data in topics_data:
+        if topic_data.excluded:
+            continue
+
+        sub_diagram: SequenceGraph = seq_diagram.copyCallingsLabels( topic_data.name )
+        if sub_diagram.size() < 1:
+            topic_data.suburl = None
+            continue
+
+        sub_diagram.process( params )
+
+        subdiagram_data = copy.copy( diagram_data )
+        subdiagram_data.seq_diagram  = sub_diagram
+        subdiagram_data.nodes_subdir = os.path.join( os.pardir, subdiagram_data.nodes_subdir )
+        subdiagram_data.msgs_subdir  = os.path.join( os.pardir, subdiagram_data.msgs_subdir )
+
+        topic_filename = prepare_filesystem_name( topic_data.name )
+        out_path = os.path.join( topics_out_dir, f"{topic_filename}.puml" )
+        generate_diagram( subdiagram_data, out_path )
+
+        svg_path    = topic_filename + ".svg"
+        actors_page = topic_filename + ".html"
+        out_path    = os.path.join( topics_out_dir, actors_page )
 
         write_seq_node_page( svg_path, out_path )
 
-    return nodes_data
 
+def generate_messages_pages( diagram_data: DiagramData, outdir ):
+    seq_diagram   = diagram_data.seq_diagram
+    params        = diagram_data.params
 
-def generate_messages_pages( seq_diagram: SequenceGraph, params: dict, outdir ):
     if params.get( "write_messages", False ) is False:
         return
+
     notes_functor = params.get( 'notes_functor' )
     out_dir = os.path.join( outdir, "msgs" )
     os.makedirs( out_dir, exist_ok=True )
@@ -182,7 +268,7 @@ def generate_messages_pages( seq_diagram: SequenceGraph, params: dict, outdir ):
             if item.isMessageSet() is False:
                 continue
             out_name = f"{item.index}_msg.html"
-            item.setProp( "url", "msgs/" + out_name )
+            item.setProp( "url", out_name )
             out_path = os.path.join( out_dir, out_name )
             note_content = None
             if notes_functor is not None:

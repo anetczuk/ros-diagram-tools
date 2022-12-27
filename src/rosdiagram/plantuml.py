@@ -12,29 +12,37 @@ import logging
 from typing import Set, List, Dict
 
 from rosdiagram.io import write_file, prepare_filesystem_name
-from rosdiagram.seqgraph import SequenceGraph, SeqItems, GraphItem
+from rosdiagram.seqgraph import SequenceGraph, SeqItems, GraphItem, DiagramData
 
 
 _LOGGER = logging.getLogger(__name__)
 
 
-def generate_seq_diagram( seq_graph: SequenceGraph, out_path, params: dict = None, nodes_subdir="nodes" ):
-    genrator = SequenceDiagramGenerator( params )
-    genrator.generate( seq_graph, out_path, nodes_subdir )
+def generate_diagram( diagram_data: DiagramData, out_path ):
+    params   = diagram_data.params
+    genrator = SequenceDiagramGenerator( params,
+                                         nodes_subdir=diagram_data.nodes_subdir,
+                                         msgs_subdir=diagram_data.msgs_subdir )
+    genrator.generate( diagram_data, out_path )
 
 
 ##
 class SequenceDiagramGenerator():
 
-    def __init__(self, params: dict = None):
+    def __init__(self, params: dict = None, nodes_subdir="", msgs_subdir="" ):
         self.name_dict: Dict[str, str] = {}
         self.params_dict = params
         if self.params_dict is None:
             self.params_dict = {}
 
+        self.nodes_subdir = nodes_subdir
+        self.msgs_subdir  = msgs_subdir
+
         self.actors_order: List[str] = []
 
-    def generate( self, seq_graph: SequenceGraph, out_path, nodes_subdir="nodes" ):
+    def generate( self, diagram_data: DiagramData, out_path ):
+        seq_graph    = diagram_data.seq_diagram
+
         call_len = seq_graph.size()
         if call_len < 1:
             content = """\
@@ -62,7 +70,7 @@ skinparam backgroundColor #FEFEFE
 
             item_filename = prepare_filesystem_name( item )
             item_path = item_filename + ".html"
-            item_path = os.path.join( nodes_subdir, item_path )
+            item_path = os.path.join( self.nodes_subdir, item_path )
             content += f"""participant "{item}" as {item_id} [[{item_path}]]\n"""
 
         content += "\n"
@@ -102,6 +110,8 @@ skinparam backgroundColor #FEFEFE
             data_url = None
             if call.isMessageSet():
                 data_url = call.getProp( "url", None )
+            if data_url is not None:
+                data_url = os.path.join( self.msgs_subdir, data_url )
 
             call_label = self.calculateLabel( call, data_url )
             indent     = ""
