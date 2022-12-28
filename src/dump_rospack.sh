@@ -25,7 +25,7 @@ mkdir -p $INFO_DIR
 echo "Dumping data to $INFO_DIR"
 
 
-rospack list-names > "$INFO_DIR/list.txt"
+rospack list > "$INFO_DIR/list.txt"
 
 echo -e "\nDone.\n"
 
