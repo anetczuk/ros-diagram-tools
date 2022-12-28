@@ -97,9 +97,20 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
             diagram_data.topics_subdir = "topics"
             diagram_data.msgs_subdir   = "msgs"
 
-            seq_diagram  = diagram_data.seq_diagram
+            seq_diagram = diagram_data.seq_diagram
             items_count = seq_diagram.itemsNum()
             print( "diagram items num:", items_count )
+
+            ## calculate notes
+            notes_functor = params.get( 'notes_functor' )
+            for loop in seq_diagram.getLoops():
+                for item in loop.items:
+                    if item.isMessageSet() is False:
+                        continue
+                    note_content = None
+                    if notes_functor is not None:
+                        note_content = notes_functor( item.labels, item.msgtype, item.msgdata )                       
+                    item.notes_data = note_content
 
             ## generating message pages
             generate_messages_pages( diagram_data, outdir )
@@ -122,6 +133,7 @@ def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> Diag
 
     excluded_topics = set()
 
+    ## topics list
     topics_data: List[ TopicData ] = []
     for connection in reader.connections:
         curr_topic  = connection.topic
@@ -142,6 +154,7 @@ def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> Diag
     seq_diagram: SequenceGraph = generate_basic_graph( reader, topic_subs, excluded_topics )
     seq_diagram.process( params )
 
+    ## nodes list
     nodes_data: List[ NodeData ] = []
     graph_actors = seq_diagram.actors()
     for node in graph_actors:
@@ -160,6 +173,7 @@ def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> Diag
     ret_data.nodes       = nodes_data
     ret_data.topics      = topics_data
     ret_data.params      = params
+
     return ret_data
 
 
@@ -256,15 +270,15 @@ def generate_topics_pages( diagram_data: DiagramData, outdir ):
 
 
 def generate_messages_pages( diagram_data: DiagramData, outdir ):
-    seq_diagram   = diagram_data.seq_diagram
-    params        = diagram_data.params
+    seq_diagram = diagram_data.seq_diagram
+    params      = diagram_data.params
 
     if params.get( "write_messages", False ) is False:
         return
 
-    notes_functor = params.get( 'notes_functor' )
     out_dir = os.path.join( outdir, "msgs" )
     os.makedirs( out_dir, exist_ok=True )
+
     for loop in seq_diagram.getLoops():
         if loop.repeats > 1:
             pass
@@ -274,9 +288,7 @@ def generate_messages_pages( diagram_data: DiagramData, outdir ):
             out_name = f"{item.index}_msg.html"
             item.setProp( "url", out_name )
             out_path = os.path.join( out_dir, out_name )
-            note_content = None
-            if notes_functor is not None:
-                note_content = notes_functor( item.labels, item.msgtype, item.msgdata )
+            note_content = item.notes_data
             if note_content is not None:
                 note_content = note_content.replace( "\n", "<br />\n" )
             write_message_page( item, out_path, note_content )
@@ -307,7 +319,7 @@ def generate_basic_graph( reader, topic_subs, excluded_topics ):
         ext = connection.ext
         topic_publisher = ext.callerid
 
-        time_diff = timestamp - first_timestamp
+        time_diff  = timestamp - first_timestamp
         graph_item = seq_diagram.addCallSubs( topic_publisher, subscribers, time_diff, timestamp, connection.topic )
 
         valid, msg = deserialize_msg( rawdata, connection )

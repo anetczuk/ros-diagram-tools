@@ -98,22 +98,20 @@ skinparam backgroundColor #FEFEFE
         write_file( out_path, content )
 
     def generateLoop( self, seq: SeqItems, loop_indent ):
-        content = ""
-
-        group_subs    = self.params_dict.get( "group_subs", False )
-        notes_functor = self.params_dict.get( "notes_functor", None )
+        content    = ""
+        group_subs = self.params_dict.get( "group_subs", False )
 
         calls = seq.items
-        for call in calls:
-            receivers = sorted( call.subs, reverse=True )
+        for item in calls:
+            receivers = sorted( item.subs, reverse=True )
 
             data_url = None
-            if call.isMessageSet():
-                data_url = call.getProp( "url", None )
+            if item.isMessageSet():
+                data_url = item.getProp( "url", None )
             if data_url is not None:
                 data_url = os.path.join( self.msgs_subdir, data_url )
 
-            call_label = self.calculateLabel( call, data_url )
+            call_label = self.calculateLabel( item, data_url )
             indent     = ""
 
             use_subs_group = len( receivers ) > 1 and group_subs
@@ -123,27 +121,17 @@ skinparam backgroundColor #FEFEFE
                 call_label = ""
                 indent = "    "
 
-            pub_id = self._getItemId( call.pub )
+            pub_id = self._getItemId( item.pub )
             for rec in receivers:
                 rec_id = self._getItemId( rec )
                 content   += f"""{loop_indent}{indent}{pub_id} o-> {rec_id} : {call_label}\n"""
-                if call_label and notes_functor is not None:
-                    try:
-                        note_content = notes_functor( call.labels, call.msgtype, call.msgdata )
-                        if note_content is not None:
-                            content += f"""\
+                if call_label:
+                    if item.notes_data is not None:
+                        content += f"""\
 note left
-{note_content}
+{item.notes_data}
 end note
 """
-#                             content += f""" x note left:
-# {note_content}
-# end note
-# """
-                    except AttributeError:
-                        timestamp_string = self.callTime( call )
-                        _LOGGER.error( "xxx %s", timestamp_string )
-                        raise
                 call_label = ""     ## clear label after first item
 
             if use_subs_group:

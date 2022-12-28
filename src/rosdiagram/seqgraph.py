@@ -24,6 +24,8 @@ class MsgData():
         self.msgdef  = None
         self.msgdata = None
 
+        self.notes_data = None
+
         self.props: Dict[ str, Any ] = {}
 
     def copy(self):
