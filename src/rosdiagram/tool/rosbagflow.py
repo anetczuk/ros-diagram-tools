@@ -109,7 +109,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
                         continue
                     note_content = None
                     if notes_functor is not None:
-                        note_content = notes_functor( item.labels, item.msgtype, item.msgdata )                       
+                        note_content = notes_functor( item.labels, item.msgtype, item.msgdata )
                     item.notes_data = note_content
 
             ## generating message pages
@@ -180,7 +180,7 @@ def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> Diag
 def generate_main_page( diagram_data: DiagramData, bag_path, exclude_set, outdir ):
     nodes_data  = diagram_data.nodes
     topics_data = diagram_data.topics
-    
+
     bag_name = os.path.basename( bag_path )
 
     out_path = os.path.join( outdir, f"flow_{bag_name}.puml" )

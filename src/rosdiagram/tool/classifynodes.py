@@ -8,16 +8,10 @@
 import os
 import logging
 
-import re
-from typing import List
 import argparse
-
-from rosdiagram.htmlgenerator import generate_graph_html
-from rosdiagram.graphviz import Graph, unquote_name_list, set_node_labels
-from rosdiagram.io import read_list, prepare_filesystem_name, read_file,\
-    write_file
-from rosdiagram.utils import get_create_item
 import json
+
+from rosdiagram.io import read_list, prepare_filesystem_name, write_file
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -84,7 +78,7 @@ def main():
     for pack in pack_list:
         pack_name = pack[0]
         pack_dir  = pack[1]
-        
+
         nodes_list = []
         for launch_path, launch_nodes in launch_dict.items():
             if pack_dir in launch_path:
@@ -94,7 +88,7 @@ def main():
             #print( "found nodes:", pack_name, pack_dir, nodes_list )
             pack_nodes_dict[ pack_name ] = { "path": pack_dir,
                                              "nodes": nodes_list,
-                                            }
+                                             }
 
     if args.out_file:
         # content = str( pack_nodes_dict )
