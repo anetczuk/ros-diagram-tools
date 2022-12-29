@@ -80,6 +80,7 @@ Dumping required data is split into two scripts:
 
 - [pydotplus](https://pypi.org/project/pydotplus/)
 - [PlantUML](https://plantuml.com/)
+- [GraphViz gallery](https://graphviz.org/gallery/)
 - [Texthon](texthon.chipsforbrain.org/)
 
 

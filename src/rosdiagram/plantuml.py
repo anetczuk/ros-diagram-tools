@@ -9,13 +9,21 @@ import os
 import datetime
 import itertools
 import logging
+import hashlib
+
 from typing import Set, List, Dict
 
-from rosdiagram.io import write_file, prepare_filesystem_name
+from rosdiagram.io import write_file, prepare_filesystem_name, read_list
 from rosdiagram.seqgraph import SequenceGraph, SeqItems, MsgData, DiagramData
 
 
+SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
+
 _LOGGER = logging.getLogger(__name__)
+
+
+BG_COLORS_PATH = os.path.join( SCRIPT_DIR, "plantuml_bg_colors.txt" )
+BG_COLORS_LIST = read_list( BG_COLORS_PATH )
 
 
 def generate_diagram( diagram_data: DiagramData, out_path ):
@@ -71,7 +79,19 @@ skinparam backgroundColor #FEFEFE
             item_filename = prepare_filesystem_name( item )
             item_path = item_filename + ".html"
             item_path = os.path.join( self.nodes_subdir, item_path )
-            content += f"""participant "{item}" as {item_id} [[{item_path}]]\n"""
+            
+            if BG_COLORS_LIST:
+                ## BG_COLORS
+                item_hash      = hashlib.sha256( item_id.encode('utf-8') ).hexdigest()
+                bg_color_index = int( item_hash, 16 ) % len( BG_COLORS_LIST )
+                bg_color       = BG_COLORS_LIST[ bg_color_index ]
+                
+                content += f"""box #{bg_color}\n"""
+                ## content += f"""'bg color: {bg_color}\n"""
+                content += f"""    participant "{item}" as {item_id} [[{item_path}]]\n"""
+                content += f"""end box\n"""
+            else:
+                content += f"""participant "{item}" as {item_id} [[{item_path}]]\n"""
 
         content += "\n"
 
