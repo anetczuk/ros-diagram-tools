@@ -311,9 +311,10 @@ def generate_basic_graph( reader, topic_subs, excluded_topics ):
         if connection.topic in excluded_topics:
             continue
 
-        subscribers = topic_subs[ connection.topic ]
+        subscribers = topic_subs.get( connection.topic, None )
         if not subscribers:
             ## topic without subscribers
+            print( "could not find topic for subscriber", connection.topic )
             continue
 
         ext = connection.ext
