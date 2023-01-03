@@ -78,6 +78,7 @@ Dumping required data is split into two scripts:
 
 ## References
 
+- [rosbag library](https://ternaris.gitlab.io/rosbags/index.html)
 - [pydotplus](https://pypi.org/project/pydotplus/)
 - [PlantUML](https://plantuml.com/)
 - [GraphViz gallery](https://graphviz.org/gallery/)
