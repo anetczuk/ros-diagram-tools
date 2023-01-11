@@ -8,6 +8,8 @@
 import logging
 from typing import List, Set
 
+import json
+
 import pydotplus
 from pydotplus.graphviz import quote_if_necessary, graph_from_dot_data
 
@@ -24,11 +26,17 @@ class Graph():
             base_object = pydotplus.graphviz.Dot()
         self.base_graph = base_object
 
+    def to_json(self):
+        return self.__str__()
+
     def base(self) -> pydotplus.Graph:
         return self.base_graph
 
     def parent(self) -> pydotplus.Graph:
         return self.base_graph.get_parent_graph()
+
+    def empty(self):
+        return self.getNodesCount() < 1
 
     def topGraph(self) -> pydotplus.Graph:
         curr_graph = self.base_graph
@@ -78,7 +86,7 @@ class Graph():
     def getNodesAll(self) -> List[ pydotplus.Node ]:
         return get_nodes_all( self.base_graph )
 
-    def getNodeNamesAll(self, unquote=False) -> Set[ str ]:
+    def getNodeNamesAll(self, unquote=True) -> Set[ str ]:
         names_list = get_node_names_all( self.base_graph )
         if unquote:
             names_list = unquote_name_list( names_list )
@@ -424,7 +432,7 @@ def preserve_neighbour_nodes( graph: Graph, nodes_start_list: List[str], level=0
     found_node_names = [ quote_if_necessary( node_name ) for node_name in nodes_start_list ]
     if len( found_node_names ) < 1:
         return
-    all_node_names = graph.getNodeNamesAll()
+    all_node_names = graph.getNodeNamesAll( unquote=False )
 
     preserve_edges = set()
     preserve_nodes = []

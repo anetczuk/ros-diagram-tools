@@ -51,6 +51,19 @@ def read_dict( file_path ):
     return {}
 
 
+## required for JSON to make classes serializable
+class CustomJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if hasattr(obj, 'to_json'):
+            return obj.to_json()
+        raise TypeError(f'Object of type {obj.__class__.__name__} is not JSON serializable')
+
+
+def write_dict( dict_obj, out_file, indent=None ):
+    content = json.dumps( dict_obj, indent=indent, cls=CustomJSONEncoder )
+    write_file( out_file, content )
+
+
 def write_file( file_path, content ):
     with open( file_path, 'w', encoding='utf-8' ) as content_file:
         content_file.write( content )
