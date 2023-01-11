@@ -56,7 +56,7 @@ echo "flake8 -- no warnings found"
 
 echo "running pylint3"
 echo "to ignore warning for module put following line on top of file: # pylint: disable=<check_id>"
-pylint --rcfile=$SCRIPT_DIR/pylint3.config $src_dir/rosdiagram $src_dir/testrosdiagram $src_dir/*.py
+pylint --rcfile=$SCRIPT_DIR/pylint3.config $src_dir
 exit_code=$?
 if [ $exit_code -ne 0 ]; then
     exit $exit_code
