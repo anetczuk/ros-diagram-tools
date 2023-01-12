@@ -70,12 +70,9 @@ ${DATA_DICT.get('graph_map', '')}
 #}
     </div>
 #!
-#! info_content = DATA_DICT.get('info_content')
-#{ if info_content:
-    <div class="info_content">
-${info_content}
-    </div>
-#}
+${ ros_topic_info( DATA_DICT ) }
+${ ros_service_info( DATA_DICT ) }
+#!
     <div class="bottom_content">
 ${DATA_DICT.get('bottom_content', '')}
     </div>
@@ -93,13 +90,61 @@ ${ ros_link_list( services_list, "ROS services" ) }
 #end template
 
 
+#*******************************************************
+
+
+#template ros_topic_info( DATA_DICT )
+#!
+#! msg_type    = DATA_DICT.get('msg_type')
+#! msg_content = DATA_DICT.get('msg_content')
+    <div class="info_content">
+#{ if msg_type:
+        Message: <code>${msg_type}</code><br/>
+#}
+#{ if msg_content:
+        <pre><code>${msg_content}</code></pre>
+#}
+    </div>
+#end template
+
+
+#template ros_service_info( DATA_DICT )
+#!
+#! srv_name     = DATA_DICT.get('srv_name')
+#! srv_listener = DATA_DICT.get('srv_listener')
+#{ if srv_name and srv_listener:
+    <div class="info_content">
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td>${srv_name}</td>
+            </tr>
+            <tr>
+                <td>Listener:</td>
+                <td>${ ros_item_link( srv_listener ) }</td>
+            </tr>
+        </table>
+#!
+#! msg_type = DATA_DICT.get('msg_type')
+#{ if msg_type:
+        Message: <code>${msg_type}</code><br/>
+#}
+#! msg_content = DATA_DICT.get('msg_content')
+#{ if msg_content:
+        <pre><code>${msg_content}</code></pre>
+#}
+    </div>
+#}
+#end template
+
+
 #template ros_link_list( items_list, list_title )
 #{ if items_list:
     <div class="bottom_content">
         $list_title (${ len(items_list) }):
         <ul>
 #{     for items_pair in items_list:
-            ${ ros_item_link( items_pair ) }
+            <li>${ ros_item_link( items_pair ) }</li>
 #}
         </ul>
         <br />
@@ -107,13 +152,14 @@ ${ ros_link_list( services_list, "ROS services" ) }
 #}
 #end template
 
+
 #template ros_item_link( item_pair )
 #! item_name = item_pair[0]
 #! item_url  = item_pair[1]
 #{ if item_url:
-<li><a href="${item_url}"><code>${item_name}</code></a></li>$>
+<a href="${item_url}"><code>${item_name}</code></a>$>
 #}
 #{ else:
-<li><code>${item_name}</code></li>$>
+<code>${item_name}</code>$>
 #}
 #end template

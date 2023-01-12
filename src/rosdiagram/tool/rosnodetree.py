@@ -387,6 +387,38 @@ def get_topics_from_dict( nodes_dict, nodes_list ) -> List[ str ]:
     return ret_list
 
 
+def get_topics_info( nodes_dict, msgs_dump_dir=None ):
+    ret_data = {}
+    for _, node_list in nodes_dict.items():
+        pubs_list = node_list[ "pubs" ]
+        for item_id, item_type in pubs_list:
+            topic_data = {}
+            ret_data[ item_id ] = topic_data
+            topic_data["type"] = item_type
+            
+            msg_content = ""
+            if msgs_dump_dir:
+                msg_file    = prepare_filesystem_name( item_type )
+                msg_path    = os.path.join( msgs_dump_dir, msg_file + ".txt" )
+                msg_content = read_file( msg_path )
+            topic_data["content"] = msg_content
+
+        subs_list = node_list[ "subs" ]
+        for item_id, item_type in subs_list:
+            topic_data = {}
+            ret_data[ item_id ] = topic_data
+            topic_data["type"] = item_type
+
+            msg_content = ""
+            if msgs_dump_dir:
+                msg_file    = prepare_filesystem_name( item_type )
+                msg_path    = os.path.join( msgs_dump_dir, msg_file + ".txt" )
+                msg_content = read_file( msg_path )
+            topic_data["content"] = msg_content
+
+    return ret_data
+
+
 def get_services( node_lists ) -> List[ str ]:
     servs_list = node_lists.get( "servs", [] )
     return get_names_from_list( servs_list )
@@ -398,6 +430,26 @@ def get_services_from_dict( nodes_dict, nodes_list ) -> List[ str ]:
         servs_list = get_services( nodes_dict.get( node_id, {} ) )
         ret_list.extend( servs_list )
     return ret_list
+
+
+def get_services_info( nodes_dict ):
+    ret_data = {}
+    for node_id, node_list in nodes_dict.items():
+        srvs_list = node_list[ "servs" ]
+        for item_id, item_type in srvs_list:
+            srv_data = {}
+            ret_data[ item_id ] = srv_data
+            srv_data["listener"] = node_id
+            srv_data["type"] = item_type
+            
+            msg_content = ""
+#             if msgs_dump_dir:
+#                 msg_file    = prepare_filesystem_name( item_type )
+#                 msg_path    = os.path.join( msgs_dump_dir, msg_file + ".txt" )
+#                 msg_content = read_file( msg_path )
+            srv_data["content"] = msg_content
+
+    return ret_data
 
 
 def get_names_from_list( items_list ) -> List[ str ]:
@@ -445,21 +497,22 @@ def remove_ros_items( graph: Graph ):
             graph.removeNode( name )
 
 
-def generate_subpages_dict( nodes_dict, items_list, label_dict, info_dict, neighbour_range ):
+def generate_subpages_dict( nodes_dict, items_list, label_dict, neighbour_range ):
     sub_items = {}
     for item_id in items_list:
-        node_dict = {}
-        sub_items[ item_id ] = node_dict
+        item_dict = {}
+        sub_items[ item_id ] = item_dict
         item_graph: Graph = generate_full_graph( nodes_dict, labels_dict=label_dict )
         # item_graph: Graph = generate_full_graph( nodes_dict, labels_dict=label_dict, services_as_labels=False, services_as_nodes=True )
         preserve_neighbour_nodes( item_graph, [item_id], neighbour_range )
         graph_names = list( item_graph.getNodeNamesAll() )
         nodes_list  = sorted( filter_nodes( nodes_dict, graph_names ) )
-        node_dict[ "graph" ]    = item_graph
-        node_dict[ "info" ]     = info_dict.get( item_id, None )
-        node_dict[ "nodes" ]    = nodes_list
-        node_dict[ "topics" ]   = sorted( filter_topics( nodes_dict, graph_names ) )
-        node_dict[ "services" ] = sorted( get_services_from_dict( nodes_dict, [ item_id ] ) )
+        item_dict[ "graph" ]    = item_graph
+        item_dict[ "msg_type" ]    = ""
+        item_dict[ "msg_content" ] = ""
+        item_dict[ "nodes" ]    = nodes_list
+        item_dict[ "topics" ]   = sorted( filter_topics( nodes_dict, graph_names ) )
+        item_dict[ "services" ] = sorted( get_services_from_dict( nodes_dict, [ item_id ] ) )
     return sub_items
 
 
@@ -495,7 +548,7 @@ def main():
         return
 
     label_dict = fix_names( nodes_dict )
-    info_dict  = get_node_info_dict( nodes_dict, label_dict, args.msgs_dump_dir, args.srvs_dump_dir )
+    # info_dict  = get_node_info_dict( nodes_dict, label_dict, args.msgs_dump_dir, args.srvs_dump_dir )
 
     if len( args.outraw ) > 0 or len( args.outpng ) > 0:
         graph = generate_full_graph( nodes_dict )
@@ -514,16 +567,29 @@ def main():
         main_graph: Graph = generate_compact_graph( nodes_dict, show_services=True, labels_dict=label_dict )
         remove_ros_items( main_graph )
 
-        nodes_subpages_dict    = generate_subpages_dict( nodes_dict, all_nodes, label_dict, info_dict, 1 )
-        topics_subpages_dict   = generate_subpages_dict( nodes_dict, all_topics, label_dict, info_dict, 0 )
-        services_subpages_dict = generate_subpages_dict( nodes_dict, all_services, label_dict, info_dict, 0 )
+        nodes_subpages_dict    = generate_subpages_dict( nodes_dict, all_nodes, label_dict, 1 )
+        topics_subpages_dict   = generate_subpages_dict( nodes_dict, all_topics, label_dict, 0 )
+        services_subpages_dict = generate_subpages_dict( nodes_dict, all_services, label_dict, 0 )
+
+        topics_info = get_topics_info( nodes_dict, args.msgs_dump_dir )
+        for topic_id, topic_data in topics_info.items():
+            sub_dict = topics_subpages_dict[ topic_id ]
+            sub_dict[ "msg_type" ]    = topic_data.get( "type", "" )
+            sub_dict[ "msg_content" ] = topic_data.get( "content", "" )
+
+        services_info = get_services_info( nodes_dict )
+        for service_id, service_data in services_info.items():
+            sub_dict = services_subpages_dict[ service_id ]
+            sub_dict[ "svr_listener" ] = service_data.get( "listener", "" )
+            sub_dict[ "msg_type" ]     = service_data.get( "type", "" )
+            sub_dict[ "msg_content" ]  = service_data.get( "content", "" )
+
         sub_items = {}
         sub_items.update( nodes_subpages_dict )
         sub_items.update( topics_subpages_dict )
         sub_items.update( services_subpages_dict )
 
-        params_dict = { "default_style": {
-                                           },
+        params_dict = { "style": { },
                         "labels_dict": label_dict,
                         "main_page": { "graph": main_graph,
                                        "nodes":    all_nodes,

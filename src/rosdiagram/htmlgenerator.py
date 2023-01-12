@@ -112,8 +112,10 @@ class HtmlGenerator():
 
         store_graph_to_html( graph, output_dir )
 
-        graph_name     = graph.getName()                       ## usually node id
-        graph_filename = prepare_filesystem_name( graph_name )
+        graph_id       = graph.getName()                       ## usually node id
+        graph_filename = prepare_filesystem_name( graph_id )
+
+        graph_label = self.labels_dict.get( graph_id, graph_id )
 
         graph_map = ""
         graph_image_path = ""
@@ -122,22 +124,24 @@ class HtmlGenerator():
             graph_map        = read_file( map_out )
             graph_image_path = f"{graph_filename}.png"
 
-        body_color     = self.params.get( "body_color", "#bbbbbb" )
-        head_css_style = self.params.get( "head_css_style", "" )
-
-        alt_text = self.labels_dict.get( graph_name, graph_name )
+        alt_text = graph_label
 #         if len(self.type_label) > 0:
 #             alt_text = self.type_label + " " + alt_text
-
-        info_content = item_config_dict.get( "info", None )
-
-        item_nodes_list    = item_config_dict.get( "nodes", None )
-        item_topics_list   = item_config_dict.get( "topics", None )
-        item_services_list = item_config_dict.get( "services", None )
 
         link_subdir = ""
         if is_mainpage:
             link_subdir = self.OUTPUT_NODES_REL_DIR
+
+        listener = ""
+        listener_id = item_config_dict.get( "svr_listener", "" )
+        if listener_id:
+            link_list = self._getROSItemLinkList( [listener_id], link_subdir )
+            if link_list:
+                listener = link_list[0]
+
+        item_nodes_list    = item_config_dict.get( "nodes", None )
+        item_topics_list   = item_config_dict.get( "topics", None )
+        item_services_list = item_config_dict.get( "services", None )
 
         nodes_list    = self._getROSItemLinkList( item_nodes_list, link_subdir )
         topics_list   = self._getROSItemLinkList( item_topics_list, link_subdir )
@@ -150,19 +154,24 @@ class HtmlGenerator():
             main_page_link  = os.path.join( os.pardir, item_filename + ".html" )
 
         ## prepare input for template
-        page_params = { "body_color":       body_color,
-                        "head_css_style":   head_css_style,
+        page_params = { "body_color":       self._getStyle( "body_color", "#bbbbbb" ),
+                        "head_css_style":   "",
                         "top_content":      "",
-                        "info_content":     info_content,
+                        "info_content":     item_config_dict.get( "info", None ),
                         "bottom_content":   "",
 
                         "main_page_link": main_page_link,
+
+                        "srv_name":     graph_label,
+                        "srv_listener": listener,
+                        "msg_type":     item_config_dict.get( "msg_type", "" ),
+                        "msg_content":  item_config_dict.get( "msg_content", "" ),
 
                         "nodes":    nodes_list,
                         "topics":   topics_list,
                         "services": services_list,
 
-                        "graph_name":        graph_name,
+                        "graph_name":        graph_id,
                         "graph_image_path":  graph_image_path,
                         "alt_text":          alt_text,
                         "graph_map":         graph_map
@@ -203,6 +212,10 @@ class HtmlGenerator():
             else:
                 ret_list.append( (label, None) )
         return ret_list
+
+    def _getStyle( self, item_id, default_value ):
+        style_dict = self.params.get( "style", {} )
+        return style_dict.get( item_id, default_value )
 
     def _isSubPage(self, item_id):
         sub_items_dict = self.params.get( "sub_pages", {} )
