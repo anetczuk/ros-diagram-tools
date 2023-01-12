@@ -480,10 +480,48 @@ def split_to_groups( nodes_dict ):
 ## =====================================================
 
 
-def generate( node_info_dir ):
-    data_dict = read_nodes( node_info_dir )
-    graph     = generate_full_graph( data_dict )
-    return graph
+def generate_pages( nodes_dict, out_dir, label_dict = None, msgs_dump_dir=None ):
+    if label_dict is None:
+        label_dict = fix_names( nodes_dict )
+
+    all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
+
+    main_graph: Graph = generate_compact_graph( nodes_dict, show_services=True, labels_dict=label_dict )
+    remove_ros_items( main_graph )
+
+    nodes_subpages_dict    = generate_subpages_dict( nodes_dict, all_nodes, label_dict, 1 )
+    topics_subpages_dict   = generate_subpages_dict( nodes_dict, all_topics, label_dict, 0 )
+    services_subpages_dict = generate_subpages_dict( nodes_dict, all_services, label_dict, 0 )
+
+    topics_info = get_topics_info( nodes_dict, msgs_dump_dir )
+    for topic_id, topic_data in topics_info.items():
+        sub_dict = topics_subpages_dict[ topic_id ]
+        sub_dict[ "msg_type" ]    = topic_data.get( "type", "" )
+        sub_dict[ "msg_content" ] = topic_data.get( "content", "" )
+
+    services_info = get_services_info( nodes_dict )
+    for service_id, service_data in services_info.items():
+        sub_dict = services_subpages_dict[ service_id ]
+        sub_dict[ "svr_listener" ] = service_data.get( "listener", "" )
+        sub_dict[ "msg_type" ]     = service_data.get( "type", "" )
+        sub_dict[ "msg_content" ]  = service_data.get( "content", "" )
+
+    sub_items = {}
+    sub_items.update( nodes_subpages_dict )
+    sub_items.update( topics_subpages_dict )
+    sub_items.update( services_subpages_dict )
+
+    params_dict = { "style": { },
+                    "labels_dict": label_dict,
+                    "main_page": { "graph": main_graph,
+                                   "nodes":    all_nodes,
+                                   "topics":   all_topics,
+                                   "services": all_services
+                                   },
+                    "sub_pages": sub_items
+                    }
+
+    generate_graph_html( out_dir, params_dict )
 
 
 def remove_ros_items( graph: Graph ):
@@ -524,7 +562,7 @@ def main():
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '--dump_dir', action='store', required=False, default="",
-                         help="Dump directory containing 'rostopic' output data" )
+                         help="Dump directory containing 'rosnode' output data" )
     parser.add_argument( '--msgs_dump_dir', action='store', required=False, default="",
                          help="Dump directory containing 'rosmsg' output data" )
     parser.add_argument( '--srvs_dump_dir', action='store', required=False, default="",
@@ -561,42 +599,5 @@ def main():
     ##
     ## generate HTML data
     ##
-    all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
-
     if args.outhtml and len( args.outdir ) > 0:
-        main_graph: Graph = generate_compact_graph( nodes_dict, show_services=True, labels_dict=label_dict )
-        remove_ros_items( main_graph )
-
-        nodes_subpages_dict    = generate_subpages_dict( nodes_dict, all_nodes, label_dict, 1 )
-        topics_subpages_dict   = generate_subpages_dict( nodes_dict, all_topics, label_dict, 0 )
-        services_subpages_dict = generate_subpages_dict( nodes_dict, all_services, label_dict, 0 )
-
-        topics_info = get_topics_info( nodes_dict, args.msgs_dump_dir )
-        for topic_id, topic_data in topics_info.items():
-            sub_dict = topics_subpages_dict[ topic_id ]
-            sub_dict[ "msg_type" ]    = topic_data.get( "type", "" )
-            sub_dict[ "msg_content" ] = topic_data.get( "content", "" )
-
-        services_info = get_services_info( nodes_dict )
-        for service_id, service_data in services_info.items():
-            sub_dict = services_subpages_dict[ service_id ]
-            sub_dict[ "svr_listener" ] = service_data.get( "listener", "" )
-            sub_dict[ "msg_type" ]     = service_data.get( "type", "" )
-            sub_dict[ "msg_content" ]  = service_data.get( "content", "" )
-
-        sub_items = {}
-        sub_items.update( nodes_subpages_dict )
-        sub_items.update( topics_subpages_dict )
-        sub_items.update( services_subpages_dict )
-
-        params_dict = { "style": { },
-                        "labels_dict": label_dict,
-                        "main_page": { "graph": main_graph,
-                                       "nodes":    all_nodes,
-                                       "topics":   all_topics,
-                                       "services": all_services
-                                       },
-                        "sub_pages": sub_items
-                        }
-
-        generate_graph_html( args.outdir, params_dict )
+        generate_pages( nodes_dict, args.outdir, label_dict=label_dict, msgs_dump_dir=args.msgs_dump_dir )
