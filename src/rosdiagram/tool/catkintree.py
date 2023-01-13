@@ -123,14 +123,14 @@ def generate_pages( deps_dict, out_dir, highlight_list=[], top_list=None, paint_
         paint_function( main_graph )
     paint_nodes( main_graph, highlight_list )
 
-    all_items = main_graph.getNodeNamesAll()
+    all_items = sorted( main_graph.getNodeNamesAll() )
 
     params_dict = { "style": {},
                     "labels_dict": {},
                     "main_page": { "graph": main_graph,
                                    "lists": [ { "title": "Graph items", "items": all_items } ]
                                    },
-                    "sub_pages": generate_subpages_dict( deps_dict, all_items, highlight_list, paint_function=paint_function )
+                    "sub_pages": generate_subpages_dict( deps_dict, all_items, highlight_list, top_list=top_list, paint_function=paint_function )
                     }
  
     generate_graph_html( out_dir, params_dict )
@@ -157,7 +157,7 @@ def generate_subpages_dict( deps_dict, items_list, highlight_list=[], top_list=N
         item_dict[ "msg_type" ]    = ""
         item_dict[ "msg_content" ] = ""
 
-        nodes_list = list( item_graph.getNodeNamesAll() )
+        nodes_list = sorted( list( item_graph.getNodeNamesAll() ) )
         item_dict[ "lists" ] = [ { "title": "Graph items", "items": nodes_list } ]
 
     return sub_items

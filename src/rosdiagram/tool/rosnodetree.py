@@ -480,7 +480,7 @@ def split_to_groups( nodes_dict ):
 ## =====================================================
 
 
-def generate_pages( nodes_dict, out_dir, label_dict = None, msgs_dump_dir=None ):
+def generate_pages( nodes_dict, out_dir, label_dict = None, msgs_dump_dir=None, paint_function=None ):
     if label_dict is None:
         label_dict = fix_names( nodes_dict )
 
@@ -488,10 +488,12 @@ def generate_pages( nodes_dict, out_dir, label_dict = None, msgs_dump_dir=None )
 
     main_graph: Graph = generate_compact_graph( nodes_dict, show_services=True, labels_dict=label_dict )
     remove_ros_items( main_graph )
+    if paint_function:
+        paint_function( main_graph )
 
-    nodes_subpages_dict    = generate_subpages_dict( nodes_dict, all_nodes, label_dict, 1 )
-    topics_subpages_dict   = generate_subpages_dict( nodes_dict, all_topics, label_dict, 0 )
-    services_subpages_dict = generate_subpages_dict( nodes_dict, all_services, label_dict, 0 )
+    nodes_subpages_dict    = generate_subpages_dict( nodes_dict, all_nodes, label_dict, 1, paint_function=paint_function )
+    topics_subpages_dict   = generate_subpages_dict( nodes_dict, all_topics, label_dict, 0, paint_function=paint_function )
+    services_subpages_dict = generate_subpages_dict( nodes_dict, all_services, label_dict, 0, paint_function=paint_function )
 
     topics_info = get_topics_info( nodes_dict, msgs_dump_dir )
     for topic_id, topic_data in topics_info.items():
@@ -533,7 +535,7 @@ def remove_ros_items( graph: Graph ):
             graph.removeNode( name )
 
 
-def generate_subpages_dict( nodes_dict, items_list, label_dict, neighbour_range ):
+def generate_subpages_dict( nodes_dict, items_list, label_dict, neighbour_range, paint_function=None ):
     sub_items = {}
     for item_id in items_list:
         item_dict = {}
@@ -541,6 +543,9 @@ def generate_subpages_dict( nodes_dict, items_list, label_dict, neighbour_range 
         item_graph: Graph = generate_full_graph( nodes_dict, labels_dict=label_dict )
         # item_graph: Graph = generate_full_graph( nodes_dict, labels_dict=label_dict, services_as_labels=False, services_as_nodes=True )
         preserve_neighbour_nodes( item_graph, [item_id], neighbour_range )
+        if paint_function:
+            paint_function( item_graph )
+        
         graph_names = list( item_graph.getNodeNamesAll() )
         nodes_list  = sorted( filter_nodes( nodes_dict, graph_names ) )
         item_dict[ "graph" ]    = item_graph
