@@ -139,13 +139,14 @@ class HtmlGenerator():
             if link_list:
                 listener = link_list[0]
 
-        item_nodes_list    = item_config_dict.get( "nodes", None )
-        item_topics_list   = item_config_dict.get( "topics", None )
-        item_services_list = item_config_dict.get( "services", None )
-
-        nodes_list    = self._getROSItemLinkList( item_nodes_list, link_subdir )
-        topics_list   = self._getROSItemLinkList( item_topics_list, link_subdir )
-        services_list = self._getROSItemLinkList( item_services_list, link_subdir )
+        converted_lists = []
+        items_lists = item_config_dict.get( "lists", [] )
+        for list_dict in items_lists:
+            title = list_dict.get( "title", "Items" )
+            items = list_dict.get( "items", [] )
+            converted_list = self._getROSItemLinkList( items, link_subdir )
+            converted_dict = { "title": title, "items": converted_list }
+            converted_lists.append( converted_dict )
 
         main_page_link = ""
         if not is_mainpage:
@@ -167,9 +168,7 @@ class HtmlGenerator():
                         "msg_type":     item_config_dict.get( "msg_type", "" ),
                         "msg_content":  item_config_dict.get( "msg_content", "" ),
 
-                        "nodes":    nodes_list,
-                        "topics":   topics_list,
-                        "services": services_list,
+                        "lists": converted_lists,
 
                         "graph_name":        graph_id,
                         "graph_image_path":  graph_image_path,

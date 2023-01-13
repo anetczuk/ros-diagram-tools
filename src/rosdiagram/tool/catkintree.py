@@ -9,8 +9,10 @@ import os
 import logging
 import argparse
 
-from rosdiagram.graphviz import Graph
+from rosdiagram.graphviz import Graph, preserve_neighbour_nodes, set_nodes_style,\
+    preserve_top_subgraph
 from rosdiagram.io import read_file
+from rosdiagram.htmlgenerator import generate_graph_html
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -60,7 +62,15 @@ def parse_content( content, build_deps=True ):
     return deps_dict
 
 
-def generate_graph( deps_dict, node_shape="box" ):
+def get_items_list( deps_dict ):
+    ret_list = []
+    ret_list.extend( deps_dict.keys() )
+    for _, deps in deps_dict.items():
+        ret_list.extend( deps )
+    return ret_list
+
+
+def generate_graph( deps_dict, node_shape="octagon" ):
     dot_graph = Graph()
     base_graph = dot_graph.base_graph
     base_graph.set_type( 'digraph' )
@@ -86,12 +96,71 @@ def set_min_max_rank( dot_graph: Graph ):
     dot_graph.setNodesRank( top_nodes, "min" )
 
 
+def paint_nodes( graph: Graph, paint_list ):
+    style = { "style": "filled",
+              "fillcolor": "yellow"
+              }
+    set_nodes_style( graph, paint_list, style )
+
+
+## ===============================================================
+
+
 def generate( catkin_list_file, node_shape="box" ):
     content   = read_file( catkin_list_file )
     data_dict = parse_content( content, build_deps=False )
     graph     = generate_graph( data_dict, node_shape )
     set_min_max_rank( graph )
     return graph
+
+
+def generate_pages( deps_dict, out_dir, highlight_list=[], top_list=None, paint_function=None ):
+    main_graph: Graph = generate_graph( deps_dict )
+    if top_list:
+        preserve_top_subgraph( main_graph, top_list )
+    set_min_max_rank( main_graph )
+    if paint_function:
+        paint_function( main_graph )
+    paint_nodes( main_graph, highlight_list )
+
+    all_items = main_graph.getNodeNamesAll()
+
+    params_dict = { "style": {},
+                    "labels_dict": {},
+                    "main_page": { "graph": main_graph,
+                                   "lists": [ { "title": "Graph items", "items": all_items } ]
+                                   },
+                    "sub_pages": generate_subpages_dict( deps_dict, all_items, highlight_list, paint_function=paint_function )
+                    }
+ 
+    generate_graph_html( out_dir, params_dict )
+
+
+def generate_subpages_dict( deps_dict, items_list, highlight_list=[], top_list=None, paint_function=None ):
+    sub_items = {}
+    for item_id in items_list:
+        _LOGGER.info( "preparing subpage data for %s", item_id )
+
+        item_dict = {}
+        sub_items[ item_id ] = item_dict
+
+        item_graph = generate_graph( deps_dict )
+        if top_list:
+            preserve_top_subgraph( item_graph, top_list )
+        preserve_neighbour_nodes( item_graph, [item_id], 0 )
+        set_min_max_rank( item_graph )
+        if paint_function:
+            paint_function( item_graph )
+        paint_nodes( item_graph, highlight_list )
+
+        item_dict[ "graph" ]       = item_graph
+        item_dict[ "msg_type" ]    = ""
+        item_dict[ "msg_content" ] = ""
+
+        nodes_list = list( item_graph.getNodeNamesAll() )
+        item_dict[ "lists" ] = [ { "title": "Graph items", "items": nodes_list } ]
+
+    return sub_items
 
 
 ## ===================================================================
@@ -106,8 +175,8 @@ def main():
     parser.add_argument( '--node_shape', action='store', required=False, default=None, help="Graph RAW output" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
-#     parser.add_argument( '--filter', action='store', required=False, default="",
-#                          help="Filter packages with items in file" )
+    parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
+    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 
     args = parser.parse_args()
 
@@ -127,3 +196,12 @@ def main():
         graph.writeRAW( args.outraw )
     if len( args.outpng ) > 0:
         graph.writePNG( args.outpng )
+        
+    ##
+    ## generate HTML data
+    ##
+    if args.outhtml and len( args.outdir ) > 0:
+        _LOGGER.info( "generating HTML graph" )
+        content   = read_file( args.file )
+        data_dict = parse_content( content, build_deps=False )
+        generate_pages( data_dict, args.outdir )

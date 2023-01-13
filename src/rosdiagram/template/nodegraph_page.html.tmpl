@@ -77,14 +77,12 @@ ${ ros_service_info( DATA_DICT ) }
 ${DATA_DICT.get('bottom_content', '')}
     </div>
 #!
-#! nodes_list = DATA_DICT.get('nodes')
-${ ros_link_list( nodes_list, "ROS nodes" ) }
-#!
-#! topics_list = DATA_DICT.get('topics')
-${ ros_link_list( topics_list, "ROS topics" ) }
-#!
-#! services_list = DATA_DICT.get('services')
-${ ros_link_list( services_list, "ROS services" ) }
+#! groups_lists = DATA_DICT.get('lists', [])
+#{ for group_dict in groups_lists:
+#!     title      = group_dict.get( "title", "Items" )
+#!     items_list = group_dict.get( "items", [] )
+        ${ ros_link_list( items_list, title ) }
+#}
 </body>
 </html>
 #end template

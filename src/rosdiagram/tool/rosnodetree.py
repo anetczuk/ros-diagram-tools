@@ -511,12 +511,10 @@ def generate_pages( nodes_dict, out_dir, label_dict = None, msgs_dump_dir=None )
     sub_items.update( topics_subpages_dict )
     sub_items.update( services_subpages_dict )
 
-    params_dict = { "style": { },
+    params_dict = { "style": {},
                     "labels_dict": label_dict,
                     "main_page": { "graph": main_graph,
-                                   "nodes":    all_nodes,
-                                   "topics":   all_topics,
-                                   "services": all_services
+                                   "lists": generate_items_lists( all_nodes, all_topics, all_services )
                                    },
                     "sub_pages": sub_items
                     }
@@ -548,10 +546,27 @@ def generate_subpages_dict( nodes_dict, items_list, label_dict, neighbour_range 
         item_dict[ "graph" ]    = item_graph
         item_dict[ "msg_type" ]    = ""
         item_dict[ "msg_content" ] = ""
-        item_dict[ "nodes" ]    = nodes_list
-        item_dict[ "topics" ]   = sorted( filter_topics( nodes_dict, graph_names ) )
-        item_dict[ "services" ] = sorted( get_services_from_dict( nodes_dict, [ item_id ] ) )
+
+        topics_list   = sorted( filter_topics( nodes_dict, graph_names ) )
+        services_list = sorted( get_services_from_dict( nodes_dict, [ item_id ] ) )
+        
+        item_dict[ "lists" ] = generate_items_lists( nodes_list, topics_list, services_list )
+        
     return sub_items
+
+
+def generate_items_lists( nodes_list, topics_list, services_list ):
+    ret_list =  [ { "title": "ROS nodes",
+                    "items": nodes_list
+                    },
+                  { "title": "ROS topics",
+                    "items": topics_list
+                    },
+                  { "title": "ROS services",
+                    "items": services_list
+                    }
+                 ]
+    return ret_list
 
 
 ## ===================================================================
