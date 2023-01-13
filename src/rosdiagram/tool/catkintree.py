@@ -114,7 +114,14 @@ def generate( catkin_list_file, node_shape="box" ):
     return graph
 
 
-def generate_pages( deps_dict, out_dir, highlight_list=[], top_list=None, paint_function=None ):
+def generate_pages( deps_dict, out_dir, config_params_dict=None ):
+    if config_params_dict is None:
+        config_params_dict = {}
+
+    top_list       = config_params_dict.get( "top_list", [] )
+    highlight_list = config_params_dict.get( "highlight_list", [] )
+    paint_function = config_params_dict.get( "paint_function", None )
+
     main_graph: Graph = generate_graph( deps_dict )
     if top_list:
         preserve_top_subgraph( main_graph, top_list )

@@ -480,7 +480,14 @@ def split_to_groups( nodes_dict ):
 ## =====================================================
 
 
-def generate_pages( nodes_dict, out_dir, label_dict = None, msgs_dump_dir=None, paint_function=None ):
+def generate_pages( nodes_dict, out_dir, config_params_dict=None ):
+    if config_params_dict is None:
+        config_params_dict = {}
+
+    label_dict     = config_params_dict.get( "label_dict", {} )
+    msgs_dump_dir  = config_params_dict.get( "msgs_dump_dir", None )
+    paint_function = config_params_dict.get( "paint_function", None )
+
     if label_dict is None:
         label_dict = fix_names( nodes_dict )
 
@@ -620,4 +627,7 @@ def main():
     ## generate HTML data
     ##
     if args.outhtml and len( args.outdir ) > 0:
-        generate_pages( nodes_dict, args.outdir, label_dict=label_dict, msgs_dump_dir=args.msgs_dump_dir )
+        config_params_dict = { "label_dict":    label_dict,
+                               "msgs_dump_dir": args.msgs_dump_dir
+                               }
+        generate_pages( nodes_dict, args.outdir, config_params_dict )
