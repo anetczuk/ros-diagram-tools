@@ -1,0 +1,6 @@
+<map id="package_b" name="package_b">
+<area shape="poly" id="node1" href="package_b.html" title="node: package_b" alt="" coords="176,111,176,91,126,77,55,77,5,91,5,111,55,125,126,125"/>
+<area shape="poly" id="node2" href="std_msgs.html" title="node: std_msgs" alt="" coords="403,39,403,19,358,5,293,5,247,19,247,39,293,53,358,53"/>
+<area shape="poly" id="node3" href="sensor_msgs.html" title="node: sensor_msgs" alt="" coords="427,111,427,91,367,77,283,77,224,91,224,111,283,125,367,125"/>
+<area shape="poly" id="node4" href="package_a.html" title="node: package_a" alt="" coords="410,183,410,163,360,149,290,149,241,163,241,183,290,197,360,197"/>
+</map>
