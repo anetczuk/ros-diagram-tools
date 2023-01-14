@@ -27,16 +27,13 @@ echo "Dumping data to $INFO_DIR"
 
 rospack list > "$INFO_DIR/list.txt"
 
+
+items_list=$(rospack list-names)
+
+for item in $items_list; do
+    out_file="$INFO_DIR/"$(echo "$item" | sed "s/\//_/g")".txt"
+    echo "Writing $out_file"
+    rospack depends1 $item > $out_file
+done
+
 echo -e "\nDone.\n"
-
-
-#items_list=$(rospack list-names)
-#
-#
-#for item in $items_list; do
-#    out_file="$INFO_DIR/"$(echo "$item" | sed "s/\//_/g")".txt"
-#    echo "Writing $out_file"
-#    rospack info $item > $out_file
-#done
-#
-#echo -e "\nDone.\n"
