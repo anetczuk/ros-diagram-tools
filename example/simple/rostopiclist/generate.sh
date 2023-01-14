@@ -7,7 +7,7 @@ set -eu
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 
 
-TOOL_DIR="$SCRIPT_DIR/../../src"
+TOOL_DIR="$SCRIPT_DIR/../../../src"
 
 OUT_DIR="$SCRIPT_DIR/out"
 
