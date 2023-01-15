@@ -1,18 +1,18 @@
 digraph G {
 rankdir=LR;
-"/topic2" [shape=ellipse];
-"/node2" [shape=box];
-"/node4" [shape=box];
-"/node5" [shape=box];
-"t|/topic1" [shape=ellipse];
-"/node1" [shape=box];
-"/node3" [shape=box];
-"n|/topic1" [shape=box];
-"/node2" -> "/topic2";
-"/topic2" -> "/node4";
-"/topic2" -> "/node5";
-"/node1" -> "t|/topic1";
-"t|/topic1" -> "/node2";
-"t|/topic1" -> "/node3";
-"t|/topic1" -> "n|/topic1";
+"t_/topic1" [shape=ellipse];
+"n_/node1" [shape=box];
+"n_/node2" [shape=box];
+"n_/node3" [shape=box];
+"n_/topic1" [shape=box];
+"t_/topic2" [shape=ellipse];
+"n_/node4" [shape=box];
+"n_/node5" [shape=box];
+"n_/node1" -> "t_/topic1";
+"t_/topic1" -> "n_/node2";
+"t_/topic1" -> "n_/node3";
+"t_/topic1" -> "n_/topic1";
+"n_/node2" -> "t_/topic2";
+"t_/topic2" -> "n_/node4";
+"t_/topic2" -> "n_/node5";
 }
