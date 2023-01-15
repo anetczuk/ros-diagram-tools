@@ -70,9 +70,14 @@ ${DATA_DICT.get('graph_map', '')}
 #}
     </div>
 #!
-${ ros_topic_info( DATA_DICT ) }
-${ ros_service_info( DATA_DICT ) }
+#! page_type = DATA_DICT.get('page_type')
 #!
+#{ if page_type == "topic":
+${ ros_topic_info( DATA_DICT ) }
+#}
+#{ if page_type == "service":
+${ ros_service_info( DATA_DICT ) }
+#}
     <div class="bottom_content">
 ${DATA_DICT.get('bottom_content', '')}
     </div>
@@ -123,17 +128,20 @@ ${DATA_DICT.get('bottom_content', '')}
             </tr>
         </table>
 #!
-#! msg_type = DATA_DICT.get('msg_type')
-#{ if msg_type:
+#!     msg_type = DATA_DICT.get('msg_type')
+#{     if msg_type:
         Message: <code>${msg_type}</code><br/>
 #}
-#! msg_content = DATA_DICT.get('msg_content')
-#{ if msg_content:
+#!     msg_content = DATA_DICT.get('msg_content')
+#{     if msg_content:
         <pre><code>${msg_content}</code></pre>
 #}
     </div>
 #}
 #end template
+
+
+#*******************************************************
 
 
 #template ros_link_list( items_list, list_title )

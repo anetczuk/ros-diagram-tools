@@ -21,6 +21,9 @@ class DataDict():
         if self.data is None:
             self.data = {}
 
+    def keys(self):
+        return list( self.data.keys() )
+
     def value( self, *keys, default=None ):
         try:
             curr_data = self.data

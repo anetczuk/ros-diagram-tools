@@ -11,6 +11,7 @@ import logging
 import argparse
 
 import rosdiagram.ros.rostopicdata as rostopicdata
+import rosdiagram.ros.rosservicedata as rosservicedata
 
 from rosdiagram.utils import get_create_item
 from rosdiagram.ros.rosnodedata import get_topics, get_services,\
@@ -21,6 +22,7 @@ from rosdiagram.htmlgenerator import generate_graph_html
 from rosdiagram.graphviz import Graph, set_node_labels, preserve_neighbour_nodes
 from rosdiagram.ros.rosutils import remove_ros_items
 from rosdiagram.ros.rostopicdata import read_topics
+from rosdiagram.ros.rosservicedata import read_services
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -147,15 +149,20 @@ def generate_pages( nodes_dict, out_dir, config_params_dict=None ):
     label_dict        = config_params_dict.get( "label_dict", {} )
     topics_data_dir   = config_params_dict.get( "topics_data_dir", None )
     msgs_dump_dir     = config_params_dict.get( "msgs_dump_dir", None )
-    services_data_dir = config_params_dict.get( "services_data_dir", None )
+    services_dump_dir = config_params_dict.get( "services_dump_dir", None )
     srvs_dump_dir     = config_params_dict.get( "srvs_dump_dir", None )
     paint_function    = config_params_dict.get( "paint_function", None )
 
     if label_dict is None:
         label_dict = fix_names( nodes_dict )
 
-    topics_dict  = read_topics( topics_data_dir )
-    topic_labels = rostopicdata.fix_names( topics_dict )
+    topics_dict = read_topics( topics_data_dir )
+    rostopicdata.fix_names( topics_dict )
+    # topic_labels = rostopicdata.fix_names( topics_dict )
+
+    services_dict = read_services( services_dump_dir )
+    rosservicedata.fix_names( services_dict )
+    # services_labels = rostopicdata.fix_names( services_dict )
 
     nodes_data: ROSNodeData = ROSNodeData( nodes_dict )
     nodes_data.nodes_label_dict = label_dict
@@ -171,16 +178,21 @@ def generate_pages( nodes_dict, out_dir, config_params_dict=None ):
     topics_subpages_dict   = generate_subpages_dict( nodes_dict, all_topics, label_dict, 0, paint_function=paint_function )
     services_subpages_dict = generate_subpages_dict( nodes_dict, all_services, label_dict, 0, paint_function=paint_function )
 
+    for _, node_data in nodes_subpages_dict.items():
+        node_data[ "item_type" ] = "node"
+
     #topics_info = nodes_data.getTopicsInfo()
     topics_info = get_topics_info( nodes_dict, topics_dict, msgs_dump_dir )
     for topic_id, topic_data in topics_info.items():
         sub_dict = topics_subpages_dict[ topic_id ]
+        sub_dict[ "item_type" ]   = "topic"
         sub_dict[ "msg_type" ]    = topic_data.get( "type", "" )
         sub_dict[ "msg_content" ] = topic_data.get( "content", "" )
 
-    services_info = get_services_info( nodes_dict )
+    services_info = get_services_info( nodes_dict, services_dict, srvs_dump_dir )
     for service_id, service_data in services_info.items():
         sub_dict = services_subpages_dict[ service_id ]
+        sub_dict[ "item_type" ]    = "service"
         sub_dict[ "svr_listener" ] = service_data.get( "listener", "" )
         sub_dict[ "msg_type" ]     = service_data.get( "type", "" )
         sub_dict[ "msg_content" ]  = service_data.get( "content", "" )
@@ -253,8 +265,10 @@ def main():
                          help="Dump directory containing 'rostopic' output data" )
     parser.add_argument( '--msgs_dump_dir', action='store', required=False, default="",
                          help="Dump directory containing 'rosmsg' output data" )
-    parser.add_argument( '--srvs_dump_dir', action='store', required=False, default="",
+    parser.add_argument( '--services_dump_dir', action='store', required=False, default="",
                          help="Dump directory containing 'rosservice' output data" )
+    parser.add_argument( '--srvs_dump_dir', action='store', required=False, default="",
+                         help="Dump directory containing 'rossrv' output data" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
     parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
@@ -288,9 +302,11 @@ def main():
     ## generate HTML data
     ##
     if args.outhtml and len( args.outdir ) > 0:
-        config_params_dict = { "label_dict":      label_dict,
-                               "topics_data_dir": args.topics_data_dir,
-                               "msgs_dump_dir":   args.msgs_dump_dir
+        config_params_dict = { "label_dict":        label_dict,
+                               "topics_data_dir":   args.topics_data_dir,
+                               "msgs_dump_dir":     args.msgs_dump_dir,
+                               "services_dump_dir": args.services_dump_dir,
+                               "srvs_dump_dir":     args.srvs_dump_dir
                                }
         os.makedirs( args.outdir, exist_ok=True )
         generate_pages( nodes_dict, args.outdir, config_params_dict )

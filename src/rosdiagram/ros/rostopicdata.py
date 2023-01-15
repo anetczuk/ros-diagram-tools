@@ -153,7 +153,7 @@ def fix_names( topics_dict ):
         topics_dict[ item_id ] = topics_dict.pop( topic )
         label_dict[ item_id ] = topic
 
-    for topic_id, lists in topics_dict.items():
+    for _, lists in topics_dict.items():
         pubs_list  = lists[ "pubs" ]
         subs_list  = lists[ "subs" ]
 

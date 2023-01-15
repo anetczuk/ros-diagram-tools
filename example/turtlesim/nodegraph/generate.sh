@@ -19,6 +19,8 @@ $TOOL_DIR/rosdiagramnode.py -la \
                             --dump_dir $SCRIPT_DIR/../dump/nodeinfo \
                             --topics_data_dir $SCRIPT_DIR/../dump/topicinfo \
                             --msgs_dump_dir $SCRIPT_DIR/../dump/msginfo \
+                            --services_dump_dir $SCRIPT_DIR/../dump/serviceinfo \
+                            --srvs_dump_dir $SCRIPT_DIR/../dump/srvinfo \
                             --outpng "$OUT_DIR/graph.png" --outraw "$OUT_DIR/graph.gv.txt" \
                             --outhtml --outdir $OUT_DIR $@
 

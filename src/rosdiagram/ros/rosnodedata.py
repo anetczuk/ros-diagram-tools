@@ -15,6 +15,8 @@ from rosdiagram.io import read_list, prepare_filesystem_name, read_file
 from rosdiagram.utils import get_create_item
 from rosdiagram.ros.rostopicdata import read_topics, get_topic_type
 from rosdiagram.ros.rosmsgdata import read_msg
+from rosdiagram.ros.rosservicedata import read_service, get_service_type
+from rosdiagram.ros.rossrvdata import read_srv
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -299,11 +301,15 @@ def get_topics_info( nodes_dict, topics_dict, msgs_dump_dir=None ):
     for _, node_list in nodes_dict.items():
         pubs_list = node_list[ "pubs" ]
         for item_id, item_type in pubs_list:
-            topic_type = get_topic_type( topics_dict, item_id )
+            #topic_type = get_topic_type( topics_dict, item_id )
+            topic_data = topics_dict.get( item_id, {} )
+            topic_type = topic_data.get( "type", None )
             if topic_type:
                 item_type = topic_type
             topic_data = {}
             ret_data[ item_id ] = topic_data
+            topic_data["pubs"] = topic_data.get("pubs", None)
+            topic_data["subs"] = topic_data.get("subs", None)
             topic_data["type"] = item_type
             
             msg_content = read_msg( msgs_dump_dir, item_type )
@@ -311,11 +317,15 @@ def get_topics_info( nodes_dict, topics_dict, msgs_dump_dir=None ):
 
         subs_list = node_list[ "subs" ]
         for item_id, item_type in subs_list:
-            topic_type = get_topic_type( topics_dict, item_id )
+            #topic_type = get_topic_type( topics_dict, item_id )
+            topic_data = topics_dict.get( item_id, {} )
+            topic_type = topic_data.get( "type", None )
             if topic_type:
                 item_type = topic_type
             topic_data = {}
             ret_data[ item_id ] = topic_data
+            topic_data["pubs"] = topic_data.get("pubs", None)
+            topic_data["subs"] = topic_data.get("subs", None)
             topic_data["type"] = item_type
 
             msg_content = ""
@@ -341,22 +351,21 @@ def get_services_from_dict( nodes_dict, nodes_list ) -> List[ str ]:
     return ret_list
 
 
-def get_services_info( nodes_dict ):
+def get_services_info( nodes_dict, services_dict, srvs_dump_dir ):
     ret_data = {}
     for node_id, node_list in nodes_dict.items():
         srvs_list = node_list[ "servs" ]
         for item_id, item_type in srvs_list:
+            service_type = get_service_type( services_dict, item_id )
+            if service_type:
+                item_type = service_type
             srv_data = {}
             ret_data[ item_id ] = srv_data
             srv_data["listener"] = node_id
             srv_data["type"] = item_type
             
-            msg_content = ""
-#             if msgs_dump_dir:
-#                 msg_file    = prepare_filesystem_name( item_type )
-#                 msg_path    = os.path.join( msgs_dump_dir, msg_file + ".txt" )
-#                 msg_content = read_file( msg_path )
-            srv_data["content"] = msg_content
+            srv_content = read_srv( srvs_dump_dir, item_type )
+            srv_data["content"] = srv_content
 
     return ret_data
 

@@ -112,6 +112,8 @@ class HtmlGenerator():
 
         store_graph_to_html( graph, output_dir )
 
+        page_type = item_config_dict.get( "item_type", "" )
+
         graph_id       = graph.getName()                       ## usually node id
         graph_filename = prepare_filesystem_name( graph_id )
 
@@ -163,6 +165,7 @@ class HtmlGenerator():
 
                         "main_page_link": main_page_link,
 
+                        "page_type":    page_type,
                         "srv_name":     graph_label,
                         "srv_listener": listener,
                         "msg_type":     item_config_dict.get( "msg_type", "" ),
