@@ -34,9 +34,10 @@ def read_topics( topic_dir ):
     """
     topics_dict = {}
     topics_path = os.path.join( topic_dir, "list.txt" )
+    _LOGGER.debug( "reading topics list file: %s", topics_path )
     topics_list = read_list( topics_path )
     for item in topics_list:
-        topic_filename = prepare_filesystem_name( item )
+        topic_filename  = prepare_filesystem_name( item )
         topic_item_path = os.path.join( topic_dir, topic_filename + ".txt" )
         content   = read_dependencies( topic_item_path )
         deps_dict = parse_content( content )
@@ -48,7 +49,7 @@ def read_dependencies( deps_file=None ):
     content = ""
     if os.path.isfile( deps_file ):
         ## read content from file
-        _LOGGER.debug( "loading dependencies from file: %s", deps_file )
+        _LOGGER.debug( "reading topic info file: %s", deps_file )
         with open( deps_file, 'r', encoding='utf-8' ) as content_file:
             content = content_file.read()
     else:
@@ -63,11 +64,16 @@ def parse_content( content ):
     publishers  = []
     subscribers = []
 
+    msg_type         = None
     publishers_list  = False
     subscribers_list = False
 
     for line in content.splitlines():
         if len(line) < 1:
+            continue
+
+        if "Type:" in line:
+            msg_type = match_type( line )
             continue
 
         if "Publishers:" in line:
@@ -99,6 +105,7 @@ def parse_content( content ):
     # print( publishers, subscribers )
 
     deps_dict = {}
+    deps_dict['type'] = msg_type
     deps_dict['pubs'] = publishers
     deps_dict['subs'] = subscribers
     return deps_dict
@@ -106,7 +113,16 @@ def parse_content( content ):
 
 def match_node( line ):
     matched = re.findall( r"^ \* (.*) \(.*$", line )
-    m_size = len( matched )
+    m_size  = len( matched )
+    if m_size != 1:
+        _LOGGER.warning( "invalid state for line: %s", line )
+        return None
+    return matched[0]
+
+
+def match_type( line ):
+    matched = re.findall( r"^Type: (.*)$", line )
+    m_size  = len( matched )
     if m_size != 1:
         _LOGGER.warning( "invalid state for line: %s", line )
         return None
@@ -129,28 +145,31 @@ def get_topic_subs_dict( topic_data ):
 
 ## it happens that topic and node has the same name, so it has to be prefixed
 def fix_names( topics_dict ):
-    rename_topics_list = set()
-    topics_list = list( topics_dict.keys() )
-    for topic, lists in topics_dict.items():
-        pubs_list = lists[ "pubs" ]
-        subs_list = lists[ "subs" ]
+    label_dict = {}
+    all_topics = list( topics_dict.keys() )
 
-        pSize = len( pubs_list )
-        for i in range(0, pSize):
-            item = pubs_list[i]
-            if topics_list.count( item ) > 0:
-                pubs_list[i] = "n|" + item
-                rename_topics_list.add( item )
+    for topic in all_topics:
+        item_id = "t_" + topic
+        topics_dict[ item_id ] = topics_dict.pop( topic )
+        label_dict[ item_id ] = topic
 
-        pSize = len( subs_list )
-        for i in range(0, pSize):
-            item = subs_list[i]
-            if topics_list.count( item ) > 0:
-                subs_list[i] = "n|" + item
-                rename_topics_list.add( item )
+    for topic_id, lists in topics_dict.items():
+        pubs_list  = lists[ "pubs" ]
+        subs_list  = lists[ "subs" ]
 
-    for topic in rename_topics_list:
-        topics_dict[ "t|" + topic ] = topics_dict.pop( topic )
+        for node in pubs_list.copy():
+            item_id = "n_" + node
+            pubs_list.append( item_id )
+            pubs_list.remove( node )
+            label_dict[ item_id ] = node
+
+        for node in subs_list.copy():
+            item_id = "n_" + node
+            subs_list.append( item_id )
+            subs_list.remove( node )
+            label_dict[ item_id ] = node
+
+    return label_dict
 
 
 def get_nodes( topic_lists ) -> List[ str ]:
