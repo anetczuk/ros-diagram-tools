@@ -89,7 +89,7 @@ skinparam backgroundColor #FEFEFE
                 content += f"""box #{bg_color}\n"""
                 ## content += f"""'bg color: {bg_color}\n"""
                 content += f"""    participant "{item}" as {item_id} [[{item_path}]]\n"""
-                content += f"""end box\n"""
+                content += "end box\n"
             else:
                 content += f"""participant "{item}" as {item_id} [[{item_path}]]\n"""
 

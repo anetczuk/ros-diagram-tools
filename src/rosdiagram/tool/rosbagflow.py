@@ -24,7 +24,7 @@ from rosbags.serde import deserialize_ros1
 from rosbags.typesys import get_types_from_msg, register_types
 
 from rosdiagram.io import read_list, prepare_filesystem_name
-from rosdiagram.tool.rostopictree import read_topics, get_topic_subs_dict
+from rosdiagram.ros.rostopicdata import read_topics, get_topic_subs_dict
 from rosdiagram.plantuml import SequenceGraph, generate_diagram,\
     convert_time_index
 from rosdiagram.seqgraph import MsgData, DiagramData, NodeData, TopicData

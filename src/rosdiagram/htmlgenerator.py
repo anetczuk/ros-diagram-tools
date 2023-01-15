@@ -8,9 +8,9 @@
 import os
 import logging
 
-from rosdiagram.io import read_file, prepare_filesystem_name, write_dict
-from rosdiagram.graphviz import Graph, get_nodes_names, preserve_neighbour_nodes,\
-    unquote_name, set_nodes_style, unquote_name_list, set_node_labels,\
+from rosdiagram.io import read_file, prepare_filesystem_name
+from rosdiagram.graphviz import Graph, \
+    unquote_name, set_nodes_style, unquote_name_list, \
     get_node_label
 from rosdiagram import texttemplate
 
@@ -175,9 +175,8 @@ class HtmlGenerator():
                                 "graph_map":         graph_map,
 
                                 ## service specific fields
-#                                 "srv_name":     graph_label,
                                 "srv_listener": listener
-                        } )
+                                } )
 
         template_path = os.path.join( SCRIPT_DIR, "template", "nodegraph_page.html.tmpl" )
         html_out      = os.path.join( output_dir, graph_filename + ".html" )
@@ -201,7 +200,7 @@ class HtmlGenerator():
         node_graph.setName( node_id )
         return node_graph
 
-    def _getROSItemLinkList(self, item_list, link_subdir = "" ):
+    def _getROSItemLinkList(self, item_list, link_subdir="" ):
         ret_list = []
         for item_id in item_list:
             label = self.labels_dict.get( item_id, item_id )

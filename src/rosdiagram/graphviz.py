@@ -8,8 +8,6 @@
 import logging
 from typing import List, Set
 
-import json
-
 import pydotplus
 from pydotplus.graphviz import quote_if_necessary, graph_from_dot_data
 
@@ -26,7 +24,7 @@ class Graph():
             base_object = pydotplus.graphviz.Dot()
         self.base_graph = base_object
 
-    def to_json(self):
+    def toJSON(self):
         return self.__str__()
 
     def base(self) -> pydotplus.Graph:

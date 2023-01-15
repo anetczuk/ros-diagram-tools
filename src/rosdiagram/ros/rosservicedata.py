@@ -9,7 +9,7 @@ import os
 import logging
 import re
 
-from rosdiagram.io import  prepare_filesystem_name, read_file, read_list
+from rosdiagram.io import prepare_filesystem_name, read_file, read_list
 
 
 _LOGGER = logging.getLogger(__name__)

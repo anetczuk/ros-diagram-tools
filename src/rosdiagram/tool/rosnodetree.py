@@ -10,8 +10,10 @@ import logging
 
 import argparse
 
-import rosdiagram.ros.rostopicdata as rostopicdata
-import rosdiagram.ros.rosservicedata as rosservicedata
+from typing import Dict, Any
+
+from rosdiagram.ros import rostopicdata
+from rosdiagram.ros import rosservicedata
 
 from rosdiagram.utils import get_create_item
 from rosdiagram.ros.rosnodedata import get_topics, get_services,\
@@ -117,7 +119,7 @@ def generate_compact_graph( nodes_dict, show_services=True, labels_dict=None ) -
     topics_dict = create_topics_dict( nodes_dict )
 
     ## create connections dict
-    connections_dict = {}
+    connections_dict: Dict[ Any, Any ] = {}
     for _, lists in topics_dict.items():
         pubs_list = lists[ "pubs" ]
         subs_list = lists[ "subs" ]
@@ -166,9 +168,12 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
     if paint_function:
         paint_function( main_graph )
 
-    nodes_subpages_dict    = generate_subpages_dict( nodes_dict, all_nodes, nodes_labels, 1, paint_function=paint_function )
-    topics_subpages_dict   = generate_subpages_dict( nodes_dict, all_topics, nodes_labels, 0, paint_function=paint_function )
-    services_subpages_dict = generate_subpages_dict( nodes_dict, all_services, nodes_labels, 0, paint_function=paint_function )
+    nodes_subpages_dict    = generate_subpages_dict( nodes_dict, all_nodes, nodes_labels, 1,
+                                                     paint_function=paint_function )
+    topics_subpages_dict   = generate_subpages_dict( nodes_dict, all_topics, nodes_labels, 0,
+                                                     paint_function=paint_function )
+    services_subpages_dict = generate_subpages_dict( nodes_dict, all_services, nodes_labels, 0,
+                                                     paint_function=paint_function )
 
     for _, node_data in nodes_subpages_dict.items():
         node_data[ "item_type" ] = "node"
@@ -218,7 +223,6 @@ def generate_subpages_dict( nodes_dict, items_list, label_dict, neighbour_range,
         item_dict = {}
         sub_items[ item_id ] = item_dict
         item_graph: Graph = generate_full_graph( nodes_dict, labels_dict=label_dict )
-        # item_graph: Graph = generate_full_graph( nodes_dict, labels_dict=label_dict, services_as_labels=False, services_as_nodes=True )
         preserve_neighbour_nodes( item_graph, [item_id], neighbour_range )
         if paint_function:
             paint_function( item_graph )
@@ -238,15 +242,15 @@ def generate_subpages_dict( nodes_dict, items_list, label_dict, neighbour_range,
 
 
 def generate_items_lists( nodes_list, topics_list, services_list ):
-    ret_list =  [ { "title": "ROS nodes",
-                    "items": nodes_list
-                    },
-                  { "title": "ROS topics",
-                    "items": topics_list
-                    },
-                  { "title": "ROS services",
-                    "items": services_list
-                    }
+    ret_list = [ { "title": "ROS nodes",
+                   "items": nodes_list
+                   },
+                 { "title": "ROS topics",
+                   "items": topics_list
+                   },
+                 { "title": "ROS services",
+                   "items": services_list
+                   }
                  ]
     return ret_list
 
@@ -303,9 +307,9 @@ def main():
     if args.outhtml and len( args.outdir ) > 0:
         os.makedirs( args.outdir, exist_ok=True )
         generate_pages( nodes_dict, args.outdir,
-                        nodes_labels      = label_dict,
-                        topics_data_dir   = args.topics_data_dir,
-                        msgs_dump_dir     = args.msgs_dump_dir,
-                        services_dump_dir = args.services_dump_dir,
-                        srvs_dump_dir     = args.srvs_dump_dir
+                        nodes_labels=label_dict,
+                        topics_data_dir=args.topics_data_dir,
+                        msgs_dump_dir=args.msgs_dump_dir,
+                        services_dump_dir=args.services_dump_dir,
+                        srvs_dump_dir=args.srvs_dump_dir
                         )

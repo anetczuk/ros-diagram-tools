@@ -10,6 +10,8 @@ import logging
 
 import argparse
 
+from typing import List
+
 from rosdiagram.graphviz import Graph
 from rosdiagram.utils import get_create_item
 from rosdiagram.ros.rostopicdata import fix_names, get_nodes, join_common_topics,\

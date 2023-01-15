@@ -137,13 +137,17 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
                     "main_page": { "graph": main_graph,
                                    "lists": [ { "title": "Graph items", "items": all_items } ]
                                    },
-                    "sub_pages": generate_subpages_dict( deps_dict, all_items, highlight_list, top_list=top_list, paint_function=paint_function )
+                    "sub_pages": generate_subpages_dict( deps_dict, all_items, highlight_list,
+                                                         top_list=top_list, paint_function=paint_function )
                     }
 
     generate_graph_html( out_dir, params_dict )
 
 
-def generate_subpages_dict( deps_dict, items_list, highlight_list=[], top_list=None, paint_function=None ):
+def generate_subpages_dict( deps_dict, items_list, highlight_list=None, top_list=None, paint_function=None ):
+    if highlight_list is None:
+        highlight_list = []
+
     sub_items = {}
     for item_id in items_list:
         _LOGGER.info( "preparing subpage data for %s", item_id )
