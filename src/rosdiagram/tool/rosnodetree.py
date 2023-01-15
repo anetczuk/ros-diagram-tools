@@ -160,9 +160,8 @@ def generate_pages( nodes_dict, out_dir, config_params_dict=None ):
     rostopicdata.fix_names( topics_dict )
     # topic_labels = rostopicdata.fix_names( topics_dict )
 
-    services_dict = read_services( services_dump_dir )
-    rosservicedata.fix_names( services_dict )
-    # services_labels = rostopicdata.fix_names( services_dict )
+    services_dict   = read_services( services_dump_dir )
+    services_labels = rosservicedata.fix_names( services_dict )
 
     nodes_data: ROSNodeData = ROSNodeData( nodes_dict )
     nodes_data.nodes_label_dict = label_dict
@@ -191,8 +190,15 @@ def generate_pages( nodes_dict, out_dir, config_params_dict=None ):
 
     services_info = get_services_info( nodes_dict, services_dict, srvs_dump_dir )
     for service_id, service_data in services_info.items():
+        service_name = services_labels.get( service_id, None )
+        if service_name is None:
+            service_name = label_dict.get( service_id, None )
+        if service_name is None:
+            service_name = "<unknown>"
+
         sub_dict = services_subpages_dict[ service_id ]
         sub_dict[ "item_type" ]    = "service"
+        sub_dict[ "srv_name" ]     = service_name
         sub_dict[ "svr_listener" ] = service_data.get( "listener", "" )
         sub_dict[ "msg_type" ]     = service_data.get( "type", "" )
         sub_dict[ "msg_content" ]  = service_data.get( "content", "" )

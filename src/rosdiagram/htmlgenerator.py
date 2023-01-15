@@ -108,11 +108,17 @@ class HtmlGenerator():
         self._generateGraphPage( graph, node_config_dict, node_out_dir )
 
     def _generateGraphPage( self, graph, item_config_dict, output_dir ):
+        page_params = item_config_dict.copy()
+
+        ## ensure field
+        page_params[ "item_type" ]      = page_params.get( "item_type", "" )
+        page_params[ "head_css_style" ] = page_params.get( "head_css_style", "" )
+        page_params[ "top_content" ]    = page_params.get( "top_content", "" )
+        page_params[ "bottom_content" ] = page_params.get( "bottom_content", "" )
+
         is_mainpage = self.output_dir == output_dir
 
         store_graph_to_html( graph, output_dir )
-
-        page_type = item_config_dict.get( "item_type", "" )
 
         graph_id       = graph.getName()                       ## usually node id
         graph_filename = prepare_filesystem_name( graph_id )
@@ -157,27 +163,21 @@ class HtmlGenerator():
             main_page_link  = os.path.join( os.pardir, item_filename + ".html" )
 
         ## prepare input for template
-        page_params = { "body_color":       self._getStyle( "body_color", "#bbbbbb" ),
-                        "head_css_style":   "",
-                        "top_content":      "",
-                        "info_content":     item_config_dict.get( "info", None ),
-                        "bottom_content":   "",
+        page_params.update( {   "body_color":       self._getStyle( "body_color", "#bbbbbb" ),
+                                "main_page_link":   main_page_link,
 
-                        "main_page_link": main_page_link,
+                                "lists": converted_lists,
 
-                        "page_type":    page_type,
-                        "srv_name":     graph_label,
-                        "srv_listener": listener,
-                        "msg_type":     item_config_dict.get( "msg_type", "" ),
-                        "msg_content":  item_config_dict.get( "msg_content", "" ),
+                                ## graph image specific fields
+                                "graph_name":        graph_id,
+                                "graph_image_path":  graph_image_path,
+                                "alt_text":          alt_text,
+                                "graph_map":         graph_map,
 
-                        "lists": converted_lists,
-
-                        "graph_name":        graph_id,
-                        "graph_image_path":  graph_image_path,
-                        "alt_text":          alt_text,
-                        "graph_map":         graph_map
-                        }
+                                ## service specific fields
+#                                 "srv_name":     graph_label,
+                                "srv_listener": listener
+                        } )
 
         template_path = os.path.join( SCRIPT_DIR, "template", "nodegraph_page.html.tmpl" )
         html_out      = os.path.join( output_dir, graph_filename + ".html" )
