@@ -1,0 +1,21 @@
+string body_name
+string reference_frame
+geometry_msgs/Point reference_point
+  float64 x
+  float64 y
+  float64 z
+geometry_msgs/Wrench wrench
+  geometry_msgs/Vector3 force
+    float64 x
+    float64 y
+    float64 z
+  geometry_msgs/Vector3 torque
+    float64 x
+    float64 y
+    float64 z
+time start_time
+duration duration
+---
+bool success
+string status_message
+

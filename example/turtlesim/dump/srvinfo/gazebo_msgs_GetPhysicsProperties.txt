@@ -1,0 +1,22 @@
+---
+float64 time_step
+bool pause
+float64 max_update_rate
+geometry_msgs/Vector3 gravity
+  float64 x
+  float64 y
+  float64 z
+gazebo_msgs/ODEPhysics ode_config
+  bool auto_disable_bodies
+  uint32 sor_pgs_precon_iters
+  uint32 sor_pgs_iters
+  float64 sor_pgs_w
+  float64 sor_pgs_rms_error_tol
+  float64 contact_surface_layer
+  float64 contact_max_correcting_vel
+  float64 cfm
+  float64 erp
+  uint32 max_contacts
+bool success
+string status_message
+

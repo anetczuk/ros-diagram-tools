@@ -1,0 +1,12 @@
+string model_name
+---
+string parent_model_name
+string canonical_body_name
+string[] body_names
+string[] geom_names
+string[] joint_names
+string[] child_model_names
+bool is_static
+bool success
+string status_message
+

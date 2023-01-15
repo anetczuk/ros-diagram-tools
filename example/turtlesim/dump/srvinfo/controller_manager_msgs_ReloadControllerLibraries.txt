@@ -1,0 +1,4 @@
+bool force_kill
+---
+bool ok
+
