@@ -142,19 +142,12 @@ def generate_compact_graph( nodes_dict, show_services=True, labels_dict=None ) -
 ## =====================================================
 
 
-def generate_pages( nodes_dict, out_dir, config_params_dict=None ):
-    if config_params_dict is None:
-        config_params_dict = {}
-
-    label_dict        = config_params_dict.get( "label_dict", {} )
-    topics_data_dir   = config_params_dict.get( "topics_data_dir", None )
-    msgs_dump_dir     = config_params_dict.get( "msgs_dump_dir", None )
-    services_dump_dir = config_params_dict.get( "services_dump_dir", None )
-    srvs_dump_dir     = config_params_dict.get( "srvs_dump_dir", None )
-    paint_function    = config_params_dict.get( "paint_function", None )
-
-    if label_dict is None:
-        label_dict = fix_names( nodes_dict )
+def generate_pages( nodes_dict, out_dir, nodes_labels=None, 
+                    topics_data_dir=None, msgs_dump_dir=None, services_dump_dir=None, srvs_dump_dir=None,
+                    paint_function=None
+                    ):
+    if nodes_labels is None:
+        nodes_labels = fix_names( nodes_dict )
 
     topics_dict = read_topics( topics_data_dir )
     rostopicdata.fix_names( topics_dict )
@@ -164,18 +157,18 @@ def generate_pages( nodes_dict, out_dir, config_params_dict=None ):
     services_labels = rosservicedata.fix_names( services_dict )
 
     nodes_data: ROSNodeData = ROSNodeData( nodes_dict )
-    nodes_data.nodes_label_dict = label_dict
+    nodes_data.nodes_label_dict = nodes_labels
 
     all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
 
-    main_graph: Graph = generate_compact_graph( nodes_dict, show_services=True, labels_dict=label_dict )
+    main_graph: Graph = generate_compact_graph( nodes_dict, show_services=True, labels_dict=nodes_labels )
     remove_ros_items( main_graph )
     if paint_function:
         paint_function( main_graph )
 
-    nodes_subpages_dict    = generate_subpages_dict( nodes_dict, all_nodes, label_dict, 1, paint_function=paint_function )
-    topics_subpages_dict   = generate_subpages_dict( nodes_dict, all_topics, label_dict, 0, paint_function=paint_function )
-    services_subpages_dict = generate_subpages_dict( nodes_dict, all_services, label_dict, 0, paint_function=paint_function )
+    nodes_subpages_dict    = generate_subpages_dict( nodes_dict, all_nodes, nodes_labels, 1, paint_function=paint_function )
+    topics_subpages_dict   = generate_subpages_dict( nodes_dict, all_topics, nodes_labels, 0, paint_function=paint_function )
+    services_subpages_dict = generate_subpages_dict( nodes_dict, all_services, nodes_labels, 0, paint_function=paint_function )
 
     for _, node_data in nodes_subpages_dict.items():
         node_data[ "item_type" ] = "node"
@@ -192,7 +185,7 @@ def generate_pages( nodes_dict, out_dir, config_params_dict=None ):
     for service_id, service_data in services_info.items():
         service_name = services_labels.get( service_id, None )
         if service_name is None:
-            service_name = label_dict.get( service_id, None )
+            service_name = nodes_labels.get( service_id, None )
         if service_name is None:
             service_name = "<unknown>"
 
@@ -209,7 +202,7 @@ def generate_pages( nodes_dict, out_dir, config_params_dict=None ):
     sub_items.update( services_subpages_dict )
 
     params_dict = { "style": {},
-                    "labels_dict": label_dict,
+                    "labels_dict": nodes_labels,
                     "main_page": { "graph": main_graph,
                                    "lists": generate_items_lists( all_nodes, all_topics, all_services )
                                    },
@@ -308,11 +301,11 @@ def main():
     ## generate HTML data
     ##
     if args.outhtml and len( args.outdir ) > 0:
-        config_params_dict = { "label_dict":        label_dict,
-                               "topics_data_dir":   args.topics_data_dir,
-                               "msgs_dump_dir":     args.msgs_dump_dir,
-                               "services_dump_dir": args.services_dump_dir,
-                               "srvs_dump_dir":     args.srvs_dump_dir
-                               }
         os.makedirs( args.outdir, exist_ok=True )
-        generate_pages( nodes_dict, args.outdir, config_params_dict )
+        generate_pages( nodes_dict, args.outdir, 
+                        nodes_labels      = label_dict,
+                        topics_data_dir   = args.topics_data_dir, 
+                        msgs_dump_dir     = args.msgs_dump_dir, 
+                        services_dump_dir = args.services_dump_dir, 
+                        srvs_dump_dir     = args.srvs_dump_dir
+                        )
