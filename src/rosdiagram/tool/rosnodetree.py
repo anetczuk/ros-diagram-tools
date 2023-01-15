@@ -10,11 +10,13 @@ import logging
 
 import argparse
 
+import rosdiagram.ros.rostopicdata as rostopicdata
+
 from rosdiagram.utils import get_create_item
 from rosdiagram.ros.rosnodedata import get_topics, get_services,\
     get_names_from_list, create_topics_dict, fix_names, split_to_groups,\
     get_services_info, filter_nodes, filter_topics,\
-    get_services_from_dict, read_nodes, ROSNodeData
+    get_services_from_dict, read_nodes, ROSNodeData, get_topics_info
 from rosdiagram.htmlgenerator import generate_graph_html
 from rosdiagram.graphviz import Graph, set_node_labels, preserve_neighbour_nodes
 from rosdiagram.ros.rosutils import remove_ros_items
@@ -142,17 +144,20 @@ def generate_pages( nodes_dict, out_dir, config_params_dict=None ):
     if config_params_dict is None:
         config_params_dict = {}
 
-    label_dict      = config_params_dict.get( "label_dict", {} )
-    topics_data_dir = config_params_dict.get( "topics_data_dir", None )
-    msgs_dump_dir   = config_params_dict.get( "msgs_dump_dir", None )
-    paint_function  = config_params_dict.get( "paint_function", None )
+    label_dict        = config_params_dict.get( "label_dict", {} )
+    topics_data_dir   = config_params_dict.get( "topics_data_dir", None )
+    msgs_dump_dir     = config_params_dict.get( "msgs_dump_dir", None )
+    services_data_dir = config_params_dict.get( "services_data_dir", None )
+    srvs_dump_dir     = config_params_dict.get( "srvs_dump_dir", None )
+    paint_function    = config_params_dict.get( "paint_function", None )
 
     if label_dict is None:
         label_dict = fix_names( nodes_dict )
 
-    topics_dict = read_topics( topics_data_dir )
-    nodes_data: ROSNodeData = ROSNodeData( nodes_dict, topics_dict, msgs_dump_dir )
-    nodes_data.fixTopicsNames()
+    topics_dict  = read_topics( topics_data_dir )
+    topic_labels = rostopicdata.fix_names( topics_dict )
+
+    nodes_data: ROSNodeData = ROSNodeData( nodes_dict )
     nodes_data.nodes_label_dict = label_dict
 
     all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
@@ -166,7 +171,8 @@ def generate_pages( nodes_dict, out_dir, config_params_dict=None ):
     topics_subpages_dict   = generate_subpages_dict( nodes_dict, all_topics, label_dict, 0, paint_function=paint_function )
     services_subpages_dict = generate_subpages_dict( nodes_dict, all_services, label_dict, 0, paint_function=paint_function )
 
-    topics_info = nodes_data.getTopicsInfo()
+    #topics_info = nodes_data.getTopicsInfo()
+    topics_info = get_topics_info( nodes_dict, topics_dict, msgs_dump_dir )
     for topic_id, topic_data in topics_info.items():
         sub_dict = topics_subpages_dict[ topic_id ]
         sub_dict[ "msg_type" ]    = topic_data.get( "type", "" )

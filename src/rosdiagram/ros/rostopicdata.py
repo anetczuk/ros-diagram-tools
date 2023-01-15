@@ -189,6 +189,11 @@ def get_nodes_all( topics_dict ) -> List[ str ]:
     return list( dict.fromkeys(ret_set) )
 
 
+def get_topic_type( topics_dict, topic_id ) -> str:
+    topic_data = topics_dict.get( topic_id, {} )
+    return topic_data.get( "type", None )
+
+
 def common_topics( data1_dict, data2_dict ):
     data1_topics = set()
     for topic in data1_dict:

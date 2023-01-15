@@ -11,11 +11,9 @@ import logging
 import re
 from typing import List, Dict
 
-import rosdiagram.ros.rostopicdata as rostopicdata
-
 from rosdiagram.io import read_list, prepare_filesystem_name, read_file
 from rosdiagram.utils import get_create_item
-from rosdiagram.ros.rostopicdata import read_topics
+from rosdiagram.ros.rostopicdata import read_topics, get_topic_type
 from rosdiagram.ros.rosmsgdata import read_msg
 
 
@@ -29,67 +27,12 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 
 class ROSNodeData():
     
-    def __init__(self, nodes_dict, topics_dict=None, msgs_data_dir=None ):
-        self.nodes_dict    = nodes_dict
-        self.topics_dict   = topics_dict
-        self.msgs_data_dir = msgs_data_dir
-        
-        self.nodes_label_dict  = None
-        self.topics_label_dict = None
-
-    def getTopicType(self, topic_id):
-        if not self.topics_dict:
-            return None 
-        topic_data = self.topics_dict.get( topic_id, {} )
-        return topic_data.get( "type", None )
+    def __init__(self, nodes_dict ):
+        self.nodes_dict       = nodes_dict
+        self.nodes_label_dict = None
 
     def fixNames(self):
         self.nodes_label_dict  = fix_names( self.nodes_dict )
-        self.fixTopicsNames()
-
-    def fixTopicsNames(self):
-        self.topics_label_dict = rostopicdata.fix_names( self.topics_dict )
-
-    def getTopicsInfo( self ):
-        ret_data = {}
-        for _, node_list in self.nodes_dict.items():
-            pubs_list = node_list[ "pubs" ]
-            for item_id, item_type in pubs_list:
-                topic_type = self.getTopicType( item_id )
-                if topic_type:
-                    item_type = topic_type
-                topic_data = {}
-                ret_data[ item_id ] = topic_data
-                topic_data["type"] = item_type
-                
-                msg_content = read_msg( self.msgs_data_dir, item_type )
-                topic_data["content"] = msg_content
-    
-            subs_list = node_list[ "subs" ]
-            for item_id, item_type in subs_list:
-                topic_type = self.getTopicType( item_id )
-                if topic_type:
-                    item_type = topic_type
-                topic_data = {}
-                ret_data[ item_id ] = topic_data
-                topic_data["type"] = item_type
-    
-                msg_content = read_msg( self.msgs_data_dir, item_type )
-                topic_data["content"] = msg_content
-    
-        return ret_data
-
-    @staticmethod
-    def read_data( self, nodes_data_dir, topics_data_dir=None, msgs_data_dir=None ) -> 'ROSNodeData':
-        """ Read dump info about nodes. 
-        
-            nodes_data_dir  -- nodes dump dir
-            topics_data_dir -- topics dump dir, for unknown reason for some nodes there is no topic message type in 'nodes_data_dir'
-            msgs_data_dir   -- messages dump dir
-        """
-        nodes_dict  = read_nodes( nodes_data_dir )
-        topics_dict = read_topics( topics_data_dir )
-        return ROSNodeData( nodes_dict, topics_dict, msgs_data_dir )
 
 
 ## ===================================================================
@@ -351,11 +294,14 @@ def get_topics_from_dict( nodes_dict, nodes_list ) -> List[ str ]:
     return ret_list
 
 
-def get_topics_info( nodes_dict, msgs_dump_dir=None ):
+def get_topics_info( nodes_dict, topics_dict, msgs_dump_dir=None ):
     ret_data = {}
     for _, node_list in nodes_dict.items():
         pubs_list = node_list[ "pubs" ]
         for item_id, item_type in pubs_list:
+            topic_type = get_topic_type( topics_dict, item_id )
+            if topic_type:
+                item_type = topic_type
             topic_data = {}
             ret_data[ item_id ] = topic_data
             topic_data["type"] = item_type
@@ -365,6 +311,9 @@ def get_topics_info( nodes_dict, msgs_dump_dir=None ):
 
         subs_list = node_list[ "subs" ]
         for item_id, item_type in subs_list:
+            topic_type = get_topic_type( topics_dict, item_id )
+            if topic_type:
+                item_type = topic_type
             topic_data = {}
             ret_data[ item_id ] = topic_data
             topic_data["type"] = item_type
