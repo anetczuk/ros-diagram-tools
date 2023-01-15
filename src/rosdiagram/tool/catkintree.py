@@ -139,7 +139,7 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
                                    },
                     "sub_pages": generate_subpages_dict( deps_dict, all_items, highlight_list, top_list=top_list, paint_function=paint_function )
                     }
- 
+
     generate_graph_html( out_dir, params_dict )
 
 
@@ -203,7 +203,7 @@ def main():
         graph.writeRAW( args.outraw )
     if len( args.outpng ) > 0:
         graph.writePNG( args.outpng )
-        
+
     ##
     ## generate HTML data
     ##

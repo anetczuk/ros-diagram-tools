@@ -48,7 +48,7 @@ class HtmlGenerator():
         self.params       = params_dict
         self.labels_dict  = self.params.get( "labels_dict", {} )
         self.output_dir   = None
-        
+
         self._main_graph  = None
 
     def generate(self):
@@ -200,7 +200,7 @@ class HtmlGenerator():
             raise RuntimeError( f"'graph' not set for item '{node_id}'" )
         node_graph.setName( node_id )
         return node_graph
-    
+
     def _getROSItemLinkList(self, item_list, link_subdir = "" ):
         ret_list = []
         for item_id in item_list:

@@ -79,13 +79,13 @@ skinparam backgroundColor #FEFEFE
             item_filename = prepare_filesystem_name( item )
             item_path = item_filename + ".html"
             item_path = os.path.join( self.nodes_subdir, item_path )
-            
+
             if BG_COLORS_LIST:
                 ## BG_COLORS
                 item_hash      = hashlib.sha256( item_id.encode('utf-8') ).hexdigest()
                 bg_color_index = int( item_hash, 16 ) % len( BG_COLORS_LIST )
                 bg_color       = BG_COLORS_LIST[ bg_color_index ]
-                
+
                 content += f"""box #{bg_color}\n"""
                 ## content += f"""'bg color: {bg_color}\n"""
                 content += f"""    participant "{item}" as {item_id} [[{item_path}]]\n"""

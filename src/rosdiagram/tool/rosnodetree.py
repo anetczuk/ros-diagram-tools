@@ -142,7 +142,7 @@ def generate_compact_graph( nodes_dict, show_services=True, labels_dict=None ) -
 ## =====================================================
 
 
-def generate_pages( nodes_dict, out_dir, nodes_labels=None, 
+def generate_pages( nodes_dict, out_dir, nodes_labels=None,
                     topics_data_dir=None, msgs_dump_dir=None, services_dump_dir=None, srvs_dump_dir=None,
                     paint_function=None
                     ):
@@ -222,7 +222,7 @@ def generate_subpages_dict( nodes_dict, items_list, label_dict, neighbour_range,
         preserve_neighbour_nodes( item_graph, [item_id], neighbour_range )
         if paint_function:
             paint_function( item_graph )
-        
+
         graph_names = list( item_graph.getNodeNamesAll() )
         nodes_list  = sorted( filter_nodes( nodes_dict, graph_names ) )
         item_dict[ "graph" ]    = item_graph
@@ -231,9 +231,9 @@ def generate_subpages_dict( nodes_dict, items_list, label_dict, neighbour_range,
 
         topics_list   = sorted( filter_topics( nodes_dict, graph_names ) )
         services_list = sorted( get_services_from_dict( nodes_dict, [ item_id ] ) )
-        
+
         item_dict[ "lists" ] = generate_items_lists( nodes_list, topics_list, services_list )
-        
+
     return sub_items
 
 
@@ -302,10 +302,10 @@ def main():
     ##
     if args.outhtml and len( args.outdir ) > 0:
         os.makedirs( args.outdir, exist_ok=True )
-        generate_pages( nodes_dict, args.outdir, 
+        generate_pages( nodes_dict, args.outdir,
                         nodes_labels      = label_dict,
-                        topics_data_dir   = args.topics_data_dir, 
-                        msgs_dump_dir     = args.msgs_dump_dir, 
-                        services_dump_dir = args.services_dump_dir, 
+                        topics_data_dir   = args.topics_data_dir,
+                        msgs_dump_dir     = args.msgs_dump_dir,
+                        services_dump_dir = args.services_dump_dir,
                         srvs_dump_dir     = args.srvs_dump_dir
                         )

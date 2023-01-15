@@ -28,7 +28,7 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 
 
 class ROSNodeData():
-    
+
     def __init__(self, nodes_dict ):
         self.nodes_dict       = nodes_dict
         self.nodes_label_dict = None
@@ -311,7 +311,7 @@ def get_topics_info( nodes_dict, topics_dict, msgs_dump_dir=None ):
             topic_data["pubs"] = topic_data.get("pubs", None)
             topic_data["subs"] = topic_data.get("subs", None)
             topic_data["type"] = item_type
-            
+
             msg_content = read_msg( msgs_dump_dir, item_type )
             topic_data["content"] = msg_content
 
@@ -363,7 +363,7 @@ def get_services_info( nodes_dict, services_dict, srvs_dump_dir ):
             ret_data[ item_id ] = srv_data
             srv_data["listener"] = node_id
             srv_data["type"] = item_type
-            
+
             srv_content = read_srv( srvs_dump_dir, item_type )
             srv_data["content"] = srv_content
 
