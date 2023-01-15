@@ -1,0 +1,8 @@
+Type: rosgraph_msgs/Log
+
+Publishers: 
+ * /rosout (http://bob-vb:39945/)
+
+Subscribers: None
+
+

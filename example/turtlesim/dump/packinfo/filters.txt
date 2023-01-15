@@ -1,0 +1,4 @@
+roslib
+rosconsole
+roscpp
+pluginlib

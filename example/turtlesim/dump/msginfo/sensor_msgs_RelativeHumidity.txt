@@ -1,0 +1,7 @@
+std_msgs/Header header
+  uint32 seq
+  time stamp
+  string frame_id
+float64 relative_humidity
+float64 variance
+

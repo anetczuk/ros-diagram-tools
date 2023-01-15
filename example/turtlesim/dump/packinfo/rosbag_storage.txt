@@ -1,0 +1,6 @@
+cpp_common
+pluginlib
+roscpp_serialization
+roscpp_traits
+rostime
+roslz4

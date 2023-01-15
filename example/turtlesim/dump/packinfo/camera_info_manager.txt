@@ -1,0 +1,5 @@
+camera_calibration_parsers
+image_transport
+roscpp
+roslib
+sensor_msgs

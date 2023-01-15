@@ -1,0 +1,7 @@
+cv_bridge
+dynamic_reconfigure
+image_transport
+message_runtime
+pluginlib
+rosbag
+std_msgs

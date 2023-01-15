@@ -1,0 +1,8 @@
+Type: geometry_msgs/Twist
+
+Publishers: None
+
+Subscribers: 
+ * /turtlesim (http://bob-vb:34079/)
+
+

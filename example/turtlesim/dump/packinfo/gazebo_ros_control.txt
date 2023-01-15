@@ -1,0 +1,11 @@
+gazebo_ros
+roscpp
+std_msgs
+control_toolbox
+controller_manager
+pluginlib
+hardware_interface
+transmission_interface
+joint_limits_interface
+urdf
+angles

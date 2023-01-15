@@ -1,0 +1,8 @@
+cv_bridge
+dynamic_reconfigure
+image_transport
+nodelet
+roscpp
+tf2
+tf2_geometry_msgs
+tf2_ros

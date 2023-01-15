@@ -1,0 +1,8 @@
+cv_bridge
+dynamic_reconfigure
+image_geometry
+image_transport
+nodelet
+nodelet_topic_tools
+roscpp
+sensor_msgs

@@ -1,0 +1,9 @@
+Type: rosgraph_msgs/Log
+
+Publishers: 
+ * /turtlesim (http://bob-vb:34079/)
+
+Subscribers: 
+ * /rosout (http://bob-vb:39945/)
+
+

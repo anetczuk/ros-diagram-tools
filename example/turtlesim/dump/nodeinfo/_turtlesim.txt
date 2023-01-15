@@ -1,0 +1,30 @@
+--------------------------------------------------------------------------------
+Node [/turtlesim]
+Publications: 
+ * /rosout [rosgraph_msgs/Log]
+ * /turtle1/color_sensor [turtlesim/Color]
+ * /turtle1/pose [turtlesim/Pose]
+
+Subscriptions: 
+ * /turtle1/cmd_vel [unknown type]
+
+Services: 
+ * /clear
+ * /kill
+ * /reset
+ * /spawn
+ * /turtle1/set_pen
+ * /turtle1/teleport_absolute
+ * /turtle1/teleport_relative
+ * /turtlesim/get_loggers
+ * /turtlesim/set_logger_level
+
+
+contacting node http://bob-vb:34079/ ...
+Pid: 1812
+Connections:
+ * topic: /rosout
+    * to: /rosout
+    * direction: outbound (56527 - 127.0.0.1:58534) [22]
+    * transport: TCPROS
+

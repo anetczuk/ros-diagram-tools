@@ -1,0 +1,5 @@
+roslang
+rospack
+rosgraph_msgs
+std_srvs
+ros_environment

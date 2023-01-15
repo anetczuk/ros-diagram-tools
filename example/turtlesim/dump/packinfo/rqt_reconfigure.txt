@@ -1,0 +1,7 @@
+dynamic_reconfigure
+python_qt_binding
+rospy
+rqt_console
+rqt_gui
+rqt_gui_py
+rqt_py_common

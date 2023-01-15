@@ -1,0 +1,6 @@
+cv_bridge
+image_geometry
+message_filters
+rospy
+std_srvs
+sensor_msgs

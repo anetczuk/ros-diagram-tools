@@ -1,0 +1,21 @@
+--------------------------------------------------------------------------------
+Node [/rosout]
+Publications: 
+ * /rosout_agg [rosgraph_msgs/Log]
+
+Subscriptions: 
+ * /rosout [rosgraph_msgs/Log]
+
+Services: 
+ * /rosout/get_loggers
+ * /rosout/set_logger_level
+
+
+contacting node http://bob-vb:39945/ ...
+Pid: 1707
+Connections:
+ * topic: /rosout
+    * to: /turtlesim (http://bob-vb:34079/)
+    * direction: inbound (58534 - bob-vb:56527) [13]
+    * transport: TCPROS
+

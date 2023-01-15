@@ -1,0 +1,9 @@
+cv_bridge
+dynamic_reconfigure
+image_geometry
+image_proc
+image_transport
+message_filters
+nodelet
+sensor_msgs
+stereo_msgs

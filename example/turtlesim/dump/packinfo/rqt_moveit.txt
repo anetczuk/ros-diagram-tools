@@ -1,0 +1,9 @@
+python_qt_binding
+rosnode
+rospy
+rostopic
+rqt_gui
+rqt_gui_py
+rqt_py_common
+rqt_topic
+sensor_msgs

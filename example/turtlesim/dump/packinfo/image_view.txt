@@ -1,0 +1,9 @@
+camera_calibration_parsers
+cv_bridge
+dynamic_reconfigure
+image_transport
+message_filters
+nodelet
+rosconsole
+roscpp
+std_srvs

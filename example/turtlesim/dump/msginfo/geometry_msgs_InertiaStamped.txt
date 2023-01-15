@@ -1,0 +1,17 @@
+std_msgs/Header header
+  uint32 seq
+  time stamp
+  string frame_id
+geometry_msgs/Inertia inertia
+  float64 m
+  geometry_msgs/Vector3 com
+    float64 x
+    float64 y
+    float64 z
+  float64 ixx
+  float64 ixy
+  float64 ixz
+  float64 iyy
+  float64 iyz
+  float64 izz
+

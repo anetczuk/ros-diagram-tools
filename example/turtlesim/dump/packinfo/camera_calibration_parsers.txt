@@ -1,0 +1,3 @@
+sensor_msgs
+roscpp
+roscpp_serialization

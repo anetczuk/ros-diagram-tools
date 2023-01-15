@@ -1,0 +1,6 @@
+python_qt_binding
+qt_gui
+qt_gui_py_common
+rospy
+rqt_gui
+rqt_gui_py

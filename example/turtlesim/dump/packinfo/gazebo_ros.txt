@@ -1,0 +1,10 @@
+gazebo_dev
+gazebo_msgs
+roslib
+roscpp
+tf
+std_srvs
+rosgraph_msgs
+dynamic_reconfigure
+std_msgs
+geometry_msgs

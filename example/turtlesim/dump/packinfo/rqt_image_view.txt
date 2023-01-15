@@ -1,0 +1,6 @@
+cv_bridge
+geometry_msgs
+image_transport
+rqt_gui
+rqt_gui_cpp
+sensor_msgs

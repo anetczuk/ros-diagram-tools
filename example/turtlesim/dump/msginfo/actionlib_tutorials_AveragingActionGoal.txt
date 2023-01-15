@@ -1,0 +1,10 @@
+std_msgs/Header header
+  uint32 seq
+  time stamp
+  string frame_id
+actionlib_msgs/GoalID goal_id
+  time stamp
+  string id
+actionlib_tutorials/AveragingGoal goal
+  int32 samples
+

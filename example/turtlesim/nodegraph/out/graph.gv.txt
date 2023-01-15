@@ -1,0 +1,16 @@
+digraph nodes_graph {
+rankdir=LR;
+"n_/rosout" [label="/rosout", shape=box];
+"t_/rosout_agg" [label="/rosout_agg", shape=ellipse];
+"t_/rosout" [label="/rosout", shape=ellipse];
+"n_/turtlesim" [label="/turtlesim", shape=box];
+"t_/turtle1/color_sensor" [label="/turtle1/color_sensor", shape=ellipse];
+"t_/turtle1/pose" [label="/turtle1/pose", shape=ellipse];
+"t_/turtle1/cmd_vel" [label="/turtle1/cmd_vel", shape=ellipse];
+"n_/rosout" -> "t_/rosout_agg";
+"t_/rosout" -> "n_/rosout";
+"n_/turtlesim" -> "t_/rosout";
+"n_/turtlesim" -> "t_/turtle1/color_sensor";
+"n_/turtlesim" -> "t_/turtle1/pose";
+"t_/turtle1/cmd_vel" -> "n_/turtlesim";
+}

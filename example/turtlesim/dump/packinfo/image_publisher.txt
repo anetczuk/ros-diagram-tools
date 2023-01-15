@@ -1,0 +1,7 @@
+cv_bridge
+dynamic_reconfigure
+camera_info_manager
+image_transport
+nodelet
+roscpp
+sensor_msgs

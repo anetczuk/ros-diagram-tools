@@ -1,0 +1,7 @@
+python_qt_binding
+roslaunch
+rospy
+rqt_console
+rqt_gui
+rqt_gui_py
+rqt_py_common

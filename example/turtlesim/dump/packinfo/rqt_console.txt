@@ -1,0 +1,7 @@
+python_qt_binding
+roslib
+rospy
+rqt_gui
+rqt_gui_py
+rqt_logger_level
+rqt_py_common

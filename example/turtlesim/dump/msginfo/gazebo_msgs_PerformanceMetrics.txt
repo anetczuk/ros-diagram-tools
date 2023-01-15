@@ -1,0 +1,11 @@
+std_msgs/Header header
+  uint32 seq
+  time stamp
+  string frame_id
+float64 real_time_factor
+gazebo_msgs/SensorPerformanceMetric[] sensors
+  string name
+  float64 sim_update_rate
+  float64 real_update_rate
+  float64 fps
+

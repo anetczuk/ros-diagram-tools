@@ -1,0 +1,3 @@
+qt_gui
+rqt_gui
+rospy

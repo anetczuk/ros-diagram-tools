@@ -1,0 +1,10 @@
+geometry_msgs
+rosbag
+roslib
+rospy
+rqt_bag
+rqt_gui
+rqt_gui_py
+rqt_plot
+sensor_msgs
+std_msgs

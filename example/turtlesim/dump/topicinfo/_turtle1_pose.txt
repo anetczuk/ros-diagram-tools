@@ -1,0 +1,8 @@
+Type: turtlesim/Pose
+
+Publishers: 
+ * /turtlesim (http://bob-vb:34079/)
+
+Subscribers: None
+
+

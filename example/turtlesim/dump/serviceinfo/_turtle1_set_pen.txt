@@ -1,0 +1,4 @@
+Node: /turtlesim
+URI: rosrpc://bob-vb:56527
+Type: turtlesim/SetPen
+Args: r g b width off

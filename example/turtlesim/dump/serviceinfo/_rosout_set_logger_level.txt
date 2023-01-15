@@ -1,0 +1,4 @@
+Node: /rosout
+URI: rosrpc://bob-vb:55465
+Type: roscpp/SetLoggerLevel
+Args: logger level

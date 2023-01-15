@@ -1,0 +1,4 @@
+Node: /turtlesim
+URI: rosrpc://bob-vb:56527
+Type: std_srvs/Empty
+Args: 

@@ -1,0 +1,6 @@
+message_filters
+pluginlib
+rosconsole
+roscpp
+roslib
+sensor_msgs

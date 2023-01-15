@@ -1,0 +1,9 @@
+geometry_msgs
+gl_dependency
+python_qt_binding
+rospy
+rostopic
+rqt_gui
+rqt_gui_py
+rqt_py_common
+tf

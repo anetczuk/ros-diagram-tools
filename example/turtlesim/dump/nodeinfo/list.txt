@@ -1,0 +1,2 @@
+/rosout
+/turtlesim
