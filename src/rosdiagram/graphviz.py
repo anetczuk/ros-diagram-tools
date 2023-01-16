@@ -5,16 +5,25 @@
 # LICENSE file in the root directory of this source tree.
 #
 
+import os
 import logging
 from typing import List, Set
+import hashlib
 
 import pydotplus
 from pydotplus.graphviz import quote_if_necessary, graph_from_dot_data
 
+from rosdiagram.io import read_list
 from rosdiagram.utils import get_create_item
 
 
+SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
+
 _LOGGER = logging.getLogger(__name__)
+
+
+EDGE_COLORS_PATH = os.path.join( SCRIPT_DIR, "graphviz_edge_colors.txt" )
+EDGE_COLORS_LIST = read_list( EDGE_COLORS_PATH )
 
 
 class Graph():
@@ -343,6 +352,14 @@ class Graph():
 
         new_edge = pydotplus.Edge( from_node, to_node )
         self.base_graph.add_edge( new_edge )
+
+        if EDGE_COLORS_LIST:
+            edge_string = f"{from_node}-{to_node}"
+            item_hash   = hashlib.sha256( edge_string.encode('utf-8') ).hexdigest()
+            color_index = int( item_hash, 16 ) % len( EDGE_COLORS_LIST )
+            edge_color  = EDGE_COLORS_LIST[ color_index ]
+            new_edge.set( "color", edge_color )
+
         return new_edge
 
     def removeEdgeByObject( self, edge: pydotplus.Edge ):
