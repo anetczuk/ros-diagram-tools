@@ -132,12 +132,12 @@ def match_type( line ):
 
 
 def get_topic_subs_dict( topic_data ):
-    ret_pubs = {}
+    # ret_pubs = {}
     ret_subs = {}
     for topic, lists_dict in topic_data.items():
-        pubs: List[str] = lists_dict[ "pubs" ]
+        # pubs: List[str] = lists_dict[ "pubs" ]
         subs: List[str] = lists_dict[ "subs" ]
-        ret_pubs[ topic ] = pubs
+        # ret_pubs[ topic ] = pubs
         ret_subs[ topic ] = subs
     return ret_subs
 

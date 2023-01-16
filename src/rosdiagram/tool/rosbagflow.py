@@ -84,6 +84,9 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
         topic_data = {}
     topic_subs  = get_topic_subs_dict( topic_data )
 
+#     print( "got topic data:", topic_data )
+#     print( "got topic subs:", topic_subs )
+
     try:
         # create reader instance and open for reading
         with Reader( bag_path ) as reader:
@@ -313,14 +316,15 @@ def generate_basic_graph( reader, topic_subs, excluded_topics ):
         if connection.topic in excluded_topics:
             continue
 
+        ext = connection.ext
+        topic_publisher = ext.callerid
+
         subscribers = topic_subs.get( connection.topic, None )
         if not subscribers:
             ## topic without subscribers
-            print( "could not find topic for subscriber", connection.topic )
-            continue
-
-        ext = connection.ext
-        topic_publisher = ext.callerid
+#             print( f"could not find subscribers for topic[{connection.topic}] published from[{topic_publisher}]" )
+#             continue
+            subscribers = ["void"]
 
         time_diff  = timestamp - first_timestamp
         graph_item = seq_diagram.addCallSubs( topic_publisher, subscribers, time_diff, timestamp, connection.topic )
