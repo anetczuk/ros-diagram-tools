@@ -80,6 +80,8 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
     print( "exclude set:", exclude_filter.raw_exclude )
 
     topic_data  = read_topics( topic_dump_dir )
+    if topic_data is None:
+        topic_data = {}
     topic_subs  = get_topic_subs_dict( topic_data )
 
     try:

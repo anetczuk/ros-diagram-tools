@@ -28,6 +28,8 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 
 def generate( topic_info_dir ):
     data_dict = read_topics( topic_info_dir )
+    if data_dict is None:
+        data_dict = {}
     graph     = generate_graph( data_dict )
     return graph
 

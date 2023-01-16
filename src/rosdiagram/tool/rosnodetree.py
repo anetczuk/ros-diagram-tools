@@ -145,17 +145,21 @@ def generate_compact_graph( nodes_dict, show_services=True, labels_dict=None ) -
 
 
 def generate_pages( nodes_dict, out_dir, nodes_labels=None,
-                    topics_data_dir=None, msgs_dump_dir=None, services_dump_dir=None, srvs_dump_dir=None,
+                    topics_dump_dir=None, msgs_dump_dir=None, services_dump_dir=None, srvs_dump_dir=None,
                     paint_function=None
                     ):
     if nodes_labels is None:
         nodes_labels = fix_names( nodes_dict )
 
-    topics_dict = read_topics( topics_data_dir )
+    topics_dict = read_topics( topics_dump_dir )
+    if topics_dict is None:
+        topics_dict = {}
     rostopicdata.fix_names( topics_dict )
     # topic_labels = rostopicdata.fix_names( topics_dict )
 
     services_dict   = read_services( services_dump_dir )
+    if services_dict is None:
+        services_dict = {}
     services_labels = rosservicedata.fix_names( services_dict )
 
     nodes_data: ROSNodeData = ROSNodeData( nodes_dict )
@@ -214,6 +218,7 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
                     "sub_pages": sub_items
                     }
 
+    os.makedirs( out_dir, exist_ok=True )
     generate_graph_html( out_dir, params_dict )
 
 
@@ -264,7 +269,7 @@ def main():
     # pylint: disable=C0301
     parser.add_argument( '--dump_dir', action='store', required=False, default="",
                          help="Dump directory containing 'rosnode' output data" )
-    parser.add_argument( '--topics_data_dir', action='store', required=False, default="",
+    parser.add_argument( '--topics_dump_dir', action='store', required=False, default="",
                          help="Dump directory containing 'rostopic' output data" )
     parser.add_argument( '--msgs_dump_dir', action='store', required=False, default="",
                          help="Dump directory containing 'rosmsg' output data" )
@@ -286,7 +291,7 @@ def main():
         logging.getLogger().setLevel( logging.INFO )
 
     nodes_dict = read_nodes( args.dump_dir )
-    if len(nodes_dict) < 1:
+    if not nodes_dict:
         _LOGGER.warning( "no data found in %s", args.dump_dir )
         return
 
@@ -308,7 +313,7 @@ def main():
         os.makedirs( args.outdir, exist_ok=True )
         generate_pages( nodes_dict, args.outdir,
                         nodes_labels=label_dict,
-                        topics_data_dir=args.topics_data_dir,
+                        topics_dump_dir=args.topics_dump_dir,
                         msgs_dump_dir=args.msgs_dump_dir,
                         services_dump_dir=args.services_dump_dir,
                         srvs_dump_dir=args.srvs_dump_dir

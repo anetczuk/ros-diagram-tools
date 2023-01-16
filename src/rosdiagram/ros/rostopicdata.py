@@ -32,6 +32,8 @@ def read_topics( topic_dir ):
                          }
           }
     """
+    if not topic_dir:
+        return None
     topics_dict = {}
     topics_path = os.path.join( topic_dir, "list.txt" )
     _LOGGER.debug( "reading topics list file: %s", topics_path )

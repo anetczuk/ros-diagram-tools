@@ -21,6 +21,8 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 
 
 def read_services( service_dir ):
+    if not service_dir:
+        return None
     services_dict = {}
     list_path = os.path.join( service_dir, "list.txt" )
     _LOGGER.debug( "reading services list file: %s", list_path )

@@ -40,6 +40,8 @@ class ROSNodeData():
 
 
 def read_nodes( nodes_dir ):
+    if not nodes_dir:
+        return None
     nodes_dict = {}
     nodes_path = os.path.join( nodes_dir, "list.txt" )
     _LOGGER.debug( "reading nodes list file: %s", nodes_path )
