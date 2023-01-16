@@ -1,0 +1,224 @@
+@startuml
+
+skinparam backgroundColor #FEFEFE
+
+box #Bisque
+    participant "/record_1673907549608806002" as _record_1673907549608806002 [[_record_1673907549608806002.html]]
+end box
+box #NavajoWhite
+    participant "/rosout" as _rosout [[_rosout.html]]
+end box
+box #PeachPuff
+    participant "void" as void [[void.html]]
+end box
+
+_record_1673907549608806002 o-> _rosout : **[[../msgs/0_msg.html {message data} 23:19:09.724323]]**: /rosout
+note left
+log: '/record_1673907549608806002': "Subscribing to /turtle1/pose" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> _rosout : **[[../msgs/28782_msg.html {message data} 23:19:09.724351]]**: /rosout
+note left
+log: '/record_1673907549608806002': "Subscribing to /turtle1/color_sensor" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> _rosout : **[[../msgs/2001208390_msg.html {message data} 23:19:11.725531]]**: /rosout
+note left
+log: '/record_1673907549608806002': "Subscribing to /statistics" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/2198044513_msg.html {message data} 23:19:11.922367]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 62 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/2224288664_msg.html {message data} 23:19:11.948611]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/3203170277_msg.html {message data} 23:19:12.927493]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/3231127848_msg.html {message data} 23:19:12.955451]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/4207235108_msg.html {message data} 23:19:13.931558]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/4245878066_msg.html {message data} 23:19:13.970201]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 62 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/5227825094_msg.html {message data} 23:19:14.952148]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/5246573575_msg.html {message data} 23:19:14.970896]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 64 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/5368806063_msg.html {message data} 23:19:15.093129]]**: /statistics
+note left
+topic '/rosout_agg' from '/rosout' to '/record_1673907549608806002' delivered: 2 dropped: 0
+end note
+_record_1673907549608806002 o-> _rosout : **[[../msgs/5997802368_msg.html {message data} 23:19:15.722125]]**: /rosout
+note left
+log: '/record_1673907549608806002': "Subscribing to /turtle1/cmd_vel" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/6238537093_msg.html {message data} 23:19:15.962860]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 64 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/6254346149_msg.html {message data} 23:19:15.978669]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/7244419826_msg.html {message data} 23:19:16.968743]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 61 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/7257678577_msg.html {message data} 23:19:16.982001]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 61 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/7365148448_msg.html {message data} 23:19:17.089471]]**: /statistics
+note left
+topic '/turtle1/cmd_vel' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 12 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/7452039458_msg.html {message data} 23:19:17.176362]]**: /statistics
+note left
+topic '/rosout_agg' from '/rosout' to '/record_1673907549608806002' delivered: 22 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/8049869739_msg.html {message data} 23:19:17.774192]]**: /statistics
+note left
+topic '/rosout' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 21 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/8255841953_msg.html {message data} 23:19:17.980165]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 62 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/8284527287_msg.html {message data} 23:19:18.008850]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 62 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/8458063566_msg.html {message data} 23:19:18.182386]]**: /statistics
+note left
+topic '/turtle1/cmd_vel' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 11 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/9266209990_msg.html {message data} 23:19:18.990533]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 62 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/9295511108_msg.html {message data} 23:19:19.019834]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 64 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/9461704527_msg.html {message data} 23:19:19.186027]]**: /statistics
+note left
+topic '/rosout_agg' from '/rosout' to '/record_1673907549608806002' delivered: 20 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/9461794872_msg.html {message data} 23:19:19.186118]]**: /statistics
+note left
+topic '/turtle1/cmd_vel' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 10 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/10052983575_msg.html {message data} 23:19:19.777306]]**: /statistics
+note left
+topic '/rosout' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 20 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/10274851714_msg.html {message data} 23:19:19.999174]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 60 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/10304571969_msg.html {message data} 23:19:20.028895]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 59 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/10559374697_msg.html {message data} 23:19:20.283697]]**: /statistics
+note left
+topic '/turtle1/cmd_vel' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 11 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/11280521564_msg.html {message data} 23:19:21.004844]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/11316411701_msg.html {message data} 23:19:21.040734]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/11554241805_msg.html {message data} 23:19:21.278564]]**: /statistics
+note left
+topic '/rosout_agg' from '/rosout' to '/record_1673907549608806002' delivered: 21 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/11651697443_msg.html {message data} 23:19:21.376020]]**: /statistics
+note left
+topic '/turtle1/cmd_vel' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 11 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/12153750333_msg.html {message data} 23:19:21.878073]]**: /statistics
+note left
+topic '/rosout' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 21 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/12288813583_msg.html {message data} 23:19:22.013136]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/12321680083_msg.html {message data} 23:19:22.046003]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/12657416421_msg.html {message data} 23:19:22.381739]]**: /statistics
+note left
+topic '/turtle1/cmd_vel' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 10 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/13298472140_msg.html {message data} 23:19:23.022795]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 61 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/13328361170_msg.html {message data} 23:19:23.052684]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 61 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/13653239933_msg.html {message data} 23:19:23.377563]]**: /statistics
+note left
+topic '/rosout_agg' from '/rosout' to '/record_1673907549608806002' delivered: 21 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/13747373524_msg.html {message data} 23:19:23.471696]]**: /statistics
+note left
+topic '/turtle1/cmd_vel' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 11 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/14245355843_msg.html {message data} 23:19:23.969679]]**: /statistics
+note left
+topic '/rosout' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 21 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/14305195755_msg.html {message data} 23:19:24.029518]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 62 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/14337483117_msg.html {message data} 23:19:24.061806]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/15318216641_msg.html {message data} 23:19:25.042539]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 64 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/15375155724_msg.html {message data} 23:19:25.099478]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 62 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/16320907139_msg.html {message data} 23:19:26.045230]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 61 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/16388919497_msg.html {message data} 23:19:26.113242]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 64 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/17331001423_msg.html {message data} 23:19:27.055324]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 56 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/17395727665_msg.html {message data} 23:19:27.120050]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 56 dropped: 0
+end note
+
+@enduml

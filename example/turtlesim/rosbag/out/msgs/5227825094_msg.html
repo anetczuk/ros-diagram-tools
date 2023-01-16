@@ -1,0 +1,143 @@
+<html>
+<head>
+<!--
+File was automatically generated using 'ros-diagram-tools' project.
+Project is distributed under the BSD 3-Clause license.
+-->
+    <title>rosbag diagram -- message page</title>
+    <style>
+        body {  padding: 24;
+                background-color: #bbbbbb;
+             }
+        pre {  background-color: rgb(226, 226, 226);
+               margin: 0px;
+               margin-top: 24px;
+               padding: 16px;
+            }
+        pre code {  margin: 0px;
+                    padding: 0px;
+                 }
+
+        .center_content {  width: 100%;
+                           margin-right: auto; margin-left: auto;
+                           text-align: center;
+                           padding-top: 24; padding-bottom: 24;
+                        }
+
+        .info_content { margin-bottom: 36; }
+
+        .info_content td { padding-right: 24; }
+        
+        .notes { display: inline-block;
+                 background-color: #FBFB77;
+                 padding: 12;
+               }
+
+    </style>
+</head>
+<body>
+    <div class="info_content">
+        <a href="../full_graph.html">back to Main graph</a>
+    </div>
+    <div class="info_content">
+        <table>
+            <tr>
+                <td>Timestamp:</td>
+                <td>2023-01-16 23:19:14.952148</td>
+            </tr>
+            <tr>
+                <td>Delta time:</td>
+                <td>5227.825094 ms</td>
+            </tr>
+            <tr>
+                <td>Topic:</td>
+                <td>/statistics</td>
+            </tr>
+            <tr>
+                <td>Publisher:</td>
+                <td>/record_1673907549608806002</td>
+            </tr>
+            <tr>
+                <td>Subscribers:</td>
+                <td>void</td>
+            </tr>
+        </table>
+    </div>
+    <div class="info_content">
+        Notes:<br /><br />
+        <div class="notes"> 
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+        </div> 
+    </div>
+    <div class="info_content">
+        Data:
+        <pre><code>{'__msgtype__': 'rosgraph_msgs/msg/TopicStatistics',
+ 'topic': '/turtle1/color_sensor',
+ 'node_pub': '/turtlesim',
+ 'node_sub': '/record_1673907549608806002',
+ 'window_start': {'__msgtype__': 'builtin_interfaces/msg/Time',
+                  'sec': 1673907553,
+                  'nanosec': 931476938},
+ 'window_stop': {'__msgtype__': 'builtin_interfaces/msg/Time',
+                 'sec': 1673907554,
+                 'nanosec': 952066216},
+ 'delivered_msgs': 63,
+ 'dropped_msgs': 0,
+ 'traffic': 189,
+ 'period_mean': {'__msgtype__': 'builtin_interfaces/msg/Duration',
+                 'sec': 0,
+                 'nanosec': 15840308},
+ 'period_stddev': {'__msgtype__': 'builtin_interfaces/msg/Duration',
+                   'sec': 0,
+                   'nanosec': 4855121},
+ 'period_max': {'__msgtype__': 'builtin_interfaces/msg/Duration',
+                'sec': 0,
+                'nanosec': 29631312},
+ 'stamp_age_mean': {'__msgtype__': 'builtin_interfaces/msg/Duration',
+                    'sec': 0,
+                    'nanosec': 0},
+ 'stamp_age_stddev': {'__msgtype__': 'builtin_interfaces/msg/Duration',
+                      'sec': 0,
+                      'nanosec': 0},
+ 'stamp_age_max': {'__msgtype__': 'builtin_interfaces/msg/Duration',
+                   'sec': 0,
+                   'nanosec': 0}}</code></pre>
+    </div>
+    <div class="info_content">
+        Message: <code>rosgraph_msgs/msg/TopicStatistics</code><br/>
+        <pre><code># name of the topic
+string topic
+
+# node id of the publisher
+string node_pub
+
+# node id of the subscriber
+string node_sub
+
+# the statistics apply to this time window
+time window_start
+time window_stop
+
+# number of messages delivered during the window
+int32 delivered_msgs
+# numbers of messages dropped during the window
+int32 dropped_msgs
+
+# traffic during the window, in bytes
+int32 traffic
+
+# mean/stddev/max period between two messages
+duration period_mean
+duration period_stddev
+duration period_max
+
+# mean/stddev/max age of the message based on the
+# timestamp in the message header. In case the
+# message does not have a header, it will be 0.
+duration stamp_age_mean
+duration stamp_age_stddev
+duration stamp_age_max
+</code></pre>
+    </div>
+</body>
+</html>

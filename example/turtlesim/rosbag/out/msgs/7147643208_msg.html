@@ -1,0 +1,136 @@
+<html>
+<head>
+<!--
+File was automatically generated using 'ros-diagram-tools' project.
+Project is distributed under the BSD 3-Clause license.
+-->
+    <title>rosbag diagram -- message page</title>
+    <style>
+        body {  padding: 24;
+                background-color: #bbbbbb;
+             }
+        pre {  background-color: rgb(226, 226, 226);
+               margin: 0px;
+               margin-top: 24px;
+               padding: 16px;
+            }
+        pre code {  margin: 0px;
+                    padding: 0px;
+                 }
+
+        .center_content {  width: 100%;
+                           margin-right: auto; margin-left: auto;
+                           text-align: center;
+                           padding-top: 24; padding-bottom: 24;
+                        }
+
+        .info_content { margin-bottom: 36; }
+
+        .info_content td { padding-right: 24; }
+        
+        .notes { display: inline-block;
+                 background-color: #FBFB77;
+                 padding: 12;
+               }
+
+    </style>
+</head>
+<body>
+    <div class="info_content">
+        <a href="../full_graph.html">back to Main graph</a>
+    </div>
+    <div class="info_content">
+        <table>
+            <tr>
+                <td>Timestamp:</td>
+                <td>2023-01-16 23:19:16.871966</td>
+            </tr>
+            <tr>
+                <td>Delta time:</td>
+                <td>7147.643208 ms</td>
+            </tr>
+            <tr>
+                <td>Topic:</td>
+                <td>/rosout_agg</td>
+            </tr>
+            <tr>
+                <td>Publisher:</td>
+                <td>/rosout</td>
+            </tr>
+            <tr>
+                <td>Subscribers:</td>
+                <td>void</td>
+            </tr>
+        </table>
+    </div>
+    <div class="info_content">
+        Notes:<br /><br />
+        <div class="notes"> 
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+        </div> 
+    </div>
+    <div class="info_content">
+        Data:
+        <pre><code>{'__msgtype__': 'rosgraph_msgs/msg/Log',
+ 'header': {'__msgtype__': 'std_msgs/msg/Header',
+            'stamp': {'__msgtype__': 'builtin_interfaces/msg/Time',
+                      'sec': 1673907556,
+                      'nanosec': 868952989},
+            'frame_id': ''},
+ 'level': 2,
+ 'name': '/turtlesim_2807_1673907554697',
+ 'msg': 'Radius '
+        '= '
+        '2.000000',
+ 'file': 'circle.py',
+ 'function': 'turtle_circle',
+ 'line': 21,
+ 'topics': ['/turtle1/cmd_vel',
+            '/rosout'],
+ 'DEBUG': 1,
+ 'INFO': 2,
+ 'WARN': 4,
+ 'ERROR': 8,
+ 'FATAL': 16}</code></pre>
+    </div>
+    <div class="info_content">
+        Message: <code>rosgraph_msgs/msg/Log</code><br/>
+        <pre><code>##
+## Severity level constants
+##
+byte DEBUG=1 #debug level
+byte INFO=2  #general level
+byte WARN=4  #warning level
+byte ERROR=8 #error level
+byte FATAL=16 #fatal/critical level
+##
+## Fields
+##
+Header header
+byte level
+string name # name of the node
+string msg # message 
+string file # file the message came from
+string function # function the message came from
+uint32 line # line the message came from
+string[] topics # topic names that the node publishes
+
+================================================================================
+MSG: std_msgs/Header
+# Standard metadata for higher-level stamped data types.
+# This is generally used to communicate timestamped data 
+# in a particular coordinate frame.
+# 
+# sequence ID: consecutively increasing ID 
+uint32 seq
+#Two-integer timestamp that is expressed as:
+# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')
+# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')
+# time-handling sugar is provided by the client library
+time stamp
+#Frame this data is associated with
+string frame_id
+</code></pre>
+    </div>
+</body>
+</html>

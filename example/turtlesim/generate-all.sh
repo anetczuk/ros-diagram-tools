@@ -8,3 +8,5 @@ SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 
 
 $SCRIPT_DIR/nodegraph/generate.sh
+
+$SCRIPT_DIR/rosbag/generate.sh

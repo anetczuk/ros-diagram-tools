@@ -1,0 +1,584 @@
+@startuml
+
+skinparam backgroundColor #FEFEFE
+
+box #Bisque
+    participant "/record_1673907549608806002" as _record_1673907549608806002 [[_record_1673907549608806002.html]]
+end box
+box #NavajoWhite
+    participant "/rosout" as _rosout [[_rosout.html]]
+end box
+box #PeachPuff
+    participant "void" as void [[void.html]]
+end box
+
+_rosout o-> void : **[[../msgs/2012290294_msg.html {message data} 23:19:11.736613]]**: /rosout_agg
+note left
+log: '/record_1673907549608806002': "Subscribing to /statistics" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/2198044513_msg.html {message data} 23:19:11.922367]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 62 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/2224288664_msg.html {message data} 23:19:11.948611]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/3203170277_msg.html {message data} 23:19:12.927493]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/3231127848_msg.html {message data} 23:19:12.955451]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/4207235108_msg.html {message data} 23:19:13.931558]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/4245878066_msg.html {message data} 23:19:13.970201]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 62 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/5227825094_msg.html {message data} 23:19:14.952148]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/5246573575_msg.html {message data} 23:19:14.970896]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 64 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/5368785044_msg.html {message data} 23:19:15.093108]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/5368806063_msg.html {message data} 23:19:15.093129]]**: /statistics
+note left
+topic '/rosout_agg' from '/rosout' to '/record_1673907549608806002' delivered: 2 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/5445750605_msg.html {message data} 23:19:15.170073]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/5550917142_msg.html {message data} 23:19:15.275240]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/5665633592_msg.html {message data} 23:19:15.389956]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/5747306783_msg.html {message data} 23:19:15.471629]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/5845363525_msg.html {message data} 23:19:15.569686]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/5972627054_msg.html {message data} 23:19:15.696950]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/5998046991_msg.html {message data} 23:19:15.722370]]**: /rosout_agg
+note left
+log: '/record_1673907549608806002': "Subscribing to /turtle1/cmd_vel" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/6047022269_msg.html {message data} 23:19:15.771345]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/6157227347_msg.html {message data} 23:19:15.881550]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/6238537093_msg.html {message data} 23:19:15.962860]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 64 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/6247668401_msg.html {message data} 23:19:15.971991]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/6254346149_msg.html {message data} 23:19:15.978669]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/6362430159_msg.html {message data} 23:19:16.086753]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/6447715042_msg.html {message data} 23:19:16.172038]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/6557111800_msg.html {message data} 23:19:16.281435]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/6650162512_msg.html {message data} 23:19:16.374485]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/6767713690_msg.html {message data} 23:19:16.492036]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/6852072366_msg.html {message data} 23:19:16.576395]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/6953247399_msg.html {message data} 23:19:16.677570]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/7049408686_msg.html {message data} 23:19:16.773731]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/7147643208_msg.html {message data} 23:19:16.871966]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/7244419826_msg.html {message data} 23:19:16.968743]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 61 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/7257604596_msg.html {message data} 23:19:16.981927]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/7257678577_msg.html {message data} 23:19:16.982001]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 61 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/7365148448_msg.html {message data} 23:19:17.089471]]**: /statistics
+note left
+topic '/turtle1/cmd_vel' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 12 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/7365629708_msg.html {message data} 23:19:17.089952]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/7452014790_msg.html {message data} 23:19:17.176337]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/7452039458_msg.html {message data} 23:19:17.176362]]**: /statistics
+note left
+topic '/rosout_agg' from '/rosout' to '/record_1673907549608806002' delivered: 22 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/7577481020_msg.html {message data} 23:19:17.301804]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/7649932494_msg.html {message data} 23:19:17.374255]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/7749476246_msg.html {message data} 23:19:17.473799]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/7846109007_msg.html {message data} 23:19:17.570432]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/7961932844_msg.html {message data} 23:19:17.686255]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/8049869739_msg.html {message data} 23:19:17.774192]]**: /statistics
+note left
+topic '/rosout' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 21 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/8052652854_msg.html {message data} 23:19:17.776976]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/8147263762_msg.html {message data} 23:19:17.871587]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/8244897329_msg.html {message data} 23:19:17.969220]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/8255841953_msg.html {message data} 23:19:17.980165]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 62 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/8284527287_msg.html {message data} 23:19:18.008850]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 62 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/8349383590_msg.html {message data} 23:19:18.073706]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/8458030917_msg.html {message data} 23:19:18.182354]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/8458063566_msg.html {message data} 23:19:18.182386]]**: /statistics
+note left
+topic '/turtle1/cmd_vel' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 11 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/8570487279_msg.html {message data} 23:19:18.294810]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/8645695584_msg.html {message data} 23:19:18.370018]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/8749936779_msg.html {message data} 23:19:18.474259]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/8852952864_msg.html {message data} 23:19:18.577276]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/8950456685_msg.html {message data} 23:19:18.674779]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/9046103615_msg.html {message data} 23:19:18.770426]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/9146785275_msg.html {message data} 23:19:18.871108]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/9266209990_msg.html {message data} 23:19:18.990533]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 62 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/9266719600_msg.html {message data} 23:19:18.991042]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/9295511108_msg.html {message data} 23:19:19.019834]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 64 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/9348137344_msg.html {message data} 23:19:19.072460]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/9461617613_msg.html {message data} 23:19:19.185940]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/9461704527_msg.html {message data} 23:19:19.186027]]**: /statistics
+note left
+topic '/rosout_agg' from '/rosout' to '/record_1673907549608806002' delivered: 20 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/9461794872_msg.html {message data} 23:19:19.186118]]**: /statistics
+note left
+topic '/turtle1/cmd_vel' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 10 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/9548689676_msg.html {message data} 23:19:19.273012]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/9680696157_msg.html {message data} 23:19:19.405019]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/9750433787_msg.html {message data} 23:19:19.474756]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/9847150686_msg.html {message data} 23:19:19.571473]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/9948653728_msg.html {message data} 23:19:19.672976]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/10052983575_msg.html {message data} 23:19:19.777306]]**: /statistics
+note left
+topic '/rosout' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 20 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/10053869376_msg.html {message data} 23:19:19.778192]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/10149909694_msg.html {message data} 23:19:19.874232]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/10265304739_msg.html {message data} 23:19:19.989627]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/10274851714_msg.html {message data} 23:19:19.999174]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 60 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/10304571969_msg.html {message data} 23:19:20.028895]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 59 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/10348245441_msg.html {message data} 23:19:20.072568]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/10445046144_msg.html {message data} 23:19:20.169369]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/10558811112_msg.html {message data} 23:19:20.283134]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/10559374697_msg.html {message data} 23:19:20.283697]]**: /statistics
+note left
+topic '/turtle1/cmd_vel' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 11 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/10645207015_msg.html {message data} 23:19:20.369530]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/10746521133_msg.html {message data} 23:19:20.470844]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/10846243791_msg.html {message data} 23:19:20.570566]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/10958334821_msg.html {message data} 23:19:20.682657]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/11048452838_msg.html {message data} 23:19:20.772776]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/11154057796_msg.html {message data} 23:19:20.878381]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/11256390296_msg.html {message data} 23:19:20.980713]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/11280521564_msg.html {message data} 23:19:21.004844]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/11316411701_msg.html {message data} 23:19:21.040734]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/11348510488_msg.html {message data} 23:19:21.072833]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/11446690134_msg.html {message data} 23:19:21.171013]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/11553323559_msg.html {message data} 23:19:21.277646]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/11554241805_msg.html {message data} 23:19:21.278564]]**: /statistics
+note left
+topic '/rosout_agg' from '/rosout' to '/record_1673907549608806002' delivered: 21 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/11645922880_msg.html {message data} 23:19:21.370246]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/11651697443_msg.html {message data} 23:19:21.376020]]**: /statistics
+note left
+topic '/turtle1/cmd_vel' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 11 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/11747961425_msg.html {message data} 23:19:21.472284]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/11846451155_msg.html {message data} 23:19:21.570774]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/11946783590_msg.html {message data} 23:19:21.671106]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/12047243880_msg.html {message data} 23:19:21.771567]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/12153057065_msg.html {message data} 23:19:21.877380]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/12153750333_msg.html {message data} 23:19:21.878073]]**: /statistics
+note left
+topic '/rosout' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 21 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/12247080555_msg.html {message data} 23:19:21.971403]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/12288813583_msg.html {message data} 23:19:22.013136]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/12321680083_msg.html {message data} 23:19:22.046003]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/12346319471_msg.html {message data} 23:19:22.070642]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/12461108309_msg.html {message data} 23:19:22.185431]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/12547037726_msg.html {message data} 23:19:22.271360]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/12657410002_msg.html {message data} 23:19:22.381733]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/12657416421_msg.html {message data} 23:19:22.381739]]**: /statistics
+note left
+topic '/turtle1/cmd_vel' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 10 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/12764675268_msg.html {message data} 23:19:22.488998]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/12844948635_msg.html {message data} 23:19:22.569271]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/12950079271_msg.html {message data} 23:19:22.674402]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/13053317593_msg.html {message data} 23:19:22.777640]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/13148577050_msg.html {message data} 23:19:22.872900]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/13247868913_msg.html {message data} 23:19:22.972192]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/13298472140_msg.html {message data} 23:19:23.022795]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 61 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/13328361170_msg.html {message data} 23:19:23.052684]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 61 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/13347993833_msg.html {message data} 23:19:23.072317]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/13452395444_msg.html {message data} 23:19:23.176718]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/13546419593_msg.html {message data} 23:19:23.270742]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/13653139897_msg.html {message data} 23:19:23.377463]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/13653239933_msg.html {message data} 23:19:23.377563]]**: /statistics
+note left
+topic '/rosout_agg' from '/rosout' to '/record_1673907549608806002' delivered: 21 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/13746101396_msg.html {message data} 23:19:23.470424]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/13747373524_msg.html {message data} 23:19:23.471696]]**: /statistics
+note left
+topic '/turtle1/cmd_vel' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 11 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/13844988586_msg.html {message data} 23:19:23.569311]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/13957548173_msg.html {message data} 23:19:23.681871]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/14052177992_msg.html {message data} 23:19:23.776501]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/14147247507_msg.html {message data} 23:19:23.871570]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/14245355843_msg.html {message data} 23:19:23.969679]]**: /statistics
+note left
+topic '/rosout' from '/turtlesim_2807_1673907554697' to '/record_1673907549608806002' delivered: 21 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/14245493108_msg.html {message data} 23:19:23.969816]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/14305195755_msg.html {message data} 23:19:24.029518]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 62 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/14337483117_msg.html {message data} 23:19:24.061806]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 63 dropped: 0
+end note
+_rosout o-> void : **[[../msgs/14349662304_msg.html {message data} 23:19:24.073985]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_rosout o-> void : **[[../msgs/14450709836_msg.html {message data} 23:19:24.175033]]**: /rosout_agg
+note left
+log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/15318216641_msg.html {message data} 23:19:25.042539]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 64 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/15375155724_msg.html {message data} 23:19:25.099478]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 62 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/16320907139_msg.html {message data} 23:19:26.045230]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 61 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/16388919497_msg.html {message data} 23:19:26.113242]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 64 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/17331001423_msg.html {message data} 23:19:27.055324]]**: /statistics
+note left
+topic '/turtle1/color_sensor' from '/turtlesim' to '/record_1673907549608806002' delivered: 56 dropped: 0
+end note
+_record_1673907549608806002 o-> void : **[[../msgs/17395727665_msg.html {message data} 23:19:27.120050]]**: /statistics
+note left
+topic '/turtle1/pose' from '/turtlesim' to '/record_1673907549608806002' delivered: 56 dropped: 0
+end note
+
+@enduml
