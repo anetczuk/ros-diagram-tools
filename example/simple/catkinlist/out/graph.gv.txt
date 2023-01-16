@@ -2,15 +2,15 @@ digraph G {
 rankdir=LR;
 package_a [shape=octagon];
 roscpp [shape=octagon];
-package_a -> roscpp;
-package_a -> tf;
-package_b -> std_msgs;
-package_b -> sensor_msgs;
-package_b -> package_a;
-roscpp -> package_c;
+package_a -> roscpp  [color=mediumblue];
+package_a -> tf  [color=firebrick];
+package_b -> std_msgs  [color=darkmagenta];
+package_b -> sensor_msgs  [color=maroon];
+package_b -> package_a  [color=brown];
+roscpp -> package_c  [color=darkviolet];
 package_d [shape=octagon];
-package_d -> package_a;
-package_e -> package_d;
+package_d -> package_a  [color=navy];
+package_e -> package_d  [color=firebrick];
 {
 rank=max;
 tf [shape=octagon];

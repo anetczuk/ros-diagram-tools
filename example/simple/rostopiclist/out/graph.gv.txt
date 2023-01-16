@@ -8,11 +8,11 @@ rankdir=LR;
 "t_/topic2" [shape=ellipse];
 "n_/node4" [shape=box];
 "n_/node5" [shape=box];
-"n_/node1" -> "t_/topic1";
-"t_/topic1" -> "n_/node2";
-"t_/topic1" -> "n_/node3";
-"t_/topic1" -> "n_/topic1";
-"n_/node2" -> "t_/topic2";
-"t_/topic2" -> "n_/node4";
-"t_/topic2" -> "n_/node5";
+"n_/node1" -> "t_/topic1"  [color=darkblue];
+"t_/topic1" -> "n_/node2"  [color=darkred];
+"t_/topic1" -> "n_/node3"  [color=blueviolet];
+"t_/topic1" -> "n_/topic1"  [color=saddlebrown];
+"n_/node2" -> "t_/topic2"  [color=black];
+"t_/topic2" -> "n_/node4"  [color=brown];
+"t_/topic2" -> "n_/node5"  [color=black];
 }
