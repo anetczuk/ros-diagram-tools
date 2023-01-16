@@ -33,7 +33,8 @@ items_list=$(rosservice list)
 for item in $items_list; do
     out_file="$INFO_DIR/"$(echo "$item" | sed "s/\//_/g")".txt"
     echo "Writing $out_file"
-    rosservice info $item > $out_file
+    ## csn hspprn that some types could not be loaded
+    rosservice info $item > $out_file || true
 done
 
 echo -e "\nDone.\n"
