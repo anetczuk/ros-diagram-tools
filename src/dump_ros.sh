@@ -22,11 +22,22 @@ INFO_DIR="$1"
 mkdir -p $INFO_DIR
 
 
+echo "executing: $SCRIPT_DIR/dump_rospack.sh $INFO_DIR/packinfo"
 $SCRIPT_DIR/dump_rospack.sh "$INFO_DIR/packinfo"
+
+echo "executing: $SCRIPT_DIR/dump_rosnode.sh $INFO_DIR/nodeinfo"
 $SCRIPT_DIR/dump_rosnode.sh "$INFO_DIR/nodeinfo"
+
+echo "executing: $SCRIPT_DIR/dump_rostopic.sh $INFO_DIR/topicinfo"
 $SCRIPT_DIR/dump_rostopic.sh "$INFO_DIR/topicinfo"
+
+echo "executing: $SCRIPT_DIR/dump_rosservice.sh $INFO_DIR/serviceinfo"
 $SCRIPT_DIR/dump_rosservice.sh "$INFO_DIR/serviceinfo"
+
+echo "executing: $SCRIPT_DIR/dump_rossrv.sh $INFO_DIR/srvinfo"
 $SCRIPT_DIR/dump_rossrv.sh "$INFO_DIR/srvinfo"
+
+echo "executing: $SCRIPT_DIR/dump_rosmsg.sh $INFO_DIR/msginfo"
 $SCRIPT_DIR/dump_rosmsg.sh "$INFO_DIR/msginfo"
 
 
