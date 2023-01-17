@@ -127,6 +127,6 @@ node_4;
 digraph G {
 node_1;
 node_2;
-node_1 -> node_2;
+node_1 -> node_2  [color=blue];
 }
 """, content )
