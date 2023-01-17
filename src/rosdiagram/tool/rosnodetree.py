@@ -20,7 +20,7 @@ from rosdiagram.ros.rosnodedata import get_topics, get_services,\
     get_names_from_list, create_topics_dict, fix_names, split_to_groups,\
     get_services_info, filter_nodes, filter_topics,\
     get_services_from_dict, read_nodes, ROSNodeData, get_topics_info
-from rosdiagram.htmlgenerator import generate_graph_html
+from rosdiagram.graphviztohtml import generate_graph_html
 from rosdiagram.graphviz import Graph, set_node_labels, preserve_neighbour_nodes
 from rosdiagram.ros.rosutils import remove_ros_items
 from rosdiagram.ros.rostopicdata import read_topics

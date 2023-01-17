@@ -7,7 +7,7 @@
 
 import unittest
 
-from rosdiagram.htmlgenerator import ParamsDict
+from rosdiagram.graphviztohtml import ParamsDict
 
 
 class ParamsDictTest(unittest.TestCase):
