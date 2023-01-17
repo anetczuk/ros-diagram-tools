@@ -77,7 +77,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
 
     exclude_filter = ExcludeItemFilter( exclude_set )
 
-    print( "exclude set:", exclude_filter.raw_exclude )
+    _LOGGER.info( "exclude set: %s", exclude_filter.raw_exclude )
 
     topic_data  = read_topics( topic_dump_dir )
     if topic_data is None:
@@ -90,21 +90,25 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
     try:
         # create reader instance and open for reading
         with Reader( bag_path ) as reader:
-            print( "bag statistics:" )
-            print( "total messages:", reader.message_count )
-            print( "time span:", str( reader.duration / 1000000000 / 60 ) + "m" )
+            bag_time_span = reader.duration / 1000000000 / 60
+            _LOGGER.info( f"""bag statistics:
+total messages: {reader.message_count}
+time span: {bag_time_span}m""" )
 
             # topic and msgtype information is available on .connections list
 
             diagram_data: DiagramData = calculate_diagram_data( reader, params, topic_subs, exclude_filter )
 
-            diagram_data.nodes_subdir  = "nodes"
-            diagram_data.topics_subdir = "topics"
+            nodes_subdir  = "nodes"
+            topics_subdir = "topics"
+
+            diagram_data.nodes_subdir  = nodes_subdir
+            diagram_data.topics_subdir = topics_subdir
             diagram_data.msgs_subdir   = "msgs"
 
             seq_diagram = diagram_data.seq_diagram
             items_count = seq_diagram.itemsNum()
-            print( "diagram items num:", items_count )
+            _LOGGER.info( "diagram items num: %s", items_count )
 
             ## calculate notes
             notes_functor = params.get( 'notes_functor' )
@@ -114,7 +118,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
                         continue
                     note_content = None
                     if notes_functor is not None:
-                        note_content = notes_functor( item.labels, item.msgtype, item.msgdata )
+                        note_content = notes_functor( item.topics, item.msgtype, item.msgdata )
                     item.notes_data = note_content
 
             ## generating message pages
@@ -124,6 +128,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
             generate_topics_pages( diagram_data, outdir )
 
             ## generating nodes pages
+            diagram_data.topics_subdir = topics_subdir
             generate_nodes_pages( diagram_data, outdir )
 
             ## generating main page
@@ -194,6 +199,7 @@ def generate_main_page( diagram_data: DiagramData, bag_path, exclude_set, outdir
     for node in nodes_data:
         if node.suburl is not None:
             node.suburl = os.path.join( diagram_data.nodes_subdir, node.suburl )
+    ## topic: TopicData
     for topic in topics_data:
         if topic.suburl is not None:
             topic.suburl = os.path.join( diagram_data.topics_subdir, topic.suburl )
@@ -202,7 +208,7 @@ def generate_main_page( diagram_data: DiagramData, bag_path, exclude_set, outdir
     main_out_path = os.path.join( outdir, "full_graph.html" )
     write_seq_main_page( bag_path, svg_path, nodes_data, topics_data, exclude_set, main_out_path )
 
-    print( f"generated main page: file://{main_out_path}" )
+    _LOGGER.info( "generated main page: file://%s", main_out_path )
 
 
 def generate_nodes_pages( diagram_data: DiagramData, outdir ):
@@ -223,9 +229,10 @@ def generate_nodes_pages( diagram_data: DiagramData, outdir ):
         sub_diagram: SequenceGraph = seq_diagram.copyCallingsActors( actor )
         sub_diagram.process( params )
 
-        subdiagram_data = copy.copy( diagram_data )
+        subdiagram_data: DiagramData = copy.copy( diagram_data )
         subdiagram_data.seq_diagram  = sub_diagram
         subdiagram_data.nodes_subdir = ""
+        subdiagram_data.topics_subdir = "../topics"
         subdiagram_data.msgs_subdir  = os.path.join( os.pardir, subdiagram_data.msgs_subdir )
 
         out_path = os.path.join( nodes_out_dir, f"{actor_filename}.puml" )
@@ -258,10 +265,11 @@ def generate_topics_pages( diagram_data: DiagramData, outdir ):
 
         sub_diagram.process( params )
 
-        subdiagram_data = copy.copy( diagram_data )
-        subdiagram_data.seq_diagram  = sub_diagram
-        subdiagram_data.nodes_subdir = os.path.join( os.pardir, subdiagram_data.nodes_subdir )
-        subdiagram_data.msgs_subdir  = os.path.join( os.pardir, subdiagram_data.msgs_subdir )
+        subdiagram_data: DiagramData = copy.copy( diagram_data )
+        subdiagram_data.seq_diagram   = sub_diagram
+        subdiagram_data.nodes_subdir  = os.path.join( os.pardir, subdiagram_data.nodes_subdir )
+        subdiagram_data.topics_subdir = ""
+        subdiagram_data.msgs_subdir   = os.path.join( os.pardir, subdiagram_data.msgs_subdir )
 
         topic_filename = prepare_filesystem_name( topic_data.name )
         out_path = os.path.join( topics_out_dir, f"{topic_filename}.puml" )
@@ -304,7 +312,7 @@ def generate_basic_graph( reader, topic_subs, excluded_topics ):
     ## iterates items in timestamp order
     messages = reader.messages()
     if not messages:
-        print( "no message found" )
+        _LOGGER.warning( "no message found" )
         return None
 
     seq_diagram = SequenceGraph()
@@ -331,7 +339,7 @@ def generate_basic_graph( reader, topic_subs, excluded_topics ):
 
         valid, msg = deserialize_msg( rawdata, connection )
         if valid is False:
-            print( "unable to deserialize:", timestamp, connection.topic, connection.msgtype )
+            _LOGGER.warning( "unable to deserialize: %s %s %s", timestamp, connection.topic, connection.msgtype )
             continue
         graph_item.setMessageData( connection.msgtype, connection.msgdef, msg )
 
@@ -405,7 +413,7 @@ class ExcludeItemFilter():
 
 
 def write_seq_main_page( bag_file, svg_name, nodes_data, topics_data, exclude_set, out_path ):
-    print( f"generating main page: file://{out_path}" )
+    _LOGGER.info( "generating main page: file://%s", out_path )
 
     template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "baggraph_seq_main_page.html.tmpl" )
 
@@ -422,7 +430,7 @@ def write_seq_main_page( bag_file, svg_name, nodes_data, topics_data, exclude_se
 
 
 def write_seq_node_page( svg_name, out_path ):
-    print( f"generating node page: file://{out_path}" )
+    _LOGGER.info( "generating node page: file://%s", out_path )
 
     template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "baggraph_seq_node_page.html.tmpl" )
 

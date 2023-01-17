@@ -13,12 +13,12 @@ from typing import Set, List, Any, Dict
 ##
 class MsgData():
 
-    def __init__(self, pub: str, subs: Set[str], index: int, timestamp, labels: Set[str] ):
+    def __init__(self, pub: str, subs: Set[str], index: int, timestamp, topics: Set[str] ):
         self.pub       = pub
         self.subs      = subs
         self.index     = index
         self.timestamp = timestamp
-        self.labels    = labels
+        self.topics    = topics
 
         self.msgtype = None
         self.msgdef  = None
@@ -63,8 +63,8 @@ class MsgData():
             return True
         return False
 
-    def haveLabel(self, label):
-        return label in self.labels
+    def haveLabel(self, topic):
+        return topic in self.topics
 
     def sameActors( self, other_item: 'MsgData' ):
         if self.pub != other_item.pub:
@@ -74,16 +74,16 @@ class MsgData():
         return True
 
     def sameLabels( self, other_item: 'MsgData' ):
-        return self.labels == other_item.labels
+        return self.topics == other_item.topics
 
-    def addLabels(self, labels: Set[str] ):
-        self.labels = self.labels.union( labels )
+    def addLabels(self, topics: Set[str] ):
+        self.topics = self.topics.union( topics )
 
     def hashValue(self):
         string_list = []
         string_list.append( self.pub )
         string_list.extend( self.subs )
-        string_list.extend( self.labels )
+        string_list.extend( self.topics )
         return hash( tuple( string_list ) )
 
 
@@ -140,13 +140,13 @@ class SequenceGraph():
             ret_set.update( calls.subs )
         return ret_set
 
-    def addCall(self, publisher, subscriber, index, timestamp, label) -> MsgData:
-        item = MsgData( publisher, set(subscriber,), index, timestamp, set([label]) )
+    def addCall(self, publisher, subscriber, index, timestamp, topic) -> MsgData:
+        item = MsgData( publisher, set(subscriber,), index, timestamp, set([topic]) )
         self.callings.append( item )
         return item
 
-    def addCallSubs(self, publisher, subscribers_list, index, timestamp, label) -> MsgData:
-        item = MsgData( publisher, set(subscribers_list), index, timestamp, set([label]) )
+    def addCallSubs(self, publisher, subscribers_list, index, timestamp, topic) -> MsgData:
+        item = MsgData( publisher, set(subscribers_list), index, timestamp, set([topic]) )
         self.callings.append( item )
         return item
 
@@ -173,7 +173,7 @@ class SequenceGraph():
             call = self.callings[i]
             if prev_call.sameActors( call ):
                 ## same pub and subs
-                prev_call.addLabels( call.labels )
+                prev_call.addLabels( call.topics )
                 prev_call.clearMessageaData()
                 continue
             groups.append( prev_call )

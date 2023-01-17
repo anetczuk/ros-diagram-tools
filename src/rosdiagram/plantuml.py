@@ -30,6 +30,7 @@ def generate_diagram( diagram_data: DiagramData, out_path ):
     params   = diagram_data.params
     genrator = SequenceDiagramGenerator( params,
                                          nodes_subdir=diagram_data.nodes_subdir,
+                                         topics_subdir=diagram_data.topics_subdir,
                                          msgs_subdir=diagram_data.msgs_subdir )
     genrator.generate( diagram_data, out_path )
 
@@ -37,14 +38,15 @@ def generate_diagram( diagram_data: DiagramData, out_path ):
 ##
 class SequenceDiagramGenerator():
 
-    def __init__(self, params: dict = None, nodes_subdir="", msgs_subdir="" ):
+    def __init__(self, params: dict = None, nodes_subdir="", topics_subdir="", msgs_subdir="" ):
         self.name_dict: Dict[str, str] = {}
         self.params_dict = params
         if self.params_dict is None:
             self.params_dict = {}
 
-        self.nodes_subdir = nodes_subdir
-        self.msgs_subdir  = msgs_subdir
+        self.nodes_subdir  = nodes_subdir
+        self.topics_subdir = topics_subdir
+        self.msgs_subdir   = msgs_subdir
 
         self.actors_order: List[str] = []
 
@@ -121,17 +123,19 @@ skinparam backgroundColor #FEFEFE
         content    = ""
         group_subs = self.params_dict.get( "group_subs", False )
 
-        calls = seq.items
-        for item in calls:
-            receivers = sorted( item.subs, reverse=True )
+        calls: List[ MsgData ] = seq.items
+        ## item: MsgData
+        for msg_data in calls:
+            receivers = sorted( msg_data.subs, reverse=True )
 
-            data_url = None
-            if item.isMessageSet():
-                data_url = item.getProp( "url", None )
-            if data_url is not None:
-                data_url = os.path.join( self.msgs_subdir, data_url )
+            message_url = None
+            if msg_data.isMessageSet():
+                message_url = msg_data.getProp( "url", None )
+            if message_url is not None:
+                message_url = os.path.join( self.msgs_subdir, message_url )
 
-            call_label = self.calculateLabel( item, data_url )
+            ## topic url: out/topics/_turtle1_cmd_vel.html
+            call_label = self.calculateLabel( msg_data, message_url )
             indent     = ""
 
             use_subs_group = len( receivers ) > 1 and group_subs
@@ -141,15 +145,15 @@ skinparam backgroundColor #FEFEFE
                 call_label = ""
                 indent = "    "
 
-            pub_id = self._getItemId( item.pub )
+            pub_id = self._getItemId( msg_data.pub )
             for rec in receivers:
                 rec_id = self._getItemId( rec )
                 content   += f"""{loop_indent}{indent}{pub_id} o-> {rec_id} : {call_label}\n"""
                 if call_label:
-                    if item.notes_data is not None:
+                    if msg_data.notes_data is not None:
                         content += f"""\
 note left
-{item.notes_data}
+{msg_data.notes_data}
 end note
 """
                 call_label = ""     ## clear label after first item
@@ -165,13 +169,28 @@ end note
         return timestamp_string
 
     def calculateLabel(self, item: MsgData, url=None ):
-        label            = " | ".join( item.labels )
+        ret_content = ""
+
         timestamp_string = self.callTime( item )
         if url is None:
-            call_label       = f"""**{timestamp_string}**: {label}"""
+            ret_content = f"""**{timestamp_string}**: """
         else:
-            call_label       = f"""**[[{url} {{message data}} {timestamp_string}]]**: {label}"""
-        return call_label
+            ## {message data} is tooltip of hyperlink
+            plantuml_url = generate_url( url, timestamp_string, "message data" )
+            ret_content  = f"""**{plantuml_url}**: """
+
+        labels_list = []
+        for topic in item.topics:
+            if self.topics_subdir:
+                topic_filename = prepare_filesystem_name( topic ) + ".html"
+                topic_path = os.path.join( self.topics_subdir, topic_filename )
+                plantuml_url = generate_url( topic_path, topic, "topic data" )
+                labels_list.append( plantuml_url )
+            else:
+                labels_list.append( topic )
+
+        ret_content += " | ".join( labels_list )
+        return ret_content
 
     def calculateLabelsDict(self, seq_graph: SequenceGraph ):
         labels_dict = {}
@@ -197,6 +216,10 @@ end note
 
 
 ## ========================================================================
+
+
+def generate_url( url, label, tooltip ):
+    return f"""[[{url} {{{tooltip}}} {label}]]"""
 
 
 def calculate_actors_optimized_order( graph_actors, labels_dict ) -> List[str]:
