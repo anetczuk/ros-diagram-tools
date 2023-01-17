@@ -275,6 +275,10 @@ class NodeData():
             return self.excluded
         raise IndexError( f"invalid index: {key}" )
 
+    @staticmethod
+    def sort_list( items_list: List['NodeData'] ):
+        items_list.sort( key=lambda x: x.name )
+
 
 @dataclass
 class TopicData():
@@ -291,6 +295,10 @@ class TopicData():
         if key == 2:
             return self.excluded
         raise IndexError( f"invalid index: {key}" )
+   
+    @staticmethod
+    def sort_list( items_list: List['TopicData'] ):
+        items_list.sort( key=lambda x: x.name )
 
 
 @dataclass

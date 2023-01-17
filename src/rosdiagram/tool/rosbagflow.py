@@ -409,9 +409,12 @@ def write_seq_main_page( bag_file, svg_name, nodes_data, topics_data, exclude_se
 
     template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "baggraph_seq_main_page.html.tmpl" )
 
-    page_params = { 'bag_file': bag_file,
-                    'svg_name': svg_name,
-                    'nodes_data': nodes_data,
+    NodeData.sort_list( nodes_data )
+    # TopicData.sort_list( topics_data )
+
+    page_params = { 'bag_file':    bag_file,
+                    'svg_name':    svg_name,
+                    'nodes_data':  nodes_data,
                     'topics_data': topics_data,
                     'exclude_set': exclude_set
                     }
