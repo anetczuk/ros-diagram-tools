@@ -13,7 +13,8 @@ from typing import Set, List, Any, Dict
 ##
 class MsgData():
 
-    def __init__(self, pub: str, subs: Set[str], index: int, timestamp, topics: Set[str] ):
+    def __init__(self, id, pub: str, subs: Set[str], index: int, timestamp, topics: Set[str] ):
+        self.id        = id
         self.pub       = pub
         self.subs      = subs
         self.index     = index
@@ -92,7 +93,7 @@ class SeqItems():
 
     def __init__( self, items, repeat=1 ):
         self.items: List[ MsgData ] = items
-        self.repeats: int             = repeat
+        self.repeats: int           = repeat
         if repeat > 1:
             for item in self.items:
                 item.clearMessageaData()
@@ -109,7 +110,8 @@ class SequenceGraph():
 
     def __init__(self):
         self.callings: List[ MsgData ] = []
-        self.loops: List[ SeqItems ]     = []
+        self.loops: List[ SeqItems ]   = []
+        self._msg_counter = -1
 
     def size(self):
         return len( self.callings )
@@ -141,12 +143,14 @@ class SequenceGraph():
         return ret_set
 
     def addCall(self, publisher, subscriber, index, timestamp, topic) -> MsgData:
-        item = MsgData( publisher, set(subscriber,), index, timestamp, set([topic]) )
+        self._msg_counter += 1
+        item = MsgData( self._msg_counter, publisher, set(subscriber,), index, timestamp, set([topic]) )
         self.callings.append( item )
         return item
 
     def addCallSubs(self, publisher, subscribers_list, index, timestamp, topic) -> MsgData:
-        item = MsgData( publisher, set(subscribers_list), index, timestamp, set([topic]) )
+        self._msg_counter += 1
+        item = MsgData( self._msg_counter, publisher, set(subscribers_list), index, timestamp, set([topic]) )
         self.callings.append( item )
         return item
 

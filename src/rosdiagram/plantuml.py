@@ -6,9 +6,10 @@
 #
 
 import os
+import logging
 import datetime
 import itertools
-import logging
+import math
 import hashlib
 
 from typing import Set, List, Dict
@@ -27,6 +28,8 @@ BG_COLORS_LIST = read_list( BG_COLORS_PATH )
 
 
 def generate_diagram( diagram_data: DiagramData, out_path ):
+    """ Generate PlantUML diagram and store to file. """
+
     params   = diagram_data.params
     genrator = SequenceDiagramGenerator( params,
                                          nodes_subdir=diagram_data.nodes_subdir,
@@ -241,6 +244,14 @@ def calculate_actors_optimized_order( graph_actors, labels_dict ) -> List[str]:
     best_width = sorted_width
 
     a_size = len( sorted_actors )
+    
+    perm_size = math.factorial( a_size )
+    if perm_size > 10000:
+        print( "unable to calculate best order:", len( labels_dict ), a_size, perm_size )
+        return sorted_actors
+        
+    print( "calculating best order:", len( labels_dict ), a_size )
+
     for curr_list in itertools.permutations( sorted_actors, a_size ):
         curr_width = calculate_width( curr_list, distance_dict )
         if curr_width < best_width:

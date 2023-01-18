@@ -20,9 +20,9 @@ class MsgDataTest(unittest.TestCase):
         pass
 
     def test_hashValue(self):
-        item1 = MsgData( "aaa", ["bbb"], 0, 0, ["ccc"] )
+        item1 = MsgData( 0, "aaa", ["bbb"], 0, 0, ["ccc"] )
         val1  = item1.hashValue()
-        item2 = MsgData( "aaa", ["bbb"], 0, 0, ["ccc"] )
+        item2 = MsgData( 1, "aaa", ["bbb"], 0, 0, ["ccc"] )
         val2  = item2.hashValue()
         self.assertEqual( val1, val2 )
 

@@ -11,6 +11,7 @@ import pprint
 import datetime
 import copy
 import re
+import collections
 
 from typing import List
 
@@ -95,6 +96,8 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
 total messages: {reader.message_count}
 time span: {bag_time_span}m""" )
 
+            print_topics_stats( reader )
+
             # topic and msgtype information is available on .connections list
 
             diagram_data: DiagramData = calculate_diagram_data( reader, params, topic_subs, exclude_filter )
@@ -111,6 +114,7 @@ time span: {bag_time_span}m""" )
             _LOGGER.info( "diagram items num: %s", items_count )
 
             ## calculate notes
+            print( "calculating notes" )
             notes_functor = params.get( 'notes_functor' )
             for loop in seq_diagram.getLoops():
                 for item in loop.items:
@@ -122,26 +126,51 @@ time span: {bag_time_span}m""" )
                     item.notes_data = note_content
 
             ## generating message pages
+            print( "generating messages pages" )
             generate_messages_pages( diagram_data, outdir )
 
             ## generating topic pages
+            print( "generating topics pages" )
             generate_topics_pages( diagram_data, outdir )
 
             ## generating nodes pages
+            print( "generating nodes pages" )
             diagram_data.topics_subdir = topics_subdir
             generate_nodes_pages( diagram_data, outdir )
 
             ## generating main page
+            print( "generating main page" )
             generate_main_page( diagram_data, bag_path, exclude_set, outdir )
+
+#             params_dict = { "style": {},
+#                             "main_page": {},
+#                             "node_pages": [],
+#                             "topic_pages": [],
+#                             "message_pages": []
+#                             }
 
     except rosbags.rosbag1.reader.ReaderError as ex:
         _LOGGER.error( "unable to parse bag file: %s", ex )
+
+
+def print_topics_stats( reader ):
+    topics_stats = collections.Counter()
+    for connection in reader.connections:
+        curr_topic  = connection.topic
+        msg_num     = connection.msgcount
+        topics_stats[ curr_topic ] += msg_num
+
+    print( "topics stats:" )
+    for value, count in topics_stats.most_common():
+        print( value, count )
 
 
 def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> DiagramData:
     excluded_nodes = get_excluded_nodes( topic_subs, exclude_filter )
 
     excluded_topics = set()
+
+    print( "iterating rosbag connections:", len(reader.connections) )
 
     ## topics list
     topics_data: List[ TopicData ] = []
@@ -161,6 +190,7 @@ def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> Diag
     topics_data = sorted( topics_data, key=lambda x: (-x[1], x[0]) )
 
     ## generating sequence diagram
+    print( "generating sequence graph" )
     seq_diagram: SequenceGraph = generate_basic_graph( reader, topic_subs, excluded_topics )
     seq_diagram.process( params )
 
@@ -188,13 +218,13 @@ def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> Diag
 
 
 def generate_main_page( diagram_data: DiagramData, bag_path, exclude_set, outdir ):
-    nodes_data  = diagram_data.nodes
-    topics_data = diagram_data.topics
-
     bag_name = os.path.basename( bag_path )
 
     out_path = os.path.join( outdir, f"flow_{bag_name}.puml" )
     generate_diagram( diagram_data, out_path  )
+
+    nodes_data: List[ NodeData ]   = diagram_data.nodes
+    topics_data: List[ TopicData ] = diagram_data.topics
 
     for node in nodes_data:
         if node.suburl is not None:
@@ -225,6 +255,9 @@ def generate_nodes_pages( diagram_data: DiagramData, outdir ):
             continue
 
         actor = node_data.name
+
+        print( f"preparing sequence graph for node {actor}" )
+
         actor_filename = prepare_filesystem_name( actor )
         sub_diagram: SequenceGraph = seq_diagram.copyCallingsActors( actor )
         sub_diagram.process( params )
@@ -236,6 +269,7 @@ def generate_nodes_pages( diagram_data: DiagramData, outdir ):
         subdiagram_data.msgs_subdir  = os.path.join( os.pardir, subdiagram_data.msgs_subdir )
 
         out_path = os.path.join( nodes_out_dir, f"{actor_filename}.puml" )
+        print( f"preparing puml diagram {out_path}" )
         generate_diagram( subdiagram_data, out_path )
 
         svg_path    = actor_filename + ".svg"
@@ -283,8 +317,8 @@ def generate_topics_pages( diagram_data: DiagramData, outdir ):
 
 
 def generate_messages_pages( diagram_data: DiagramData, outdir ):
-    seq_diagram = diagram_data.seq_diagram
-    params      = diagram_data.params
+    seq_diagram: SequenceGraph = diagram_data.seq_diagram
+    params = diagram_data.params
 
     if params.get( "write_messages", False ) is False:
         return
@@ -292,18 +326,21 @@ def generate_messages_pages( diagram_data: DiagramData, outdir ):
     out_dir = os.path.join( outdir, "msgs" )
     os.makedirs( out_dir, exist_ok=True )
 
+    ## loop: List[ SeqItems ]
     for loop in seq_diagram.getLoops():
         if loop.repeats > 1:
             pass
+        ## item: List[ MsgData ]
         for item in loop.items:
             if item.isMessageSet() is False:
                 continue
-            out_name = f"{item.index}_msg.html"
+            out_name = f"{item.id}_msg.html"
             item.setProp( "url", out_name )
             out_path = os.path.join( out_dir, out_name )
             note_content = item.notes_data
             if note_content is not None:
                 note_content = note_content.replace( "\n", "<br />\n" )
+            print( "generating message page:", out_path, item.index, item.topics )
             write_message_page( item, out_path, note_content )
 
 
@@ -412,7 +449,7 @@ class ExcludeItemFilter():
 ## ===================================================================
 
 
-def write_seq_main_page( bag_file, svg_name, nodes_data, topics_data, exclude_set, out_path ):
+def write_seq_main_page( bag_file: str, svg_name: str, nodes_data: List[ NodeData ], topics_data: List[ TopicData ], exclude_set, out_path ):
     _LOGGER.info( "generating main page: file://%s", out_path )
 
     template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "baggraph_seq_main_page.html.tmpl" )
