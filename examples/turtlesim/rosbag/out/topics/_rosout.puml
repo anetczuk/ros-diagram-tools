@@ -2,13 +2,13 @@
 
 skinparam backgroundColor #FEFEFE
 
-box #Bisque
+box #PaleTurquoise
     participant "/record_1673907549608806002" as _record_1673907549608806002 [[../nodes/_record_1673907549608806002.html]]
 end box
-box #Moccasin
+box #GhostWhite
     participant "/turtlesim_2807_1673907554697" as _turtlesim_2807_1673907554697 [[../nodes/_turtlesim_2807_1673907554697.html]]
 end box
-box #NavajoWhite
+box #BlanchedAlmond
     participant "/rosout" as _rosout [[../nodes/_rosout.html]]
 end box
 

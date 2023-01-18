@@ -2,10 +2,10 @@
 
 skinparam backgroundColor #FEFEFE
 
-box #Bisque
+box #PaleTurquoise
     participant "/record_1673907549608806002" as _record_1673907549608806002 [[../nodes/_record_1673907549608806002.html]]
 end box
-box #PeachPuff
+box #LightGrey
     participant "void" as void [[../nodes/void.html]]
 end box
 

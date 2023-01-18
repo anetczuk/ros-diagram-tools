@@ -2,10 +2,10 @@
 
 skinparam backgroundColor #FEFEFE
 
-box #GhostWhite
+box #PeachPuff
     participant "/turtlesim" as _turtlesim [[../nodes/_turtlesim.html]]
 end box
-box #Moccasin
+box #GhostWhite
     participant "/turtlesim_2807_1673907554697" as _turtlesim_2807_1673907554697 [[../nodes/_turtlesim_2807_1673907554697.html]]
 end box
 
