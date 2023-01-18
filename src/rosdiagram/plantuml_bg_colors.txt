@@ -7,8 +7,6 @@ Beige
 Bisque
 BlanchedAlmond
 BurlyWood
-CadetBlue
-Chartreuse
 Cornsilk
 Cyan
 FloralWhite
@@ -30,12 +28,9 @@ LightGreen
 LightGrey
 LightPink
 LightSalmon
-LightSeaGreen
-LightSkyBlue
 LightSlateGray
 LightSteelBlue
 LightYellow
-Lime
 Linen
 MintCream
 MistyRose
@@ -47,10 +42,8 @@ PaleGreen
 PaleTurquoise
 PapayaWhip
 PeachPuff
-Peru
 Pink
 PowderBlue
-SeaShell
 Silver
 SkyBlue
 Snow
