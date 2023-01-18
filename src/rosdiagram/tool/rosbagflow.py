@@ -19,6 +19,7 @@ import argparse
 import numpy
 
 import rosbags
+from pympler import asizeof
 
 from rosbags.rosbag1 import Reader
 from rosbags.serde import deserialize_ros1
@@ -154,15 +155,33 @@ time span: {bag_time_span}m""" )
 
 
 def print_topics_stats( reader ):
-    topics_stats = collections.Counter()
+    msg_num_counter = collections.Counter()
     for connection in reader.connections:
         curr_topic  = connection.topic
         msg_num     = connection.msgcount
-        topics_stats[ curr_topic ] += msg_num
+        msg_num_counter[ curr_topic ] += msg_num
+
+    msg_size_counter = collections.Counter()
+    messages = reader.messages()
+    for connection, _, rawdata in messages:
+        curr_topic  = connection.topic
+        curr_size = asizeof.asizeof( rawdata )
+        msg_size_counter[ curr_topic ] += curr_size
 
     content = ""
-    for value, count in topics_stats.most_common():
-        content += f"{value} {count}\n"
+    for topic, count in msg_num_counter.most_common():
+        transfer_size = msg_size_counter.get( topic, 0 )
+        transfer_label = ""
+        if transfer_size < 1024:
+            transfer_label = f"{transfer_size}B"
+        elif transfer_size < 1024*1024:
+            value = transfer_size / 1024
+            transfer_label = f"{value}KB"            
+        else:
+            value = transfer_size / (1024 * 1024)
+            transfer_label = f"{value}MB"
+        content += f"{topic} {count} total size: {transfer_label}\n"
+
     return content
 
 
@@ -341,7 +360,7 @@ def generate_messages_pages( diagram_data: DiagramData, outdir ):
             note_content = item.notes_data
             if note_content is not None:
                 note_content = note_content.replace( "\n", "<br />\n" )
-            _LOGGER.info( "generating message page: %s %s %s", out_path, item.index, item.topics )
+            _LOGGER.info( "generating message page: %s %s %s msg size: %sB", out_path, item.index, item.topics, item.memMsgSize() )
             write_message_page( item, out_path, note_content )
 
 

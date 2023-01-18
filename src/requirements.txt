@@ -2,3 +2,4 @@ pydotplus
 # pygraphviz
 
 rosbags
+pympler

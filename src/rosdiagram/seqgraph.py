@@ -5,10 +5,13 @@
 # LICENSE file in the root directory of this source tree.
 #
 
+import sys
 import logging
 import copy
 from dataclasses import dataclass, field
 from typing import Set, List, Any, Dict
+
+from pympler import asizeof
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -17,8 +20,8 @@ _LOGGER = logging.getLogger(__name__)
 ##
 class MsgData():
 
-    def __init__(self, id, pub: str, subs: Set[str], index: int, timestamp, topics: Set[str] ):
-        self.id        = id
+    def __init__(self, msg_id, pub: str, subs: Set[str], index: int, timestamp, topics: Set[str] ):
+        self.id        = msg_id
         self.pub       = pub
         self.subs      = subs
         self.index     = index
@@ -35,6 +38,12 @@ class MsgData():
 
     def copy(self):
         return copy.deepcopy( self )
+
+    def memSize(self):
+        return asizeof.asizeof( self )
+
+    def memMsgSize(self):
+        return asizeof.asizeof( self.msgdata )
 
     def setMessageData( self, msgtype, msgdef, msgdata ):
         self.msgtype = msgtype
