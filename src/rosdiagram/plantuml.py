@@ -247,10 +247,10 @@ def calculate_actors_optimized_order( graph_actors, labels_dict ) -> List[str]:
     
     perm_size = math.factorial( a_size )
     if perm_size > 10000:
-        print( "unable to calculate best order:", len( labels_dict ), a_size, perm_size )
+        _LOGGER.warning( "unable to calculate best order: %s %s %s", len( labels_dict ), a_size, perm_size )
         return sorted_actors
         
-    print( "calculating best order:", len( labels_dict ), a_size )
+    _LOGGER.info( "calculating best order: %s %s", len( labels_dict ), a_size )
 
     for curr_list in itertools.permutations( sorted_actors, a_size ):
         curr_width = calculate_width( curr_list, distance_dict )
@@ -258,7 +258,7 @@ def calculate_actors_optimized_order( graph_actors, labels_dict ) -> List[str]:
             best_order = list( curr_list )
             best_width = curr_width
 
-    print( "best order:", best_order, best_width, sorted_width )
+    _LOGGER.info( "best order: %s %s %s", best_order, best_width, sorted_width )
     return best_order
 
 #     found_best = True

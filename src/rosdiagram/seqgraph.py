@@ -5,9 +5,13 @@
 # LICENSE file in the root directory of this source tree.
 #
 
+import logging
 import copy
 from dataclasses import dataclass, field
 from typing import Set, List, Any, Dict
+
+
+_LOGGER = logging.getLogger(__name__)
 
 
 ##
@@ -221,7 +225,7 @@ class SequenceGraph():
                     new_loops.append( items_seq )
                     continue
 
-                print( "best loop detected:", best_seq )
+                _LOGGER.info( "best loop detected: %s", best_seq )
                 improved = True
                 start_index = best_seq[0]
                 next_index  = best_seq[0] + best_seq[1]

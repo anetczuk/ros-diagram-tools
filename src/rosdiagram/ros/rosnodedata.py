@@ -118,10 +118,8 @@ def parse_node_info( content ):
                 continue
             services.append( (node, None) )
         else:
-            print( "forbidden state", section_mode )
+            _LOGGER.warning( "forbidden state", section_mode )
             continue
-
-    # print( publishers, subscribers )
 
     deps_dict = {}
     deps_dict["pubs"]  = publications

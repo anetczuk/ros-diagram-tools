@@ -85,8 +85,8 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
         topic_data = {}
     topic_subs  = get_topic_subs_dict( topic_data )
 
-#     print( "got topic data:", topic_data )
-#     print( "got topic subs:", topic_subs )
+#     _LOGGER.info( "got topic data: %s", topic_data )
+#     _LOGGER.info( "got topic subs: %s", topic_subs )
 
     try:
         # create reader instance and open for reading
@@ -96,7 +96,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
 total messages: {reader.message_count}
 time span: {bag_time_span}m""" )
 
-            print_topics_stats( reader )
+            _LOGGER.info( "topic stats:\n%s", print_topics_stats( reader ) )
 
             # topic and msgtype information is available on .connections list
 
@@ -114,7 +114,7 @@ time span: {bag_time_span}m""" )
             _LOGGER.info( "diagram items num: %s", items_count )
 
             ## calculate notes
-            print( "calculating notes" )
+            _LOGGER.info( "calculating notes" )
             notes_functor = params.get( 'notes_functor' )
             for loop in seq_diagram.getLoops():
                 for item in loop.items:
@@ -126,20 +126,20 @@ time span: {bag_time_span}m""" )
                     item.notes_data = note_content
 
             ## generating message pages
-            print( "generating messages pages" )
+            _LOGGER.info( "generating messages pages" )
             generate_messages_pages( diagram_data, outdir )
 
             ## generating topic pages
-            print( "generating topics pages" )
+            _LOGGER.info( "generating topics pages" )
             generate_topics_pages( diagram_data, outdir )
 
             ## generating nodes pages
-            print( "generating nodes pages" )
+            _LOGGER.info( "generating nodes pages" )
             diagram_data.topics_subdir = topics_subdir
             generate_nodes_pages( diagram_data, outdir )
 
             ## generating main page
-            print( "generating main page" )
+            _LOGGER.info( "generating main page" )
             generate_main_page( diagram_data, bag_path, exclude_set, outdir )
 
 #             params_dict = { "style": {},
@@ -160,9 +160,10 @@ def print_topics_stats( reader ):
         msg_num     = connection.msgcount
         topics_stats[ curr_topic ] += msg_num
 
-    print( "topics stats:" )
+    content = ""
     for value, count in topics_stats.most_common():
-        print( value, count )
+        content += f"{value} {count}\n"
+    return content
 
 
 def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> DiagramData:
@@ -170,7 +171,7 @@ def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> Diag
 
     excluded_topics = set()
 
-    print( "iterating rosbag connections:", len(reader.connections) )
+    _LOGGER.info( "iterating rosbag connections: %s", len(reader.connections) )
 
     ## topics list
     topics_data: List[ TopicData ] = []
@@ -190,7 +191,7 @@ def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> Diag
     topics_data = sorted( topics_data, key=lambda x: (-x[1], x[0]) )
 
     ## generating sequence diagram
-    print( "generating sequence graph" )
+    _LOGGER.info( "generating sequence graph" )
     seq_diagram: SequenceGraph = generate_basic_graph( reader, topic_subs, excluded_topics )
     seq_diagram.process( params )
 
@@ -256,7 +257,7 @@ def generate_nodes_pages( diagram_data: DiagramData, outdir ):
 
         actor = node_data.name
 
-        print( f"preparing sequence graph for node {actor}" )
+        _LOGGER.info( f"preparing sequence graph for node {actor}" )
 
         actor_filename = prepare_filesystem_name( actor )
         sub_diagram: SequenceGraph = seq_diagram.copyCallingsActors( actor )
@@ -269,7 +270,7 @@ def generate_nodes_pages( diagram_data: DiagramData, outdir ):
         subdiagram_data.msgs_subdir  = os.path.join( os.pardir, subdiagram_data.msgs_subdir )
 
         out_path = os.path.join( nodes_out_dir, f"{actor_filename}.puml" )
-        print( f"preparing puml diagram {out_path}" )
+        _LOGGER.info( f"preparing puml diagram {out_path}" )
         generate_diagram( subdiagram_data, out_path )
 
         svg_path    = actor_filename + ".svg"
@@ -340,7 +341,7 @@ def generate_messages_pages( diagram_data: DiagramData, outdir ):
             note_content = item.notes_data
             if note_content is not None:
                 note_content = note_content.replace( "\n", "<br />\n" )
-            print( "generating message page:", out_path, item.index, item.topics )
+            _LOGGER.info( "generating message page: %s %s %s", out_path, item.index, item.topics )
             write_message_page( item, out_path, note_content )
 
 
@@ -367,7 +368,7 @@ def generate_basic_graph( reader, topic_subs, excluded_topics ):
         subscribers = topic_subs.get( connection.topic, None )
         if not subscribers:
             ## topic without subscribers
-#             print( f"could not find subscribers for topic[{connection.topic}] published from[{topic_publisher}]" )
+#             _LOGGER.info( f"could not find subscribers for topic[{connection.topic}] published from[{topic_publisher}]" )
 #             continue
             subscribers = ["void"]
 

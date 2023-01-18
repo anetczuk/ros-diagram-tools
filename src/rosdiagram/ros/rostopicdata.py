@@ -89,7 +89,7 @@ def parse_content( content ):
 
         if publishers_list is True:
             if subscribers_list is True:
-                print( "forbidden state" )
+                _LOGGER.warning( "forbidden state" )
                 continue
             node = match_node( line )
             if node is None:
@@ -103,8 +103,6 @@ def parse_content( content ):
             if node is None:
                 continue
             subscribers.append( node )
-
-    # print( publishers, subscribers )
 
     deps_dict = {}
     deps_dict['type'] = msg_type
