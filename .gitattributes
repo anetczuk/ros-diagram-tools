@@ -1,2 +1,0 @@
-## ignore generated HTML files from detecting language in github
-example/*.html linguist-detectable=false
