@@ -5,7 +5,6 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-import sys
 import logging
 import copy
 from dataclasses import dataclass, field
@@ -312,7 +311,7 @@ class TopicData():
         if key == 2:
             return self.excluded
         raise IndexError( f"invalid index: {key}" )
-   
+
     @staticmethod
     def sortList( items_list: List['TopicData'] ):
         items_list.sort( key=lambda x: x.name )

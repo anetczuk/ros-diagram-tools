@@ -118,7 +118,7 @@ def parse_node_info( content ):
                 continue
             services.append( (node, None) )
         else:
-            _LOGGER.warning( "forbidden state", section_mode )
+            _LOGGER.warning( "forbidden state %s", section_mode )
             continue
 
     deps_dict = {}

@@ -244,12 +244,12 @@ def calculate_actors_optimized_order( graph_actors, labels_dict ) -> List[str]:
     best_width = sorted_width
 
     a_size = len( sorted_actors )
-    
+
     perm_size = math.factorial( a_size )
     if perm_size > 10000:
         _LOGGER.warning( "unable to calculate best order: %s %s %s", len( labels_dict ), a_size, perm_size )
         return sorted_actors
-        
+
     _LOGGER.info( "calculating best order: %s %s", len( labels_dict ), a_size )
 
     for curr_list in itertools.permutations( sorted_actors, a_size ):
