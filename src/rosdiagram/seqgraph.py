@@ -293,7 +293,7 @@ class NodeData():
         raise IndexError( f"invalid index: {key}" )
 
     @staticmethod
-    def sort_list( items_list: List['NodeData'] ):
+    def sortList( items_list: List['NodeData'] ):
         items_list.sort( key=lambda x: x.name )
 
 
@@ -314,7 +314,7 @@ class TopicData():
         raise IndexError( f"invalid index: {key}" )
    
     @staticmethod
-    def sort_list( items_list: List['TopicData'] ):
+    def sortList( items_list: List['TopicData'] ):
         items_list.sort( key=lambda x: x.name )
 
 

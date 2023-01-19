@@ -16,7 +16,6 @@ import collections
 from typing import List
 
 import argparse
-import numpy
 
 import rosbags
 from pympler import asizeof
@@ -29,8 +28,8 @@ from rosdiagram.io import read_list, prepare_filesystem_name
 from rosdiagram.ros.rostopicdata import read_topics, get_topic_subs_dict
 from rosdiagram.plantuml import SequenceGraph, generate_diagram,\
     convert_time_index
-from rosdiagram.seqgraph import MsgData, DiagramData, NodeData, TopicData
-from rosdiagram import texttemplate
+from rosdiagram.seqgraph import DiagramData, NodeData, TopicData
+from rosdiagram.plantumltohtml import generate_plantuml_html, data_to_dict
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -93,9 +92,9 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
         # create reader instance and open for reading
         with Reader( bag_path ) as reader:
             bag_time_span = reader.duration / 1000000000 / 60
-            _LOGGER.info( f"""bag statistics:
-total messages: {reader.message_count}
-time span: {bag_time_span}m""" )
+            _LOGGER.info( """bag statistics:
+total messages: %s
+time span: %sm""", reader.message_count, bag_time_span )
 
             _LOGGER.info( "topic stats:\n%s", print_topics_stats( reader ) )
 
@@ -117,38 +116,38 @@ time span: {bag_time_span}m""" )
             ## calculate notes
             _LOGGER.info( "calculating notes" )
             notes_functor = params.get( 'notes_functor' )
-            for loop in seq_diagram.getLoops():
-                for item in loop.items:
-                    if item.isMessageSet() is False:
-                        continue
-                    note_content = None
-                    if notes_functor is not None:
+            if notes_functor is not None:
+                for loop in seq_diagram.getLoops():
+                    for item in loop.items:
+                        if item.isMessageSet() is False:
+                            continue
                         note_content = notes_functor( item.topics, item.msgtype, item.msgdata )
-                    item.notes_data = note_content
+                        item.notes_data = note_content
 
-            ## generating message pages
-            _LOGGER.info( "generating messages pages" )
-            generate_messages_pages( diagram_data, outdir )
+            ## generating message data
+            _LOGGER.info( "generating messages data" )
+            message_pages_list = generate_messages_list( diagram_data, outdir )
 
-            ## generating topic pages
-            _LOGGER.info( "generating topics pages" )
-            generate_topics_pages( diagram_data, outdir )
+            ## generating main data
+            _LOGGER.info( "generating main data" )
+            main_page_dict = generate_main_dict( diagram_data, bag_path, exclude_set, outdir )
 
             ## generating nodes pages
-            _LOGGER.info( "generating nodes pages" )
+            _LOGGER.info( "generating nodes data" )
             diagram_data.topics_subdir = topics_subdir
-            generate_nodes_pages( diagram_data, outdir )
+            node_pages_list = generate_nodes_list( diagram_data, outdir )
 
-            ## generating main page
-            _LOGGER.info( "generating main page" )
-            generate_main_page( diagram_data, bag_path, exclude_set, outdir )
+            ## generating topic data
+            _LOGGER.info( "generating topics data" )
+            topic_pages_list = generate_topics_list( diagram_data, outdir )
 
-#             params_dict = { "style": {},
-#                             "main_page": {},
-#                             "node_pages": [],
-#                             "topic_pages": [],
-#                             "message_pages": []
-#                             }
+            params_dict = { "style": {},
+                            "main_page": main_page_dict,
+                            "node_pages": node_pages_list,
+                            "topic_pages": topic_pages_list,
+                            "message_pages": message_pages_list
+                            }
+            generate_plantuml_html( outdir, params_dict )
 
     except rosbags.rosbag1.reader.ReaderError as ex:
         _LOGGER.error( "unable to parse bag file: %s", ex )
@@ -174,9 +173,9 @@ def print_topics_stats( reader ):
         transfer_label = ""
         if transfer_size < 1024:
             transfer_label = f"{transfer_size}B"
-        elif transfer_size < 1024*1024:
+        elif transfer_size < 1024 * 1024:
             value = transfer_size / 1024
-            transfer_label = f"{value}KB"            
+            transfer_label = f"{value}KB"
         else:
             value = transfer_size / (1024 * 1024)
             transfer_label = f"{value}MB"
@@ -237,7 +236,7 @@ def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> Diag
     return ret_data
 
 
-def generate_main_page( diagram_data: DiagramData, bag_path, exclude_set, outdir ):
+def generate_main_dict( diagram_data: DiagramData, bag_path, exclude_set, outdir ):
     bag_name = os.path.basename( bag_path )
 
     out_path = os.path.join( outdir, f"flow_{bag_name}.puml" )
@@ -255,13 +254,19 @@ def generate_main_page( diagram_data: DiagramData, bag_path, exclude_set, outdir
             topic.suburl = os.path.join( diagram_data.topics_subdir, topic.suburl )
 
     svg_path = f"flow_{bag_name}.svg"
-    main_out_path = os.path.join( outdir, "full_graph.html" )
-    write_seq_main_page( bag_path, svg_path, nodes_data, topics_data, exclude_set, main_out_path )
 
-    _LOGGER.info( "generated main page: file://%s", main_out_path )
+    page_dict = { 'bag_file': bag_path,
+                  'svg_name': svg_path,
+                  'nodes_data':  nodes_data,
+                  'topics_data': topics_data,
+                  'exclude_set': exclude_set
+                  }
+    return page_dict
 
 
-def generate_nodes_pages( diagram_data: DiagramData, outdir ):
+def generate_nodes_list( diagram_data: DiagramData, outdir ):
+    ret_params_list = []
+
     seq_diagram   = diagram_data.seq_diagram
     nodes_data    = diagram_data.nodes
     params        = diagram_data.params
@@ -276,7 +281,7 @@ def generate_nodes_pages( diagram_data: DiagramData, outdir ):
 
         actor = node_data.name
 
-        _LOGGER.info( f"preparing sequence graph for node {actor}" )
+        _LOGGER.info( "preparing sequence graph for node %s", actor )
 
         actor_filename = prepare_filesystem_name( actor )
         sub_diagram: SequenceGraph = seq_diagram.copyCallingsActors( actor )
@@ -289,17 +294,24 @@ def generate_nodes_pages( diagram_data: DiagramData, outdir ):
         subdiagram_data.msgs_subdir  = os.path.join( os.pardir, subdiagram_data.msgs_subdir )
 
         out_path = os.path.join( nodes_out_dir, f"{actor_filename}.puml" )
-        _LOGGER.info( f"preparing puml diagram {out_path}" )
+        _LOGGER.info( "preparing puml diagram %s", out_path )
         generate_diagram( subdiagram_data, out_path )
 
         svg_path    = actor_filename + ".svg"
         actors_page = actor_filename + ".html"
         out_path    = os.path.join( nodes_out_dir, actors_page )
 
-        write_seq_node_page( svg_path, out_path )
+        page_dict = { 'out_path': out_path,
+                      'svg_name': svg_path
+                      }
+        ret_params_list.append( page_dict )
+
+    return ret_params_list
 
 
-def generate_topics_pages( diagram_data: DiagramData, outdir ):
+def generate_topics_list( diagram_data: DiagramData, outdir ):
+    ret_params_list = []
+
     seq_diagram   = diagram_data.seq_diagram
     topics_data   = diagram_data.topics
     params        = diagram_data.params
@@ -333,15 +345,22 @@ def generate_topics_pages( diagram_data: DiagramData, outdir ):
         actors_page = topic_filename + ".html"
         out_path    = os.path.join( topics_out_dir, actors_page )
 
-        write_seq_node_page( svg_path, out_path )
+        page_dict = { 'out_path': out_path,
+                      'svg_name': svg_path
+                      }
+        ret_params_list.append( page_dict )
+
+    return ret_params_list
 
 
-def generate_messages_pages( diagram_data: DiagramData, outdir ):
+def generate_messages_list( diagram_data: DiagramData, outdir ):
     seq_diagram: SequenceGraph = diagram_data.seq_diagram
     params = diagram_data.params
 
     if params.get( "write_messages", False ) is False:
-        return
+        return []
+
+    ret_params_list = []
 
     out_dir = os.path.join( outdir, "msgs" )
     os.makedirs( out_dir, exist_ok=True )
@@ -360,8 +379,25 @@ def generate_messages_pages( diagram_data: DiagramData, outdir ):
             note_content = item.notes_data
             if note_content is not None:
                 note_content = note_content.replace( "\n", "<br />\n" )
-            _LOGGER.info( "generating message page: %s %s %s msg size: %sB", out_path, item.index, item.topics, item.memMsgSize() )
-            write_message_page( item, out_path, note_content )
+
+            timestamp_dt = datetime.datetime.fromtimestamp( item.timestamp / 1000000000 )
+
+            time_value, time_unit = convert_time_index( item.index )
+
+            msg_data = data_to_dict( item.msgdata )
+            msg_data = pprint.pformat( msg_data, indent=1, width=1, sort_dicts=False )              # type: ignore
+
+            page_dict = { 'out_path': out_path,
+                          'timestamp_dt': timestamp_dt,
+                          'time_value': time_value,
+                          'time_unit': time_unit,
+                          'item': item,
+                          'msg_data': msg_data,
+                          'notes_data': note_content
+                          }
+            ret_params_list.append( page_dict )
+
+    return ret_params_list
 
 
 def generate_basic_graph( reader, topic_subs, excluded_topics ):
@@ -387,8 +423,6 @@ def generate_basic_graph( reader, topic_subs, excluded_topics ):
         subscribers = topic_subs.get( connection.topic, None )
         if not subscribers:
             ## topic without subscribers
-#             _LOGGER.info( f"could not find subscribers for topic[{connection.topic}] published from[{topic_publisher}]" )
-#             continue
             subscribers = ["void"]
 
         time_diff  = timestamp - first_timestamp
@@ -464,90 +498,6 @@ class ExcludeItemFilter():
             if regex.match( item ):
                 return True
         return False
-
-
-## ===================================================================
-
-
-def write_seq_main_page( bag_file: str, svg_name: str, nodes_data: List[ NodeData ], topics_data: List[ TopicData ], exclude_set, out_path ):
-    _LOGGER.info( "generating main page: file://%s", out_path )
-
-    template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "baggraph_seq_main_page.html.tmpl" )
-
-    NodeData.sort_list( nodes_data )
-    # TopicData.sort_list( topics_data )
-
-    page_params = { 'bag_file':    bag_file,
-                    'svg_name':    svg_name,
-                    'nodes_data':  nodes_data,
-                    'topics_data': topics_data,
-                    'exclude_set': exclude_set
-                    }
-    texttemplate.generate( template_path, out_path, INPUT_DICT=page_params )
-
-
-def write_seq_node_page( svg_name, out_path ):
-    _LOGGER.info( "generating node page: file://%s", out_path )
-
-    template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "baggraph_seq_node_page.html.tmpl" )
-
-    page_params = { 'svg_name': svg_name
-                    }
-    texttemplate.generate( template_path, out_path, INPUT_DICT=page_params )
-
-
-def write_message_page( item: MsgData, out_path, notes_data=None ):
-    timestamp_dt = datetime.datetime.fromtimestamp( item.timestamp / 1000000000 )
-
-    time_value, time_unit = convert_time_index( item.index )
-
-    msg_data = data_to_dict( item.msgdata )
-    msg_data = pprint.pformat( msg_data, indent=1, width=1, sort_dicts=False )              # type: ignore
-
-    template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "baggraph_message.html.tmpl" )
-
-    page_params = { 'timestamp_dt': timestamp_dt,
-                    'time_value': time_value,
-                    'time_unit': time_unit,
-                    'item': item,
-                    'msg_data': msg_data,
-                    'notes_data': notes_data
-                    }
-    texttemplate.generate( template_path, out_path, INPUT_DICT=page_params )
-
-
-def data_to_dict( data_obj ):
-    if isinstance( data_obj, list ):
-        return [ data_to_dict( item ) for item in data_obj ]
-
-    if isinstance( data_obj, numpy.ndarray ):
-        return list( data_obj )
-
-    try:
-        data_dict = None
-        if isinstance( data_obj, dict ):
-            data_dict = copy.copy( data_obj )
-        else:
-            data_dict = copy.copy( data_obj.__dict__ )
-        for key, val in data_dict.copy().items():
-            data_dict[ key ] = data_to_dict( val )
-
-        type_key = "__msgtype__"
-        if type_key not in data_dict.keys():
-            return data_dict
-
-        ## move '__msgtype__' key to top
-        reordered_dict = {}
-        reordered_dict[ type_key ] = data_dict[ type_key ]
-        del data_dict[ type_key ]
-        for key, val in data_dict.items():
-            reordered_dict[ key ] = data_to_dict( val )
-        return reordered_dict
-
-    # except AttributeError as ex:
-    except AttributeError:
-        ## object has no attribute '__dict__'
-        return data_obj
 
 
 ## ===================================================================
