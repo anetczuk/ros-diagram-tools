@@ -8,7 +8,7 @@ end box
 box #BlanchedAlmond
     participant "/rosout" as _rosout [[_rosout.html]]
 end box
-box #LightGrey
+box #LimeGreen
     participant "void" as void [[void.html]]
 end box
 

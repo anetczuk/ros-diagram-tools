@@ -2,7 +2,7 @@
 
 skinparam backgroundColor #FEFEFE
 
-box #PeachPuff
+box #LimeGreen
     participant "/turtlesim" as _turtlesim [[_turtlesim.html]]
 end box
 box #GhostWhite

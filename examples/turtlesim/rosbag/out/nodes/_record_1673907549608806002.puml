@@ -2,7 +2,7 @@
 
 skinparam backgroundColor #FEFEFE
 
-box #PaleTurquoise
+box #LimeGreen
     participant "/record_1673907549608806002" as _record_1673907549608806002 [[_record_1673907549608806002.html]]
 end box
 box #BlanchedAlmond

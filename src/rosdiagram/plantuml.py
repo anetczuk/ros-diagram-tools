@@ -54,7 +54,7 @@ class SequenceDiagramGenerator():
         self.actors_order: List[str] = []
 
     def generate( self, diagram_data: DiagramData, out_path ):
-        seq_graph    = diagram_data.seq_diagram
+        seq_graph: SequenceGraph = diagram_data.seq_diagram
 
         call_len = seq_graph.size()
         if call_len < 1:
@@ -85,13 +85,19 @@ skinparam backgroundColor #FEFEFE
             item_path = item_filename + ".html"
             item_path = os.path.join( self.nodes_subdir, item_path )
 
-            if BG_COLORS_LIST:
+            actor_bg_color = None
+            node_data: NodeData = diagram_data.getNodeByName( item )
+            if node_data:
+                actor_bg_color = node_data.params.get( "bg_color", None )
+
+            if actor_bg_color is None and BG_COLORS_LIST:
                 ## BG_COLORS
                 item_hash      = hashlib.sha256( item_id.encode('utf-8') ).hexdigest()
                 bg_color_index = int( item_hash, 16 ) % len( BG_COLORS_LIST )
-                bg_color       = BG_COLORS_LIST[ bg_color_index ]
-
-                content += f"""box #{bg_color}\n"""
+                actor_bg_color = BG_COLORS_LIST[ bg_color_index ]
+                
+            if actor_bg_color:
+                content += f"""box #{actor_bg_color}\n"""
                 ## content += f"""'bg color: {bg_color}\n"""
                 content += f"""    participant "{item}" as {item_id} [[{item_path}]]\n"""
                 content += "end box\n"

@@ -275,9 +275,10 @@ class SequenceGraph():
 
 @dataclass
 class NodeData():
-    name: str       = None
-    suburl: str     = None
-    excluded: bool  = False
+    name: str              = None
+    suburl: str            = None
+    excluded: bool         = False
+    params: Dict[str, Any] = field(default_factory=lambda: {})
 
     def __getitem__(self, key):
         if key == 0:
@@ -324,6 +325,13 @@ class DiagramData():
     nodes_subdir                = "nodes"
     topics_subdir               = "topics"
     msgs_subdir                 = "msgs"
+
+
+    def getNodeByName(self, name) -> NodeData:
+        for node in self.nodes:
+            if node.name == name:
+                return node
+        return None
 
 
 ## =============================================================

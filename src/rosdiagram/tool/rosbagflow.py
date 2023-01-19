@@ -287,6 +287,7 @@ def generate_nodes_list( diagram_data: DiagramData, outdir ):
     nodes_out_dir = os.path.join( outdir, nodes_subdir )
     os.makedirs( nodes_out_dir, exist_ok=True )
 
+    ## node_data: List[ NodeData ]
     for node_data in nodes_data:
         if node_data.excluded:
             continue
@@ -299,11 +300,16 @@ def generate_nodes_list( diagram_data: DiagramData, outdir ):
         sub_diagram: SequenceGraph = seq_diagram.copyCallingsActors( actor )
         sub_diagram.process( params )
 
-        subdiagram_data: DiagramData = copy.copy( diagram_data )
-        subdiagram_data.seq_diagram  = sub_diagram
-        subdiagram_data.nodes_subdir = ""
+        subdiagram_data: DiagramData  = copy.copy( diagram_data )        ## shallow copy
+        subdiagram_data.seq_diagram   = sub_diagram
+        subdiagram_data.nodes_subdir  = ""
         subdiagram_data.topics_subdir = "../topics"
-        subdiagram_data.msgs_subdir  = os.path.join( os.pardir, subdiagram_data.msgs_subdir )
+        subdiagram_data.msgs_subdir   = os.path.join( os.pardir, subdiagram_data.msgs_subdir )
+        subdiagram_data.nodes         = copy.deepcopy( diagram_data.nodes )        ## eep copy
+
+        sugdiagram_node = subdiagram_data.getNodeByName( actor )
+        if sugdiagram_node:
+            sugdiagram_node.params[ "bg_color" ] = "LimeGreen"
 
         out_path = os.path.join( nodes_out_dir, f"{actor_filename}.puml" )
         _LOGGER.info( "preparing puml diagram %s", out_path )
