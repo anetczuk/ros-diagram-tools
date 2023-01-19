@@ -19,13 +19,13 @@ _LOGGER = logging.getLogger(__name__)
 ##
 class MsgData():
 
-    def __init__(self, msg_id, pub: str, subs: Set[str], index: int, timestamp, topics: Set[str] ):
-        self.id        = msg_id
-        self.pub       = pub
-        self.subs      = subs
-        self.index     = index
-        self.timestamp = timestamp
-        self.topics    = topics
+    def __init__(self, msg_index, pub: str, subs: Set[str], index: int, timestamp_abs, topics: Set[str] ):
+        self.index         = msg_index
+        self.pub           = pub
+        self.subs          = subs
+        self.timestamp_rel = index
+        self.timestamp_abs = timestamp_abs
+        self.topics        = topics
 
         self.msgtype = None
         self.msgdef  = None
@@ -123,7 +123,6 @@ class SequenceGraph():
     def __init__(self):
         self.callings: List[ MsgData ] = []
         self.loops: List[ SeqItems ]   = []
-        self._msg_counter = -1
 
     def size(self):
         return len( self.callings )
@@ -154,15 +153,13 @@ class SequenceGraph():
             ret_set.update( calls.subs )
         return ret_set
 
-    def addCall(self, publisher, subscriber, index, timestamp, topic) -> MsgData:
-        self._msg_counter += 1
-        item = MsgData( self._msg_counter, publisher, set(subscriber,), index, timestamp, set([topic]) )
+    def addCall(self, msg_index, publisher, subscriber, index, timestamp, topic) -> MsgData:
+        item = MsgData( msg_index, publisher, set(subscriber,), index, timestamp, set([topic]) )
         self.callings.append( item )
         return item
 
-    def addCallSubs(self, publisher, subscribers_list, index, timestamp, topic) -> MsgData:
-        self._msg_counter += 1
-        item = MsgData( self._msg_counter, publisher, set(subscribers_list), index, timestamp, set([topic]) )
+    def addCallSubs(self, msg_index, publisher, subscribers_list, index, timestamp, topic) -> MsgData:
+        item = MsgData( msg_index, publisher, set(subscribers_list), index, timestamp, set([topic]) )
         self.callings.append( item )
         return item
 

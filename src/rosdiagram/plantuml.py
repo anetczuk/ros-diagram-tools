@@ -167,7 +167,7 @@ end note
         return content
 
     def callTime(self, item: MsgData):
-        timestamp_dt     = datetime.datetime.fromtimestamp( item.timestamp / 1000000000 )
+        timestamp_dt     = datetime.datetime.fromtimestamp( item.timestamp_abs / 1000000000 )
         timestamp_string = timestamp_dt.strftime('%H:%M:%S.%f')
         return timestamp_string
 

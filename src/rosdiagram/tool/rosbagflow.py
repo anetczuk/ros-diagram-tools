@@ -373,16 +373,16 @@ def generate_messages_list( diagram_data: DiagramData, outdir ):
         for item in loop.items:
             if item.isMessageSet() is False:
                 continue
-            out_name = f"{item.id}_msg.html"
+            out_name = f"{item.index:07d}_msg.html"
             item.setProp( "url", out_name )
             out_path = os.path.join( out_dir, out_name )
             note_content = item.notes_data
             if note_content is not None:
                 note_content = note_content.replace( "\n", "<br />\n" )
 
-            timestamp_dt = datetime.datetime.fromtimestamp( item.timestamp / 1000000000 )
+            timestamp_dt = datetime.datetime.fromtimestamp( item.timestamp_abs / 1000000000 )
 
-            time_value, time_unit = convert_time_index( item.index )
+            time_value, time_unit = convert_time_index( item.timestamp_rel )
 
             msg_data = data_to_dict( item.msgdata )
             msg_data = pprint.pformat( msg_data, indent=1, width=1, sort_dicts=False )              # type: ignore
@@ -413,7 +413,9 @@ def generate_basic_graph( reader, topic_subs, excluded_topics ):
     first_timestamp = first_item[1]
 
     messages = reader.messages()
+    msg_index = -1
     for connection, timestamp, rawdata in messages:
+        msg_index += 1
         if connection.topic in excluded_topics:
             continue
 
@@ -426,7 +428,7 @@ def generate_basic_graph( reader, topic_subs, excluded_topics ):
             subscribers = ["void"]
 
         time_diff  = timestamp - first_timestamp
-        graph_item = seq_diagram.addCallSubs( topic_publisher, subscribers, time_diff, timestamp, connection.topic )
+        graph_item = seq_diagram.addCallSubs( msg_index, topic_publisher, subscribers, time_diff, timestamp, connection.topic )
 
         valid, msg = deserialize_msg( rawdata, connection )
         if valid is False:

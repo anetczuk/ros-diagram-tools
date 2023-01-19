@@ -41,9 +41,9 @@ class SequenceGraphTest(unittest.TestCase):
 
     def test_groupCalls(self):
         graph = SequenceGraph()
-        graph.addCall( "A", "B", 0, 0, "c1" )
-        graph.addCall( "A", "B", 0, 0, "c2" )
-        graph.addCall( "A", "B", 0, 0, "c3" )
+        graph.addCall( 0, "A", "B", 0, 0, "c1" )
+        graph.addCall( 1, "A", "B", 0, 0, "c2" )
+        graph.addCall( 2, "A", "B", 0, 0, "c3" )
         self.assertEqual( 3, graph.size() )
 
         graph.groupCalls()
