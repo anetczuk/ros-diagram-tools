@@ -96,7 +96,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
 total messages: %s
 time span: %sm""", reader.message_count, bag_time_span )
 
-            _LOGGER.info( "topic stats:\n%s", print_topics_stats( reader ) )
+            print_topics_stats( reader )
 
             # topic and msgtype information is available on .connections list
 
@@ -167,21 +167,33 @@ def print_topics_stats( reader ):
         curr_size = asizeof.asizeof( rawdata )
         msg_size_counter[ curr_topic ] += curr_size
 
-    content = ""
+    topics_data = []
     for topic, count in msg_num_counter.most_common():
         transfer_size = msg_size_counter.get( topic, 0 )
         transfer_label = ""
         if transfer_size < 1024:
-            transfer_label = f"{transfer_size}B"
+            transfer_label = f"{transfer_size} B"
         elif transfer_size < 1024 * 1024:
             value = transfer_size / 1024
-            transfer_label = f"{value}KB"
+            value = round( value, 2 )
+            transfer_label = f"{value} KB"
         else:
             value = transfer_size / (1024 * 1024)
-            transfer_label = f"{value}MB"
-        content += f"{topic} {count} total size: {transfer_label}\n"
+            value = round( value, 2 )
+            transfer_label = f"{value} MB"
+        topics_data.append( ( topic, count, transfer_size, transfer_label ) )
 
-    return content
+    content = ""
+    topics_data.sort( key=lambda item: item[1], reverse=True )
+    for topic_item in topics_data:
+        content += f"{topic_item[0]} {topic_item[1]} total size: {topic_item[3]}\n"
+    _LOGGER.info( "topic count stats:\n%s", content )
+
+    content = ""
+    topics_data.sort( key=lambda item: item[2], reverse=True )
+    for topic_item in topics_data:
+        content += f"{topic_item[0]} {topic_item[1]} total size: {topic_item[3]}\n"
+    _LOGGER.info( "topic memory stats:\n%s", content )
 
 
 def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> DiagramData:
