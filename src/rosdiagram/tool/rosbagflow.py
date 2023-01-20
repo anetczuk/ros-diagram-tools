@@ -100,13 +100,17 @@ time span: %sm""", reader.message_count, bag_time_span )
 
             # topic and msgtype information is available on .connections list
 
-            diagram_data: DiagramData = calculate_diagram_data( reader, params, topic_subs, exclude_filter )
-
             nodes_subdir  = "nodes"
             topics_subdir = "topics"
 
-            diagram_data.nodes_subdir  = nodes_subdir
-            diagram_data.topics_subdir = topics_subdir
+            os.makedirs( os.path.join( outdir, nodes_subdir ), exist_ok=True )
+            os.makedirs( os.path.join( outdir, topics_subdir ), exist_ok=True )
+
+            diagram_data: DiagramData = calculate_diagram_data( reader, params, topic_subs, exclude_filter,
+                                                                nodes_subdir, topics_subdir )
+
+            diagram_data.nodes_subdir  = ""
+            diagram_data.topics_subdir = ""
             diagram_data.msgs_subdir   = "msgs"
 
             seq_diagram = diagram_data.seq_diagram
@@ -134,7 +138,6 @@ time span: %sm""", reader.message_count, bag_time_span )
 
             ## generating nodes pages
             _LOGGER.info( "generating nodes data" )
-            diagram_data.topics_subdir = topics_subdir
             node_pages_list = generate_nodes_list( diagram_data, outdir )
 
             ## generating topic data
@@ -196,7 +199,8 @@ def print_topics_stats( reader ):
     _LOGGER.info( "topic memory stats:\n%s", content )
 
 
-def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> DiagramData:
+## 'topic_subs' -- dictionary containing topics subscribers
+def calculate_diagram_data( reader, params, topic_subs, exclude_filter, nodes_subdir, topics_subdir ) -> DiagramData:
     excluded_nodes = get_excluded_nodes( topic_subs, exclude_filter )
 
     excluded_topics = set()
@@ -204,23 +208,31 @@ def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> Diag
     _LOGGER.info( "iterating rosbag connections: %s", len(reader.connections) )
 
     ## topics list
-    topics_data: List[ TopicData ] = []
+    topics_dict = {}                   ## it happened that topic was split into more than one connection
+
     ## connection: rosbags.interfaces.Connection
     for connection in reader.connections:
         curr_topic = connection.topic
-        topic_obj  = TopicData( curr_topic, connection.msgcount )
-        topic_obj.msgtype = connection.msgtype
+        
+        topic_obj = topics_dict.get( curr_topic, None )
+        if topic_obj is None:
+            topic_obj = TopicData( curr_topic, connection.msgcount )
+            topic_obj.msgtype = connection.msgtype
 
-        is_excluded = exclude_filter.excluded( curr_topic )
-        if is_excluded:
-            excluded_topics.add( curr_topic )
+            is_excluded = exclude_filter.excluded( curr_topic )
+            if is_excluded:
+                excluded_topics.add( curr_topic )
+            else:
+                topic_filename = prepare_filesystem_name( curr_topic )
+                topic_obj.suburl = os.path.join( topics_subdir, topic_filename + ".html" )
+
+            topic_obj.excluded = is_excluded
+            topics_dict[ curr_topic ] = topic_obj
         else:
-            topic_filename = prepare_filesystem_name( curr_topic )
-            topic_obj.suburl = topic_filename + ".html"
+            ## next connection with the same topic found
+            topic_obj.msgcount += connection.msgcount
 
-        topic_obj.excluded = is_excluded
-        topics_data.append( topic_obj )
-    topics_data = sorted( topics_data, key=lambda x: (-x[1], x[0]) )
+    topics_data: List[ TopicData ] = list( topics_dict.values() )
 
     ## generating sequence diagram
     _LOGGER.info( "generating sequence graph" )
@@ -229,13 +241,14 @@ def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> Diag
 
     ## nodes list
     nodes_data: List[ NodeData ] = []
-    graph_actors = seq_diagram.actors()
-    for node in graph_actors:
-        node_filename = prepare_filesystem_name( node )
-        node_obj          = NodeData( node )
-        node_obj.suburl   = node_filename + ".html"
+    graph_actors: Set[str] = seq_diagram.actors()
+    for node_name in graph_actors:
+        node_filename     = prepare_filesystem_name( node_name )
+        node_obj          = NodeData( node_name )
+        node_obj.suburl   = os.path.join( nodes_subdir, node_filename + ".html" )
         node_obj.excluded = False
         nodes_data.append( node_obj )
+
     for node in excluded_nodes:
         node_obj          = NodeData( node )
         node_obj.excluded = True
@@ -246,6 +259,9 @@ def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> Diag
     ret_data.nodes       = nodes_data
     ret_data.topics      = topics_data
     ret_data.params      = params
+
+    ret_data.sortNodes()
+    ret_data.sortTopics()
 
     return ret_data
 
@@ -259,6 +275,7 @@ def generate_main_dict( diagram_data: DiagramData, bag_path, exclude_set, outdir
     nodes_data: List[ NodeData ]   = diagram_data.nodes
     topics_data: List[ TopicData ] = diagram_data.topics
 
+    ## node: NodeData
     for node in nodes_data:
         if node.suburl is not None:
             node.suburl = os.path.join( diagram_data.nodes_subdir, node.suburl )
@@ -284,10 +301,9 @@ def generate_nodes_list( diagram_data: DiagramData, outdir ):
     seq_diagram   = diagram_data.seq_diagram
     nodes_data    = diagram_data.nodes
     params        = diagram_data.params
-    nodes_subdir  = diagram_data.nodes_subdir
 
-    nodes_out_dir = os.path.join( outdir, nodes_subdir )
-    os.makedirs( nodes_out_dir, exist_ok=True )
+#     nodes_out_dir = os.path.join( outdir, nodes_subdir )
+#     os.makedirs( nodes_out_dir, exist_ok=True )
 
     ## node_data: List[ NodeData ]
     for node_data in nodes_data:
@@ -298,7 +314,6 @@ def generate_nodes_list( diagram_data: DiagramData, outdir ):
 
         _LOGGER.info( "preparing sequence graph for node %s", actor )
 
-        actor_filename = prepare_filesystem_name( actor )
         sub_diagram: SequenceGraph = seq_diagram.copyCallingsActors( actor )
         sub_diagram.process( params )
 
@@ -307,22 +322,39 @@ def generate_nodes_list( diagram_data: DiagramData, outdir ):
         subdiagram_data.nodes_subdir  = ""
         subdiagram_data.topics_subdir = "../topics"
         subdiagram_data.msgs_subdir   = os.path.join( os.pardir, subdiagram_data.msgs_subdir )
-        subdiagram_data.nodes         = copy.deepcopy( diagram_data.nodes )        ## eep copy
+        subdiagram_data.nodes         = copy.deepcopy( diagram_data.nodes )        ## deep copy
 
         sugdiagram_node = subdiagram_data.getNodeByName( actor )
         if sugdiagram_node:
-            sugdiagram_node.params[ "bg_color" ] = "LimeGreen"
+            sugdiagram_node.params[ "bg_color" ] = "LawnGreen"
+            ## sugdiagram_node.params[ "bg_color" ] = "LimeGreen"
 
-        out_path = os.path.join( nodes_out_dir, f"{actor_filename}.puml" )
+        diag_nodes  = sub_diagram.getActors()
+        diag_topics = sub_diagram.getTopics()
+
+        subdiagram_data.root_subdir = "../"
+
+        subdiagram_data.nodes  = subdiagram_data.filterNodes( diag_nodes )
+        subdiagram_data.topics = subdiagram_data.filterTopics( diag_topics )
+        
+        subdiagram_data.sortNodes()
+        subdiagram_data.sortTopics()
+
+        out_path     = os.path.join( outdir, node_data.suburl )
+        path_name, _ = os.path.splitext( out_path )
+
+        puml_out_path = f"{path_name}.puml"
         _LOGGER.info( "preparing puml diagram %s", out_path )
-        generate_diagram( subdiagram_data, out_path )
+        generate_diagram( subdiagram_data, puml_out_path )
 
-        svg_path    = actor_filename + ".svg"
-        actors_page = actor_filename + ".html"
-        out_path    = os.path.join( nodes_out_dir, actors_page )
-
+        node_filename = prepare_filesystem_name( node_data.name )
+        svg_path      = node_filename + ".svg"
+ 
         page_dict = { 'out_path': out_path,
-                      'svg_name': svg_path
+                      'svg_name': svg_path,
+                      'root_url': subdiagram_data.root_subdir,
+                      'nodes_data':  subdiagram_data.nodes,
+                      'topics_data': subdiagram_data.topics
                       }
         ret_params_list.append( page_dict )
 
@@ -335,10 +367,9 @@ def generate_topics_list( diagram_data: DiagramData, outdir ):
     seq_diagram   = diagram_data.seq_diagram
     topics_data   = diagram_data.topics
     params        = diagram_data.params
-    topics_subdir = diagram_data.topics_subdir
 
-    topics_out_dir = os.path.join( outdir, topics_subdir )
-    os.makedirs( topics_out_dir, exist_ok=True )
+#     topics_out_dir = os.path.join( outdir, topics_subdir )
+#     os.makedirs( topics_out_dir, exist_ok=True )
 
     for topic_data in topics_data:
         if topic_data.excluded:
@@ -357,16 +388,32 @@ def generate_topics_list( diagram_data: DiagramData, outdir ):
         subdiagram_data.topics_subdir = ""
         subdiagram_data.msgs_subdir   = os.path.join( os.pardir, subdiagram_data.msgs_subdir )
 
-        topic_filename = prepare_filesystem_name( topic_data.name )
-        out_path = os.path.join( topics_out_dir, f"{topic_filename}.puml" )
-        generate_diagram( subdiagram_data, out_path )
+        diag_nodes  = sub_diagram.getActors()
+        diag_topics = sub_diagram.getTopics()
 
-        svg_path    = topic_filename + ".svg"
-        actors_page = topic_filename + ".html"
-        out_path    = os.path.join( topics_out_dir, actors_page )
+        subdiagram_data.nodes  = subdiagram_data.filterNodes( diag_nodes )
+        subdiagram_data.topics = subdiagram_data.filterTopics( diag_topics )
+
+        subdiagram_data.sortNodes()
+        subdiagram_data.sortTopics()
+
+        subdiagram_data.root_subdir = "../"
+
+        out_path     = os.path.join( outdir, topic_data.suburl )
+        path_name, _ = os.path.splitext( out_path )
+
+        puml_out_path = f"{path_name}.puml"
+        _LOGGER.info( "preparing puml diagram %s", out_path )
+        generate_diagram( subdiagram_data, puml_out_path )
+
+        topic_filename = prepare_filesystem_name( topic_data.name )
+        svg_path       = topic_filename + ".svg"
 
         page_dict = { 'out_path': out_path,
-                      'svg_name': svg_path
+                      'svg_name': svg_path,
+                      'root_url': subdiagram_data.root_subdir,
+                      'nodes_data':  subdiagram_data.nodes,
+                      'topics_data': subdiagram_data.topics
                       }
         ret_params_list.append( page_dict )
 
@@ -420,6 +467,7 @@ def generate_messages_list( diagram_data: DiagramData, outdir ):
     return ret_params_list
 
 
+## 'topic_subs' -- dictionary containing topics subscribers
 def generate_basic_graph( reader, topic_subs, excluded_topics ):
     # iterate over messages
     ## iterates items in timestamp order
@@ -436,6 +484,7 @@ def generate_basic_graph( reader, topic_subs, excluded_topics ):
     msg_index = -1
     for connection, timestamp, rawdata in messages:
         msg_index += 1
+
         if connection.topic in excluded_topics:
             continue
 

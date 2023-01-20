@@ -42,6 +42,45 @@ Project is distributed under the BSD 3-Clause license.
     <div class="center_content">
         <object type="image/svg+xml" data="${DATA_DICT.get('svg_name')}">missing image</object>
     </div>
+#!
+#! root_url = DATA_DICT.get('root_url', '')
+#!
+    <div class="bottom_content">
+#!
+#! nodes_data = DATA_DICT.get('nodes_data', [])
+#!
+        Nodes (${len(nodes_data)}):<br/>
+        <ul>
+#!
+#{ for item in nodes_data:
+#!     excl = "(excluded)" if item.excluded is True else ""
+            <li>${ generate_code_link( item.name, item.suburl, root_url ) } ${excl}</li>
+#}
+        </ul>
+        <br />
+#!
+#! topics_data = DATA_DICT.get('topics_data', [])
+#!
+        Topics (${len(topics_data)}):<br/>
+        <ul>
+#!
+#{ for item in topics_data:
+#!     excl     = "(excluded)" if item.excluded is True else ""
+#!     msg_type = f"{item.msgtype}" if item.msgtype else "unknown"
+        <li>${ generate_code_link( item.name, item.suburl, root_url ) } [<code>${msg_type}</code>]: ${item.msgcount} ${excl}</li>
+#}
+        </ul>
+    </div>
 </body>
 </html>
+#end template
+
+
+#template generate_code_link( item_name, item_url, base_url )
+#{ if item_url:
+<a href="${base_url}${item_url}"><code>${item_name}</code></a>$>
+#}
+#{ else:
+<code>${item_name}</code>$>
+#}
 #end template

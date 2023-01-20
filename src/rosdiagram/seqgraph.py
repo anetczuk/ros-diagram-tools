@@ -21,8 +21,8 @@ class MsgData():
 
     def __init__(self, msg_index, pub: str, subs: Set[str], index: int, timestamp_abs, topics: Set[str] ):
         self.index         = msg_index
-        self.pub           = pub
-        self.subs          = subs
+        self.pub           = pub                    ## publisher node
+        self.subs          = subs                   ## subscriber nodes
         self.timestamp_rel = index
         self.timestamp_abs = timestamp_abs
         self.topics        = topics
@@ -68,6 +68,12 @@ class MsgData():
 
     def setProp(self, key, value):
         self.props[ key ] = value
+
+    def getActors(self):
+        ret_set = set()
+        ret_set.add( self.pub )
+        ret_set.update( self.subs )
+        return ret_set
 
     def haveActor(self, actor):
         if self.pub == actor:
@@ -249,6 +255,19 @@ class SequenceGraph():
             curr_loops = new_loops
         self.loops = curr_loops
 
+    def getActors( self ):
+        ret_set = set()
+        for call in self.callings:
+            call_actors = call.getActors()
+            ret_set.update( call_actors )
+        return ret_set
+
+    def getTopics( self ):
+        ret_set = set()
+        for call in self.callings:
+            ret_set.update( call.topics )
+        return ret_set
+
     def copyCallingsActors(self, actor ):
         new_calls: List[ MsgData ] = []
         for call in self.callings:
@@ -323,6 +342,7 @@ class DiagramData():
     nodes: List[ NodeData ]     = field(default_factory=lambda: [])
     topics: List[ TopicData ]   = field(default_factory=lambda: [])
 
+    root_subdir                 = ""
     nodes_subdir                = "nodes"
     topics_subdir               = "topics"
     msgs_subdir                 = "msgs"
@@ -333,6 +353,32 @@ class DiagramData():
             if node.name == name:
                 return node
         return None
+
+    def getTopicByName(self, name) -> TopicData:
+        for topic in self.topics:
+            if topic.name == name:
+                return topic
+        return None
+    
+    def filterNodes( self, names ):
+        ret_list = []
+        for node in self.nodes:
+            if node.name in names:
+                ret_list.append( node )
+        return ret_list
+
+    def filterTopics( self, names ):
+        ret_list = []
+        for topic in self.topics:
+            if topic.name in names:
+                ret_list.append( topic )
+        return ret_list
+    
+    def sortNodes(self):
+        self.nodes = sorted( self.nodes, key=lambda x: x.name )
+
+    def sortTopics(self):
+        self.topics = sorted( self.topics, key=lambda x: (-x.msgcount, x.name) )
 
 
 ## =============================================================

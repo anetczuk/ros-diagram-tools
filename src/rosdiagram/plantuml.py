@@ -31,30 +31,29 @@ def generate_diagram( diagram_data: DiagramData, out_path ):
     """ Generate PlantUML diagram and store to file. """
 
     params   = diagram_data.params
-    genrator = SequenceDiagramGenerator( params,
-                                         nodes_subdir=diagram_data.nodes_subdir,
-                                         topics_subdir=diagram_data.topics_subdir,
-                                         msgs_subdir=diagram_data.msgs_subdir )
-    genrator.generate( diagram_data, out_path )
+    genrator = SequenceDiagramGenerator( diagram_data, params )
+    genrator.generate( out_path )
 
 
 ##
 class SequenceDiagramGenerator():
 
-    def __init__(self, params: dict = None, nodes_subdir="", topics_subdir="", msgs_subdir="" ):
+    def __init__(self, diagram_data: DiagramData, params: dict = None ):
+        self.diagram_data = diagram_data
+
         self.name_dict: Dict[str, str] = {}
         self.params_dict = params
         if self.params_dict is None:
             self.params_dict = {}
 
-        self.nodes_subdir  = nodes_subdir
-        self.topics_subdir = topics_subdir
-        self.msgs_subdir   = msgs_subdir
+        self.nodes_subdir  = diagram_data.nodes_subdir
+        self.topics_subdir = diagram_data.topics_subdir
+        self.msgs_subdir   = diagram_data.msgs_subdir
 
         self.actors_order: List[str] = []
 
-    def generate( self, diagram_data: DiagramData, out_path ):
-        seq_graph: SequenceGraph = diagram_data.seq_diagram
+    def generate( self, out_path ):
+        seq_graph: SequenceGraph = self.diagram_data.seq_diagram
 
         call_len = seq_graph.size()
         if call_len < 1:
@@ -77,19 +76,15 @@ skinparam backgroundColor #FEFEFE
         self.actors_order      = calculate_actors_optimized_order( graph_actors, labels_dict )
 
         ## add actors
-        for item in self.actors_order:
-            item_id = self._getItemId( item )
-#             content += f"""participant "{item}" as {item_id}\n"""
+        for actor_name in self.actors_order:
+            node_data: NodeData = self.diagram_data.getNodeByName( actor_name )
+            if node_data is None:
+                continue
 
-            item_filename = prepare_filesystem_name( item )
-            item_path = item_filename + ".html"
-            item_path = os.path.join( self.nodes_subdir, item_path )
+            item_id   = self._getItemId( actor_name )
+            item_path = os.path.join( self.diagram_data.root_subdir, node_data.suburl )
 
-            actor_bg_color = None
-            node_data: NodeData = diagram_data.getNodeByName( item )
-            if node_data:
-                actor_bg_color = node_data.params.get( "bg_color", None )
-
+            actor_bg_color = node_data.params.get( "bg_color", None )
             if actor_bg_color is None and BG_COLORS_LIST:
                 ## BG_COLORS
                 item_hash      = hashlib.sha256( item_id.encode('utf-8') ).hexdigest()
@@ -99,10 +94,10 @@ skinparam backgroundColor #FEFEFE
             if actor_bg_color:
                 content += f"""box #{actor_bg_color}\n"""
                 ## content += f"""'bg color: {bg_color}\n"""
-                content += f"""    participant "{item}" as {item_id} [[{item_path}]]\n"""
+                content += f"""    participant "{actor_name}" as {item_id} [[{item_path}]]\n"""
                 content += "end box\n"
             else:
-                content += f"""participant "{item}" as {item_id} [[{item_path}]]\n"""
+                content += f"""participant "{actor_name}" as {item_id} [[{item_path}]]\n"""
 
         content += "\n"
 
@@ -189,14 +184,14 @@ end note
             ret_content  = f"""**{plantuml_url}**: """
 
         labels_list = []
-        for topic in item.topics:
-            if self.topics_subdir:
-                topic_filename = prepare_filesystem_name( topic ) + ".html"
-                topic_path = os.path.join( self.topics_subdir, topic_filename )
-                plantuml_url = generate_url( topic_path, topic, "topic data" )
+        for topic_name in item.topics:
+            topic_obj: TopicData = self.diagram_data.getTopicByName( topic_name )
+            if topic_obj:
+                item_path = os.path.join( self.diagram_data.root_subdir, topic_obj.suburl )
+                plantuml_url = generate_url( item_path, topic_name, "topic data" )
                 labels_list.append( plantuml_url )
             else:
-                labels_list.append( topic )
+                labels_list.append( topic_name )
 
         ret_content += " | ".join( labels_list )
         return ret_content
