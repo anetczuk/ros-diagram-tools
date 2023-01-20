@@ -316,6 +316,9 @@ class NodeData():
 @dataclass
 class TopicData():
     name: str       = None
+    pubs: List[str] = field(default_factory=lambda: [])
+    subs: List[str] = field(default_factory=lambda: [])
+
     msgcount: int   = 0
     excluded: bool  = False
     suburl: str     = None
@@ -341,12 +344,7 @@ class DiagramData():
     params: Dict[ str, Any ]    = field(default_factory=lambda: {})
     nodes: List[ NodeData ]     = field(default_factory=lambda: [])
     topics: List[ TopicData ]   = field(default_factory=lambda: [])
-
     root_subdir                 = ""
-    nodes_subdir                = "nodes"
-    topics_subdir               = "topics"
-    msgs_subdir                 = "msgs"
-
 
     def getNodeByName(self, name) -> NodeData:
         for node in self.nodes:

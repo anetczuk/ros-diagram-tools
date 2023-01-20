@@ -46,10 +46,6 @@ class SequenceDiagramGenerator():
         if self.params_dict is None:
             self.params_dict = {}
 
-        self.nodes_subdir  = diagram_data.nodes_subdir
-        self.topics_subdir = diagram_data.topics_subdir
-        self.msgs_subdir   = diagram_data.msgs_subdir
-
         self.actors_order: List[str] = []
 
     def generate( self, out_path ):
@@ -136,7 +132,7 @@ skinparam backgroundColor #FEFEFE
             if msg_data.isMessageSet():
                 message_url = msg_data.getProp( "url", None )
             if message_url is not None:
-                message_url = os.path.join( self.msgs_subdir, message_url )
+                message_url = os.path.join( self.diagram_data.root_subdir, message_url )
 
             ## topic url: out/topics/_turtle1_cmd_vel.html
             call_label = self.calculateLabel( msg_data, message_url )
