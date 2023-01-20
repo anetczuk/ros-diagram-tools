@@ -80,15 +80,9 @@ Project is distributed under the BSD 3-Clause license.
         <ul>
 #!
 #{ for item in topics_data:
-#!     name  = item[0]
-#!     count = item[1]
-#!     excl  = "(excluded)" if item[2] is True else ""
-#{     if item.suburl is not None:
-            <li><a href="${item.suburl}"><code>${name}</code></a>: ${count} ${excl}</li>
-#}
-#{     else:
-            <li><code>${name}</code>: ${count} ${excl}</li>
-#}
+#!     excl     = "(excluded)" if item.excluded is True else ""
+#!     msg_type = f"{item.msgtype}" if item.msgtype else "unknown"
+        <li>${ generate_code_link(item.name, item.suburl) } [<code>${msg_type}</code>]: ${item.msgcount} ${excl}</li>
 #}
         </ul>
 #!
@@ -105,4 +99,14 @@ Project is distributed under the BSD 3-Clause license.
     </div>
 </body>
 </html>
+#end template
+
+
+#template generate_code_link( item_name, item_url )
+#{ if item_url:
+<a href="${item_url}"><code>${item_name}</code></a>$>
+#}
+#{ else:
+<code>${item_name}</code>$>
+#}
 #end template

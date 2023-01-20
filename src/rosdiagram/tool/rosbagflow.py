@@ -205,9 +205,11 @@ def calculate_diagram_data( reader, params, topic_subs, exclude_filter ) -> Diag
 
     ## topics list
     topics_data: List[ TopicData ] = []
+    ## connection: rosbags.interfaces.Connection
     for connection in reader.connections:
-        curr_topic  = connection.topic
-        topic_obj = TopicData( curr_topic, connection.msgcount )
+        curr_topic = connection.topic
+        topic_obj  = TopicData( curr_topic, connection.msgcount )
+        topic_obj.msgtype = connection.msgtype
 
         is_excluded = exclude_filter.excluded( curr_topic )
         if is_excluded:

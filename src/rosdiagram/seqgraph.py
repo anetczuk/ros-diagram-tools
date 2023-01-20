@@ -300,6 +300,7 @@ class TopicData():
     msgcount: int   = 0
     excluded: bool  = False
     suburl: str     = None
+    msgtype         = None
 
     def __getitem__(self, key):
         if key == 0:
