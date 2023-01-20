@@ -17,7 +17,6 @@ Ivory
 Khaki
 Lavender
 LavenderBlush
-LawnGreen
 LemonChiffon
 LightBlue
 LightCyan
