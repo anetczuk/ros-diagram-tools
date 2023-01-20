@@ -5,10 +5,10 @@ skinparam backgroundColor #FEFEFE
 box #LimeGreen
     participant "/record_1673907549608806002" as _record_1673907549608806002 [[_record_1673907549608806002.html]]
 end box
-box #BlanchedAlmond
+box #BurlyWood
     participant "/rosout" as _rosout [[_rosout.html]]
 end box
-box #LightGrey
+box #PeachPuff
     participant "void" as void [[void.html]]
 end box
 

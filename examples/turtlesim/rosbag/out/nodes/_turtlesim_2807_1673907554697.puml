@@ -2,10 +2,10 @@
 
 skinparam backgroundColor #FEFEFE
 
-box #BlanchedAlmond
+box #BurlyWood
     participant "/rosout" as _rosout [[_rosout.html]]
 end box
-box #PeachPuff
+box #GhostWhite
     participant "/turtlesim" as _turtlesim [[_turtlesim.html]]
 end box
 box #LimeGreen
