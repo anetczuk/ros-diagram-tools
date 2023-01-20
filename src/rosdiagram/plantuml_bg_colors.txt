@@ -20,7 +20,6 @@ LavenderBlush
 LawnGreen
 LemonChiffon
 LightBlue
-LightCoral
 LightCyan
 LightGoldenRodYellow
 LightGray
