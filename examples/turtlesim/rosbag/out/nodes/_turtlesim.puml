@@ -2,11 +2,11 @@
 
 skinparam backgroundColor #FEFEFE
 
-box #LimeGreen
-    participant "/turtlesim" as _turtlesim [[_turtlesim.html]]
-end box
 box #LawnGreen
-    participant "/turtlesim_2807_1673907554697" as _turtlesim_2807_1673907554697 [[_turtlesim_2807_1673907554697.html]]
+    participant "/turtlesim" as _turtlesim [[../nodes/_turtlesim.html]]
+end box
+box #LightGray
+    participant "/turtlesim_2807_1673907554697" as _turtlesim_2807_1673907554697 [[../nodes/_turtlesim_2807_1673907554697.html]]
 end box
 
 _turtlesim_2807_1673907554697 o-> _turtlesim : **[[../msgs/0000792_msg.html {message data} 23:19:15.974200]]**: [[../topics/_turtle1_cmd_vel.html {topic data} /turtle1/cmd_vel]]

@@ -2,14 +2,14 @@
 
 skinparam backgroundColor #FEFEFE
 
+box #MistyRose
+    participant "/record_1673907549608806002" as _record_1673907549608806002 [[../nodes/_record_1673907549608806002.html]]
+end box
 box #Ivory
-    participant "/record_1673907549608806002" as _record_1673907549608806002 [[_record_1673907549608806002.html]]
+    participant "/rosout" as _rosout [[../nodes/_rosout.html]]
 end box
-box #BurlyWood
-    participant "/rosout" as _rosout [[_rosout.html]]
-end box
-box #LimeGreen
-    participant "void" as void [[void.html]]
+box #LawnGreen
+    participant "void" as void [[../nodes/void.html]]
 end box
 
 _rosout o-> void : **[[../msgs/0000229_msg.html {message data} 23:19:11.736613]]**: [[../topics/_rosout_agg.html {topic data} /rosout_agg]]

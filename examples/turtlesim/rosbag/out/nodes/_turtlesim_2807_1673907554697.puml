@@ -2,14 +2,14 @@
 
 skinparam backgroundColor #FEFEFE
 
-box #BurlyWood
-    participant "/rosout" as _rosout [[_rosout.html]]
+box #Ivory
+    participant "/rosout" as _rosout [[../nodes/_rosout.html]]
 end box
-box #GhostWhite
-    participant "/turtlesim" as _turtlesim [[_turtlesim.html]]
+box #MistyRose
+    participant "/turtlesim" as _turtlesim [[../nodes/_turtlesim.html]]
 end box
-box #LimeGreen
-    participant "/turtlesim_2807_1673907554697" as _turtlesim_2807_1673907554697 [[_turtlesim_2807_1673907554697.html]]
+box #LawnGreen
+    participant "/turtlesim_2807_1673907554697" as _turtlesim_2807_1673907554697 [[../nodes/_turtlesim_2807_1673907554697.html]]
 end box
 
 _turtlesim_2807_1673907554697 o-> _rosout : **[[../msgs/0000656_msg.html {message data} 23:19:15.087197]]**: [[../topics/_rosout.html {topic data} /rosout]]

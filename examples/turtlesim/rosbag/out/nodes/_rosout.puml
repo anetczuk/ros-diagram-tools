@@ -2,17 +2,17 @@
 
 skinparam backgroundColor #FEFEFE
 
-box #Ivory
-    participant "/record_1673907549608806002" as _record_1673907549608806002 [[_record_1673907549608806002.html]]
+box #MistyRose
+    participant "/record_1673907549608806002" as _record_1673907549608806002 [[../nodes/_record_1673907549608806002.html]]
+end box
+box #LightGray
+    participant "/turtlesim_2807_1673907554697" as _turtlesim_2807_1673907554697 [[../nodes/_turtlesim_2807_1673907554697.html]]
+end box
+box #LightCyan
+    participant "void" as void [[../nodes/void.html]]
 end box
 box #LawnGreen
-    participant "/turtlesim_2807_1673907554697" as _turtlesim_2807_1673907554697 [[_turtlesim_2807_1673907554697.html]]
-end box
-box #PeachPuff
-    participant "void" as void [[void.html]]
-end box
-box #LimeGreen
-    participant "/rosout" as _rosout [[_rosout.html]]
+    participant "/rosout" as _rosout [[../nodes/_rosout.html]]
 end box
 
 _record_1673907549608806002 o-> _rosout : **[[../msgs/0000000_msg.html {message data} 23:19:09.724323]]**: [[../topics/_rosout.html {topic data} /rosout]]
