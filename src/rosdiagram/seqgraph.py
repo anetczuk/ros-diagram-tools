@@ -54,6 +54,7 @@ class MsgData():
         self.msgdef  = None
         self.msgdata = None
 
+    ## if topic is excluded, then message data will be not set
     def isMessageSet(self):
         if self.msgtype is None:
             return False

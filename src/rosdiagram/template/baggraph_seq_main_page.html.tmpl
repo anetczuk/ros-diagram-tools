@@ -74,15 +74,18 @@ Project is distributed under the BSD 3-Clause license.
         </ul>
         <br />
 #!
-#! topics_data = DATA_DICT.get('topics_data', [])
+#! topics_data  = DATA_DICT.get('topics_data', [])
+#! msgtype_dict = DATA_DICT.get('msgtypes_dict', {})
 #!
         Topics (${len(topics_data)}):<br/>
         <ul>
 #!
 #{ for item in topics_data:
-#!     excl     = "(excluded)" if item.excluded is True else ""
-#!     msg_type = f"{item.msgtype}" if item.msgtype else "unknown"
-        <li>${ generate_code_link(item.name, item.suburl) } [<code>${msg_type}</code>]: ${item.msgcount} ${excl}</li>
+#!     excl           = "(excluded)" if item.excluded is True else ""
+#!     msg_type_label = f"{item.msgtype}" if item.msgtype else "unknown"
+#!     msg_type_info  = msgtype_dict.get( item.msgtype, {} )
+#!     msg_type_url   = msg_type_info.get( 'suburl', None )
+        <li>${generate_code_link( item.name, item.suburl )} [${generate_code_link( msg_type_label, msg_type_url )}]: ${item.msgcount} ${excl}</li>
 #}
         </ul>
 #!
@@ -103,10 +106,15 @@ Project is distributed under the BSD 3-Clause license.
 
 
 #template generate_code_link( item_name, item_url )
+<code>${ generate_link(item_name, item_url) }</code>$>
+#end template
+
+
+#template generate_link( item_name, item_url )
 #{ if item_url:
-<a href="${item_url}"><code>${item_name}</code></a>$>
+<a href="${item_url}">${item_name}</a>$>
 #}
 #{ else:
-<code>${item_name}</code>$>
+${item_name}$>
 #}
 #end template

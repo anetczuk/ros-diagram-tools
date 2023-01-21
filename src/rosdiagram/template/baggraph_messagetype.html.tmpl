@@ -1,0 +1,75 @@
+#*
+#* Python is accessible by following methods:
+#* - $variable -- printing value of variable to document
+#* - ${ <expression> } -- single expression to evaluate and print to document
+#* - #! -- general purpose line of any Python code
+#* 
+#* Any non-python content and non-template content is treated as text. 
+#* 
+
+
+#import rosdiagram.datadict as data_dict
+
+
+#template main( INPUT_DICT )
+#!
+#! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+#!
+<html>
+<head>
+<!--
+File was automatically generated using 'ros-diagram-tools' project.
+Project is distributed under the BSD 3-Clause license.
+-->
+    <title>rosbag diagram -- message page</title>
+    <style>
+        body {  padding: 24;
+                background-color: #bbbbbb;
+             }
+        pre {  background-color: rgb(226, 226, 226);
+               margin: 0px;
+               margin-top: 24px;
+               padding: 16px;
+            }
+        pre code {  margin: 0px;
+                    padding: 0px;
+                 }
+
+        .center_content {  width: 100%;
+                           margin-right: auto; margin-left: auto;
+                           text-align: center;
+                           padding-top: 24; padding-bottom: 24;
+                        }
+
+        .info_content { margin-bottom: 36; }
+
+        .info_content td { padding-right: 24; }
+        
+        .notes { display: inline-block;
+                 background-color: #FBFB77;
+                 padding: 12;
+               }
+
+    </style>
+</head>
+<body>
+    <div class="info_content">
+        <a href="../full_graph.html">back to Main graph</a>
+    </div>
+    <div class="info_content">
+        <table>
+            <tr>
+                <td>Message:</td>
+                <td>${DATA_DICT.get('msgtype', '')}</td>
+            </tr>
+            <tr>
+                <td>Topic:</td>
+                <td>${DATA_DICT.get('topics', '')}</td>
+            </tr>
+        </table>
+        <br />
+        <pre><code>${DATA_DICT.get('msgdef', '')}</code></pre>
+    </div>
+</body>
+</html>
+#end template

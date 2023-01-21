@@ -24,20 +24,28 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def generate_plantuml_html( output_dir, params_dict=None ):
+    msgtypes_dict = params_dict[ "msgtypes_dict" ]
+    
     mainpage_params = params_dict[ "main_page" ]
+    mainpage_params[ "msgtypes_dict" ] = msgtypes_dict
     write_seq_main_page( output_dir, mainpage_params )
 
     nodepages_list = params_dict[ "node_pages" ]
     for nodepage_dict in nodepages_list:
+        nodepage_dict[ "msgtypes_dict" ] = msgtypes_dict
         write_seq_node_page( nodepage_dict )
 
     topicpages_list = params_dict[ "topic_pages" ]
     for topicpage_dict in topicpages_list:
+        topicpage_dict[ "msgtypes_dict" ] = msgtypes_dict
         write_seq_node_page( topicpage_dict )
 
     messagepages_list = params_dict[ "message_pages" ]
     for messagepage_dict in messagepages_list:
         write_seq_msg_page( messagepage_dict )
+
+    for msgtype_info in msgtypes_dict.values():
+        write_seq_msgtype_page( msgtype_info )
 
 
 ## =====================================================
@@ -72,6 +80,16 @@ def write_seq_msg_page( params_dict: dict ):
     _LOGGER.info( "writing message page: %s %s %s", out_path, item.index, item.topics )
 
     template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_message.html.tmpl" )
+    texttemplate.generate( template_path, out_path, INPUT_DICT=params_dict )
+
+
+def write_seq_msgtype_page( params_dict: dict ):
+    out_path = params_dict['out_path']
+    msgtype  = params_dict['msgtype']
+
+    _LOGGER.info( "writing message type page: %s %s", out_path, msgtype )
+
+    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_messagetype.html.tmpl" )
     texttemplate.generate( template_path, out_path, INPUT_DICT=params_dict )
 
 

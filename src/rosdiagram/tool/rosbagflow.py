@@ -99,13 +99,15 @@ time span: %sm""", reader.message_count, bag_time_span )
 
             # topic and msgtype information is available on .connections list
 
-            nodes_subdir  = "nodes"
-            topics_subdir = "topics"
-            msgs_subdir   = "msgs"
+            nodes_subdir    = "nodes"
+            topics_subdir   = "topics"
+            msgs_subdir     = "msgs"
+            msgtypes_subdir = "msgtypes"
 
             os.makedirs( os.path.join( outdir, nodes_subdir ), exist_ok=True )
             os.makedirs( os.path.join( outdir, topics_subdir ), exist_ok=True )
             os.makedirs( os.path.join( outdir, msgs_subdir ), exist_ok=True )
+            os.makedirs( os.path.join( outdir, msgtypes_subdir ), exist_ok=True )
 
             diagram_data: DiagramData = calculate_diagram_data( reader, params, topic_data, exclude_filter,
                                                                 nodes_subdir, topics_subdir )
@@ -128,6 +130,8 @@ time span: %sm""", reader.message_count, bag_time_span )
             ## generating message data
             _LOGGER.info( "generating messages data" )
             message_pages_list = generate_messages_list( diagram_data, msgs_subdir, outdir )
+            
+            msgtypes_dict = generate_message_types_dict( diagram_data, msgtypes_subdir, outdir )
 
             ## generating main data
             _LOGGER.info( "generating main data" )
@@ -145,7 +149,8 @@ time span: %sm""", reader.message_count, bag_time_span )
                             "main_page": main_page_dict,
                             "node_pages": node_pages_list,
                             "topic_pages": topic_pages_list,
-                            "message_pages": message_pages_list
+                            "message_pages": message_pages_list,
+                            "msgtypes_dict": msgtypes_dict
                             }
             generate_plantuml_html( outdir, params_dict )
 
@@ -423,6 +428,7 @@ def generate_messages_list( diagram_data: DiagramData, msgs_subdir, outdir ):
         for item in loop.items:
             if item.isMessageSet() is False:
                 continue
+
             out_url = os.path.join( msgs_subdir, f"{item.index:07d}_msg.html" )
             item.setProp( "url", out_url )
             out_path = os.path.join( outdir, out_url )
@@ -448,6 +454,44 @@ def generate_messages_list( diagram_data: DiagramData, msgs_subdir, outdir ):
             ret_params_list.append( page_dict )
 
     return ret_params_list
+
+
+def generate_message_types_dict( diagram_data: DiagramData, msgtypes_subdir, outdir ):
+    seq_diagram: SequenceGraph = diagram_data.seq_diagram
+    params = diagram_data.params
+
+    if params.get( "write_messages", False ) is False:
+        return {}
+
+    ret_params_dict = {}
+
+    ## loop: List[ SeqItems ]
+    for loop in seq_diagram.getLoops():
+        if loop.repeats > 1:
+            pass
+        ## item: List[ MsgData ]
+        for item in loop.items:
+            if item.isMessageSet() is False:
+                continue
+            
+            msgtype = item.msgtype
+            type_obj = ret_params_dict.get( msgtype, None )
+            if type_obj:
+                continue
+
+            msgtype_filename = prepare_filesystem_name( msgtype )
+            out_url  = os.path.join( msgtypes_subdir, f"{msgtype_filename}.html" )
+            out_path = os.path.join( outdir, out_url )
+
+            page_dict = { 'out_path': out_path,
+                          'suburl':   out_url,
+                          'msgtype':  msgtype,
+                          'topics':   item.topics,
+                          'msgdef':   item.msgdef
+                          }
+            ret_params_dict[ msgtype ] = page_dict
+
+    return ret_params_dict
 
 
 ## 'topic_subs' -- dictionary containing topics subscribers
