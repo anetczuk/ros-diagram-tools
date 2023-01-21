@@ -25,7 +25,7 @@ _LOGGER = logging.getLogger(__name__)
 
 def generate_plantuml_html( output_dir, params_dict=None ):
     msgtypes_dict = params_dict[ "msgtypes_dict" ]
-    
+
     mainpage_params = params_dict[ "main_page" ]
     mainpage_params[ "msgtypes_dict" ] = msgtypes_dict
     write_seq_main_page( output_dir, mainpage_params )

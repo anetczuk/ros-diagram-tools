@@ -358,7 +358,7 @@ class DiagramData():
             if topic.name == name:
                 return topic
         return None
-    
+
     def filterNodes( self, names ):
         ret_list = []
         for node in self.nodes:
@@ -372,7 +372,7 @@ class DiagramData():
             if topic.name in names:
                 ret_list.append( topic )
         return ret_list
-    
+
     def sortNodes(self):
         self.nodes = sorted( self.nodes, key=lambda x: x.name )
 

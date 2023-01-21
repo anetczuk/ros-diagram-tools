@@ -14,8 +14,8 @@ import hashlib
 
 from typing import Set, List, Dict
 
-from rosdiagram.io import write_file, prepare_filesystem_name, read_list
-from rosdiagram.seqgraph import SequenceGraph, SeqItems, MsgData, DiagramData
+from rosdiagram.io import write_file, read_list
+from rosdiagram.seqgraph import SequenceGraph, SeqItems, MsgData, DiagramData, TopicData, NodeData
 
 
 SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
@@ -86,7 +86,7 @@ skinparam backgroundColor #FEFEFE
                 item_hash      = hashlib.sha256( item_id.encode('utf-8') ).hexdigest()
                 bg_color_index = int( item_hash, 16 ) % len( BG_COLORS_LIST )
                 actor_bg_color = BG_COLORS_LIST[ bg_color_index ]
-                
+
             if actor_bg_color:
                 content += f"""box #{actor_bg_color}\n"""
                 ## content += f"""'bg color: {bg_color}\n"""

@@ -13,7 +13,7 @@ import copy
 import re
 import collections
 
-from typing import List
+from typing import List, Dict, Any, Set
 
 import argparse
 
@@ -130,7 +130,7 @@ time span: %sm""", reader.message_count, bag_time_span )
             ## generating message data
             _LOGGER.info( "generating messages data" )
             message_pages_list = generate_messages_list( diagram_data, msgs_subdir, outdir )
-            
+
             msgtypes_dict = generate_message_types_dict( diagram_data, msgtypes_subdir, outdir )
 
             ## generating main data
@@ -212,12 +212,12 @@ def calculate_diagram_data( reader, params, topic_data, exclude_filter, nodes_su
     _LOGGER.info( "iterating rosbag connections: %s", len(reader.connections) )
 
     ## topics list
-    topics_dict = {}                   ## it happened that topic was split into more than one connection
+    topics_dict: Dict[str, Any] = {}                   ## it happened that topic was split into more than one connection
 
     ## connection: rosbags.interfaces.Connection
     for connection in reader.connections:
         curr_topic = connection.topic
-        
+
         topic_obj = topics_dict.get( curr_topic, None )
         if topic_obj is None:
             topic_obj = TopicData( curr_topic, connection.msgcount )
@@ -330,7 +330,7 @@ def generate_nodes_list( diagram_data: DiagramData, outdir ):
 
         subdiagram_data.nodes  = subdiagram_data.filterNodes( diag_nodes )
         subdiagram_data.topics = subdiagram_data.filterTopics( diag_topics )
-        
+
         subdiagram_data.sortNodes()
         subdiagram_data.sortTopics()
 
@@ -343,7 +343,7 @@ def generate_nodes_list( diagram_data: DiagramData, outdir ):
 
         node_filename = prepare_filesystem_name( node_data.name )
         svg_path      = node_filename + ".svg"
- 
+
         page_dict = { 'out_path': out_path,
                       'node_info': node_data,
                       'svg_name': svg_path,
@@ -463,7 +463,7 @@ def generate_message_types_dict( diagram_data: DiagramData, msgtypes_subdir, out
     if params.get( "write_messages", False ) is False:
         return {}
 
-    ret_params_dict = {}
+    ret_params_dict: Dict[ str, Any ] = {}
 
     ## loop: List[ SeqItems ]
     for loop in seq_diagram.getLoops():
@@ -473,7 +473,7 @@ def generate_message_types_dict( diagram_data: DiagramData, msgtypes_subdir, out
         for item in loop.items:
             if item.isMessageSet() is False:
                 continue
-            
+
             msgtype = item.msgtype
             type_obj = ret_params_dict.get( msgtype, None )
             if type_obj:
@@ -524,7 +524,8 @@ def generate_basic_graph( reader, topic_subs, excluded_topics ):
             subscribers = ["void"]
 
         time_diff  = timestamp - first_timestamp
-        graph_item = seq_diagram.addCallSubs( msg_index, topic_publisher, subscribers, time_diff, timestamp, connection.topic )
+        graph_item = seq_diagram.addCallSubs( msg_index, topic_publisher, subscribers,
+                                              time_diff, timestamp, connection.topic )
 
         valid, msg = deserialize_msg( rawdata, connection )
         if valid is False:
