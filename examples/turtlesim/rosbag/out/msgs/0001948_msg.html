@@ -33,6 +33,13 @@ Project is distributed under the BSD 3-Clause license.
                  padding: 12;
                }
 
+        .note_info { }
+
+        .note_error { background-color: salmon;
+                      font-weight: bold;
+                      padding: 6; 
+                    }
+
     </style>
 </head>
 <body>
@@ -65,8 +72,10 @@ Project is distributed under the BSD 3-Clause license.
     </div>
     <div class="info_content">
         Notes:<br /><br />
-        <div class="notes"> 
-log: '/turtlesim_2807_1673907554697': "Radius = 2.000000" <b><back:salmon>'header.frame_id' is empty</back></b>
+        <div class="notes">
+                   <span class="note_info">level: 2 (INFO)</span>
+                   <span class="note_info">log: '/turtlesim_2807_1673907554697': 'Radius = 2.000000'</span>
+                   <span class="note_error">'header.frame_id' is empty</span>
         </div> 
     </div>
     <div class="info_content">

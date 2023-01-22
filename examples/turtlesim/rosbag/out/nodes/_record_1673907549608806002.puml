@@ -14,15 +14,15 @@ end box
 
 _record_1673907549608806002 o-> _rosout : **[[../msgs/0000000_msg.html {message data} 23:19:09.724323]]**: [[../topics/_rosout.html {topic data} /rosout]]
 note left
-log: '/record_1673907549608806002': "Subscribing to /turtle1/pose" <b><back:salmon>'header.frame_id' is empty</back></b>
+level: 2 (INFO) log: '/record_1673907549608806002': 'Subscribing to /turtle1/pose' <b><back:salmon>'header.frame_id' is empty</back></b>
 end note
 _record_1673907549608806002 o-> _rosout : **[[../msgs/0000001_msg.html {message data} 23:19:09.724351]]**: [[../topics/_rosout.html {topic data} /rosout]]
 note left
-log: '/record_1673907549608806002': "Subscribing to /turtle1/color_sensor" <b><back:salmon>'header.frame_id' is empty</back></b>
+level: 2 (INFO) log: '/record_1673907549608806002': 'Subscribing to /turtle1/color_sensor' <b><back:salmon>'header.frame_id' is empty</back></b>
 end note
 _record_1673907549608806002 o-> _rosout : **[[../msgs/0000228_msg.html {message data} 23:19:11.725531]]**: [[../topics/_rosout.html {topic data} /rosout]]
 note left
-log: '/record_1673907549608806002': "Subscribing to /statistics" <b><back:salmon>'header.frame_id' is empty</back></b>
+level: 2 (INFO) log: '/record_1673907549608806002': 'Subscribing to /statistics' <b><back:salmon>'header.frame_id' is empty</back></b>
 end note
 _record_1673907549608806002 o-> void : **[[../msgs/0000254_msg.html {message data} 23:19:11.922367]]**: [[../topics/_statistics.html {topic data} /statistics]]
 note left
@@ -62,7 +62,7 @@ topic '/rosout_agg' from '/rosout' to '/record_1673907549608806002' delivered: 2
 end note
 _record_1673907549608806002 o-> _rosout : **[[../msgs/0000751_msg.html {message data} 23:19:15.722125]]**: [[../topics/_rosout.html {topic data} /rosout]]
 note left
-log: '/record_1673907549608806002': "Subscribing to /turtle1/cmd_vel" <b><back:salmon>'header.frame_id' is empty</back></b>
+level: 2 (INFO) log: '/record_1673907549608806002': 'Subscribing to /turtle1/cmd_vel' <b><back:salmon>'header.frame_id' is empty</back></b>
 end note
 _record_1673907549608806002 o-> void : **[[../msgs/0000789_msg.html {message data} 23:19:15.962860]]**: [[../topics/_statistics.html {topic data} /statistics]]
 note left

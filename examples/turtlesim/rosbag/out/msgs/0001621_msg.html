@@ -33,6 +33,13 @@ Project is distributed under the BSD 3-Clause license.
                  padding: 12;
                }
 
+        .note_info { }
+
+        .note_error { background-color: salmon;
+                      font-weight: bold;
+                      padding: 6; 
+                    }
+
     </style>
 </head>
 <body>
@@ -65,8 +72,12 @@ Project is distributed under the BSD 3-Clause license.
     </div>
     <div class="info_content">
         Notes:<br /><br />
-        <div class="notes"> 
-topic '/rosout_agg' from '/rosout' to '/record_1673907549608806002' delivered: 21 dropped: 0
+        <div class="notes">
+                   <span class="note_info">topic '/rosout_agg'</span>
+                   <span class="note_info">from '/rosout'</span>
+                   <span class="note_info">to '/record_1673907549608806002'</span>
+                   <span class="note_info">delivered: 21</span>
+                   <span class="note_info">dropped: 0</span>
         </div> 
     </div>
     <div class="info_content">

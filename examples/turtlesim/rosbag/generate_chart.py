@@ -12,7 +12,7 @@ ROS_DIAGRAM_TOOLS_DIR = os.path.join( SCRIPT_DIR, os.pardir, os.pardir, os.pardi
 sys.path.append( ROS_DIAGRAM_TOOLS_DIR )                     ## allow importing external scripts
 
 
-from rosdiagram.tool.rosbagflow import main, get_msg_value_name, format_note_error
+from rosdiagram.tool.rosbagflow import main, get_msg_value_name, get_msg_value_enum, NotesContainer
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -22,32 +22,37 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def notes_provider_Twist( topics, message_type, message_data ):
-    content_lines = []
+    container = NotesContainer()
     linear  = message_data.linear
     angular = message_data.angular
-    content = f"linear: [{linear.x}, {linear.y}, {linear.z}] angular: [{angular.x}, {angular.y}, {angular.z}]"
-    content_lines.append( content )
-    return "\n".join( content_lines )
+    container.addInfo( f"linear: [{linear.x}, {linear.y}, {linear.z}]" )
+    container.addInfo( f"angular: [{angular.x}, {angular.y}, {angular.z}]" )
+    return container
 
 
 def notes_provider_TopicStatistics( topics, message_type, message_data ):
-    content_lines = []
-    content = f"topic '{message_data.topic}' from '{message_data.node_pub}' to '{message_data.node_sub}' delivered: {message_data.delivered_msgs} dropped: {message_data.dropped_msgs}"
-    content_lines.append( content )
-    return "\n".join( content_lines )
+    container = NotesContainer()
+    container.addInfo( f"topic '{message_data.topic}'" )
+    container.addInfo( f"from '{message_data.node_pub}'" )
+    container.addInfo( f"to '{message_data.node_sub}'" )
+    container.addInfo( f"delivered: {message_data.delivered_msgs}" )
+    container.addInfo( f"dropped: {message_data.dropped_msgs}" )
+    return container
 
 
 def notes_provider_Log( topics, message_type, message_data ):
-    content_lines = []
+    container = NotesContainer( topics )
+    header    = message_data.header
 
-    header = message_data.header
-    content = f"log: '{message_data.name}': \"{message_data.msg}\""
+    level_data = get_msg_value_enum( message_data, 'level' )
+    container.addInfoEnum( "level:", *level_data )
+
+    container.addInfo( f"log: '{message_data.name}': '{message_data.msg}'" )
 
     if not header.frame_id:
-        content += " " + format_note_error( f"'header.frame_id' is empty" )
-
-    content_lines.append( content )
-    return "\n".join( content_lines )
+        container.addError( f"'header.frame_id' is empty" )
+        #content += " " + format_note_error(  )
+    return container
 
 
 ## ==========================================================
