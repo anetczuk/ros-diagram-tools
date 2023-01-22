@@ -27,9 +27,12 @@ from rosbags.typesys import get_types_from_msg, register_types
 from rosdiagram.io import read_list, prepare_filesystem_name
 from rosdiagram.ros.rostopicdata import read_topics, get_topic_subs_dict
 from rosdiagram.plantuml import SequenceGraph, generate_diagram,\
-    convert_time_index
+    convert_time_index, format_note_error
 from rosdiagram.seqgraph import DiagramData, NodeData, TopicData
 from rosdiagram.plantumltohtml import generate_plantuml_html, data_to_dict
+
+from rosdiagram.seqgraph import NotesContainer      ## import interface
+from rosdiagram.plantuml import format_note_error   ## import interface
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -40,32 +43,32 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 ## ===================================================================
 
 
-def get_msg_value_name( data, attribute, enum_prefix="" ):
-    attr_val  = getattr( data, attribute )
-    enum_name = get_msg_name_enum( data, attribute, enum_prefix )
+def get_msg_value_name( data, attribute_name, enum_prefix="" ):
+    attr_val, enum_name = get_msg_value_enum( data, attribute_name, enum_prefix )
     if enum_name is None:
         message = format_note_error( "unknown enum" )
         return f"""'{attr_val}' ({message})"""
     return f"'{attr_val}' ({enum_name})"
 
 
-def get_msg_name_enum( data, attribute, enum_prefix ):
-    value = getattr( data, attribute )
-    name = None
+def get_msg_name_enum( data, attribute_name, enum_prefix="" ):
+    value_name = get_msg_value_enum( data, attribute_name, enum_prefix )
+    return value_name[1]
+
+
+def get_msg_value_enum( data, attribute_name, enum_prefix="" ):
+    value = getattr( data, attribute_name )
+    name  = None
     data_items = dir( data )
     for attr in data_items:
-        if attr == attribute:
+        if attr == attribute_name:
             continue
         if attr.startswith( enum_prefix ) is False:
             continue
         attr_val = getattr(data, attr)
         if attr_val == value:
             name = attr
-    return name
-
-
-def format_note_error( message: str ):
-    return f"""<b><back:salmon>{message}</back></b>"""
+    return (value, name)
 
 
 ## ===================================================================
@@ -121,6 +124,7 @@ time span: %sm""", reader.message_count, bag_time_span )
             notes_functor = params.get( 'notes_functor' )
             if notes_functor is not None:
                 for loop in seq_diagram.getLoops():
+                    ## item: MsgData
                     for item in loop.items:
                         if item.isMessageSet() is False:
                             continue
@@ -432,9 +436,9 @@ def generate_messages_list( diagram_data: DiagramData, msgs_subdir, outdir ):
             out_url = os.path.join( msgs_subdir, f"{item.index:07d}_msg.html" )
             item.setProp( "url", out_url )
             out_path = os.path.join( outdir, out_url )
-            note_content = item.notes_data
-            if note_content is not None:
-                note_content = note_content.replace( "\n", "<br />\n" )
+            notes_content = item.notes_data
+#             if notes_content is not None:
+#                 notes_content = notes_content.replace( "\n", "<br />\n" )
 
             timestamp_dt = datetime.datetime.fromtimestamp( item.timestamp_abs / 1000000000 )
 
@@ -449,7 +453,7 @@ def generate_messages_list( diagram_data: DiagramData, msgs_subdir, outdir ):
                           'time_unit': time_unit,
                           'item': item,
                           'msg_data': msg_data,
-                          'notes_data': note_content
+                          'notes_content': notes_content
                           }
             ret_params_list.append( page_dict )
 

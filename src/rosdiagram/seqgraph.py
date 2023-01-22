@@ -8,12 +8,78 @@
 import logging
 import copy
 from dataclasses import dataclass, field
-from typing import Set, List, Any, Dict
+from enum import Enum, unique, auto
+from typing import List, Dict, Any, Set
 
 from pympler import asizeof
 
 
 _LOGGER = logging.getLogger(__name__)
+
+
+## ========================================================================
+
+
+class NotesContainer():
+
+    @unique
+    class NoteType(Enum):
+        INFO  = "INFO",
+        ERROR = "ERROR"
+
+    def __init__(self, topics=None):
+        self.topics = topics
+        self._notes_lines = []    ## List[ List[Any] ]
+
+    ## list interface
+    def __len__(self):
+        return len( self._notes_lines )
+
+    ## list interface
+    def __getitem__(self, item):
+        return self._notes_lines[ item ]
+
+    ## list interface
+    def __iter__(self):
+        return self._notes_lines.__iter__()
+
+    @property
+    def notes_lines(self):
+        return self._notes_lines
+ 
+    @notes_lines.setter
+    def notes_lines(self, value):
+        if isinstance( value, str ):
+            container = NotesContainer()
+            container.addInfo( value )
+            value = container
+        self._notes_lines = value
+
+    def addNewLine(self):
+        self._notes_lines.append( [] )
+
+    def addInfo(self, message, new_line=False):
+        if new_line:
+            self.addNewLine()
+        if len( self._notes_lines ) < 1:
+            self.addNewLine()            
+        last_line: List[ Any ] = self._notes_lines[-1]
+        last_line.append( {'type': self.NoteType.INFO.name, "msg": message} )
+
+    def addInfoEnum(self, label, value, enum_name):
+        if enum_name is not None:
+            self.addInfo( f"{label} {value} ({enum_name})" )
+        else:
+            self.addInfo( f"{label} {value}" )
+            self.addError( "unknown enum" )
+
+    def addError(self, message, new_line=False):
+        if new_line:
+            self.addNewLine()
+        if len( self._notes_lines ) < 1:
+            self.addNewLine()
+        last_line: List[ Any ] = self._notes_lines[-1]
+        last_line.append( {'type': self.NoteType.ERROR.name, "msg": message} )
 
 
 ##
@@ -31,7 +97,7 @@ class MsgData():
         self.msgdef  = None
         self.msgdata = None
 
-        self.notes_data = None
+        self.notes_data: NotesContainer = None
 
         self.props: Dict[ str, Any ] = {}
 

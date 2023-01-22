@@ -15,7 +15,8 @@ import hashlib
 from typing import Set, List, Dict
 
 from rosdiagram.io import write_file, read_list
-from rosdiagram.seqgraph import SequenceGraph, SeqItems, MsgData, DiagramData, TopicData, NodeData
+from rosdiagram.seqgraph import SequenceGraph, SeqItems, MsgData, DiagramData, TopicData, NodeData,\
+    NotesContainer
 
 
 SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
@@ -150,10 +151,11 @@ skinparam backgroundColor #FEFEFE
                 rec_id = self._getItemId( rec )
                 content   += f"""{loop_indent}{indent}{pub_id} o-> {rec_id} : {call_label}\n"""
                 if call_label:
-                    if msg_data.notes_data is not None:
+                    notes_content = convert_notes( msg_data.notes_data )
+                    if notes_content is not None:
                         content += f"""\
 note left
-{msg_data.notes_data}
+{notes_content}
 end note
 """
                 call_label = ""     ## clear label after first item
@@ -216,6 +218,32 @@ end note
 
 
 ## ========================================================================
+
+
+def convert_notes( notes_data: NotesContainer ):
+    if notes_data is None:
+        return None
+    content_list = []
+    for notes_list in notes_data:
+        content_line = []
+        for note in notes_list:
+            note_type = note['type']
+            note_msg  = note['msg']
+            if note_type == NotesContainer.NoteType.INFO.name:
+                content_line.append( note_msg )
+            elif note_type == NotesContainer.NoteType.ERROR.name:
+                msg = format_note_error( note_msg )
+                content_line.append( msg )
+            else:
+                _LOGGER.warning( "unhandled note type: %s", note_type )
+                content_line.append( note_msg )
+        content = " ".join( content_line )
+        content_list.append( content )
+    return "\n".join( content_list )
+
+
+def format_note_error( message: str ):
+    return f"""<b><back:salmon>{message}</back></b>"""
 
 
 def generate_url( url, label, tooltip ):

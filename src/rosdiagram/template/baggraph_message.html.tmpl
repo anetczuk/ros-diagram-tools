@@ -50,6 +50,13 @@ Project is distributed under the BSD 3-Clause license.
                  padding: 12;
                }
 
+        .note_info { }
+
+        .note_error { background-color: salmon;
+                      font-weight: bold;
+                      padding: 6; 
+                    }
+
     </style>
 </head>
 <body>
@@ -84,12 +91,16 @@ Project is distributed under the BSD 3-Clause license.
         </table>
     </div>
 #!
-#! notes = DATA_DICT.get('notes_data')
+#! notes = DATA_DICT.get('notes_content')
 #{ if notes is not None:
     <div class="info_content">
         Notes:<br /><br />
-        <div class="notes"> 
-${notes}
+        <div class="notes">
+#{     for notes_line in notes:
+#{         for note in notes_line:
+               ${ print_note( note ) }
+#}
+#}
         </div> 
     </div>
 #}
@@ -103,4 +114,15 @@ ${notes}
     </div>
 </body>
 </html>
+#end template
+
+
+#template print_note( note )
+#! note_type = note.get('type')
+#{ if note_type == "INFO":
+    <span class="note_info">${ note.get('msg') }</span>$>
+#}
+#{ if note_type == "ERROR":
+    <span class="note_error">${ note.get('msg') }</span>$>
+#}
 #end template
