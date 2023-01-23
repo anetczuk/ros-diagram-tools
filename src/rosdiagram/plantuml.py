@@ -166,7 +166,7 @@ end note
         return content
 
     def callTime(self, item: MsgData):
-        timestamp_dt     = datetime.datetime.fromtimestamp( item.timestamp_abs / 1000000000 )
+        timestamp_dt     = item.getTimestampDateTime()
         timestamp_string = timestamp_dt.strftime('%H:%M:%S.%f')
         return timestamp_string
 
@@ -182,15 +182,13 @@ end note
             ret_content  = f"""**{plantuml_url}**: """
 
         labels_list = []
-        for topic_name in item.topics:
-            topic_obj: TopicData = self.diagram_data.getTopicByName( topic_name )
-            if topic_obj:
-                item_path = os.path.join( self.diagram_data.root_subdir, topic_obj.suburl )
-                plantuml_url = generate_url( item_path, topic_name, "topic data" )
+        url_list = self.diagram_data.getTopicsUrls( item.topics )
+        for topic_name, topic_url in url_list:
+            if topic_url:
+                plantuml_url = generate_url( topic_url, topic_name, "topic data" )
                 labels_list.append( plantuml_url )
             else:
                 labels_list.append( topic_name )
-
         ret_content += " | ".join( labels_list )
         return ret_content
 

@@ -5,8 +5,11 @@
 # LICENSE file in the root directory of this source tree.
 #
 
+import os
 import logging
 import copy
+import datetime
+
 from dataclasses import dataclass, field
 from enum import Enum, unique, auto
 from typing import List, Dict, Any, Set
@@ -54,6 +57,14 @@ class NotesContainer():
             container.addInfo( value )
             value = container
         self._notes_lines = value
+
+    def getErrorNotes(self) -> List[Any]:
+        ret_list = []
+        for notes_line in self._notes_lines:
+            for note in notes_line:
+                if note['type'] == self.NoteType.ERROR.name:
+                    ret_list.append( note )
+        return ret_list
 
     def addNewLine(self):
         self._notes_lines.append( [] )
@@ -171,6 +182,9 @@ class MsgData():
         string_list.extend( self.subs )
         string_list.extend( self.topics )
         return hash( tuple( string_list ) )
+    
+    def getTimestampDateTime(self) -> datetime.datetime:
+        return datetime.datetime.fromtimestamp( self.timestamp_abs / 1000000000 )
 
 
 ##
@@ -225,6 +239,19 @@ class SequenceGraph():
             ret_set.add( calls.pub )
             ret_set.update( calls.subs )
         return ret_set
+
+    def messages(self, set_only=True) -> List[MsgData]:
+        ret_list = []
+        ## loop: List[ SeqItems ]
+        for loop in self.getLoops():
+            if loop.repeats > 1:
+                pass
+            ## item: List[ MsgData ]
+            for item in loop.items:
+                if set_only and item.isMessageSet() is False:
+                    continue
+                ret_list.append( item )
+        return ret_list
 
     def addCall(self, msg_index, publisher, subscriber, index, timestamp, topic) -> MsgData:
         item = MsgData( msg_index, publisher, set(subscriber,), index, timestamp, set([topic]) )
@@ -424,6 +451,17 @@ class DiagramData():
             if topic.name == name:
                 return topic
         return None
+    
+    def getTopicsUrls(self, topic_names):
+        labels_list = []
+        for topic_name in topic_names:
+            topic_obj: TopicData = self.getTopicByName( topic_name )
+            if topic_obj:
+                item_path = os.path.join( self.root_subdir, topic_obj.suburl )
+                labels_list.append( ( topic_name, item_path ) )
+            else:
+                labels_list.append( ( topic_name, None ) )
+        return labels_list
 
     def filterNodes( self, names ):
         ret_list = []

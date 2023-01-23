@@ -280,6 +280,8 @@ def calculate_diagram_data( reader, params, topic_data, exclude_filter, nodes_su
 
 
 def generate_main_dict( diagram_data: DiagramData, bag_path, exclude_set, outdir ):
+    seq_diagram: SequenceGraph = diagram_data.seq_diagram
+
     bag_name = os.path.basename( bag_path )
 
     out_path = os.path.join( outdir, f"flow_{bag_name}.puml" )
@@ -288,12 +290,32 @@ def generate_main_dict( diagram_data: DiagramData, bag_path, exclude_set, outdir
     nodes_data: List[ NodeData ]   = diagram_data.nodes
     topics_data: List[ TopicData ] = diagram_data.topics
 
+    errors_data: List[ Any ] = []
+    messages: List[MsgData] = seq_diagram.messages()
+    for msg_data in messages:
+        notes_data: NotesContainer = msg_data.notes_data
+        error_notes = notes_data.getErrorNotes()
+        if len(error_notes) < 1:
+            continue
+        timestamp_dt     = msg_data.getTimestampDateTime()
+        timestamp_string = timestamp_dt.strftime('%H:%M:%S.%f')
+        
+        url_list = diagram_data.getTopicsUrls( msg_data.topics )
+        
+        errors_data.append( { 'msg': msg_data,
+                              'url': msg_data.getProp('url'),
+                              'timestamp': timestamp_string,
+                              'topics': url_list,
+                              'notes': error_notes
+                             } )
+
     svg_path = f"flow_{bag_name}.svg"
 
     page_dict = { 'bag_file': bag_path,
                   'svg_name': svg_path,
                   'nodes_data':  nodes_data,
                   'topics_data': topics_data,
+                  'errors_data': errors_data,
                   'exclude_set': exclude_set
                   }
     return page_dict
@@ -424,38 +446,29 @@ def generate_messages_list( diagram_data: DiagramData, msgs_subdir, outdir ):
 
     ret_params_list = []
 
-    ## loop: List[ SeqItems ]
-    for loop in seq_diagram.getLoops():
-        if loop.repeats > 1:
-            pass
-        ## item: List[ MsgData ]
-        for item in loop.items:
-            if item.isMessageSet() is False:
-                continue
+    messages: List[MsgData] = seq_diagram.messages()
+    for item in messages:
+        out_url = os.path.join( msgs_subdir, f"{item.index:07d}_msg.html" )
+        item.setProp( "url", out_url )
+        out_path = os.path.join( outdir, out_url )
+        notes_content = item.notes_data
 
-            out_url = os.path.join( msgs_subdir, f"{item.index:07d}_msg.html" )
-            item.setProp( "url", out_url )
-            out_path = os.path.join( outdir, out_url )
-            notes_content = item.notes_data
-#             if notes_content is not None:
-#                 notes_content = notes_content.replace( "\n", "<br />\n" )
+        timestamp_dt = item.getTimestampDateTime()
 
-            timestamp_dt = datetime.datetime.fromtimestamp( item.timestamp_abs / 1000000000 )
+        time_value, time_unit = convert_time_index( item.timestamp_rel )
 
-            time_value, time_unit = convert_time_index( item.timestamp_rel )
+        msg_data = data_to_dict( item.msgdata )
+        msg_data = pprint.pformat( msg_data, indent=1, width=1, sort_dicts=False )              # type: ignore
 
-            msg_data = data_to_dict( item.msgdata )
-            msg_data = pprint.pformat( msg_data, indent=1, width=1, sort_dicts=False )              # type: ignore
-
-            page_dict = { 'out_path': out_path,
-                          'timestamp_dt': timestamp_dt,
-                          'time_value': time_value,
-                          'time_unit': time_unit,
-                          'item': item,
-                          'msg_data': msg_data,
-                          'notes_content': notes_content
-                          }
-            ret_params_list.append( page_dict )
+        page_dict = { 'out_path': out_path,
+                      'timestamp': timestamp_dt,
+                      'time_value': time_value,
+                      'time_unit': time_unit,
+                      'item': item,
+                      'msg_data': msg_data,
+                      'notes_content': notes_content
+                      }
+        ret_params_list.append( page_dict )
 
     return ret_params_list
 

@@ -41,6 +41,14 @@ Project is distributed under the BSD 3-Clause license.
                            padding-top: 24; padding-bottom: 24;
                         }
         .info_content { margin-bottom: 36; }
+
+        .note_info { }
+
+        .note_error { background-color: salmon;
+                      font-weight: bold;
+                      padding: 6;
+                      display: inline-block; 
+                    }
     </style>
 </head>
 <body>
@@ -89,6 +97,27 @@ Project is distributed under the BSD 3-Clause license.
 #}
         </ul>
 #!
+#! errors_data  = DATA_DICT.get('errors_data', [])
+#!
+        Errors (${len(errors_data)}):<br/>
+        <ul>
+#!
+#{ for item in errors_data:
+#!     item_label   = item.get('timestamp')
+#!     item_url     = item.get('url')
+#!     item_topics  = item.get('topics')
+#!     item_notes   = item.get('notes')
+        <li>${ generate_link(item_label, item_url) }:
+#{     for topic_url in item_topics:
+           ${ generate_link( topic_url[0], topic_url[1] ) }
+#}
+#{     for note in item_notes:
+           ${ print_note( note ) }
+#}
+        </li>
+#}
+        </ul>
+#!
 #! exclude_set = DATA_DICT.get('exclude_set')
 #{ if exclude_set is not None:
         Exclude set:<br />
@@ -116,5 +145,16 @@ Project is distributed under the BSD 3-Clause license.
 #}
 #{ else:
 ${item_name}$>
+#}
+#end template
+
+
+#template print_note( note )
+#! note_type = note.get('type')
+#{ if note_type == "INFO":
+    <span class="note_info">${ note.get('msg') }</span>$>
+#}
+#{ if note_type == "ERROR":
+    <span class="note_error">${ note.get('msg') }</span>$>
 #}
 #end template
