@@ -35,7 +35,15 @@ Project is distributed under the BSD 3-Clause license.
         pre code {  margin: 0px;
                     padding: 0px;
                  }
-    
+
+        .footer { margin-top:48px;
+                  width: 100%;
+                  margin-right: auto; margin-left: auto;
+                  text-align: center;
+                  font-size: 12px;
+                  color: #444444;
+                }
+
         .center_content {  width: 100%;
                            margin-right: auto; margin-left: auto;
                            text-align: center;
@@ -88,6 +96,11 @@ ${DATA_DICT.get('bottom_content', '')}
 #!     items_list = group_dict.get( "items", [] )
         ${ ros_link_list( items_list, title ) }
 #}
+
+    <div class="footer">
+        File was automatically generated using <i>ros-diagram-tools</i> project.
+        Project is distributed under the BSD 3-Clause license.
+    </div>
 </body>
 </html>
 #end template
