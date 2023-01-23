@@ -57,6 +57,7 @@ Project is distributed under the BSD 3-Clause license.
         <a href="../full_graph.html">back to Main graph</a>
     </div>
     <div class="info_content">
+#! topic_urls = DATA_DICT.get( 'topic_urls', [] )
         <table>
             <tr>
                 <td>Message:</td>
@@ -64,7 +65,11 @@ Project is distributed under the BSD 3-Clause license.
             </tr>
             <tr>
                 <td>Topic:</td>
-                <td>${DATA_DICT.get('topics', '')}</td>
+                <td>
+#{     for topic_url in topic_urls:
+           ${ generate_link( topic_url[0], topic_url[1] ) }
+#}
+                </td>
             </tr>
         </table>
         <br />
@@ -72,4 +77,14 @@ Project is distributed under the BSD 3-Clause license.
     </div>
 </body>
 </html>
+#end template
+
+
+#template generate_link( item_name, item_url )
+#{ if item_url:
+<a href="${item_url}">${item_name}</a>$>
+#}
+#{ else:
+${item_name}$>
+#}
 #end template

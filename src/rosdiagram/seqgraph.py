@@ -452,6 +452,17 @@ class DiagramData():
                 return topic
         return None
     
+    def getNodesUrls(self, node_names):
+        labels_list = []
+        for node_name in node_names:
+            node_obj: NodeData = self.getNodeByName( node_name )
+            if node_obj:
+                item_path = os.path.join( self.root_subdir, node_obj.suburl )
+                labels_list.append( ( node_name, item_path ) )
+            else:
+                labels_list.append( ( node_name, None ) )
+        return labels_list
+    
     def getTopicsUrls(self, topic_names):
         labels_list = []
         for topic_name in topic_names:

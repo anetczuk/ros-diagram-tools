@@ -56,6 +56,8 @@ Project is distributed under the BSD 3-Clause license.
 #!     msg_type_label = f"{topic_info.msgtype}" if topic_info.msgtype else "unknown"
 #!     msg_type_info  = msgtype_dict.get( topic_info.msgtype, {} )
 #!     msg_type_url   = msg_type_info.get( 'suburl', None )
+#!     pubs_urls   = DATA_DICT.get( 'pub_urls', [] )
+#!     subs_urls   = DATA_DICT.get( 'sub_urls', [] )
     <div class="info_content">
         <table>
             <tr>
@@ -68,11 +70,19 @@ Project is distributed under the BSD 3-Clause license.
             </tr>
             <tr>
                 <td>Publishers:</td>
-                <td><code>${ "</code>, <code>".join(topic_info.pubs) }</code></td>
+                <td><code>
+#{     for topic_url in pubs_urls:
+           ${ generate_link( topic_url[0], topic_url[1] ) }
+#}
+                </code></td>
             </tr>
             <tr>
                 <td>Subscribers:</td>
-                <td><code>${ "</code>, <code>".join(topic_info.subs) }</code></td>
+                <td><code>
+#{     for topic_url in subs_urls:
+           ${ generate_link( topic_url[0], topic_url[1] ) }
+#}
+                </code></td>
             </tr>
         </table>
     </div>
@@ -114,13 +124,23 @@ Project is distributed under the BSD 3-Clause license.
 
 
 #template generate_code_link( item_name, item_url, base_url )
-<code>${ generate_link(item_name, item_url, base_url) }</code>$>
+<code>${ generate_link_base(item_name, item_url, base_url) }</code>$>
 #end template
 
 
-#template generate_link( item_name, item_url, base_url )
+#template generate_link_base( item_name, item_url, base_url )
 #{ if item_url:
 <a href="${base_url}${item_url}">${item_name}</a>$>
+#}
+#{ else:
+${item_name}$>
+#}
+#end template
+
+
+#template generate_link( item_name, item_url )
+#{ if item_url:
+<a href="${item_url}">${item_name}</a>$>
 #}
 #{ else:
 ${item_name}$>

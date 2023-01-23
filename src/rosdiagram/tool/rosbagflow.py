@@ -133,20 +133,24 @@ time span: %sm""", reader.message_count, bag_time_span )
 
             ## generating message data
             _LOGGER.info( "generating messages data" )
+            diagram_data.root_subdir = "../"
             message_pages_list = generate_messages_list( diagram_data, msgs_subdir, outdir )
 
             msgtypes_dict = generate_message_types_dict( diagram_data, msgtypes_subdir, outdir )
 
             ## generating main data
             _LOGGER.info( "generating main data" )
+            diagram_data.root_subdir = ""
             main_page_dict = generate_main_dict( diagram_data, bag_path, exclude_set, outdir )
 
             ## generating nodes pages
             _LOGGER.info( "generating nodes data" )
+            diagram_data.root_subdir = "../"
             node_pages_list = generate_nodes_list( diagram_data, outdir )
 
             ## generating topic data
             _LOGGER.info( "generating topics data" )
+            diagram_data.root_subdir = "../"
             topic_pages_list = generate_topics_list( diagram_data, outdir )
 
             params_dict = { "style": {},
@@ -427,12 +431,17 @@ def generate_topics_list( diagram_data: DiagramData, outdir ):
         topic_filename = prepare_filesystem_name( topic_data.name )
         svg_path       = topic_filename + ".svg"
 
+        pubs_url_list = diagram_data.getNodesUrls( topic_data.pubs )
+        subs_url_list = diagram_data.getNodesUrls( topic_data.subs )
+
         page_dict = { 'out_path': out_path,
                       'topic_info': topic_data,
                       'svg_name': svg_path,
                       'root_url': subdiagram_data.root_subdir,
                       'nodes_data':  subdiagram_data.nodes,
-                      'topics_data': subdiagram_data.topics
+                      'topics_data': subdiagram_data.topics,
+                      'pub_urls': pubs_url_list,
+                      'sub_urls': subs_url_list
                       }
         ret_params_list.append( page_dict )
 
@@ -462,11 +471,18 @@ def generate_messages_list( diagram_data: DiagramData, msgs_subdir, outdir ):
         msg_data = data_to_dict( item.msgdata )
         msg_data = pprint.pformat( msg_data, indent=1, width=1, sort_dicts=False )              # type: ignore
 
+        pub_url_list   = diagram_data.getNodesUrls( [ item.pub ] )
+        subs_url_list  = diagram_data.getNodesUrls( item.subs )
+        topic_url_list = diagram_data.getTopicsUrls( item.topics )
+
         page_dict = { 'out_path': out_path,
                       'timestamp': timestamp_dt,
                       'time_value': time_value,
                       'time_unit': time_unit,
                       'item': item,
+                      'pub_url': pub_url_list[0],
+                      'sub_urls': subs_url_list,
+                      'topic_urls': topic_url_list,
                       'msg_data': msg_data,
                       'notes_content': notes_content
                       }
@@ -502,11 +518,13 @@ def generate_message_types_dict( diagram_data: DiagramData, msgtypes_subdir, out
             out_url  = os.path.join( msgtypes_subdir, f"{msgtype_filename}.html" )
             out_path = os.path.join( outdir, out_url )
 
-            page_dict = { 'out_path': out_path,
-                          'suburl':   out_url,
-                          'msgtype':  msgtype,
-                          'topics':   item.topics,
-                          'msgdef':   item.msgdef
+            topic_url_list = diagram_data.getTopicsUrls( item.topics )
+
+            page_dict = { 'out_path':   out_path,
+                          'suburl':     out_url,
+                          'msgtype':    msgtype,
+                          'topic_urls': topic_url_list,
+                          'msgdef':     item.msgdef
                           }
             ret_params_dict[ msgtype ] = page_dict
 
