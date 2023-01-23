@@ -294,6 +294,8 @@ def generate_main_dict( diagram_data: DiagramData, bag_path, exclude_set, outdir
     messages: List[MsgData] = seq_diagram.messages()
     for msg_data in messages:
         notes_data: NotesContainer = msg_data.notes_data
+        if notes_data is None:
+            continue
         error_notes = notes_data.getErrorNotes()
         if len(error_notes) < 1:
             continue

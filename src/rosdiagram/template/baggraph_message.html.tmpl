@@ -54,7 +54,8 @@ Project is distributed under the BSD 3-Clause license.
 
         .note_error { background-color: salmon;
                       font-weight: bold;
-                      padding: 6; 
+                      padding: 6;
+                      display: inline-block;
                     }
 
     </style>
@@ -100,6 +101,7 @@ Project is distributed under the BSD 3-Clause license.
 #{         for note in notes_line:
                ${ print_note( note ) }
 #}
+           <br />
 #}
         </div> 
     </div>

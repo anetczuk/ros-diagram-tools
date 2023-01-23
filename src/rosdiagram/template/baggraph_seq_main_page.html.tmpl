@@ -34,6 +34,8 @@ Project is distributed under the BSD 3-Clause license.
         pre code {  margin: 0px;
                     padding: 0px;
                  }
+        
+        td { padding: 0 8 0 8; }
 
         .center_content {  width: 100%;
                            margin-right: auto; margin-left: auto;
@@ -41,6 +43,8 @@ Project is distributed under the BSD 3-Clause license.
                            padding-top: 24; padding-bottom: 24;
                         }
         .info_content { margin-bottom: 36; }
+
+        .bottom_content { margin-bottom: 36; }
 
         .note_info { }
 
@@ -80,7 +84,8 @@ Project is distributed under the BSD 3-Clause license.
 #}
 #}
         </ul>
-        <br />
+    </div>
+    <div class="bottom_content">
 #!
 #! topics_data  = DATA_DICT.get('topics_data', [])
 #! msgtype_dict = DATA_DICT.get('msgtypes_dict', {})
@@ -96,27 +101,36 @@ Project is distributed under the BSD 3-Clause license.
         <li>${generate_code_link( item.name, item.suburl )} [${generate_code_link( msg_type_label, msg_type_url )}]: ${item.msgcount} ${excl}</li>
 #}
         </ul>
+    </div>
+    <div class="bottom_content">
 #!
 #! errors_data  = DATA_DICT.get('errors_data', [])
 #!
         Errors (${len(errors_data)}):<br/>
-        <ul>
+        <table>
 #!
 #{ for item in errors_data:
 #!     item_label   = item.get('timestamp')
 #!     item_url     = item.get('url')
 #!     item_topics  = item.get('topics')
 #!     item_notes   = item.get('notes')
-        <li>${ generate_link(item_label, item_url) }:
+            <tr>
+                <td>${ generate_link(item_label, item_url) }</td>
+                <td>
 #{     for topic_url in item_topics:
            ${ generate_link( topic_url[0], topic_url[1] ) }
 #}
+                </td>
+                <td>
 #{     for note in item_notes:
            ${ print_note( note ) }
 #}
-        </li>
+                </td>
+            </tr>
 #}
-        </ul>
+        </table>
+    </div>
+    <div class="bottom_content">
 #!
 #! exclude_set = DATA_DICT.get('exclude_set')
 #{ if exclude_set is not None:
@@ -126,7 +140,6 @@ Project is distributed under the BSD 3-Clause license.
             <li><code>${item}</code></li>
 #}
         </ul>
-        <br />
 #}
     </div>
 </body>

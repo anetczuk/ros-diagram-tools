@@ -55,7 +55,7 @@ class NotesContainer():
         if isinstance( value, str ):
             container = NotesContainer()
             container.addInfo( value )
-            value = container
+            value = container._notes_lines
         self._notes_lines = value
 
     def getErrorNotes(self) -> List[Any]:
