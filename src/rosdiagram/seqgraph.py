@@ -11,7 +11,7 @@ import copy
 import datetime
 
 from dataclasses import dataclass, field
-from enum import Enum, unique, auto
+from enum import Enum, unique
 from typing import List, Dict, Any, Set
 
 from pympler import asizeof
@@ -27,7 +27,7 @@ class NotesContainer():
 
     @unique
     class NoteType(Enum):
-        INFO  = "INFO",
+        INFO  = "INFO"
         ERROR = "ERROR"
 
     def __init__(self, topics=None):
@@ -49,13 +49,13 @@ class NotesContainer():
     @property
     def notes_lines(self):
         return self._notes_lines
- 
+
     @notes_lines.setter
     def notes_lines(self, value):
         if isinstance( value, str ):
             container = NotesContainer()
             container.addInfo( value )
-            value = container._notes_lines
+            value = container.notes_lines
         self._notes_lines = value
 
     def getErrorNotes(self) -> List[Any]:
@@ -73,7 +73,7 @@ class NotesContainer():
         if new_line:
             self.addNewLine()
         if len( self._notes_lines ) < 1:
-            self.addNewLine()            
+            self.addNewLine()
         last_line: List[ Any ] = self._notes_lines[-1]
         last_line.append( {'type': self.NoteType.INFO.name, "msg": message} )
 
@@ -182,7 +182,7 @@ class MsgData():
         string_list.extend( self.subs )
         string_list.extend( self.topics )
         return hash( tuple( string_list ) )
-    
+
     def getTimestampDateTime(self) -> datetime.datetime:
         return datetime.datetime.fromtimestamp( self.timestamp_abs / 1000000000 )
 
@@ -451,7 +451,7 @@ class DiagramData():
             if topic.name == name:
                 return topic
         return None
-    
+
     def getNodesUrls(self, node_names):
         labels_list = []
         for node_name in node_names:
@@ -462,7 +462,7 @@ class DiagramData():
             else:
                 labels_list.append( ( node_name, None ) )
         return labels_list
-    
+
     def getTopicsUrls(self, topic_names):
         labels_list = []
         for topic_name in topic_names:

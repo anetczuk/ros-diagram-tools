@@ -8,7 +8,6 @@
 import os
 import logging
 import pprint
-import datetime
 import copy
 import re
 import collections
@@ -27,8 +26,8 @@ from rosbags.typesys import get_types_from_msg, register_types
 from rosdiagram.io import read_list, prepare_filesystem_name
 from rosdiagram.ros.rostopicdata import read_topics, get_topic_subs_dict
 from rosdiagram.plantuml import SequenceGraph, generate_diagram,\
-    convert_time_index, format_note_error
-from rosdiagram.seqgraph import DiagramData, NodeData, TopicData
+    convert_time_index
+from rosdiagram.seqgraph import DiagramData, NodeData, TopicData, MsgData
 from rosdiagram.plantumltohtml import generate_plantuml_html, data_to_dict
 
 from rosdiagram.seqgraph import NotesContainer      ## import interface
@@ -305,15 +304,15 @@ def generate_main_dict( diagram_data: DiagramData, bag_path, exclude_set, outdir
             continue
         timestamp_dt     = msg_data.getTimestampDateTime()
         timestamp_string = timestamp_dt.strftime('%H:%M:%S.%f')
-        
+
         url_list = diagram_data.getTopicsUrls( msg_data.topics )
-        
+
         errors_data.append( { 'msg': msg_data,
                               'url': msg_data.getProp('url'),
                               'timestamp': timestamp_string,
                               'topics': url_list,
                               'notes': error_notes
-                             } )
+                              } )
 
     svg_path = f"flow_{bag_name}.svg"
 

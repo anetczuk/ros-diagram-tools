@@ -7,7 +7,6 @@
 
 import os
 import logging
-import datetime
 import itertools
 import math
 import hashlib
@@ -15,7 +14,7 @@ import hashlib
 from typing import Set, List, Dict
 
 from rosdiagram.io import write_file, read_list
-from rosdiagram.seqgraph import SequenceGraph, SeqItems, MsgData, DiagramData, TopicData, NodeData,\
+from rosdiagram.seqgraph import SequenceGraph, SeqItems, MsgData, DiagramData, NodeData,\
     NotesContainer
 
 
