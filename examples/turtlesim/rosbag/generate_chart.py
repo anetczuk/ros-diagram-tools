@@ -31,7 +31,7 @@ def notes_provider_Twist( topics, message_type, message_data ):
 
 
 def notes_provider_TopicStatistics( topics, message_type, message_data ):
-    container = NotesContainer()
+    container = NotesContainer( bg_color="#FFBBBB" )
     container.addInfo( f"topic '{message_data.topic}'" )
     container.addInfo( f"from '{message_data.node_pub}'" )
     container.addInfo( f"to '{message_data.node_sub}'" )
@@ -41,7 +41,7 @@ def notes_provider_TopicStatistics( topics, message_type, message_data ):
 
 
 def notes_provider_Log( topics, message_type, message_data ):
-    container = NotesContainer( topics )
+    container = NotesContainer( topics, "aqua" )
     header    = message_data.header
 
     level_data = get_msg_value_enum( message_data, 'level' )

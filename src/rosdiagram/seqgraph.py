@@ -30,9 +30,10 @@ class NotesContainer():
         INFO  = "INFO"
         ERROR = "ERROR"
 
-    def __init__(self, topics=None):
-        self.topics = topics
-        self._notes_lines = []    ## List[ List[Any] ]
+    def __init__(self, topics=None, bg_color: str = None):
+        self.bg_color: str = bg_color
+        self.topics        = topics
+        self._notes_lines  = []    ## List[ List[Any] ]
 
     ## list interface
     def __len__(self):

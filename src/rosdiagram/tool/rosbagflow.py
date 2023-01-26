@@ -237,8 +237,8 @@ def calculate_diagram_data( reader, params, topic_data, exclude_filter, nodes_su
             topic_obj.msgcount = connection.msgcount
 
             cuur_topic_data = topic_data.get( curr_topic, {} )
-            topic_obj.pubs = cuur_topic_data.get( "pubs", [] )
-            topic_obj.subs = cuur_topic_data.get( "subs", [] )
+            topic_obj.pubs  = sorted( cuur_topic_data.get( "pubs", [] ) )
+            topic_obj.subs  = sorted( cuur_topic_data.get( "subs", [] ) )
 
             topic_obj.msgtype = connection.msgtype
 
@@ -349,20 +349,21 @@ def generate_nodes_list( diagram_data: DiagramData, outdir ):
 
         _LOGGER.info( "preparing sequence graph for node %s", actor )
 
-        sub_diagram: SequenceGraph = seq_diagram.copyCallingsActors( actor )
-        sub_diagram.process( params )
+        seq_sub_diagram: SequenceGraph = seq_diagram.copyCallingsActors( actor )
+        seq_sub_diagram.process( params )
 
         subdiagram_data: DiagramData  = copy.copy( diagram_data )        ## shallow copy
-        subdiagram_data.seq_diagram   = sub_diagram
+        subdiagram_data.seq_diagram   = seq_sub_diagram
         subdiagram_data.nodes         = copy.deepcopy( diagram_data.nodes )        ## deep copy
+        subdiagram_data.topics        = copy.deepcopy( diagram_data.topics )       ## deep copy
 
         sugdiagram_node = subdiagram_data.getNodeByName( actor )
         if sugdiagram_node:
             sugdiagram_node.params[ "bg_color" ] = "LawnGreen"
             ## sugdiagram_node.params[ "bg_color" ] = "LimeGreen"
 
-        diag_nodes  = sub_diagram.getActors()
-        diag_topics = sub_diagram.getTopics()
+        diag_nodes  = seq_sub_diagram.getActors()
+        diag_topics = seq_sub_diagram.getTopics()
 
         subdiagram_data.root_subdir = "../"
 

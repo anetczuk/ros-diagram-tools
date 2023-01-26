@@ -152,8 +152,13 @@ skinparam backgroundColor #FEFEFE
                 if call_label:
                     notes_content = convert_notes( msg_data.notes_data )
                     if notes_content is not None:
+                        bg_color = msg_data.notes_data.bg_color
+                        if bg_color is None:
+                            bg_color = ""
+                        elif not bg_color.startswith("#"):
+                            bg_color = "#" + bg_color
                         content += f"""\
-note left
+note left {bg_color}
 {notes_content}
 end note
 """

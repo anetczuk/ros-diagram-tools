@@ -113,9 +113,10 @@ Project is distributed under the BSD 3-Clause license.
 #!
 #! notes = DATA_DICT.get('notes_content')
 #{ if notes is not None:
+#!     notes_bg_color = notes.bg_color
     <div class="info_content">
         Notes:<br /><br />
-        <div class="notes">
+        <div class="notes" style="background-color: ${ notes_bg_color }">
 #{     for notes_line in notes:
 #{         for note in notes_line:
                ${ print_note( note ) }
