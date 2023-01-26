@@ -97,7 +97,7 @@ def generate( bag_path, topic_dump_dir, outdir, exclude_set=None, params: dict =
 total messages: %s
 time span: %sm""", reader.message_count, bag_time_span )
 
-            print_topics_stats( reader )
+            print_topics_stats( reader, exclude_filter )
 
             # topic and msgtype information is available on .connections list
 
@@ -165,7 +165,7 @@ time span: %sm""", reader.message_count, bag_time_span )
         _LOGGER.error( "unable to parse bag file: %s", ex )
 
 
-def print_topics_stats( reader ):
+def print_topics_stats( reader, exclude_filter: 'ExcludeItemFilter' = None ):
     msg_num_counter = collections.Counter()
     for connection in reader.connections:
         curr_topic  = connection.topic
@@ -198,13 +198,19 @@ def print_topics_stats( reader ):
     content = ""
     topics_data.sort( key=lambda item: item[1], reverse=True )
     for topic_item in topics_data:
-        content += f"{topic_item[0]} {topic_item[1]} total size: {topic_item[3]}\n"
+        excl_label = ""
+        if exclude_filter is not None and exclude_filter.excluded( topic_item[0] ):
+            excl_label = "(excluded)"            
+        content += f"{topic_item[0]} {topic_item[1]} total size: {topic_item[3]} {excl_label}\n"
     _LOGGER.info( "topic count stats:\n%s", content )
 
     content = ""
     topics_data.sort( key=lambda item: item[2], reverse=True )
     for topic_item in topics_data:
-        content += f"{topic_item[0]} {topic_item[1]} total size: {topic_item[3]}\n"
+        excl_label = ""
+        if exclude_filter is not None and exclude_filter.excluded( topic_item[0] ):
+            excl_label = "(excluded)"            
+        content += f"{topic_item[0]} {topic_item[1]} total size: {topic_item[3]} {excl_label}\n"
     _LOGGER.info( "topic memory stats:\n%s", content )
 
 
@@ -627,6 +633,7 @@ class ExcludeItemFilter():
             else:
                 self.exclude_set.add( excl )
 
+    ## is item excluded?
     def excluded(self, item):
         if item in self.exclude_set:
             return True
