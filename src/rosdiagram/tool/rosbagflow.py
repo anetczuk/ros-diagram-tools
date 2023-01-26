@@ -227,7 +227,8 @@ def calculate_diagram_data( reader, params, topic_data, exclude_filter, nodes_su
 
         topic_obj = topics_dict.get( curr_topic, None )
         if topic_obj is None:
-            topic_obj = TopicData( curr_topic, connection.msgcount )
+            topic_obj = TopicData( curr_topic )
+            topic_obj.msgcount = connection.msgcount
 
             cuur_topic_data = topic_data.get( curr_topic, {} )
             topic_obj.pubs = cuur_topic_data.get( "pubs", [] )
