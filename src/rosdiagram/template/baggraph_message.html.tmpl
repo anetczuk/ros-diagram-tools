@@ -74,10 +74,17 @@ Project is distributed under the BSD 3-Clause license.
     </div>
     <div class="info_content">
 #!
+#! root_url = DATA_DICT.get( 'root_url', '' )
+#!
 #! item          = DATA_DICT.get( 'item' )
 #! item_pub_url  = DATA_DICT.get( 'pub_url', [] )
 #! item_sub_urls = DATA_DICT.get( 'sub_urls', [] )
 #! item_topics   = DATA_DICT.get( 'topic_urls', [] )
+#!
+#! msgtype_dict   = DATA_DICT.get( 'msgtypes_dict', {} )
+#! msg_type_info  = msgtype_dict.get( item.msgtype, {} )
+#! msg_type_url   = msg_type_info.get( 'suburl', None )
+#! msg_type_label = item.msgtype if item.msgtype else "unknown"
 #!
         <table>
             <tr>
@@ -87,6 +94,10 @@ Project is distributed under the BSD 3-Clause license.
             <tr>
                 <td>Delta time:</td>
                 <td>${DATA_DICT.get('time_value', '')} ${DATA_DICT.get('time_unit', '')}</td>
+            </tr>
+            <tr>
+                <td>Type:</td>
+                <td>${generate_code_link( msg_type_label, msg_type_url, root_url )}</td>
             </tr>
             <tr>
                 <td>Topic:</td>
@@ -141,6 +152,21 @@ Project is distributed under the BSD 3-Clause license.
     </div>
 </body>
 </html>
+#end template
+
+
+#template generate_code_link( item_name, item_url, base_url )
+<code>${ generate_link_base(item_name, item_url, base_url) }</code>$>
+#end template
+
+
+#template generate_link_base( item_name, item_url, base_url )
+#{ if item_url:
+<a href="${base_url}${item_url}">${item_name}</a>$>
+#}
+#{ else:
+${item_name}$>
+#}
 #end template
 
 

@@ -499,6 +499,7 @@ def generate_messages_list( diagram_data: DiagramData, msgs_subdir, outdir ):
         topic_url_list = diagram_data.getTopicsUrls( item.topics )
 
         page_dict = { 'out_path': out_path,
+                      'root_url': diagram_data.root_subdir,
                       'timestamp': timestamp_dt,
                       'time_value': time_value,
                       'time_unit': time_unit,

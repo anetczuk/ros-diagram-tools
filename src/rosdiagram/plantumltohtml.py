@@ -42,6 +42,7 @@ def generate_plantuml_html( output_dir, params_dict=None ):
 
     messagepages_list = params_dict[ "message_pages" ]
     for messagepage_dict in messagepages_list:
+        messagepage_dict[ "msgtypes_dict" ] = msgtypes_dict
         write_seq_msg_page( messagepage_dict )
 
     for msgtype_info in msgtypes_dict.values():
