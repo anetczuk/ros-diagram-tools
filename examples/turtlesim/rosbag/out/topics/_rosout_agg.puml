@@ -2,7 +2,7 @@
 
 skinparam backgroundColor #FEFEFE
 
-box #Ivory
+box #LawnGreen
     participant "/rosout" as _rosout [[../nodes/_rosout.html]]
 end box
 box #LightCyan
