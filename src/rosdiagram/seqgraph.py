@@ -98,12 +98,12 @@ class NotesContainer():
 class MsgData():
 
     def __init__(self, msg_index, pub: str, subs: Set[str], index: int, timestamp_abs, topics: Set[str] ):
-        self.index         = msg_index
-        self.pub           = pub                    ## publisher node
-        self.subs          = subs                   ## subscriber nodes
-        self.timestamp_rel = index
-        self.timestamp_abs = timestamp_abs
-        self.topics        = topics
+        self.index            = msg_index
+        self.pub              = pub                    ## publisher node
+        self.subs             = subs                   ## subscriber nodes
+        self.timestamp_rel    = index
+        self.timestamp_abs    = timestamp_abs
+        self.topics: Set[str] = topics
 
         self.msgtype = None
         self.msgdef  = None
@@ -373,7 +373,7 @@ class SequenceGraph():
         graph.callings = new_calls
         return graph
 
-    def copyCallingsLabels(self, label ):
+    def copyCallingsTopics(self, label ):
         new_calls: List[ MsgData ] = []
         for call in self.callings:
             if call.haveLabel( label ):
@@ -382,6 +382,17 @@ class SequenceGraph():
         graph = SequenceGraph()
         graph.callings = new_calls
         return graph
+
+    def filterMessages(self, node_name ):
+        new_calls: List[ MsgData ] = []
+        ## call: MsgData
+        for call in self.callings:
+            if node_name == call.pub:
+                new_calls.append( call )
+            elif node_name in call.subs:
+                call.subs = set([node_name])
+                new_calls.append( call )
+        self.callings = new_calls 
 
 
 ## ===================================================================
@@ -428,6 +439,13 @@ class TopicData():
             return self.excluded
         raise IndexError( f"invalid index: {key}" )
 
+    def isConnectedToNode(self, node_name):
+        if node_name in self.pubs:
+            return True
+        if node_name in self.subs:
+            return True
+        return False
+
     @staticmethod
     def sortList( items_list: List['TopicData'] ):
         items_list.sort( key=lambda x: x.name )
@@ -452,6 +470,14 @@ class DiagramData():
             if topic.name == name:
                 return topic
         return None
+
+    def getConnectedTopics(self, node_name) -> TopicData:
+        ret_list = []
+        ## topic: TopicData
+        for topic in self.topics:
+            if topic.isConnectedToNode( node_name ):
+                ret_list.append( topic.name )
+        return ret_list
 
     def getNodesUrls(self, node_names):
         labels_list = []

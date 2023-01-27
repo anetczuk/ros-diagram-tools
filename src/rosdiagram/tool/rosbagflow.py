@@ -128,7 +128,14 @@ time span: %sm""", reader.message_count, bag_time_span )
                         if item.isMessageSet() is False:
                             continue
                         note_content = notes_functor( item.topics, item.msgtype, item.msgdata )
-                        item.notes_data = note_content
+                        if note_content is None:
+                            item.notes_data = note_content
+                        elif isinstance( note_content, NotesContainer ):
+                            item.notes_data = note_content
+                        else:
+                            container = NotesContainer()
+                            container.notes_lines = note_content
+                            item.notes_data = container
 
             ## generating message data
             _LOGGER.info( "generating messages data" )
@@ -350,6 +357,7 @@ def generate_nodes_list( diagram_data: DiagramData, outdir ):
         _LOGGER.info( "preparing sequence graph for node %s", actor )
 
         seq_sub_diagram: SequenceGraph = seq_diagram.copyCallingsActors( actor )
+        seq_sub_diagram.filterMessages( actor )
         seq_sub_diagram.process( params )
 
         subdiagram_data: DiagramData  = copy.copy( diagram_data )        ## shallow copy
@@ -407,7 +415,7 @@ def generate_topics_list( diagram_data: DiagramData, outdir ):
         if topic_data.excluded:
             continue
 
-        sub_diagram: SequenceGraph = seq_diagram.copyCallingsLabels( topic_data.name )
+        sub_diagram: SequenceGraph = seq_diagram.copyCallingsTopics( topic_data.name )
         if sub_diagram.size() < 1:
             topic_data.suburl = None
             continue
@@ -416,6 +424,14 @@ def generate_topics_list( diagram_data: DiagramData, outdir ):
 
         subdiagram_data: DiagramData = copy.copy( diagram_data )
         subdiagram_data.seq_diagram   = sub_diagram
+        subdiagram_data.nodes         = copy.deepcopy( diagram_data.nodes )        ## deep copy
+        subdiagram_data.topics        = copy.deepcopy( diagram_data.topics )       ## deep copy
+
+        for actor in topic_data.pubs:
+            sugdiagram_node = subdiagram_data.getNodeByName( actor )
+            if sugdiagram_node:
+                sugdiagram_node.params[ "bg_color" ] = "LawnGreen"
+                ## sugdiagram_node.params[ "bg_color" ] = "LimeGreen"
 
         diag_nodes  = sub_diagram.getActors()
         diag_topics = sub_diagram.getTopics()
