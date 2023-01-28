@@ -19,6 +19,8 @@ Package can produce following diagrams:
 Depending on desired tool, user can run subset of *dump* scripts. 
 
 Examples of provided diagrams can be seen in `/examples/` repo directory.
+First example (`sample`) contains synthetic data. Example `turtlesim` presents 
+structure of *turtlesim* tool.
 
 
 
@@ -65,6 +67,24 @@ In addition, for given graph interactive web page can be generated, [example her
 Following animation shows navigation thorough nodes of graph:
 
 ![HTML graph](doc/html_graph.gif "HTML graph")
+
+
+
+## `rosdiagrambag.py` - rosbag graph
+
+Presents visualisation of *ROS* bag in form of sequence graph.
+
+Execution: `./src/rosdiagrambag.py --help`
+
+[![ROS bag sequence graph](doc/turtlesim_rosbag-small.png "ROS bag sequence graph")](doc/turtlesim_rosbag.png)
+
+Tool generates sequence diagram and interactive web page with following functionalities:
+- viewing full graph,
+- viewing messages of node and topic,
+- viewing message data and message type definition,
+- annotating messages with additional information (for example validation messages)
+
+The web page output is stored [here](examples/turtlesim/rosbag/out/full_graph.html).
 
 
 
