@@ -28,7 +28,7 @@ Tool presents distribution of code in source subdirectories.
 
 Execution: `./src/rosdiagramcode.py --help`
 
-[![code distribution chart](examples/codedistribution/out/graph-small.png "code distribution chart")](examples/codedistribution/out/graph.png)
+[![code distribution chart](examples/simple/codedistribution/out/graph-small.png "code distribution chart")](examples/simple/codedistribution/out/graph.png)
 
 
 
@@ -38,7 +38,7 @@ Show workspace packages in form of dependency tree.
 
 Execution: `./src/rosdiagramcatkin.py --help`
 
-[![catkin packages tree](examples/catkinlist/out/graph-small.png "catkin packages tree")](examples/catkinlist/out/graph.png)
+[![catkin packages tree](examples/simple/catkinlist/out/graph-small.png "catkin packages tree")](examples/simple/catkinlist/out/graph.png)
 
 
 
@@ -48,7 +48,7 @@ Present dependecy of *ROS* nodes and topics in form of dependency graph.
 
 Execution: `./src/rosdiagramtopic.py --help`
 
-[![ROS nodes and topics graph](examples/rostopiclist/out/graph-small.png "ROS nodes and topics graph")](examples/rostopiclist/out/graph.png)
+[![ROS nodes and topics graph](examples/simple/rostopiclist/out/graph-small.png "ROS nodes and topics graph")](examples/simple/rostopiclist/out/graph.png)
 
 
 
@@ -58,9 +58,9 @@ Presents dependecy of *ROS* nodes, topics and services in form of data flow grap
 
 Execution: `./src/rosdiagramnode.py --help`
 
-[![ROS nodes, topics and services graph](examples/rosnodelist/out/full_graph-small.png "ROS nodes, topics and services graph")](examples/rosnodelist/out/full_graph.png)
+[![ROS nodes, topics and services graph](examples/simple/rosnodelist/out/full_graph-small.png "ROS nodes, topics and services graph")](examples/simple/rosnodelist/out/full_graph.png)
 
-In addition, for given graph interactive web page can be generated, [example here](examples/rosnodelist/out/full_graph.html).
+In addition, for given graph interactive web page can be generated, [example here](examples/simple/rosnodelist/out/full_graph.html).
 
 Following animation shows navigation thorough nodes of graph:
 
