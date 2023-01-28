@@ -242,7 +242,7 @@ def generate_subpages_dict( nodes_dict, items_list, label_dict, neighbour_range,
         services_list = sorted( get_services_from_dict( nodes_dict, [ item_id ] ) )
 
         group_lists = []
-        
+
         ## get lists of node pubs, subs and servs
 #         node_data = nodes_dict.get( item_id, None )
 #         if node_data is not None:
