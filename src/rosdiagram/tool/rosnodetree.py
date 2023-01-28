@@ -241,7 +241,25 @@ def generate_subpages_dict( nodes_dict, items_list, label_dict, neighbour_range,
         topics_list   = sorted( filter_topics( nodes_dict, graph_names ) )
         services_list = sorted( get_services_from_dict( nodes_dict, [ item_id ] ) )
 
-        item_dict[ "lists" ] = generate_items_lists( nodes_list, topics_list, services_list )
+        group_lists = []
+        
+        ## get lists of node pubs, subs and servs
+#         node_data = nodes_dict.get( item_id, None )
+#         if node_data is not None:
+#             node_pubs = node_data.get( "pubs", [] )
+#             node_pubs = [ item[0] for item in node_pubs ]
+#             node_subs = node_data.get( "subs", [] )
+#             node_subs = [ item[0] for item in node_subs ]
+#             node_srvs = node_data.get( "servs", [] )
+#             node_srvs = [ item[0] for item in node_srvs ]
+#             group_lists.append( { "title": "Publications", "items": node_pubs } )
+#             group_lists.append( { "title": "Subscriptions", "items": node_subs } )
+#             group_lists.append( { "title": "Services", "items": node_srvs } )
+
+        graph_items = generate_items_lists( nodes_list, topics_list, services_list )
+        group_lists.extend( graph_items )
+
+        item_dict[ "lists" ] = group_lists
 
     return sub_items
 
