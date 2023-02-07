@@ -28,3 +28,12 @@ def remove_ros_items( graph: Graph ):
             graph.removeNode( name )
         if name.startswith( "/record_" ) or name.startswith( "n_/record_" ):
             graph.removeNode( name )
+
+
+def remove_ros_rec_items( graph: Graph ):
+    unquoted_names = graph.getNodeNamesAll()
+    for name in unquoted_names:
+        if name.startswith( "/rostopic_" ) or name.startswith( "n_/rostopic_" ):
+            graph.removeNode( name )
+        if name.startswith( "/record_" ) or name.startswith( "n_/record_" ):
+            graph.removeNode( name )
