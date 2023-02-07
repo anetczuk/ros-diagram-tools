@@ -19,11 +19,10 @@ from rosdiagram.utils import get_create_item
 from rosdiagram.ros.rosnodedata import get_topics, get_services,\
     get_names_from_list, create_topics_dict, fix_names, split_to_groups,\
     get_services_info, filter_nodes, filter_topics,\
-    get_services_from_dict, read_nodes, ROSNodeData, get_topics_info
+    get_services_from_dict, read_nodes, ROSNodeData, get_topics_info, filter_ros_nodes_dict
 from rosdiagram.graphviztohtml import generate_graph_html
 from rosdiagram.graphviz import Graph, set_node_labels, preserve_neighbour_nodes
-from rosdiagram.ros.rosutils import remove_ros_rec_items
-from rosdiagram.ros.rostopicdata import read_topics
+from rosdiagram.ros.rostopicdata import read_topics, filter_ros_topics_dict
 from rosdiagram.ros.rosservicedata import read_services
 
 
@@ -154,6 +153,9 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
     topics_dict = read_topics( topics_dump_dir )
     if topics_dict is None:
         topics_dict = {}
+
+    filter_ros_topics_dict( topics_dict )
+
     rostopicdata.fix_names( topics_dict )
     # topic_labels = rostopicdata.fix_names( topics_dict )
 
@@ -168,7 +170,6 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
     all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
 
     main_graph: Graph = generate_compact_graph( nodes_dict, show_services=True, labels_dict=nodes_labels )
-    remove_ros_rec_items( main_graph )
     if paint_function:
         paint_function( main_graph )
 
@@ -229,7 +230,6 @@ def generate_subpages_dict( nodes_dict, items_list, label_dict, neighbour_range,
         sub_items[ item_id ] = item_dict
         item_graph: Graph = generate_full_graph( nodes_dict, labels_dict=label_dict )
         preserve_neighbour_nodes( item_graph, [item_id], neighbour_range )
-        remove_ros_rec_items( item_graph )
         if paint_function:
             paint_function( item_graph )
 
@@ -313,6 +313,8 @@ def main():
     if not nodes_dict:
         _LOGGER.warning( "no data found in %s", args.dump_dir )
         return
+
+    filter_ros_nodes_dict( nodes_dict )
 
     label_dict = fix_names( nodes_dict )
     # info_dict  = get_node_info_dict( nodes_dict, label_dict, args.msgs_dump_dir, args.srvs_dump_dir )

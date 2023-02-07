@@ -37,3 +37,19 @@ def remove_ros_rec_items( graph: Graph ):
             graph.removeNode( name )
         if name.startswith( "/record_" ) or name.startswith( "n_/record_" ):
             graph.removeNode( name )
+
+
+def is_ros_internal_node( node_name ):
+    if node_name in ( "/rosout", "/rosout_agg" ):
+        return True
+    if node_name.startswith( "/rostopic_" ):
+        return True
+    if node_name.startswith( "/record_" ):
+        return True
+    return False
+
+
+def is_ros_internal_topic( topic_name ):
+    if topic_name in ( "/rosout" ):
+        return True
+    return False

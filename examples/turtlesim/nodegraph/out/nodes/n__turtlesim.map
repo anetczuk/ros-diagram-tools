@@ -1,10 +1,7 @@
 <map id="n_/turtlesim" name="n_/turtlesim">
-<area shape="rect" id="node1" href="n__rosout.html" title="node: /rosout
-2 services" alt="" coords="783,5,901,56"/>
-<area shape="poly" id="node2" href="t__rosout.html" title="node: /rosout" alt="" coords="651,31,648,23,640,17,627,11,611,8,593,7,575,8,559,11,546,17,537,23,535,31,537,38,546,45,559,50,575,53,593,55,611,53,627,50,640,45,648,38"/>
-<area shape="rect" id="node3" href="n__turtlesim.html" title="node: /turtlesim
-9 services" alt="" coords="284,77,403,128"/>
-<area shape="poly" id="node4" href="t__turtle1_color_sensor.html" title="node: /turtle1/color_sensor" alt="" coords="735,103,728,95,708,89,676,83,637,80,593,79,549,80,509,83,478,89,457,95,451,103,457,110,478,117,509,122,549,125,593,127,637,125,676,122,708,117,728,110"/>
-<area shape="poly" id="node5" href="t__turtle1_pose.html" title="node: /turtle1/pose" alt="" coords="686,175,682,167,668,161,648,155,622,152,593,151,564,152,538,155,517,161,504,167,499,175,504,182,517,189,538,194,564,197,593,199,622,197,648,194,668,189,682,182"/>
-<area shape="poly" id="node6" href="t__turtle1_cmd_vel.html" title="node: /turtle1/cmd_vel" alt="" coords="236,103,230,95,214,89,188,83,156,80,121,79,85,80,53,83,27,89,11,95,5,103,11,110,27,117,53,122,85,125,121,127,156,125,188,122,214,117,230,110"/>
+<area shape="rect" id="node1" href="n__turtlesim.html" title="node: /turtlesim
+9 services" alt="" coords="284,40,403,91"/>
+<area shape="poly" id="node2" href="t__turtle1_color_sensor.html" title="node: /turtle1/color_sensor" alt="" coords="735,29,728,22,708,15,676,10,637,7,593,5,549,7,509,10,478,15,457,22,451,29,457,37,478,43,509,49,549,52,593,53,637,52,676,49,708,43,728,37"/>
+<area shape="poly" id="node3" href="t__turtle1_pose.html" title="node: /turtle1/pose" alt="" coords="686,101,682,94,668,87,648,82,622,79,593,77,564,79,538,82,517,87,504,94,499,101,504,109,517,115,538,121,564,124,593,125,622,124,648,121,668,115,682,109"/>
+<area shape="poly" id="node4" href="t__turtle1_cmd_vel.html" title="node: /turtle1/cmd_vel" alt="" coords="236,65,230,58,214,51,188,46,156,43,121,41,85,43,53,46,27,51,11,58,5,65,11,73,27,79,53,85,85,88,121,89,156,88,188,85,214,79,230,73"/>
 </map>

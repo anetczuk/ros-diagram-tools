@@ -16,6 +16,7 @@ from rosdiagram.utils import get_create_item
 from rosdiagram.ros.rosmsgdata import read_msg
 from rosdiagram.ros.rosservicedata import get_service_type
 from rosdiagram.ros.rossrvdata import read_srv
+from rosdiagram.ros.rosutils import is_ros_internal_node, is_ros_internal_topic
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -128,6 +129,7 @@ def parse_node_info( content ):
     return deps_dict
 
 
+## return pair: (topic name, message type)
 def match_topic( line ):
     matched = re.findall( r"^ \* (\S+)\s*\[(.*)\]\s*$", line )
 #     matched = re.findall( r"^ \* (\S+)\s*[.*]\s*$", line )
@@ -257,6 +259,24 @@ Message: <code>{code_title}</code><br/>
 
 
 ## ==============================================================
+
+
+def filter_ros_nodes_dict( nodes_dict ):
+    for node_name, lists in nodes_dict.copy().items():
+        if is_ros_internal_node( node_name ):
+            del nodes_dict[ node_name ]
+            continue
+
+        pubs_list = lists[ "pubs" ]
+        subs_list = lists[ "subs" ]
+
+        for topic_data in pubs_list.copy():
+            if is_ros_internal_topic( topic_data[0] ):
+                pubs_list.remove( topic_data )
+
+        for topic_name in subs_list.copy():
+            if is_ros_internal_topic( topic_data[0] ):
+                subs_list.remove( topic_data )
 
 
 def filter_nodes( nodes_dict, names_list ):

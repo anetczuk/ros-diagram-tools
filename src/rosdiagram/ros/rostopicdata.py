@@ -14,6 +14,7 @@ import copy
 
 from rosdiagram.io import read_list, prepare_filesystem_name
 from rosdiagram.utils import get_create_item
+from rosdiagram.ros.rosutils import is_ros_internal_topic, is_ros_internal_node
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -141,6 +142,24 @@ def get_topic_subs_dict( topic_data ):
 
 
 ## ===================================================================
+
+
+def filter_ros_topics_dict( topics_dict ):
+    for topic_name, lists in topics_dict.copy().items():
+        if is_ros_internal_topic( topic_name ):
+            del topics_dict[ topic_name ]
+            continue
+
+        pubs_list = lists[ "pubs" ]
+        subs_list = lists[ "subs" ]
+
+        for node_name in pubs_list.copy():
+            if is_ros_internal_node( node_name ):
+                pubs_list.remove( node_name )
+
+        for node_name in subs_list.copy():
+            if is_ros_internal_node( node_name ):
+                subs_list.remove( node_name )
 
 
 ## it happens that topic and node has the same name, so it has to be prefixed

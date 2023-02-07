@@ -1,8 +1,0 @@
-<map id="n_/rosout" name="n_/rosout">
-<area shape="rect" id="node1" href="n__turtlesim.html" title="node: /turtlesim
-9 services" alt="" coords="5,5,124,56"/>
-<area shape="poly" id="node4" href="t__rosout.html" title="node: /rosout" alt="" coords="288,31,285,23,277,17,264,11,248,8,230,7,212,8,196,11,183,17,175,23,172,31,175,38,183,45,196,50,212,53,230,55,248,53,264,50,277,45,285,38"/>
-<area shape="rect" id="node2" href="n__rosout.html" title="node: /rosout
-2 services" alt="" coords="336,5,455,56"/>
-<area shape="poly" id="node3" href="t__rosout_agg.html" title="node: /rosout_agg" alt="" coords="676,31,672,23,660,17,640,11,616,8,589,7,563,8,539,11,519,17,507,23,503,31,507,38,519,45,539,50,563,53,589,55,616,53,640,50,660,45,672,38"/>
-</map>
