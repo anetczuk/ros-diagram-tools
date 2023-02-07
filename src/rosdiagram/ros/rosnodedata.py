@@ -274,7 +274,7 @@ def filter_ros_nodes_dict( nodes_dict ):
             if is_ros_internal_topic( topic_data[0] ):
                 pubs_list.remove( topic_data )
 
-        for topic_name in subs_list.copy():
+        for topic_data in subs_list.copy():
             if is_ros_internal_topic( topic_data[0] ):
                 subs_list.remove( topic_data )
 
