@@ -31,9 +31,9 @@ class NotesContainer():
         ERROR = "ERROR"
 
     def __init__(self, topics=None, bg_color: str = None):
-        self.bg_color: str = bg_color
-        self.topics        = topics
-        self._notes_lines  = []    ## List[ List[Any] ]
+        self.bg_color: str                   = bg_color
+        self.topics                          = topics
+        self._notes_lines: List[ List[Any] ] = []
 
     ## list interface
     def __len__(self):
@@ -392,7 +392,7 @@ class SequenceGraph():
             elif node_name in call.subs:
                 call.subs = set([node_name])
                 new_calls.append( call )
-        self.callings = new_calls 
+        self.callings = new_calls
 
 
 ## ===================================================================
@@ -471,7 +471,7 @@ class DiagramData():
                 return topic
         return None
 
-    def getConnectedTopics(self, node_name) -> TopicData:
+    def getConnectedTopics(self, node_name) -> List[ str ]:
         ret_list = []
         ## topic: TopicData
         for topic in self.topics:

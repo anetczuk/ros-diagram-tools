@@ -173,13 +173,13 @@ time span: %sm""", reader.message_count, bag_time_span )
 
 
 def print_topics_stats( reader, exclude_filter: 'ExcludeItemFilter' = None ):
-    msg_num_counter = collections.Counter()
+    msg_num_counter: collections.Counter = collections.Counter()
     for connection in reader.connections:
         curr_topic  = connection.topic
         msg_num     = connection.msgcount
         msg_num_counter[ curr_topic ] += msg_num
 
-    msg_size_counter = collections.Counter()
+    msg_size_counter: collections.Counter = collections.Counter()
     messages = reader.messages()
     for connection, _, rawdata in messages:
         curr_topic  = connection.topic
@@ -207,7 +207,7 @@ def print_topics_stats( reader, exclude_filter: 'ExcludeItemFilter' = None ):
     for topic_item in topics_data:
         excl_label = ""
         if exclude_filter is not None and exclude_filter.excluded( topic_item[0] ):
-            excl_label = "(excluded)"            
+            excl_label = "(excluded)"
         content += f"{topic_item[0]} {topic_item[1]} total size: {topic_item[3]} {excl_label}\n"
     _LOGGER.info( "topic count stats:\n%s", content )
 
@@ -216,7 +216,7 @@ def print_topics_stats( reader, exclude_filter: 'ExcludeItemFilter' = None ):
     for topic_item in topics_data:
         excl_label = ""
         if exclude_filter is not None and exclude_filter.excluded( topic_item[0] ):
-            excl_label = "(excluded)"            
+            excl_label = "(excluded)"
         content += f"{topic_item[0]} {topic_item[1]} total size: {topic_item[3]} {excl_label}\n"
     _LOGGER.info( "topic memory stats:\n%s", content )
 
