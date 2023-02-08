@@ -9,6 +9,7 @@ Package can produce following diagrams:
 - *ROS* nodes and topics graphs
 - *rosbag* sequence graph
 
+In addition there is `rosverifier.py` script detecting packages overlay in *catkin* workspace.
 
 
 ## How to use?
@@ -86,6 +87,11 @@ Tool generates sequence diagram and interactive web page with following function
 
 The web page output is stored [here](examples/turtlesim/rosbag/out/full_graph.html).
 
+
+
+## `rosverifier.py` - catkin verifier
+
+Script detects packages overlay in given workspace and extended workspaces.
 
 
 ## Dumping information
