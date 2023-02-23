@@ -337,7 +337,7 @@ class Graph():
         edges = self.getEdgesAll()
         return create_edges_dict( edges )
 
-    def addEdge( self, from_node: str, to_node: str, create_nodes=False ):
+    def addEdge( self, from_node: str, to_node: str, create_nodes=False ) -> pydotplus.Edge:
         if self.hasNode(from_node) is False:
             if create_nodes is False:
                 _LOGGER.warning( "unable to find from node >%s<", from_node )
