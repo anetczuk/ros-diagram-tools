@@ -352,8 +352,7 @@ def print_critical_path( schedule: Schedule, jobs_list: List[Job], sort_list=Fal
             gap_time = job.end_time - prev_job.end_time
         else:
             gap_time = job.end_time
-        factor = gap_time / duration
-        items.append( (job.name, duration, gap_time, factor ) )
+        items.append( (job.name, duration, gap_time ) )
 
     if sort_list:
         items.sort( key=lambda item: item[1], reverse=True )
@@ -362,7 +361,7 @@ def print_critical_path( schedule: Schedule, jobs_list: List[Job], sort_list=Fal
     for item in items:
         duration = format_duration( item[1] )
         gap      = format_duration( item[2] )
-        ret_list.append( ( item[0], duration, gap, item[3] ) )
+        ret_list.append( ( item[0], duration, gap ) )
     return ret_list
 
 
