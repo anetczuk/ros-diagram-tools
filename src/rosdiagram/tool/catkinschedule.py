@@ -102,6 +102,8 @@ class Schedule():
     def _addJob( self, job: Job ):
         curr_start_time = job.start_time
         for queue in self.queues:
+            if not queue:
+                continue
             last_job = queue[ -1 ]
             if curr_start_time >= last_job.end_time:
                 queue.append( job )
@@ -171,27 +173,24 @@ def read_build_log( log_path ) -> List[Job]:
     order_list = []
     start_dict = {}
     end_dict   = {}
-    last_end_time   = 0.0
+
     ## sometimes catkin not starts next job exactly after one finishes, but waits some time
-    build_timestamp = 0.0
+    recent_time = 0.0
 
     for line in content.splitlines():
         line = line.strip()
 
         build_time = get_build_timestamp( line )
         if build_time:
-            build_timestamp = build_time
+            recent_time = max( recent_time, build_time )
             continue
 
         line_log = get_after( line, "Starting >>> " )
         if line_log:
             package_name = line_log
-            start_time = max( last_end_time, build_timestamp )
-            print( "Starting >", package_name, "<", last_end_time, build_timestamp )
-            start_dict[ package_name ] = start_time
-#             entry = ( package_name, "start" )
-#             event_list.append( entry )
+            start_dict[ package_name ] = recent_time
             order_list.append( package_name )
+            ## print( "Starting >", package_name, "<", recent_time )
             continue
 
         line_log = get_after( line, "Finished <<< " )
@@ -214,11 +213,9 @@ def read_build_log( log_path ) -> List[Job]:
 
             start_time = start_dict[ package_name ]
             last_end_time = start_time + total_seconds
-            print( "Finishing >", package_name, "<", start_time, last_end_time )
-            end_dict[ package_name ] = last_end_time
-#             entry = ( package_name, "end" )
-#             ## print( entry )
-#             event_list.append( entry )
+            recent_time = max( recent_time, last_end_time )
+            end_dict[ package_name ] = recent_time
+            ## print( "Finishing >", package_name, "<", start_time, recent_time )
             continue
 
     jobs_list = []
@@ -229,7 +226,7 @@ def read_build_log( log_path ) -> List[Job]:
         start_time = start_dict[ package_name ]
         end_time   = end_dict[ package_name ]
         item = Job( package_name, start_time, end_time )
-        #print( ">", item, "<" )
+        ## print( "adding >", package_name, "<" )
         jobs_list.append( item )
         #print( ">", item, "<" )
 
