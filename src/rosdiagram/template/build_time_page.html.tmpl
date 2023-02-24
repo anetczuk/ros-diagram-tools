@@ -75,6 +75,10 @@ ${DATA_DICT.get('head_css_style', '')}
         <object type="image/svg+xml" data="${DATA_DICT.get('svg_name')}">missing image</object>
     </div>
     
+    <div class="info_content">
+        <b>Build time:</b> ${ DATA_DICT.get('total_time') }
+    </div>
+
 #!
 #! critical_path = DATA_DICT.get('critical_path')
 #!
@@ -102,6 +106,23 @@ ${DATA_DICT.get('head_css_style', '')}
         <span style="font-weight: bold;">Packages duration:</span>
         <table>
 #{ for item in dur_list:
+            <tr>
+                <td>${ item[0] }</td>
+                <td>${ item[1] }</td>
+            </tr>
+#}
+        </table>
+    </div>
+#}
+    
+#!
+#! package_list = DATA_DICT.get('packages_list')
+#!
+#{ if package_list:
+    <div class="info_content">
+        <span style="font-weight: bold;">Packages:</span>
+        <table>
+#{ for item in package_list:
             <tr>
                 <td>${ item[0] }</td>
                 <td>${ item[1] }</td>

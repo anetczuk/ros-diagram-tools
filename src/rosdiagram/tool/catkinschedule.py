@@ -63,6 +63,16 @@ class Schedule():
             ret_list.extend( queue )
         return ret_list
 
+    def end_time(self):
+        total_end_time = 0
+        for queue in self.queues:
+            if not queue:
+                continue
+            last_job: Job = queue[-1]
+            last_end = last_job.end_time
+            total_end_time = max( total_end_time, last_end )
+        return total_end_time
+
     def get_critical_path( self ) -> List[Job]:
         ret_list = []
         infinity = float("inf")
@@ -124,19 +134,27 @@ def generate_pages( schedule: Schedule, out_dir, config_params_dict=None ):
 def generate_graph_page( schedule: Schedule, item_config_dict, output_dir ):
     page_params = item_config_dict.copy()
 
+    build_time = schedule.end_time()
+    total_time = print_time( build_time, False )
+
     critical_path = schedule.get_critical_path()
     critical_path = print_critical_path( schedule, critical_path )
 
-    dur_list = schedule.jobs_list()
-    dur_list = print_durations( dur_list, True )
+    packages_list = schedule.jobs_list()
+    dur_list      = print_durations( packages_list, True )
+
+    packages_list = print_durations( packages_list, False )
+    packages_list.sort()
  
     ## prepare input for template
     page_params.update( {   "body_color":   "#bbbbbb",
                             "svg_name":     "schedule.svg",
 #                             "main_page_link":   main_page_link,
 
+                            "total_time": total_time,
                             "critical_path": critical_path,
                             "duration_list": dur_list,
+                            "packages_list": packages_list
                             } )
 
     template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "build_time_page.html.tmpl" )
@@ -156,26 +174,36 @@ def read_build_log( log_path ) -> List[Job]:
     order_list = []
     start_dict = {}
     end_dict   = {}
-    last_end_time  = 0
+    last_end_time   = 0
+    build_timestamp = 0         ## sometimes catkin not starts next job exactly after one finishes, but waits some time
 
     for line in content.splitlines():
         line = line.strip()
+
+        build_time = get_build_timestamp( line )
+        if build_time:
+            build_timestamp = build_time
+            continue
+
         line_log = get_after( line, "Starting >>> " )
         if line_log:
-            ## print( ">", line, ">" )
             package_name = line_log
-            start_dict[ package_name ] = last_end_time
+            start_time = max( last_end_time, build_timestamp )
+            print( "Starting >", package_name, "<", last_end_time, build_timestamp )
+            start_dict[ package_name ] = start_time
 #             entry = ( package_name, "start" )
 #             event_list.append( entry )
             order_list.append( package_name )
+            continue
+
         line_log = get_after( line, "Finished <<< " )
         if line_log:
-            ## print( ">", line, ">" )
             split_content = re.split( "\[|]", line_log )
             package_name = split_content[0]
             package_name = package_name.strip()
             time_line = split_content[1]
             time_line = time_line.strip()
+
             numbers = re.findall( r"(\d*\.*\d+)", time_line )
             total_seconds = 0.0
             if len(numbers) == 1:
@@ -188,10 +216,12 @@ def read_build_log( log_path ) -> List[Job]:
 
             start_time = start_dict[ package_name ]
             last_end_time = start_time + total_seconds
+            print( "Finishing >", package_name, "<", start_time, last_end_time )
             end_dict[ package_name ] = last_end_time
 #             entry = ( package_name, "end" )
 #             ## print( entry )
 #             event_list.append( entry )
+            continue
 
     jobs_list = []
     for package_name in order_list:
@@ -217,16 +247,33 @@ def get_after( content, start ):
     return None
 
 
+def get_build_timestamp( content ):
+    ## [build 36.6 s]
+    times_list = re.findall( r"\[build (\S+) s\]", content )
+    if len(times_list) != 1:
+        return None
+
+    time_text = times_list[0]
+    numbers = re.findall( r"(\d*\.*\d+)", time_text )
+
+    total_seconds = 0.0
+    if len(numbers) == 1:
+        total_seconds += float( numbers[0] )
+    elif len(numbers) == 2:
+        total_seconds += float( numbers[0] ) * 60
+        total_seconds += float( numbers[1] )
+    else:
+        raise ValueError( f"unhandled case: {content}" )
+
+    return total_seconds
+
+
 ## ===================================================================
 
 
 def draw_shedule( schedule: Schedule, out_path ):
     queues_num = schedule.queuesNum()
-    total_end_time = 0
-    for queue in schedule.queues:
-        last_job: Job = queue[-1]
-        last_end = last_job.end_time
-        total_end_time = max( total_end_time, last_end )
+    total_end_time = schedule.end_time()
     total_end_time = int( total_end_time )
 
     pprint.pprint( schedule )
@@ -285,12 +332,20 @@ def print_durations( jobs_list: List[Job], sort_list=False ):
 
     ret_list = []
     for job in items:
-        dur  = job[1]
-        mins = int( dur / 60 )
-        secs = dur % 60.0
-        secs = round( secs, 2 )
-        ret_list.append( ( job[0], f"{mins:0>3} m {secs:0>4} s" ) )
+        time_text = print_time( job[1] )
+        ret_list.append( ( job[0], time_text ) )
     return ret_list
+
+
+def print_time( time_value, leading_zeros = True ):
+    dur  = time_value
+    mins = int( dur / 60 )
+    secs = dur % 60.0
+    secs = round( secs, 2 )
+    if leading_zeros:
+        return f"{mins:0>3} m {secs:0>4} s"
+    else:
+        return f"{mins} m {secs:0>4} s"
 
 
 def print_critical_path( schedule: Schedule, jobs_list: List[Job], sort_list=False ):
@@ -355,9 +410,9 @@ scale 20 as 100 pixels
             color = ""
             if curr_job in critical_path:
                 color = "#red"
-            curr_start_time = int( curr_job[1] )
-            content += f"{curr_start_time} is \"{curr_job[0]}\" {color}\n"
-            curr_end_time = int( curr_job[2] )
+            curr_start_time = int( curr_job.start_time )
+            content += f"{curr_start_time} is \"{curr_job.name}\" {color}\n"
+            curr_end_time = int( curr_job.end_time )
             content += f"{curr_end_time} is {{hidden}}\n"
             continue
 
@@ -451,6 +506,8 @@ def main():
         logging.getLogger().setLevel( logging.INFO )
 
     jobs_list: List[Job] = read_build_log( args.file )
+    print("jobs list:")
+    pprint.pprint( jobs_list )
     schedule = Schedule( jobs_list )
 
     ##
