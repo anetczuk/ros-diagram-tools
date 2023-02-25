@@ -86,11 +86,20 @@ ${DATA_DICT.get('head_css_style', '')}
     <div class="info_content">
         <span style="font-weight: bold;">Critical path:</span>
         <table>
+            <tr>
+                <th>Name:</th>
+                <th>Duration:</th>
+                <th>Gap:</th>
+                <th>Start time:</th>
+                <th>End time:</th>
+            </tr>
 #{ for item in critical_path:
             <tr>
                 <td>${ item[0] }</td>
                 <td>${ item[1] }</td>
                 <td>${ item[2] }</td>
+                <td>${ item[3] }</td>
+                <td>${ item[4] }</td>
             </tr>
 #}
         </table>
@@ -102,12 +111,20 @@ ${DATA_DICT.get('head_css_style', '')}
 #!
 #{ if dur_list:
     <div class="info_content">
-        <span style="font-weight: bold;">Packages duration:</span>
+        <span style="font-weight: bold;">Packages (duration order):</span>
         <table>
+            <tr>
+                <th>Name:</th>
+                <th>Duration:</th>
+                <th>Start time:</th>
+                <th>End time:</th>
+            </tr>
 #{ for item in dur_list:
             <tr>
                 <td>${ item[0] }</td>
                 <td>${ item[1] }</td>
+                <td>${ item[2] }</td>
+                <td>${ item[3] }</td>
             </tr>
 #}
         </table>
@@ -119,12 +136,20 @@ ${DATA_DICT.get('head_css_style', '')}
 #!
 #{ if package_list:
     <div class="info_content">
-        <span style="font-weight: bold;">Packages:</span>
+        <span style="font-weight: bold;">Packages (name order):</span>
         <table>
+            <tr>
+                <th>Name:</th>
+                <th>Duration:</th>
+                <th>Start time:</th>
+                <th>End time:</th>
+            </tr>
 #{ for item in package_list:
             <tr>
                 <td>${ item[0] }</td>
                 <td>${ item[1] }</td>
+                <td>${ item[2] }</td>
+                <td>${ item[3] }</td>
             </tr>
 #}
         </table>

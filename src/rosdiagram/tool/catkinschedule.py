@@ -320,26 +320,19 @@ def print_durations( jobs_list: List[Job], sort_list=False ):
     items = []
     for job in jobs_list:
         duration = job.duration()
-        items.append( (job.name, duration ) )
+        items.append( (job, duration ) )
 
     if sort_list:
         items.sort( key=lambda item: item[1], reverse=True )
 
     ret_list = []
     for item in items:
-        time_text = print_time( item[1] )
-        ret_list.append( ( item[0], time_text ) )
+        job        = item[0]
+        duration   = print_time( item[1] )
+        start_time = print_time( job.start_time )
+        end_time   = print_time( job.end_time )
+        ret_list.append( ( job.name, duration, start_time, end_time ) )
     return ret_list
-
-
-def print_time( time_value, leading_zeros=True ):
-    dur  = time_value
-    mins = int( dur / 60 )
-    secs = dur % 60.0
-    secs = round( secs, 2 )
-    if not leading_zeros:
-        return f"{mins} m {secs:0>4} s"
-    return f"{mins:0>3} m {secs:0>4} s"
 
 
 def print_critical_path( schedule: Schedule, jobs_list: List[Job], sort_list=False ):
@@ -352,23 +345,28 @@ def print_critical_path( schedule: Schedule, jobs_list: List[Job], sort_list=Fal
             gap_time = job.end_time - prev_job.end_time
         else:
             gap_time = job.end_time
-        items.append( (job.name, duration, gap_time ) )
+        items.append( (job, duration, gap_time ) )
 
     if sort_list:
         items.sort( key=lambda item: item[1], reverse=True )
 
     ret_list = []
     for item in items:
-        duration = format_duration( item[1] )
-        gap      = format_duration( item[2] )
-        ret_list.append( ( item[0], duration, gap ) )
+        job        = item[0]
+        duration   = print_time( item[1] )
+        gap        = print_time( item[2] )
+        start_time = print_time( job.start_time )
+        end_time   = print_time( job.end_time )
+        ret_list.append( ( job.name, duration, gap, start_time, end_time ) )
     return ret_list
 
 
-def format_duration( duration ):
-    mins = int( duration / 60 )
-    secs = duration % 60.0
+def print_time( time_value, leading_zeros=True ):
+    mins = int( time_value / 60 )
+    secs = time_value % 60.0
     secs = round( secs, 2 )
+    if not leading_zeros:
+        return f"{mins} m {secs:0>4} s"
     return f"{mins:0>3} m {secs:0>4} s"
 
 
