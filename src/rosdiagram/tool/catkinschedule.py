@@ -134,12 +134,17 @@ def generate_graph_page( schedule: Schedule, item_config_dict, output_dir ):
     page_params = item_config_dict.copy()
 
     build_time = schedule.endTime()
-    total_time = print_time( build_time, False )
+    total_time = print_time( build_time )
 
     critical_path = schedule.getCriticalPath()
     critical_path = print_critical_path( schedule, critical_path )
 
+    packages_sum_time = 0.0
     packages_list = schedule.jobsList()
+    for job in packages_list:
+        packages_sum_time += job.duration()
+    packages_total_time = print_time( packages_sum_time )
+
     dur_list      = print_durations( packages_list, True )
 
     packages_list = print_durations( packages_list, False )
@@ -151,6 +156,7 @@ def generate_graph_page( schedule: Schedule, item_config_dict, output_dir ):
                             # "main_page_link":   main_page_link,
 
                             "total_time": total_time,
+                            "packages_total_time": packages_total_time,
                             "critical_path": critical_path,
                             "duration_list": dur_list,
                             "packages_list": packages_list

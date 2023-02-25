@@ -76,7 +76,14 @@ ${DATA_DICT.get('head_css_style', '')}
     </div>
     
     <div class="info_content">
-        <b>Build time:</b> ${ DATA_DICT.get('total_time') }
+        <table>
+            <tr>
+                <td><b>Build time:</b></td> <td>${ DATA_DICT.get('total_time') }</td>
+            </tr>
+            <tr>
+                <td><b>Packages time sum:</b></td> <td>${ DATA_DICT.get('packages_total_time') }</td>
+            </tr>
+        </table>
     </div>
 
 #!
