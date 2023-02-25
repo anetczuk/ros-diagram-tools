@@ -198,22 +198,24 @@ def read_build_log( log_path ) -> List[Job]:
             split_content = re.split( r"\[|]", line_log )
             package_name = split_content[0]
             package_name = package_name.strip()
-            time_line = split_content[1]
-            time_line = time_line.strip()
 
-            numbers = re.findall( r"(\d*\.*\d+)", time_line )
-            total_seconds = 0.0
-            if len(numbers) == 1:
-                total_seconds += float( numbers[0] )
-            elif len(numbers) == 2:
-                total_seconds += float( numbers[0] ) * 60
-                total_seconds += float( numbers[1] )
-            else:
-                raise ValueError( f"unhandled case: {time_line}" )
+#             time_line = split_content[1]
+#             time_line = time_line.strip()
+# 
+#             numbers = re.findall( r"(\d*\.*\d+)", time_line )
+#             total_seconds = 0.0
+#             if len(numbers) == 1:
+#                 total_seconds += float( numbers[0] )
+#             elif len(numbers) == 2:
+#                 total_seconds += float( numbers[0] ) * 60
+#                 total_seconds += float( numbers[1] )
+#             else:
+#                 raise ValueError( f"unhandled case: {time_line}" )
+#
+#             start_time = start_dict[ package_name ]
+#             last_end_time = start_time + total_seconds
+#             recent_time = max( recent_time, last_end_time )
 
-            start_time = start_dict[ package_name ]
-            last_end_time = start_time + total_seconds
-            recent_time = max( recent_time, last_end_time )
             end_dict[ package_name ] = recent_time
             ## print( "Finishing >", package_name, "<", start_time, recent_time )
             continue
