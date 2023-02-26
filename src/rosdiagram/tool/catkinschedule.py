@@ -41,10 +41,12 @@ class Job():
 
 class Schedule():
 
-    def __init__(self, jobs_list=None):
+    def __init__(self, jobs_list=None, high_load_duration=0.0, start_gap_duration=0.0):
         self.queues: List[ list ] = []
         if jobs_list is not None:
             self.parseList( jobs_list )
+        self.high_load_duration = high_load_duration
+        self.start_gap_duration = start_gap_duration
 
     def parseList( self, jobs_list: List[Job] ):
         self.queues.clear()
@@ -157,6 +159,9 @@ def generate_graph_page( schedule: Schedule, item_config_dict, output_dir ):
 
                             "total_time": total_time,
                             "packages_total_time": packages_total_time,
+                            "high_load_duration": print_time( schedule.high_load_duration ),
+                            "start_gap_duration": print_time( schedule.start_gap_duration ),
+                            
                             "critical_path": critical_path,
                             "duration_list": dur_list,
                             "packages_list": packages_list
@@ -181,18 +186,26 @@ def read_build_log( log_path ) -> List[Job]:
     end_dict   = {}
 
     ## sometimes catkin not starts next job exactly after one finishes, but waits some time
-    recent_time = 0.0
+    recent_time        = 0.0
+    high_load_duration = 0.0
+    last_finish_time   = 0.0
+    start_gap_duration = 0.0
 
     for line in content.splitlines():
         line = line.strip()
 
         build_time = get_build_timestamp( line )
         if build_time:
+            if "High Load" in line:
+                high_duration = build_time - recent_time
+                high_load_duration += high_duration
             recent_time = max( recent_time, build_time )
             continue
 
         line_log = get_after( line, "Starting >>> " )
         if line_log:
+            gap_duration = recent_time - last_finish_time
+            start_gap_duration += gap_duration
             package_name = line_log
             start_dict[ package_name ] = recent_time
             order_list.append( package_name )
@@ -201,6 +214,7 @@ def read_build_log( log_path ) -> List[Job]:
 
         line_log = get_after( line, "Finished <<< " )
         if line_log:
+            last_finish_time = recent_time
             split_content = re.split( r"\[|]", line_log )
             package_name = split_content[0]
             package_name = package_name.strip()
@@ -238,7 +252,11 @@ def read_build_log( log_path ) -> List[Job]:
         jobs_list.append( item )
         #print( ">", item, "<" )
 
-    return jobs_list
+    print("jobs list:")
+    pprint.pprint( jobs_list )
+
+    schedule = Schedule( jobs_list, high_load_duration, start_gap_duration )
+    return schedule
 
 
 def get_after( content, start ):
@@ -504,10 +522,7 @@ def main():
     else:
         logging.getLogger().setLevel( logging.INFO )
 
-    jobs_list: List[Job] = read_build_log( args.file )
-    print("jobs list:")
-    pprint.pprint( jobs_list )
-    schedule = Schedule( jobs_list )
+    schedule = read_build_log( args.file )
 
     ##
     ## generate HTML data
