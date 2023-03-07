@@ -74,10 +74,12 @@ class Schedule():
         return total_end_time
 
     def getQueuesStats(self):
+        q_size = len( self.queues )
+        if q_size < 1:
+            return []
         pipeline_duration = self.endTime()
         jobs_duration = 0.0
         queue_time_list = []
-        q_size = len( self.queues )
         for q in range(0, q_size):
             queue = self.queues[q]
             name = f"thread {q}"
@@ -90,7 +92,7 @@ class Schedule():
             queue_time_list.append( ( name, queue_time, queue_time / pipeline_duration ) )
             jobs_duration += queue_time
 
-        queue_time_list.append( ( "overall", jobs_duration, jobs_duration / pipeline_duration / 4 ) )
+        queue_time_list.append( ( "OVERALL", jobs_duration, jobs_duration / pipeline_duration / q_size ) )
         return queue_time_list
 
     def getCriticalPath( self ) -> List[Job]:
