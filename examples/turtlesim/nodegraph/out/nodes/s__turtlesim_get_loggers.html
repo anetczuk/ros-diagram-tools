@@ -12,13 +12,14 @@ Project is distributed under the BSD 3-Clause license.
 
         pre {  background-color: rgb(226, 226, 226);
                margin: 0px;
-               margin-top: 24px;
                padding: 16px;
             }
 
         pre code {  margin: 0px;
                     padding: 0px;
                  }
+
+        td { padding: 0 16 0 0; }
 
         .footer { margin-top:48px;
                   width: 100%;
@@ -52,14 +53,20 @@ Project is distributed under the BSD 3-Clause license.
         <table>
             <tr>
                 <td>Name:</td>
-                <td>/turtlesim/get_loggers</td>
+                <td><code>/turtlesim/get_loggers</code></td>
             </tr>
             <tr>
-                <td>Node:</td>
+                <td>Data type:</td>
+                <td><code>roscpp/GetLoggers</code></td>
+            </tr>
+            <tr>
+                <td>Listener:</td>
                 <td><a href="n__turtlesim.html"><code>/turtlesim</code></a></td>
             </tr>
         </table>
-        Message: <code>roscpp/GetLoggers</code><br/>
+    </div>
+    <div class="info_content">
+        <div style="margin-bottom: 12px">Message:</div>
         <pre><code>---
 roscpp/Logger[] loggers
   string name

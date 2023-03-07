@@ -321,14 +321,14 @@ def get_topics_info( nodes_dict, topics_dict, msgs_dump_dir=None ):
         pubs_list = node_list[ "pubs" ]
         for item_id, item_type in pubs_list:
             #topic_type = get_topic_type( topics_dict, item_id )
-            topic_data = topics_dict.get( item_id, {} )
-            topic_type = topic_data.get( "type", None )
+            item_data  = topics_dict.get( item_id, {} )
+            topic_type = item_data.get( "type", None )
             if topic_type:
                 item_type = topic_type
             topic_data = {}
             ret_data[ item_id ] = topic_data
-            topic_data["pubs"] = topic_data.get("pubs", None)
-            topic_data["subs"] = topic_data.get("subs", None)
+            topic_data["pubs"] = item_data.get("pubs", None)
+            topic_data["subs"] = item_data.get("subs", None)
             topic_data["type"] = item_type
 
             msg_content = read_msg( msgs_dump_dir, item_type )
@@ -337,14 +337,14 @@ def get_topics_info( nodes_dict, topics_dict, msgs_dump_dir=None ):
         subs_list = node_list[ "subs" ]
         for item_id, item_type in subs_list:
             #topic_type = get_topic_type( topics_dict, item_id )
-            topic_data = topics_dict.get( item_id, {} )
-            topic_type = topic_data.get( "type", None )
+            item_data  = topics_dict.get( item_id, {} )
+            topic_type = item_data.get( "type", None )
             if topic_type:
                 item_type = topic_type
             topic_data = {}
             ret_data[ item_id ] = topic_data
-            topic_data["pubs"] = topic_data.get("pubs", None)
-            topic_data["subs"] = topic_data.get("subs", None)
+            topic_data["pubs"] = item_data.get("pubs", None)
+            topic_data["subs"] = item_data.get("subs", None)
             topic_data["type"] = item_type
 
             msg_content = ""

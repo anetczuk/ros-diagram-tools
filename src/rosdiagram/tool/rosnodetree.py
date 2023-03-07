@@ -156,8 +156,7 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
 
     filter_ros_topics_dict( topics_dict )
 
-    rostopicdata.fix_names( topics_dict )
-    # topic_labels = rostopicdata.fix_names( topics_dict )
+    topic_labels = rostopicdata.fix_names( topics_dict )
 
     services_dict   = read_services( services_dump_dir )
     if services_dict is None:
@@ -186,22 +185,24 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
     #topics_info = nodes_data.getTopicsInfo()
     topics_info = get_topics_info( nodes_dict, topics_dict, msgs_dump_dir )
     for topic_id, topic_data in topics_info.items():
+        pubs_list  = topic_data.get( "pubs", [] )
+        subs_list  = topic_data.get( "subs", [] )
+        pubs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in pubs_list ]
+        subs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in subs_list ]
+
         sub_dict = topics_subpages_dict[ topic_id ]
         sub_dict[ "item_type" ]   = "topic"
+        sub_dict[ "topic_name" ]  = get_label( topic_labels, topic_id, "<unknown>" )
+        sub_dict[ "topic_pubs" ]  = pubs_names
+        sub_dict[ "topic_subs" ]  = subs_names
         sub_dict[ "msg_type" ]    = topic_data.get( "type", "" )
         sub_dict[ "msg_content" ] = topic_data.get( "content", "" )
 
     services_info = get_services_info( nodes_dict, services_dict, srvs_dump_dir )
     for service_id, service_data in services_info.items():
-        service_name = services_labels.get( service_id, None )
-        if service_name is None:
-            service_name = nodes_labels.get( service_id, None )
-        if service_name is None:
-            service_name = "<unknown>"
-
         sub_dict = services_subpages_dict[ service_id ]
         sub_dict[ "item_type" ]    = "service"
-        sub_dict[ "srv_name" ]     = service_name
+        sub_dict[ "srv_name" ]     = get_label( services_labels, service_id, "<unknown>" )
         sub_dict[ "svr_listener" ] = service_data.get( "listener", "" )
         sub_dict[ "msg_type" ]     = service_data.get( "type", "" )
         sub_dict[ "msg_content" ]  = service_data.get( "content", "" )
@@ -223,6 +224,13 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
     generate_graph_html( out_dir, params_dict )
 
 
+def get_label( label_dict, item_id, default_name="<unknown>" ):
+    item_name = label_dict.get( item_id, None )
+    if item_name:
+        return item_name
+    return default_name
+
+
 def generate_subpages_dict( nodes_dict, items_list, label_dict, neighbour_range, paint_function=None ):
     sub_items = {}
     for item_id in items_list:
@@ -236,6 +244,7 @@ def generate_subpages_dict( nodes_dict, items_list, label_dict, neighbour_range,
         graph_names = list( item_graph.getNodeNamesAll() )
         nodes_list  = sorted( filter_nodes( nodes_dict, graph_names ) )
         item_dict[ "graph" ]    = item_graph
+        item_dict[ "msg_name" ]    = ""
         item_dict[ "msg_type" ]    = ""
         item_dict[ "msg_content" ] = ""
 

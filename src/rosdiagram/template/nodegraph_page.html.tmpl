@@ -29,13 +29,14 @@ Project is distributed under the BSD 3-Clause license.
 
         pre {  background-color: rgb(226, 226, 226);
                margin: 0px;
-               margin-top: 24px;
                padding: 16px;
             }
 
         pre code {  margin: 0px;
                     padding: 0px;
                  }
+
+        td { padding: 0 16 0 0; }
 
         .footer { margin-top:48px;
                   width: 100%;
@@ -112,16 +113,42 @@ ${DATA_DICT.get('bottom_content', '')}
 
 #template ros_topic_info( DATA_DICT )
 #!
+#! topic_name  = DATA_DICT.get('topic_name')
+#! topic_pubs  = DATA_DICT.get('topic_pubs')
+#! topic_subs  = DATA_DICT.get('topic_subs')
 #! msg_type    = DATA_DICT.get('msg_type')
 #! msg_content = DATA_DICT.get('msg_content')
     <div class="info_content">
+        <table>
+#{ if topic_name:
+            <tr>
+                <td>Topic name:</td>
+                <td><code>${topic_name}</code></td>
+            </tr>
+#}
 #{ if msg_type:
-        Message: <code>${msg_type}</code><br/>
+            <tr>
+                <td>Data type:</td>
+                <td><code>${msg_type}</code></td>
+            </tr>
 #}
-#{ if msg_content:
-        <pre><code>${msg_content}</code></pre>
-#}
+            <tr>
+                <td>Publishers:</td>
+                <td><code>${ " ".join(topic_pubs) }</code></td>
+            </tr>
+            <tr>
+                <td>Subscribers:</td>
+                <td><code>${ " ".join(topic_subs) }</code></td>
+            </tr>
+        </table>
     </div>
+
+#{ if msg_content:
+    <div class="info_content">
+        <div style="margin-bottom: 12px">Message:</div>
+        <pre><code>${msg_content}</code></pre>
+    </div>
+#}
 #end template
 
 
@@ -129,28 +156,34 @@ ${DATA_DICT.get('bottom_content', '')}
 #!
 #! srv_name     = DATA_DICT.get('srv_name')
 #! srv_listener = DATA_DICT.get('srv_listener')
+#! msg_type     = DATA_DICT.get('msg_type')
 #{ if srv_name and srv_listener:
     <div class="info_content">
         <table>
             <tr>
                 <td>Name:</td>
-                <td>${srv_name}</td>
+                <td><code>${srv_name}</code></td>
             </tr>
+#{ if msg_type:
             <tr>
-                <td>Node:</td>
+                <td>Data type:</td>
+                <td><code>${msg_type}</code></td>
+            </tr>
+#}
+            <tr>
+                <td>Listener:</td>
                 <td>${ ros_item_link( srv_listener ) }</td>
             </tr>
         </table>
+    </div>
 #!
-#!     msg_type = DATA_DICT.get('msg_type')
-#{     if msg_type:
-        Message: <code>${msg_type}</code><br/>
-#}
 #!     msg_content = DATA_DICT.get('msg_content')
 #{     if msg_content:
+    <div class="info_content">
+        <div style="margin-bottom: 12px">Message:</div>
         <pre><code>${msg_content}</code></pre>
-#}
     </div>
+#}
 #}
 #end template
 
