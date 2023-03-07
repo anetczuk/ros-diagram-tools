@@ -19,6 +19,7 @@ from PIL import Image, ImageDraw
 
 from rosdiagram.io import read_file, write_file
 from rosdiagram import texttemplate
+from rosdiagram.textutils import time_to_string
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -72,18 +73,43 @@ class Schedule():
             total_end_time = max( total_end_time, last_end )
         return total_end_time
 
+    def getQueuesStats(self):
+        pipeline_duration = self.endTime()
+        jobs_duration = 0.0
+        queue_time_list = []
+        q_size = len( self.queues )
+        for q in range(0, q_size):
+            queue = self.queues[q]
+            name = f"thread {q}"
+            if not queue:
+                queue_time_list.append( (name, 0.0, 0.0) )
+                continue
+            queue_time = 0.0
+            for job in queue:
+                queue_time += job.duration()
+            queue_time_list.append( ( name, queue_time, queue_time / pipeline_duration ) )
+            jobs_duration += queue_time
+
+        queue_time_list.append( ( "overall", jobs_duration, jobs_duration / pipeline_duration / 4 ) )
+        return queue_time_list
+
     def getCriticalPath( self ) -> List[Job]:
         ret_list = []
         infinity = float("inf")
         last_job: Job = self.getBefore( infinity )
+        if last_job is None:
+            return ([], 0.0)
+        ret_gap = 0.0
         while True:
-            if last_job is None:
-                break
             ret_list.append( last_job )
             start_time = last_job.start_time
-            last_job = self.getBefore( start_time )
+            prev_job = self.getBefore( start_time )
+            if prev_job is None:
+                break
+            ret_gap += last_job.start_time - prev_job.end_time
+            last_job = prev_job
         ret_list.reverse()
-        return ret_list
+        return (ret_list, ret_gap)
 
     def getBefore( self, end_time, ref_job=None ) -> Job:
         last_job = None
@@ -136,21 +162,23 @@ def generate_graph_page( schedule: Schedule, item_config_dict, output_dir ):
     page_params = item_config_dict.copy()
 
     build_time = schedule.endTime()
-    total_time = print_time( build_time )
+    total_time = time_to_string( build_time )
 
-    critical_path = schedule.getCriticalPath()
+    critical_path, crit_gap = schedule.getCriticalPath()
     critical_path = print_critical_path( schedule, critical_path )
 
     packages_sum_time = 0.0
     packages_list = schedule.jobsList()
     for job in packages_list:
         packages_sum_time += job.duration()
-    packages_total_time = print_time( packages_sum_time )
+    packages_total_time = time_to_string( packages_sum_time )
 
     dur_list      = print_durations( packages_list, True )
 
     packages_list = print_durations( packages_list, False )
     packages_list.sort()
+
+    pipeline_times = schedule.getQueuesStats()
 
     ## prepare input for template
     page_params.update( {   "body_color":   "#bbbbbb",
@@ -159,8 +187,11 @@ def generate_graph_page( schedule: Schedule, item_config_dict, output_dir ):
 
                             "total_time": total_time,
                             "packages_total_time": packages_total_time,
-                            "high_load_duration": print_time( schedule.high_load_duration ),
-                            "start_gap_duration": print_time( schedule.start_gap_duration ),
+                            "high_load_duration": time_to_string( schedule.high_load_duration ),
+                            "start_gap_duration": time_to_string( schedule.start_gap_duration ),
+                            "critical_gap_duration": time_to_string( crit_gap ),
+                            
+                            "pipeline_times": pipeline_times,
                             
                             "critical_path": critical_path,
                             "duration_list": dur_list,
@@ -354,9 +385,9 @@ def print_durations( jobs_list: List[Job], sort_list=False ):
     ret_list = []
     for item in items:
         job        = item[0]
-        duration   = print_time( item[1] )
-        start_time = print_time( job.start_time )
-        end_time   = print_time( job.end_time )
+        duration   = time_to_string( item[1] )
+        start_time = time_to_string( job.start_time )
+        end_time   = time_to_string( job.end_time )
         ret_list.append( ( job.name, duration, start_time, end_time ) )
     return ret_list
 
@@ -379,21 +410,12 @@ def print_critical_path( schedule: Schedule, jobs_list: List[Job], sort_list=Fal
     ret_list = []
     for item in items:
         job        = item[0]
-        duration   = print_time( item[1] )
-        gap        = print_time( item[2] )
-        start_time = print_time( job.start_time )
-        end_time   = print_time( job.end_time )
+        duration   = time_to_string( item[1] )
+        gap        = time_to_string( item[2] )
+        start_time = time_to_string( job.start_time )
+        end_time   = time_to_string( job.end_time )
         ret_list.append( ( job.name, duration, gap, start_time, end_time ) )
     return ret_list
-
-
-def print_time( time_value, leading_zeros=True ):
-    mins = int( time_value / 60 )
-    secs = time_value % 60.0
-    secs = round( secs, 2 )
-    if not leading_zeros:
-        return f"{mins} m {secs:0>4} s"
-    return f"{mins:0>3} m {secs:0>4} s"
 
 
 def generate_plant_graph( schedule: Schedule, out_path ):
@@ -406,7 +428,7 @@ scale 20 as 100 pixels
 
 """
 
-    critical_path = schedule.getCriticalPath()
+    critical_path, _ = schedule.getCriticalPath()
 
     queues_num = len( schedule.queues )
     for q in range(0, queues_num):

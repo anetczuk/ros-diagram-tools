@@ -9,6 +9,7 @@
 
 
 #import rosdiagram.datadict as data_dict
+#import rosdiagram.textutils as textutils
 
 
 #template main( INPUT_DICT )
@@ -76,6 +77,7 @@ ${DATA_DICT.get('head_css_style', '')}
     </div>
     
     <div class="info_content">
+        <span style="font-weight: bold;">Stats:</span>
         <table>
             <tr>
                 <td><b>Build time:</b></td> <td>${ DATA_DICT.get('total_time') }</td>
@@ -89,8 +91,35 @@ ${DATA_DICT.get('head_css_style', '')}
             <tr>
                 <td><b>Start gap duration:</b></td> <td>${ DATA_DICT.get('start_gap_duration') }</td>
             </tr>
+            <tr>
+                <td><b>Critical path gap duration:</b></td> <td>${ DATA_DICT.get('critical_gap_duration') }</td>
+            </tr>
         </table>
     </div>
+
+
+#!
+#! pipeline_times = DATA_DICT.get('pipeline_times')
+#!
+#{ if pipeline_times:
+    <div class="info_content">
+        <span style="font-weight: bold;">Pipeline:</span>
+        <table>
+            <tr>
+                <th>Name:</th>
+                <th>Busy time:</th>
+                <th>Occupacy:</th>
+            </tr>
+#{ for item in pipeline_times:
+            <tr>
+                <td>${ item[0] }</td>
+                <td>${ textutils.time_to_string( item[1] ) }</td>
+                <td>${ round( item[2] * 100, 2 ) } %</td>
+            </tr>
+#}
+        </table>
+    </div>
+#}
 
 #!
 #! critical_path = DATA_DICT.get('critical_path')

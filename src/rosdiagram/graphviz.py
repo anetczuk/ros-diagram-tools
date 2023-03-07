@@ -524,8 +524,12 @@ def set_nodes_style( graph: Graph, names_list, style_dict=None ):
         node_name = node.get_name()
         raw_name  = unquote_name( node_name )
         if raw_name in names_list:
-            for key, val in style_dict.items():
-                node.set( key, val )
+            set_node_style( node, style_dict )
+
+
+def set_node_style( node, style_dict=None ):
+    for key, val in style_dict.items():
+        node.set( key, val )
 
 
 ### =================================================================
