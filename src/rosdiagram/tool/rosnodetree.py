@@ -21,7 +21,8 @@ from rosdiagram.utils import get_create_item
 from rosdiagram.ros.rosnodedata import get_topics, get_services,\
     get_names_from_list, create_topics_dict, fix_names, split_to_groups,\
     get_services_info, filter_nodes, filter_topics,\
-    get_services_from_dict, read_nodes, ROSNodeData, get_topics_info, filter_ros_nodes_dict
+    get_services_from_dict, read_nodes, ROSNodeData, get_topics_info, filter_ros_nodes_dict,\
+    get_topics_dict, get_services_dict
 from rosdiagram.graphviztohtml import generate_graph_html
 from rosdiagram.ros.rostopicdata import read_topics, filter_ros_topics_dict
 from rosdiagram.ros.rosservicedata import read_services
@@ -153,15 +154,16 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
 
     topics_dict = read_topics( topics_dump_dir )
     if topics_dict is None:
-        topics_dict = {}
+        topics_dict = get_topics_dict( nodes_dict, nodes_labels )
 
     filter_ros_topics_dict( topics_dict )
 
     topic_labels = rostopicdata.fix_names( topics_dict )
 
-    services_dict   = read_services( services_dump_dir )
+    services_dict = read_services( services_dump_dir )
     if services_dict is None:
-        services_dict = {}
+        services_dict = get_services_dict( nodes_dict, nodes_labels )
+
     services_labels = rosservicedata.fix_names( services_dict )
 
     nodes_data: ROSNodeData = ROSNodeData( nodes_dict )
@@ -189,14 +191,8 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
         pubs_list  = topic_data.get( "pubs", [] )
         subs_list  = topic_data.get( "subs", [] )
 
-        if pubs_list is None:
-            pubs_names = []
-        else:
-            pubs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in pubs_list ]
-        if subs_list is None:
-            subs_names = []
-        else:
-            subs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in subs_list ]
+        pubs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in pubs_list ]
+        subs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in subs_list ]
 
         sub_dict = topics_subpages_dict[ topic_id ]
         sub_dict[ "item_type" ]   = "topic"

@@ -316,41 +316,69 @@ def get_topics_from_dict( nodes_dict, nodes_list ) -> List[ str ]:
     return ret_list
 
 
+def get_topics_dict( nodes_dict, labels_dict=None ):
+    if labels_dict is None:
+        labels_dict = {}
+    ret_data = {}
+    for node_id, node_list in nodes_dict.items():
+        node_label = labels_dict.get( node_id, node_id )
+        pubs_list = node_list[ "pubs" ]
+        for node_topic_id, node_topic_type in pubs_list:
+            topic_label = labels_dict.get( node_topic_id, node_topic_id )
+            topic_data = ret_data.setdefault( topic_label, {} )
+            topic_pubs = topic_data.setdefault( "pubs", [] )
+            topic_data.setdefault( "subs", [] )                      ## initialize if missing
+            if node_label not in topic_pubs:
+                topic_pubs.append( node_label )
+            topic_data["type"] = node_topic_type
+
+        subs_list = node_list[ "subs" ]
+        for node_topic_id, node_topic_type in subs_list:
+            topic_label = labels_dict.get( node_topic_id, node_topic_id )
+            topic_data = ret_data.setdefault( topic_label, {} )
+            topic_data.setdefault( "pubs", [] )                      ## initialize if missing
+            topic_subs = topic_data.setdefault( "subs", [] )
+            if node_label not in topic_subs:
+                topic_subs.append( node_label )
+            topic_data["type"] = node_topic_type
+
+    return ret_data
+
+
 def get_topics_info( nodes_dict, topics_dict, msgs_dump_dir=None ):
     ret_data = {}
     for _, node_list in nodes_dict.items():
         pubs_list = node_list[ "pubs" ]
-        for item_id, item_type in pubs_list:
-            #topic_type = get_topic_type( topics_dict, item_id )
-            item_data  = topics_dict.get( item_id, {} )
+        for node_topic_id, node_topic_type in pubs_list:
+            #topic_type = get_topic_type( topics_dict, node_topic_id )
+            item_data  = topics_dict.get( node_topic_id, {} )
             topic_type = item_data.get( "type", None )
             if topic_type:
-                item_type = topic_type
-            topic_data = {}
-            ret_data[ item_id ] = topic_data
+                node_topic_type = topic_type
+            topic_data = ret_data.setdefault( node_topic_id, {} )
             topic_data["pubs"] = item_data.get("pubs", None)
             topic_data["subs"] = item_data.get("subs", None)
-            topic_data["type"] = item_type
+            topic_data["type"] = node_topic_type
 
-            msg_content = read_msg( msgs_dump_dir, item_type )
+            msg_content = read_msg( msgs_dump_dir, node_topic_type )
             topic_data["content"] = msg_content
 
         subs_list = node_list[ "subs" ]
-        for item_id, item_type in subs_list:
-            #topic_type = get_topic_type( topics_dict, item_id )
-            item_data  = topics_dict.get( item_id, {} )
+        for node_topic_id, node_topic_type in subs_list:
+            #topic_type = get_topic_type( topics_dict, topic_id )
+            item_data  = topics_dict.get( node_topic_id, {} )
             topic_type = item_data.get( "type", None )
             if topic_type:
-                item_type = topic_type
+                node_topic_type = topic_type
             topic_data = {}
-            ret_data[ item_id ] = topic_data
+            ret_data[ node_topic_id ] = topic_data
             topic_data["pubs"] = item_data.get("pubs", None)
             topic_data["subs"] = item_data.get("subs", None)
-            topic_data["type"] = item_type
+            topic_data["type"] = node_topic_type
 
             msg_content = ""
             if msgs_dump_dir:
-                msg_file    = prepare_filesystem_name( item_type )
+                msg_file    = prepare_filesystem_name( node_topic_type )
                 msg_path    = os.path.join( msgs_dump_dir, msg_file + ".txt" )
                 msg_content = read_file( msg_path )
             topic_data["content"] = msg_content
@@ -369,6 +397,19 @@ def get_services_from_dict( nodes_dict, nodes_list ) -> List[ str ]:
         servs_list = get_services( nodes_dict.get( node_id, {} ) )
         ret_list.extend( servs_list )
     return ret_list
+
+
+def get_services_dict( nodes_dict, labels_dict=None ):
+    if labels_dict is None:
+        labels_dict = {}
+    ret_data = {}
+    for _, node_list in nodes_dict.items():
+        srvs_list = node_list[ "servs" ]
+        for item_id, item_type in srvs_list:
+            service_label = labels_dict.get( item_id, item_id )
+            service_data  = ret_data.setdefault( service_label, {} )
+            service_data['type'] = item_type
+    return ret_data
 
 
 def get_services_info( nodes_dict, services_dict, srvs_dump_dir ):

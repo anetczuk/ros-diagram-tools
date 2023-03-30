@@ -29,6 +29,7 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 def read_topics( topic_dir ):
     """ Returns dict with following structure:
         { "<topic_id>": {                   ## topic id
+                          "type": str,      ## topic type
                           "pubs": [],       ## list of publishers of topic
                           "subs": []        ## list of subscribers of topic
                          }
@@ -43,13 +44,13 @@ def read_topics( topic_dir ):
     for item in topics_list:
         topic_filename  = prepare_filesystem_name( item )
         topic_item_path = os.path.join( topic_dir, topic_filename + ".txt" )
-        content   = read_dependencies( topic_item_path )
+        content   = read_content( topic_item_path )
         deps_dict = parse_content( content )
         topics_dict[ item ] = deps_dict
     return topics_dict
 
 
-def read_dependencies( deps_file=None ):
+def read_content( deps_file=None ):
     content = ""
     if os.path.isfile( deps_file ):
         ## read content from file
@@ -65,6 +66,10 @@ def read_dependencies( deps_file=None ):
 
 
 def parse_content( content ):
+    """ Returns dict: { type: topic_type
+                        pubs: publishers_list
+                        subs: subscribers_list }
+    """
     publishers  = []
     subscribers = []
 
