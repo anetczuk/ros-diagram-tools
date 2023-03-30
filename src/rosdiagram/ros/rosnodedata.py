@@ -11,7 +11,8 @@ import logging
 import re
 from typing import List, Dict
 
-from rosdiagram.io import read_list, prepare_filesystem_name, read_file
+from showgraph.io import read_list, prepare_filesystem_name, read_file
+
 from rosdiagram.utils import get_create_item
 from rosdiagram.ros.rosmsgdata import read_msg
 from rosdiagram.ros.rosservicedata import get_service_type

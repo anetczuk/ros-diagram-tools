@@ -3,3 +3,5 @@ pydotplus
 
 rosbags
 pympler
+
+git+https://github.com/anetczuk/showgraph-py#subdirectory=src

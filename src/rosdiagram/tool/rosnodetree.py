@@ -15,13 +15,14 @@ from typing import Dict, Any
 from rosdiagram.ros import rostopicdata
 from rosdiagram.ros import rosservicedata
 
+from showgraph.graphviz import Graph, set_node_labels, preserve_neighbour_nodes
+
 from rosdiagram.utils import get_create_item
 from rosdiagram.ros.rosnodedata import get_topics, get_services,\
     get_names_from_list, create_topics_dict, fix_names, split_to_groups,\
     get_services_info, filter_nodes, filter_topics,\
     get_services_from_dict, read_nodes, ROSNodeData, get_topics_info, filter_ros_nodes_dict
 from rosdiagram.graphviztohtml import generate_graph_html
-from rosdiagram.graphviz import Graph, set_node_labels, preserve_neighbour_nodes
 from rosdiagram.ros.rostopicdata import read_topics, filter_ros_topics_dict
 from rosdiagram.ros.rosservicedata import read_services
 
@@ -187,8 +188,15 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
     for topic_id, topic_data in topics_info.items():
         pubs_list  = topic_data.get( "pubs", [] )
         subs_list  = topic_data.get( "subs", [] )
-        pubs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in pubs_list ]
-        subs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in subs_list ]
+
+        if pubs_list is None:
+            pubs_names = []
+        else:
+            pubs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in pubs_list ]
+        if subs_list is None:
+            subs_names = []
+        else:
+            subs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in subs_list ]
 
         sub_dict = topics_subpages_dict[ topic_id ]
         sub_dict[ "item_type" ]   = "topic"

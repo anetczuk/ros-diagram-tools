@@ -11,7 +11,7 @@ import logging
 import argparse
 import json
 
-from rosdiagram.io import read_list, prepare_filesystem_name, write_file
+from showgraph.io import read_list, prepare_filesystem_name, write_file
 
 
 _LOGGER = logging.getLogger(__name__)

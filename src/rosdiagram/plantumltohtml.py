@@ -14,7 +14,8 @@ import numpy
 from rosdiagram import texttemplate
 from rosdiagram.seqgraph import NodeData
 
-# from rosdiagram.io import write_file, prepare_filesystem_name, read_list
+# from showgraph.io import write_file, prepare_filesystem_name, read_list
+
 # from rosdiagram.seqgraph import SequenceGraph, SeqItems, MsgData, DiagramData
 
 

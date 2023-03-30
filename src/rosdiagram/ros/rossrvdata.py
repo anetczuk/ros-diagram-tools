@@ -8,7 +8,7 @@
 import os
 import logging
 
-from rosdiagram.io import prepare_filesystem_name, read_file
+from showgraph.io import prepare_filesystem_name, read_file
 
 
 _LOGGER = logging.getLogger(__name__)

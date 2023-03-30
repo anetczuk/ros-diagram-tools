@@ -9,9 +9,10 @@ import os
 import logging
 import argparse
 
-from rosdiagram.graphviz import Graph, preserve_neighbour_nodes, set_nodes_style,\
+from showgraph.io import read_file
+from showgraph.graphviz import Graph, preserve_neighbour_nodes, set_nodes_style,\
     preserve_top_subgraph
-from rosdiagram.io import read_file
+
 from rosdiagram.graphviztohtml import generate_graph_html
 
 

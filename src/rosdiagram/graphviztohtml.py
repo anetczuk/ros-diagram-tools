@@ -8,10 +8,11 @@
 import os
 import logging
 
-from rosdiagram.io import read_file, prepare_filesystem_name
-from rosdiagram.graphviz import Graph, \
+from showgraph.io import read_file, prepare_filesystem_name
+from showgraph.graphviz import Graph, \
     unquote_name, set_nodes_style, unquote_name_list, \
     get_node_label
+
 from rosdiagram import texttemplate
 
 

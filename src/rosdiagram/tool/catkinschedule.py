@@ -17,7 +17,8 @@ from dataclasses import dataclass
 
 from PIL import Image, ImageDraw
 
-from rosdiagram.io import read_file, write_file
+from showgraph.io import read_file, write_file
+
 from rosdiagram import texttemplate
 from rosdiagram.textutils import time_to_string
 

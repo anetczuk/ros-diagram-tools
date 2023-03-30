@@ -13,7 +13,8 @@ import hashlib
 
 from typing import Set, List, Dict
 
-from rosdiagram.io import write_file, read_list
+from showgraph.io import write_file, read_list
+
 from rosdiagram.seqgraph import SequenceGraph, SeqItems, MsgData, DiagramData, NodeData,\
     NotesContainer
 

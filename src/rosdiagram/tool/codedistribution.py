@@ -12,8 +12,8 @@ import math
 import json
 import argparse
 
-from rosdiagram.graphviz import Graph, set_nodes_style
-from rosdiagram.io import read_list
+from showgraph.graphviz import Graph, set_nodes_style
+from showgraph.io import read_list
 
 
 _LOGGER = logging.getLogger(__name__)

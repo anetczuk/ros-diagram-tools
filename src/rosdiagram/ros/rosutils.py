@@ -8,7 +8,7 @@
 import os
 import logging
 
-from rosdiagram.graphviz import Graph
+from showgraph.graphviz import Graph
 
 
 _LOGGER = logging.getLogger(__name__)

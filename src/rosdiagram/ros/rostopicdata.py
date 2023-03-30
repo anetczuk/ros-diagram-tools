@@ -12,7 +12,8 @@ import re
 from typing import List
 import copy
 
-from rosdiagram.io import read_list, prepare_filesystem_name
+from showgraph.io import read_list, prepare_filesystem_name
+
 from rosdiagram.utils import get_create_item
 from rosdiagram.ros.rosutils import is_ros_internal_topic, is_ros_internal_node
 
