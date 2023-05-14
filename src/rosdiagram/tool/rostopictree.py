@@ -133,8 +133,8 @@ def generate_common_graph( left_topics_dict, right_topics_dict, left_label: str 
 ## ===================================================================
 
 
-def main():
-    parser = argparse.ArgumentParser(description='rostopic flow graph')
+def configure_parser( parser ):
+    parser.description = 'rostopic flow graph'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '--dump_dir', action='store', required=False, default="",
@@ -142,8 +142,8 @@ def main():
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
 
-    args = parser.parse_args()
 
+def process_arguments( args ):
     logging.basicConfig()
     if args.logall is True:
         logging.getLogger().setLevel( logging.DEBUG )
@@ -156,3 +156,10 @@ def main():
         graph.writeRAW( args.outraw )
     if len( args.outpng ) > 0:
         graph.writePNG( args.outpng )
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    configure_parser( parser )
+    args = parser.parse_args()
+    process_arguments( args )

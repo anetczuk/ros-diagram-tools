@@ -88,8 +88,8 @@ def generate( cloc_path ):
 ## ===================================================================
 
 
-def main():
-    parser = argparse.ArgumentParser(description='code distribution')
+def configure_parser( parser ):
+    parser.description = 'source code distribution over packages'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '--cloc_path', action='store', required=False, default="",
@@ -101,8 +101,8 @@ def main():
 #     parser.add_argument( '--filter', action='store', required=False, default="",
 #                          help="Filter packages with items in file" )
 
-    args = parser.parse_args()
 
+def process_arguments( args ):
     logging.basicConfig()
     if args.logall is True:
         logging.getLogger().setLevel( logging.DEBUG )
@@ -120,3 +120,10 @@ def main():
         graph.writeRAW( args.outraw )
     if len( args.outpng ) > 0:
         graph.writePNG( args.outpng )
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    configure_parser( parser )
+    args = parser.parse_args()
+    process_arguments( args )

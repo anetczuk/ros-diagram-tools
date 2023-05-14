@@ -665,8 +665,8 @@ class ExcludeItemFilter():
 ## ===================================================================
 
 
-def main( notes_functor=None ):
-    parser = argparse.ArgumentParser(description='rosbag sequence diagram')
+def configure_parser( parser ):
+    parser.description = 'rosbag sequence diagram'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '--bag_path', action='store', required=True, default="",
@@ -681,8 +681,8 @@ def main( notes_functor=None ):
     parser.add_argument( '--write_messages', action='store_true', help="Write message subpages" )
     parser.add_argument( '--exclude_list_path', action='store', help="Exclude list path" )
 
-    args = parser.parse_args()
 
+def process_arguments( args, notes_functor=None ):
     logging.basicConfig()
     if args.logall is True:
         logging.getLogger().setLevel( logging.DEBUG )
@@ -703,3 +703,10 @@ def main( notes_functor=None ):
                "notes_functor": notes_functor
                }
     generate( args.bag_path, args.topic_dump_dir, args.outdir, exclude_list, params )
+
+
+def main( notes_functor=None ):
+    parser = argparse.ArgumentParser()
+    configure_parser( parser )
+    args = parser.parse_args()
+    process_arguments( args, notes_functor )

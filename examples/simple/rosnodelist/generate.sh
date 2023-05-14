@@ -15,7 +15,12 @@ OUT_DIR="$SCRIPT_DIR/out"
 mkdir -p $OUT_DIR
 
 
-$TOOL_DIR/rosdiagramnode.py -la --dump_dir $SCRIPT_DIR/dump --outdir $OUT_DIR --outpng "$OUT_DIR/graph.png" --outraw "$OUT_DIR/graph.gv.txt" --outhtml $@
+$TOOL_DIR/rosdiagramtools.py rosnodetree -la \
+                                         --dump_dir $SCRIPT_DIR/dump \
+                                         --outdir $OUT_DIR \
+                                         --outpng "$OUT_DIR/graph.png" \
+                                         --outraw "$OUT_DIR/graph.gv.txt" \
+                                         --outhtml $@
 
 
 ## dot -Tpng graph.gv.txt -o graph2.png

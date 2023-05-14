@@ -178,8 +178,8 @@ def generate_subpages_dict( deps_dict, items_list, highlight_list=None, top_list
 ## ===================================================================
 
 
-def main():
-    parser = argparse.ArgumentParser(description='catkin packages graph')
+def configure_parser( parser ):
+    parser.description = 'catkin packages graph'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '-f', '--file', action='store', required=False, default="",
@@ -190,8 +190,8 @@ def main():
     parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
     parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 
-    args = parser.parse_args()
 
+def process_arguments( args ):
     logging.basicConfig()
     if args.logall is True:
         logging.getLogger().setLevel( logging.DEBUG )
@@ -217,3 +217,10 @@ def main():
         content   = read_file( args.file )
         data_dict = parse_content( content, build_deps=False )
         generate_pages( data_dict, args.outdir )
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    configure_parser( parser )
+    args = parser.parse_args()
+    process_arguments( args )

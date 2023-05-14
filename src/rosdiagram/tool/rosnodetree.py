@@ -295,8 +295,8 @@ def generate_items_lists( nodes_list, topics_list, services_list ):
 ## ===================================================================
 
 
-def main():
-    parser = argparse.ArgumentParser(description='rosnode flow graph')
+def configure_parser( parser ):
+    parser.description = 'rosnode connection graph'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '--dump_dir', action='store', required=False, default="",
@@ -314,8 +314,8 @@ def main():
     parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
     parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 
-    args = parser.parse_args()
 
+def process_arguments( args ):
     logging.basicConfig()
     if args.logall is True:
         logging.getLogger().setLevel( logging.DEBUG )
@@ -352,3 +352,10 @@ def main():
                         services_dump_dir=args.services_dump_dir,
                         srvs_dump_dir=args.srvs_dump_dir
                         )
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    configure_parser( parser )
+    args = parser.parse_args()
+    process_arguments( args )

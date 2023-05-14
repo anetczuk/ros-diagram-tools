@@ -46,8 +46,8 @@ def read_launch( launch_dir ):
 ## ===================================================================
 
 
-def main():
-    parser = argparse.ArgumentParser(description='classify nodes')
+def configure_parser( parser ):
+    parser.description = 'match nodes to packages'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '--pack_list_file', action='store', required=True, default="",
@@ -56,8 +56,8 @@ def main():
                          help="Dump directory containing 'roslaunch' output data" )
     parser.add_argument( '--out_file', action='store', required=False, default="", help="Output map file" )
 
-    args = parser.parse_args()
 
+def process_arguments( args ):
     logging.basicConfig()
     if args.logall is True:
         logging.getLogger().setLevel( logging.DEBUG )
@@ -94,3 +94,10 @@ def main():
         # content = str( pack_nodes_dict )
         content = json.dumps( pack_nodes_dict, indent=4 )
         write_file( args.out_file, content )
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    configure_parser( parser )
+    args = parser.parse_args()
+    process_arguments( args )

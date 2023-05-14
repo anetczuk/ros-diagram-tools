@@ -9,13 +9,13 @@ Package can produce following diagrams:
 - *ROS* nodes and topics graphs
 - *rosbag* sequence graph
 
-In addition there is `rosverifier.py` script detecting packages overlay in *catkin* workspace.
+In addition there is `rosverifier` tool detecting packages overlay in *catkin* workspace.
 
 
 ## How to use?
 
 1. run *dump* scripts to collect data
-2. run diagram tool
+2. run diagram tool: `./src/rosdiagramtools.py {tool} {args}`
 
 Depending on desired tool, user can run subset of *dump* scripts. 
 
@@ -25,41 +25,31 @@ structure of *turtlesim* tool.
 
 
 
-## `rosdiagramcode.py` - code distribution diagram
+## `rosdiagramtools.py codedistribution` - code distribution diagram
 
 Tool presents distribution of code in source subdirectories.
 
-Execution: `./src/rosdiagramcode.py --help`
+Execution: `./src/rosdiagramtools.py codedistribution --help`
 
 [![code distribution chart](examples/simple/codedistribution/out/graph-small.png "code distribution chart")](examples/simple/codedistribution/out/graph.png)
 
 
 
-## `rosdiagramcatkin.py` - catkin packages tree
+## `rosdiagramtools.py catkintree` - catkin packages tree
 
 Show workspace packages in form of dependency tree.
 
-Execution: `./src/rosdiagramcatkin.py --help`
+Execution: `./src/rosdiagramtools.py catkintree --help`
 
 [![catkin packages tree](examples/simple/catkinlist/out/graph-small.png "catkin packages tree")](examples/simple/catkinlist/out/graph.png)
 
 
 
-## `rosdiagramtopic.py` - rostopic tree
-
-Present dependecy of *ROS* nodes and topics in form of dependency graph.
-
-Execution: `./src/rosdiagramtopic.py --help`
-
-[![ROS nodes and topics graph](examples/simple/rostopiclist/out/graph-small.png "ROS nodes and topics graph")](examples/simple/rostopiclist/out/graph.png)
-
-
-
-## `rosdiagramnode.py` - rosnode tree
+## `rosdiagramtools.py rosnodetree` - rosnode tree
 
 Presents dependecy of *ROS* nodes, topics and services in form of data flow graph.
 
-Execution: `./src/rosdiagramnode.py --help`
+Execution: `./src/rosdiagramtools.py rosnodetree --help`
 
 [![ROS nodes, topics and services graph](examples/simple/rosnodelist/out/full_graph-small.png "ROS nodes, topics and services graph")](examples/simple/rosnodelist/out/full_graph.png)
 
@@ -71,11 +61,21 @@ Following animation shows navigation thorough nodes of graph:
 
 
 
-## `rosdiagrambag.py` - rosbag graph
+## `rosdiagramtools.py rostopictree` - rostopic tree
+
+Present dependecy of *ROS* nodes and topics in form of dependency graph.
+
+Execution: `./src/rosdiagramtools.py rostopictree --help`
+
+[![ROS nodes and topics graph](examples/simple/rostopiclist/out/graph-small.png "ROS nodes and topics graph")](examples/simple/rostopiclist/out/graph.png)
+
+
+
+## `rosdiagramtools.py rosbagflow` - rosbag graph
 
 Presents visualisation of *ROS* bag in form of sequence graph.
 
-Execution: `./src/rosdiagrambag.py --help`
+Execution: `./src/rosdiagramtools.py rosbagflow --help`
 
 [![ROS bag sequence graph](doc/turtlesim_rosbag-small.png "ROS bag sequence graph")](doc/turtlesim_rosbag.png)
 
@@ -89,9 +89,12 @@ The web page output is stored [here](examples/turtlesim/rosbag/out/full_graph.ht
 
 
 
-## `rosverifier.py` - catkin verifier
+## `rosdiagramtools.py rosverify` - catkin verifier
 
 Script detects packages overlay in given workspace and extended workspaces.
+
+Execution: `./src/rosdiagramtools.py rosverify --help`
+
 
 
 ## Dumping information

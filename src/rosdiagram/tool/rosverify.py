@@ -76,13 +76,13 @@ def find_overlays( workspaces_list ):
 ## =======================================================================
 
 
-def main():
-    parser = argparse.ArgumentParser(description='package overlay detector')
+def configure_parser( parser ):
+    parser.description = 'package overlay detector'
     parser.add_argument( '-w', '--workspace', action='store', required=False, default="",
                          help="Workspace directory to analyze" )
 
-    args = parser.parse_args()
 
+def process_arguments( args ):
     logging.basicConfig()
     logging.getLogger().setLevel( logging.INFO )
 
@@ -109,3 +109,10 @@ def main():
 
     _LOGGER.info( "all overlay packages: %s", all_overlays )
     _LOGGER.info( "workspace overlay packages: %s", main_overlays )
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    configure_parser( parser )
+    args = parser.parse_args()
+    process_arguments( args )
