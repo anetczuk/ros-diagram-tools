@@ -69,7 +69,7 @@ Presents schedule graph of workspace build consisting of build time of packages.
 
 Execution: `./src/rosdiagramtools.py catkinschedule --help`
 
-[![turtlesim build times](turtlesim_catkinschedule-small.png "turtlesim build times")](doc/turtlesim_catkinschedule.png)
+[![turtlesim build times](doc/turtlesim_catkinschedule-small.png "turtlesim build times")](doc/turtlesim_catkinschedule.png)
 
 To generate graph execute following steps:
 1. build workspace with command `catkin build > build_log.txt`
@@ -84,6 +84,7 @@ rosdiagramtools.py catkinschedule -la \
 Then graph will be available through file: `output_dir/full_graph.html`.
 
 More real-life example is presented on folowing image:
+
 [![Non-trivial build schedule graph](doc/schedule-advanced-small.png "Non-trivial build schedule graph")](doc/schedule-advanced.png)
 
 
