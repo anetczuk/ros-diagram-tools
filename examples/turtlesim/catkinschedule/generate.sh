@@ -27,3 +27,5 @@ echo "Generating diagrams for files:"
 echo "$files_list"
 
 plantuml $files_list -tsvg -nometadata -v
+
+convert -density 600 "$OUT_DIR/schedule.svg" "$OUT_DIR/build-schedule.png"
