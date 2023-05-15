@@ -146,7 +146,7 @@ class Schedule():
 ## ===============================================================
 
 
-def generate_pages( schedule: Schedule, out_dir, config_params_dict=None ):
+def generate_pages( schedule: Schedule, out_dir, config_params_dict=None, scale_sec_step=20, scale_px_num=100 ):
     if config_params_dict is None:
         config_params_dict = {}
 
@@ -154,7 +154,7 @@ def generate_pages( schedule: Schedule, out_dir, config_params_dict=None ):
     draw_shedule( schedule, draw_path )
 
     graph_path = os.path.join( out_dir, 'schedule.puml' )
-    generate_plant_graph( schedule, graph_path )
+    generate_plant_graph( schedule, graph_path, scale_sec_step, scale_px_num )
     # generate_dot_graph( schedule )
 
     params_dict: Dict[ str, Any ] = {}
@@ -214,6 +214,9 @@ def generate_graph_page( schedule: Schedule, item_config_dict, output_dir ):
 
 def read_build_log( log_path ) -> List[Job]:
     content = read_file( log_path )
+    if content is None:
+        _LOGGER.warning( "unable to read content from file '%s'", log_path )
+        return
 
     order_list = []
     start_dict = {}
@@ -243,7 +246,7 @@ def read_build_log( log_path ) -> List[Job]:
             package_name = line_log
             start_dict[ package_name ] = recent_time
             order_list.append( package_name )
-            ## print( "Starting >", package_name, "<", recent_time )
+            print( "Starting >", package_name, "<", recent_time )
             continue
 
         line_log = get_after( line, "Finished <<< " )
@@ -421,13 +424,13 @@ def print_critical_path( schedule: Schedule, jobs_list: List[Job], sort_list=Fal
     return ret_list
 
 
-def generate_plant_graph( schedule: Schedule, out_path ):
-    content = """\
+def generate_plant_graph( schedule: Schedule, out_path, scale_sec_step=20, scale_px_num=100 ):
+    content = f"""\
 @startuml
 
 'comment
 
-scale 20 as 100 pixels
+scale {scale_sec_step} as {scale_px_num} pixels
 
 """
 
@@ -536,6 +539,8 @@ def configure_parser( parser ):
     # pylint: disable=C0301
     parser.add_argument( '-f', '--file', action='store', required=False, default="",
                          help="Read catkin build log file" )
+    parser.add_argument( '-st', '--scale_sec_step', action='store', required=False, default=20, help="Scale time step" )
+    parser.add_argument( '-sp', '--scale_px_num', action='store', required=False, default=100, help="Scale pixel number" )
     parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
     parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 
@@ -548,13 +553,17 @@ def process_arguments( args ):
         logging.getLogger().setLevel( logging.INFO )
 
     schedule = read_build_log( args.file )
+    if schedule is None:
+        return
 
     ##
     ## generate HTML data
     ##
     if args.outhtml and len( args.outdir ) > 0:
         _LOGGER.info( "generating HTML graph" )
-        generate_pages( schedule, args.outdir )
+        scale_sec_step = args.scale_sec_step
+        scale_px_num   = args.scale_px_num
+        generate_pages( schedule, args.outdir, scale_sec_step=scale_sec_step, scale_px_num=scale_px_num )
 
 
 def main():

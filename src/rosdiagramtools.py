@@ -33,7 +33,7 @@ def main():
     parser = argparse.ArgumentParser(description='ROS diagram tools')
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
 
-    subparsers = parser.add_subparsers( help='subcommands', description="use one of subcommands", dest='subcommand', required=True )
+    subparsers = parser.add_subparsers( help='one of tools', description="use one of tools", dest='tool', required=True )
 
     ## =================================================
 

@@ -1,6 +1,7 @@
 pydotplus
 # pygraphviz
 
+texthon
 rosbags
 pympler
 
