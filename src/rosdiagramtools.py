@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-import os
+import sys, os
 import logging
 import argparse
 
@@ -32,8 +32,9 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 def main():
     parser = argparse.ArgumentParser(description='ROS diagram tools')
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
+    parser.add_argument( '--listtools', action='store_true', help='List tools' )
 
-    subparsers = parser.add_subparsers( help='one of tools', description="use one of tools", dest='tool', required=True )
+    subparsers = parser.add_subparsers( help='one of tools', description="use one of tools", dest='tool', required=False )
 
     ## =================================================
 
@@ -87,15 +88,22 @@ def main():
 
     args = parser.parse_args()
 
+    if args.listtools is True:
+        tools_list = list( subparsers.choices.keys() )
+        print( ", ".join( tools_list ) )
+        return
+
+    if "func" not in args:
+        ## no command given -- print help message
+        parser.print_help()
+        sys.exit( 1 )
+        return
+
     logging.basicConfig()
     if args.logall is True:
         logging.getLogger().setLevel( logging.DEBUG )
     else:
         logging.getLogger().setLevel( logging.INFO )
-
-    if "func" not in args:
-        ## no command given
-        return
 
     args.func( args )
 

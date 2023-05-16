@@ -6,6 +6,7 @@ To produce results package uses *Grpahviz* and *PlanutUML* diagram tools.
 Package can produce following diagrams:
 - source code distribution chart
 - source packages dependency tree
+- `catkin` packages build schedule
 - *ROS* nodes and topics graphs
 - *rosbag* sequence graph
 
@@ -22,6 +23,8 @@ Depending on desired tool, user can run subset of *dump* scripts.
 Examples of provided diagrams can be seen in `/examples/` repo directory.
 First example (`sample`) contains synthetic data. Example `turtlesim` presents 
 structure of *turtlesim* tool.
+
+Whole commands list with description can be found [here](doc/cmd_args.txt) by calling `rosdiagramtools.py --help`.
 
 
 
@@ -40,7 +43,7 @@ Moreover scripts use command `catkin`. The command is provided by package `pytho
 List of implemented tools:
 
 
-### `rosdiagramtools.py codedistribution` - code distribution diagram
+### `rosdiagramtools.py codedistribution`
 
 Tool presents distribution of code in source subdirectories.
 
@@ -49,7 +52,7 @@ Execution: `./src/rosdiagramtools.py codedistribution --help`
 [![code distribution chart](examples/simple/codedistribution/out/graph-small.png "code distribution chart")](examples/simple/codedistribution/out/graph.png)
 
 
-### `rosdiagramtools.py catkintree` - catkin packages tree
+### `rosdiagramtools.py catkintree`
 
 Show workspace packages in form of dependency tree.
 
@@ -58,12 +61,13 @@ Execution: `./src/rosdiagramtools.py catkintree --help`
 [![catkin packages tree](examples/simple/catkinlist/out/graph-small.png "catkin packages tree")](examples/simple/catkinlist/out/graph.png)
 
 
-### `rosdiagramtools.py classifynodes` - match nodes to packages
+### `rosdiagramtools.py classifynodes`
 
-Tool tries to match ROS nodes (given by `rosnode` command) to source packages where nodes are implemented.
+Tool tries to match ROS nodes (given by `rosnode` command) to source packages where nodes are implemented. Result is presented in form 
+of text file.
 
 
-### `rosdiagramtools.py catkinschedule` - catkin build schedule
+### `rosdiagramtools.py catkinschedule`
 
 Presents schedule graph of workspace build consisting of build time of packages.
 
@@ -88,7 +92,7 @@ More real-life example is presented on folowing image:
 [![Non-trivial build schedule graph](doc/schedule-advanced-small.png "Non-trivial build schedule graph")](doc/schedule-advanced.png)
 
 
-### `rosdiagramtools.py rosnodetree` - rosnode tree
+### `rosdiagramtools.py rosnodetree`
 
 Presents dependecy of *ROS* nodes, topics and services in form of data flow graph.
 
@@ -103,7 +107,7 @@ Following animation shows navigation thorough nodes of graph:
 ![HTML graph](doc/html_graph.gif "HTML graph")
 
 
-## `rosdiagramtools.py rostopictree` - rostopic tree
+### `rosdiagramtools.py rostopictree`
 
 Present dependecy of *ROS* nodes and topics in form of dependency graph.
 
@@ -112,7 +116,7 @@ Execution: `./src/rosdiagramtools.py rostopictree --help`
 [![ROS nodes and topics graph](examples/simple/rostopiclist/out/graph-small.png "ROS nodes and topics graph")](examples/simple/rostopiclist/out/graph.png)
 
 
-## `rosdiagramtools.py rosbagflow` - rosbag graph
+### `rosdiagramtools.py rosbagflow`
 
 Presents visualisation of *ROS* bag in form of sequence graph.
 
@@ -129,7 +133,7 @@ Tool generates sequence diagram and interactive web page with following function
 The web page output is stored [here](examples/turtlesim/rosbag/out/full_graph.html).
 
 
-## `rosdiagramtools.py rosverify` - ROS verifier
+### `rosdiagramtools.py rosverify`
 
 Script detects packages overlay in given workspace and extended workspaces.
 
@@ -146,9 +150,10 @@ INFO:rosdiagram.tool.rosverify:workspace overlay packages: []
 
 ## Dumping information
 
-Dumping required data is split into two scripts:
-- `./src/dump_cloc.py` using `cloc` to dump source code info
-- `./src/dump_ros.sh` using *ROS* tools and running `rosmaster` to collect data
+Dumping required data is split into several scripts:
+- `./src/dump_cloc.py` - stores source code info using `cloc` 
+- `./src/dump_ros.sh` - stores *ROS* data using *ROS* tools (requires `rosmaster` to be run)
+- `./src/dump_roslaunch.sh` - extracts nodes list spawned by given launch file
 
 
 
