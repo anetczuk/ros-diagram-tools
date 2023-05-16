@@ -12,11 +12,14 @@ Package can produce following diagrams:
 
 In addition there is `rosverifier` tool detecting packages overlay in *catkin* workspace.
 
+Main motivation for the project was to present variuos aspects of *ROS* workspace in friendly form.
+
+
 
 ## How to use?
 
 1. run *dump* scripts to collect data
-2. run diagram tool: `./src/rosdiagramtools.py {tool} {args}`
+2. run one of diagram tools: `./src/rosdiagramtools.py {tool} {args}`
 
 Depending on desired tool, user can run subset of *dump* scripts. 
 
