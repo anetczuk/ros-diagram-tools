@@ -1,0 +1,3 @@
+INFO:rosdiagram.tool.rosverify:found workspaces: ['/home/vbox/turtlebot3/catkin_ws', '/opt/ros/noetic']
+INFO:rosdiagram.tool.rosverify:all overlay packages: []
+INFO:rosdiagram.tool.rosverify:workspace overlay packages: []

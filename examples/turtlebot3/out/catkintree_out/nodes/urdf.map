@@ -1,0 +1,4 @@
+<map id="urdf" name="urdf">
+<area shape="poly" id="node1" href="turtlebot3_description.html" title="node: turtlebot3_description" alt="" coords="336,39,336,19,239,5,102,5,5,19,5,39,102,53,239,53"/>
+<area shape="poly" id="node2" href="urdf.html" title="node: urdf" alt="" coords="472,39,472,19,446,5,409,5,384,19,384,39,409,53,446,53"/>
+</map>

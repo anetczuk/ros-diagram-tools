@@ -1,0 +1,81 @@
+turtlebot3:
+  run_depend:
+  - turtlebot3_bringup
+  - turtlebot3_description
+  - turtlebot3_example
+  - turtlebot3_navigation
+  - turtlebot3_slam
+  - turtlebot3_teleop
+turtlebot3_bringup:
+  build_depend:
+  - roscpp
+  - std_msgs
+  - diagnostic_msgs
+  - sensor_msgs
+  - turtlebot3_msgs
+  run_depend:
+  - turtlebot3_description
+  - turtlebot3_teleop
+  - joint_state_publisher
+  - robot_state_publisher
+  - rosserial_python
+  - hls_lfcd_lds_driver
+  - roscpp
+  - std_msgs
+  - diagnostic_msgs
+  - sensor_msgs
+  - turtlebot3_msgs
+turtlebot3_description:
+  build_depend:
+  - urdf
+  - xacro
+  run_depend:
+  - urdf
+  - xacro
+turtlebot3_example:
+  build_depend:
+  - message_generation
+  - rospy
+  - actionlib
+  - interactive_markers
+  - std_msgs
+  - sensor_msgs
+  - geometry_msgs
+  - nav_msgs
+  - visualization_msgs
+  - actionlib_msgs
+  - turtlebot3_msgs
+  run_depend:
+  - message_runtime
+  - turtlebot3_bringup
+  - rospy
+  - actionlib
+  - interactive_markers
+  - std_msgs
+  - sensor_msgs
+  - geometry_msgs
+  - nav_msgs
+  - visualization_msgs
+  - actionlib_msgs
+  - turtlebot3_msgs
+turtlebot3_navigation:
+  run_depend:
+  - amcl
+  - map_server
+  - move_base
+  - turtlebot3_bringup
+turtlebot3_slam:
+  build_depend:
+  - roscpp
+  - sensor_msgs
+  run_depend:
+  - turtlebot3_bringup
+  - roscpp
+  - sensor_msgs
+turtlebot3_teleop:
+  build_depend:
+  - rospy
+  - geometry_msgs
+  run_depend:
+  - rospy
+  - geometry_msgs

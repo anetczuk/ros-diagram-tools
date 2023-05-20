@@ -1,0 +1,4 @@
+<map id="map_server" name="map_server">
+<area shape="poly" id="node1" href="turtlebot3_navigation.html" title="node: turtlebot3_navigation" alt="" coords="326,39,326,19,232,5,99,5,5,19,5,39,99,53,232,53"/>
+<area shape="poly" id="node2" href="map_server.html" title="node: map_server" alt="" coords="562,39,562,19,507,5,429,5,374,19,374,39,429,53,507,53"/>
+</map>

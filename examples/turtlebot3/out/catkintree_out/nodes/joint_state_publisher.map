@@ -1,0 +1,4 @@
+<map id="joint_state_publisher" name="joint_state_publisher">
+<area shape="poly" id="node1" href="turtlebot3_bringup.html" title="node: turtlebot3_bringup" alt="" coords="290,39,290,19,207,5,89,5,5,19,5,39,89,53,207,53"/>
+<area shape="poly" id="node2" href="joint_state_publisher.html" title="node: joint_state_publisher" alt="" coords="650,39,650,19,559,5,430,5,338,19,338,39,430,53,559,53"/>
+</map>

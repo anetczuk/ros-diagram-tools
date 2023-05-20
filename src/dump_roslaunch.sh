@@ -9,7 +9,7 @@ set -e
 
 
 if [ "$#" -ne 2 ]; then
-    echo "Illegal number of parameters -- expected two parameters: entry launch file and output directory"
+    echo "Illegal number of parameters -- expected two parameters: {entry launch file} {output directory}"
     exit 1
 fi
 

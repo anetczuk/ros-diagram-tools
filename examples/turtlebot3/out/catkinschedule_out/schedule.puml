@@ -1,0 +1,28 @@
+@startuml
+
+'comment
+
+scale 1 as 80 pixels
+
+concise "thread 0" as queue0
+concise "thread 1" as queue1
+concise "thread 2" as queue2
+
+@queue0
+0 is "catkin_tools_prebuild" #red
+1 is "turtlebot3_description" 
+4 is "turtlebot3_bringup" #red
+10 is "turtlebot3_example" 
+15 is "turtlebot3" #red
+17 is {hidden}
+
+@queue1
+1 is "turtlebot3_teleop" #red
+4 is {hidden}
+10 is "turtlebot3_navigation" 
+12 is {hidden}
+
+@queue2
+10 is "turtlebot3_slam" #red
+15 is {hidden}
+@enduml

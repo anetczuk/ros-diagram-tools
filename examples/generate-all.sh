@@ -9,6 +9,8 @@ SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 
 $SCRIPT_DIR/simple/generate-all.sh
 
+$SCRIPT_DIR/turtlebot3/generate-all.sh
+
 $SCRIPT_DIR/turtlesim/generate-all.sh
 
 

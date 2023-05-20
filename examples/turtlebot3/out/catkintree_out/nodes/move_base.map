@@ -1,0 +1,4 @@
+<map id="move_base" name="move_base">
+<area shape="poly" id="node1" href="turtlebot3_navigation.html" title="node: turtlebot3_navigation" alt="" coords="326,39,326,19,232,5,99,5,5,19,5,39,99,53,232,53"/>
+<area shape="poly" id="node2" href="move_base.html" title="node: move_base" alt="" coords="552,39,552,19,500,5,426,5,374,19,374,39,426,53,500,53"/>
+</map>

@@ -1,0 +1,280 @@
+<html>
+<head>
+<!--
+File was automatically generated using 'ros-diagram-tools' project.
+Project is distributed under the BSD 3-Clause license.
+-->
+    <title>build schedule graph</title>
+    <style>
+        body {  padding: 24;
+                background-color: #bbbbbb;
+             }
+
+        pre {  background-color: rgb(226, 226, 226);
+               margin: 0px;
+               margin-top: 24px;
+               padding: 16px;
+            }
+
+        pre code {  margin: 0px;
+                    padding: 0px;
+                 }
+
+        td { padding: 0 10px; }
+
+        .footer { margin-top:48px;
+                  width: 100%;
+                  margin-right: auto; margin-left: auto;
+                  text-align: center;
+                  font-size: 12px;
+                  color: #444444;
+                }
+
+        .center_content {  width: 100%;
+                           margin-right: auto; margin-left: auto;
+                           text-align: center;
+                           padding-top: 24; padding-bottom: 24;
+                        }
+
+        .info_content { margin-bottom: 36; }
+
+    </style>
+</head>
+
+<body>
+    <div class="top_content">
+        Main graph
+        <br />
+    </div>
+
+    <div class="center_content">
+        <object type="image/svg+xml" data="schedule.svg">missing image</object>
+    </div>
+    
+    <div class="info_content">
+        <span style="font-weight: bold;">Stats:</span>
+        <table>
+            <tr>
+                <td><b>Build time:</b></td> <td>000 m 17.2 s</td>
+            </tr>
+            <tr>
+                <td><b>Packages time sum:</b></td> <td>000 m 26.7 s</td>
+            </tr>
+            <tr>
+                <td><b>High load duration:</b></td> <td>000 m 00.0 s</td>
+            </tr>
+            <tr>
+                <td><b>Start gap duration:</b></td> <td>000 m 00.0 s</td>
+            </tr>
+            <tr>
+                <td><b>Critical path gap duration:</b></td> <td>000 m 00.0 s</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div class="info_content">
+        <span style="font-weight: bold;">Pipeline:</span>
+        <table>
+            <tr>
+                <th>Name:</th>
+                <th>Busy time:</th>
+                <th>Efficiency:</th>
+            </tr>
+            <tr>
+                <td>thread 0</td>
+                <td>000 m 16.5 s</td>
+                <td>95.93 %</td>
+            </tr>
+            <tr>
+                <td>thread 1</td>
+                <td>000 m 04.8 s</td>
+                <td>27.91 %</td>
+            </tr>
+            <tr>
+                <td>thread 2</td>
+                <td>000 m 05.4 s</td>
+                <td>31.4 %</td>
+            </tr>
+            <tr>
+                <td>OVERALL</td>
+                <td>000 m 26.7 s</td>
+                <td>51.74 %</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="info_content">
+        <span style="font-weight: bold;">Critical path:</span>
+        <table>
+            <tr>
+                <th>Name:</th>
+                <th>Duration:</th>
+                <th>Gap:</th>
+                <th>Start time:</th>
+                <th>End time:</th>
+            </tr>
+            <tr>
+                <td>catkin_tools_prebuild</td>
+                <td>000 m 01.7 s</td>
+                <td>000 m 01.7 s</td>
+                <td>000 m 00.0 s</td>
+                <td>000 m 01.7 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3_teleop</td>
+                <td>000 m 02.6 s</td>
+                <td>000 m 00.3 s</td>
+                <td>000 m 01.7 s</td>
+                <td>000 m 04.3 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3_bringup</td>
+                <td>000 m 05.8 s</td>
+                <td>000 m 05.8 s</td>
+                <td>000 m 04.3 s</td>
+                <td>000 m 10.1 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3_slam</td>
+                <td>000 m 05.4 s</td>
+                <td>000 m 00.4 s</td>
+                <td>000 m 10.1 s</td>
+                <td>000 m 15.5 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3</td>
+                <td>000 m 01.7 s</td>
+                <td>000 m 01.7 s</td>
+                <td>000 m 15.5 s</td>
+                <td>000 m 17.2 s</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="info_content">
+        <span style="font-weight: bold;">Packages (duration order):</span>
+        <table>
+            <tr>
+                <th>Name:</th>
+                <th>Duration:</th>
+                <th>Start time:</th>
+                <th>End time:</th>
+            </tr>
+            <tr>
+                <td>turtlebot3_bringup</td>
+                <td>000 m 05.8 s</td>
+                <td>000 m 04.3 s</td>
+                <td>000 m 10.1 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3_slam</td>
+                <td>000 m 05.4 s</td>
+                <td>000 m 10.1 s</td>
+                <td>000 m 15.5 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3_example</td>
+                <td>000 m 05.0 s</td>
+                <td>000 m 10.1 s</td>
+                <td>000 m 15.1 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3_teleop</td>
+                <td>000 m 02.6 s</td>
+                <td>000 m 01.7 s</td>
+                <td>000 m 04.3 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3_description</td>
+                <td>000 m 02.3 s</td>
+                <td>000 m 01.7 s</td>
+                <td>000 m 04.0 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3_navigation</td>
+                <td>000 m 02.2 s</td>
+                <td>000 m 10.1 s</td>
+                <td>000 m 12.3 s</td>
+            </tr>
+            <tr>
+                <td>catkin_tools_prebuild</td>
+                <td>000 m 01.7 s</td>
+                <td>000 m 00.0 s</td>
+                <td>000 m 01.7 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3</td>
+                <td>000 m 01.7 s</td>
+                <td>000 m 15.5 s</td>
+                <td>000 m 17.2 s</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="info_content">
+        <span style="font-weight: bold;">Packages (name order):</span>
+        <table>
+            <tr>
+                <th>Name:</th>
+                <th>Duration:</th>
+                <th>Start time:</th>
+                <th>End time:</th>
+            </tr>
+            <tr>
+                <td>catkin_tools_prebuild</td>
+                <td>000 m 01.7 s</td>
+                <td>000 m 00.0 s</td>
+                <td>000 m 01.7 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3</td>
+                <td>000 m 01.7 s</td>
+                <td>000 m 15.5 s</td>
+                <td>000 m 17.2 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3_bringup</td>
+                <td>000 m 05.8 s</td>
+                <td>000 m 04.3 s</td>
+                <td>000 m 10.1 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3_description</td>
+                <td>000 m 02.3 s</td>
+                <td>000 m 01.7 s</td>
+                <td>000 m 04.0 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3_example</td>
+                <td>000 m 05.0 s</td>
+                <td>000 m 10.1 s</td>
+                <td>000 m 15.1 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3_navigation</td>
+                <td>000 m 02.2 s</td>
+                <td>000 m 10.1 s</td>
+                <td>000 m 12.3 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3_slam</td>
+                <td>000 m 05.4 s</td>
+                <td>000 m 10.1 s</td>
+                <td>000 m 15.5 s</td>
+            </tr>
+            <tr>
+                <td>turtlebot3_teleop</td>
+                <td>000 m 02.6 s</td>
+                <td>000 m 01.7 s</td>
+                <td>000 m 04.3 s</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        File was automatically generated using <i>ros-diagram-tools</i> project.
+        Project is distributed under the BSD 3-Clause license.
+    </div>
+</body>
+</html>
