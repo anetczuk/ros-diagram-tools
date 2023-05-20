@@ -27,7 +27,7 @@ Examples of provided diagrams can be seen in `/examples/` repo directory.
 First example (`sample`) contains synthetic data. Example `turtlesim` presents 
 structure of *turtlesim* tool.
 
-Whole commands list with description can be found [here](doc/cmd_args.txt) by calling `rosdiagramtools.py --help`.
+Whole commands list with description can be found [here](doc/cmd_args.md) by calling `rosdiagramtools.py --help`.
 
 
 

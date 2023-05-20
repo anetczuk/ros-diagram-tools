@@ -1,3 +1,5 @@
+## rosdiagramtools.py --help
+```
 usage: rosdiagramtools.py [-h] [-la] [--listtools]
                           {codedistribution,catkintree,classifynodes,catkinschedule,rosnodetree,rostopictree,rosbagflow,rosverify}
                           ...
@@ -23,11 +25,12 @@ subcommands:
     rosbagflow          generate sequence diagram based on messages from
                         rosbag
     rosverify           verify ROS packages
+```
 
 
 
-
-
+## rosdiagramtools.py codedistribution --help
+```
 usage: rosdiagramtools.py codedistribution [-h] [-la] [--cloc_path CLOC_PATH]
                                            [--highlight HIGHLIGHT]
                                            [--outraw OUTRAW] [--outpng OUTPNG]
@@ -43,11 +46,12 @@ optional arguments:
                         List with items to highlight
   --outraw OUTRAW       Graph RAW output
   --outpng OUTPNG       Graph PNG output
+```
 
 
 
-
-
+## rosdiagramtools.py catkintree --help
+```
 usage: rosdiagramtools.py catkintree [-h] [-la] [-f FILE]
                                      [--node_shape NODE_SHAPE]
                                      [--outraw OUTRAW] [--outpng OUTPNG]
@@ -65,11 +69,12 @@ optional arguments:
   --outpng OUTPNG       Graph PNG output
   --outhtml             Output HTML
   --outdir OUTDIR       Output HTML
+```
 
 
 
-
-
+## rosdiagramtools.py classifynodes --help
+```
 usage: rosdiagramtools.py classifynodes [-h] [-la] --pack_list_file
                                         PACK_LIST_FILE --launch_dump_dir
                                         LAUNCH_DUMP_DIR [--out_file OUT_FILE]
@@ -84,11 +89,12 @@ optional arguments:
   --launch_dump_dir LAUNCH_DUMP_DIR
                         Dump directory containing 'roslaunch' output data
   --out_file OUT_FILE   Output map file
+```
 
 
 
-
-
+## rosdiagramtools.py catkinschedule --help
+```
 usage: rosdiagramtools.py catkinschedule [-h] [-la] [-f FILE]
                                          [-st SCALE_SEC_STEP]
                                          [-sp SCALE_PX_NUM] [--outhtml]
@@ -106,11 +112,12 @@ optional arguments:
                         Scale pixel number
   --outhtml             Output HTML
   --outdir OUTDIR       Output HTML
+```
 
 
 
-
-
+## rosdiagramtools.py rosnodetree --help
+```
 usage: rosdiagramtools.py rosnodetree [-h] [-la] [--dump_dir DUMP_DIR]
                                       [--topics_dump_dir TOPICS_DUMP_DIR]
                                       [--msgs_dump_dir MSGS_DUMP_DIR]
@@ -137,11 +144,12 @@ optional arguments:
   --outpng OUTPNG       Graph PNG output
   --outhtml             Output HTML
   --outdir OUTDIR       Output HTML
+```
 
 
 
-
-
+## rosdiagramtools.py rostopictree --help
+```
 usage: rosdiagramtools.py rostopictree [-h] [-la] [--dump_dir DUMP_DIR]
                                        [--outraw OUTRAW] [--outpng OUTPNG]
 
@@ -153,11 +161,12 @@ optional arguments:
   --dump_dir DUMP_DIR  Dump directory containing 'rostopic list' output data
   --outraw OUTRAW      Graph RAW output
   --outpng OUTPNG      Graph PNG output
+```
 
 
 
-
-
+## rosdiagramtools.py rosbagflow --help
+```
 usage: rosdiagramtools.py rosbagflow [-h] [-la] --bag_path BAG_PATH
                                      [--topic_dump_dir TOPIC_DUMP_DIR]
                                      [--outdir OUTDIR] [--group_calls]
@@ -181,11 +190,12 @@ optional arguments:
   --write_messages      Write message subpages
   --exclude_list_path EXCLUDE_LIST_PATH
                         Exclude list path
+```
 
 
 
-
-
+## rosdiagramtools.py rosverify --help
+```
 usage: rosdiagramtools.py rosverify [-h] [-w WORKSPACE]
 
 package overlay detector
@@ -194,3 +204,4 @@ optional arguments:
   -h, --help            show this help message and exit
   -w WORKSPACE, --workspace WORKSPACE
                         Workspace directory to analyze
+```
