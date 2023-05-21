@@ -1,0 +1,5 @@
+python_qt_binding
+rostopic
+rqt_gui
+rqt_gui_py
+std_msgs

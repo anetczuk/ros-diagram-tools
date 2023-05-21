@@ -1,0 +1,11 @@
+float64[] damping
+float64[] hiStop
+float64[] loStop
+float64[] erp
+float64[] cfm
+float64[] stop_erp
+float64[] stop_cfm
+float64[] fudge_factor
+float64[] fmax
+float64[] vel
+

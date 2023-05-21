@@ -1,0 +1,4 @@
+Node: /gazebo
+URI: rosrpc://ubuntu-ros:49123
+Type: gazebo_msgs/ApplyBodyWrench
+Args: body_name reference_frame reference_point wrench start_time duration

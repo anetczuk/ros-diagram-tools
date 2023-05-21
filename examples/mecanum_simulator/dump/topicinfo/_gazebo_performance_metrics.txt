@@ -1,0 +1,8 @@
+Type: gazebo_msgs/PerformanceMetrics
+
+Publishers: 
+ * /gazebo (http://ubuntu-ros:35425/)
+
+Subscribers: None
+
+

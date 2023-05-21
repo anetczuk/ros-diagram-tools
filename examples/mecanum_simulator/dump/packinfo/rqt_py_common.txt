@@ -1,0 +1,8 @@
+genpy
+python_qt_binding
+qt_gui
+roslib
+rospy
+rostopic
+actionlib
+rosbag

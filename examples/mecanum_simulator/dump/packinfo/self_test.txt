@@ -1,0 +1,3 @@
+diagnostic_msgs
+diagnostic_updater
+roscpp

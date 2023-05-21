@@ -1,0 +1,8 @@
+Type: gazebo_msgs/ModelState
+
+Publishers: None
+
+Subscribers: 
+ * /gazebo (http://ubuntu-ros:35425/)
+
+

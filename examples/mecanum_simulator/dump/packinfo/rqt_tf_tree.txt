@@ -1,0 +1,8 @@
+python_qt_binding
+qt_dotgraph
+rospy
+rqt_graph
+rqt_gui
+rqt_gui_py
+tf2_msgs
+tf2_ros

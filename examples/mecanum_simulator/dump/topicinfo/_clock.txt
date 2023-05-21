@@ -1,0 +1,12 @@
+Type: rosgraph_msgs/Clock
+
+Publishers: 
+ * /gazebo (http://ubuntu-ros:35425/)
+
+Subscribers: 
+ * /rosout (http://ubuntu-ros:33071/)
+ * /robot_state_publisher (http://ubuntu-ros:34989/)
+ * /gazebo (http://ubuntu-ros:35425/)
+ * /gazebo_gui (http://ubuntu-ros:44583/)
+
+

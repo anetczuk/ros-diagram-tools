@@ -1,0 +1,25 @@
+--------------------------------------------------------------------------------
+Node [/gazebo_gui]
+Publications: 
+ * /rosout [rosgraph_msgs/Log]
+
+Subscriptions: 
+ * /clock [rosgraph_msgs/Clock]
+
+Services: 
+ * /gazebo_gui/get_loggers
+ * /gazebo_gui/set_logger_level
+
+
+contacting node http://ubuntu-ros:44583/ ...
+Pid: 52040
+Connections:
+ * topic: /rosout
+    * to: /rosout
+    * direction: outbound (53595 - 127.0.0.1:57486) [43]
+    * transport: TCPROS
+ * topic: /clock
+    * to: /gazebo (http://ubuntu-ros:35425/)
+    * direction: inbound (38974 - ubuntu-ros:49123) [71]
+    * transport: TCPROS
+

@@ -1,0 +1,3 @@
+joint_state_publisher
+python_qt_binding
+rospy

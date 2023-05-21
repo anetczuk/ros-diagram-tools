@@ -1,0 +1,13 @@
+string light_name
+---
+std_msgs/ColorRGBA diffuse
+  float32 r
+  float32 g
+  float32 b
+  float32 a
+float64 attenuation_constant
+float64 attenuation_linear
+float64 attenuation_quadratic
+bool success
+string status_message
+

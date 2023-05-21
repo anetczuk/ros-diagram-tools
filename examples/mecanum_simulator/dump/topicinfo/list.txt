@@ -1,0 +1,15 @@
+/clock
+/cmd_vel
+/gazebo/link_states
+/gazebo/model_states
+/gazebo/parameter_descriptions
+/gazebo/parameter_updates
+/gazebo/performance_metrics
+/gazebo/set_link_state
+/gazebo/set_model_state
+/joint_states
+/odom
+/rosout
+/rosout_agg
+/tf
+/tf_static

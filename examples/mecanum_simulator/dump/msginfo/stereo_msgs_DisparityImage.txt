@@ -1,0 +1,27 @@
+std_msgs/Header header
+  uint32 seq
+  time stamp
+  string frame_id
+sensor_msgs/Image image
+  std_msgs/Header header
+    uint32 seq
+    time stamp
+    string frame_id
+  uint32 height
+  uint32 width
+  string encoding
+  uint8 is_bigendian
+  uint32 step
+  uint8[] data
+float32 f
+float32 T
+sensor_msgs/RegionOfInterest valid_window
+  uint32 x_offset
+  uint32 y_offset
+  uint32 height
+  uint32 width
+  bool do_rectify
+float32 min_disparity
+float32 max_disparity
+float32 delta_d
+

@@ -1,0 +1,28 @@
+nexus_4wd_mecanum_description:
+  build_depend:
+  - robot_state_publisher
+  - urdf
+  run_depend:
+  - robot_state_publisher
+  - urdf
+  - kdl_parser
+nexus_4wd_mecanum_gazebo:
+  build_depend:
+  - geometry_msgs
+  - gazebo-dev
+  - nav_msgs
+  - roscpp
+  - std_msgs
+  - std_srvs
+  - tf
+  - message_generation
+  run_depend:
+  - geometry_msgs
+  - gazebo
+  - gazebo_ros
+  - nav_msgs
+  - roscpp
+  - std_msgs
+  - std_srvs
+  - tf
+  - message_runtime

@@ -1,0 +1,5 @@
+<map id="t_/joint_states" name="t_/joint_states">
+<area shape="poly" id="node1" href="t__joint_states.html" title="node: /joint_states" alt="" coords="186,31,181,23,168,17,148,11,123,8,95,7,68,8,42,11,23,17,10,23,5,31,10,38,23,45,42,50,68,53,95,55,123,53,148,50,168,45,181,38"/>
+<area shape="rect" id="node2" href="n__robot_state_publisher.html" title="node: /robot_state_publisher
+2 services" alt="" coords="234,5,468,56"/>
+</map>

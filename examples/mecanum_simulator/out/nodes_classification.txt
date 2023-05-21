@@ -1,0 +1,24 @@
+{
+    "gazebo_ros": {
+        "path": "/opt/ros/noetic/share/gazebo_ros",
+        "nodes": [
+            "/gazebo",
+            "/gazebo_gui"
+        ]
+    },
+    "nexus_4wd_mecanum_description": {
+        "path": "/home/bob/stuff/new/mecanum/catkin_ws/src/nexus_4wd_mecanum_description",
+        "nodes": [
+            "/robot_state_publisher"
+        ]
+    },
+    "nexus_4wd_mecanum_gazebo": {
+        "path": "/home/bob/stuff/new/mecanum/catkin_ws/src/nexus_4wd_mecanum_gazebo",
+        "nodes": [
+            "/gazebo",
+            "/gazebo_gui",
+            "/robot_state_publisher",
+            "/urdf_spawner"
+        ]
+    }
+}

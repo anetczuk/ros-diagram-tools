@@ -1,0 +1,11 @@
+std_msgs/Header header
+  uint32 seq
+  time stamp
+  string frame_id
+string path
+string[] children
+string[] internal_outcomes
+string[] outcomes_from
+string[] outcomes_to
+string[] container_outcomes
+

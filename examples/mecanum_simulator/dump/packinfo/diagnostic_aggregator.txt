@@ -1,0 +1,7 @@
+diagnostic_msgs
+pluginlib
+roscpp
+rospy
+xmlrpcpp
+bondcpp
+bondpy

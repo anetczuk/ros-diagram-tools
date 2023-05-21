@@ -1,0 +1,7 @@
+rosclean
+rosgraph_msgs
+roslib
+rosmaster
+rosout
+rosparam
+rosunit

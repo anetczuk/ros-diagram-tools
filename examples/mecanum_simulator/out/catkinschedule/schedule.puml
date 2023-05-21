@@ -1,0 +1,18 @@
+@startuml
+
+'comment
+
+scale 1 as 80 pixels
+
+concise "thread 0" as queue0
+concise "thread 1" as queue1
+
+@queue0
+0 is "catkin_tools_prebuild" #red
+4 is "nexus_4wd_mecanum_description" 
+7 is {hidden}
+
+@queue1
+4 is "nexus_4wd_mecanum_gazebo" #red
+33 is {hidden}
+@enduml

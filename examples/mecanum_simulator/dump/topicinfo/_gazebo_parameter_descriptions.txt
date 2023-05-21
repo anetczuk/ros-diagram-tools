@@ -1,0 +1,8 @@
+Type: dynamic_reconfigure/ConfigDescription
+
+Publishers: 
+ * /gazebo (http://ubuntu-ros:35425/)
+
+Subscribers: None
+
+

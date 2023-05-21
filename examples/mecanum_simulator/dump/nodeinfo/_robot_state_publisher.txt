@@ -1,0 +1,28 @@
+--------------------------------------------------------------------------------
+Node [/robot_state_publisher]
+Publications: 
+ * /rosout [rosgraph_msgs/Log]
+ * /tf [tf2_msgs/TFMessage]
+ * /tf_static [tf2_msgs/TFMessage]
+
+Subscriptions: 
+ * /clock [rosgraph_msgs/Clock]
+ * /joint_states [unknown type]
+
+Services: 
+ * /robot_state_publisher/get_loggers
+ * /robot_state_publisher/set_logger_level
+
+
+contacting node http://ubuntu-ros:34989/ ...
+Pid: 51974
+Connections:
+ * topic: /rosout
+    * to: /rosout
+    * direction: outbound (48007 - 127.0.0.1:59286) [11]
+    * transport: TCPROS
+ * topic: /clock
+    * to: /gazebo (http://ubuntu-ros:35425/)
+    * direction: inbound (38966 - ubuntu-ros:49123) [13]
+    * transport: TCPROS
+

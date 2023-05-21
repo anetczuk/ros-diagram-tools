@@ -1,0 +1,8 @@
+Type: nav_msgs/Odometry
+
+Publishers: 
+ * /gazebo (http://ubuntu-ros:35425/)
+
+Subscribers: None
+
+

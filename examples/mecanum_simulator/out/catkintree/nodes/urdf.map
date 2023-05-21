@@ -1,0 +1,4 @@
+<map id="urdf" name="urdf">
+<area shape="poly" id="node1" href="nexus_4wd_mecanum_description.html" title="node: nexus_4wd_mecanum_description" alt="" coords="489,39,489,19,348,5,147,5,5,19,5,39,147,53,348,53"/>
+<area shape="poly" id="node2" href="urdf.html" title="node: urdf" alt="" coords="626,39,626,19,600,5,563,5,537,19,537,39,563,53,600,53"/>
+</map>

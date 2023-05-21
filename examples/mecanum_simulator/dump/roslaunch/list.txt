@@ -1,0 +1,3 @@
+/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch
+/home/bob/stuff/new/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/launch/nexus_4wd_mecanum_description.launch
+/home/bob/stuff/new/mecanum/catkin_ws/src/nexus_4wd_mecanum_gazebo/launch/nexus_4wd_mecanum_world.launch

@@ -1,0 +1,6 @@
+diagnostic_msgs
+python_qt_binding
+qt_gui
+rospy
+rqt_gui
+rqt_gui_py

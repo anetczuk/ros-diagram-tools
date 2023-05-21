@@ -1,0 +1,4 @@
+Node: /gazebo
+URI: rosrpc://ubuntu-ros:49123
+Type: gazebo_msgs/SetLightProperties
+Args: light_name cast_shadows diffuse specular attenuation_constant attenuation_linear attenuation_quadratic direction pose

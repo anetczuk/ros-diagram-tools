@@ -1,0 +1,4 @@
+Node: /gazebo
+URI: rosrpc://ubuntu-ros:49123
+Type: dynamic_reconfigure/Reconfigure
+Args: config

@@ -1,0 +1,3 @@
+rosconsole_bridge
+roscpp
+pluginlib

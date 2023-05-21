@@ -1,0 +1,8 @@
+Type: rosgraph_msgs/Log
+
+Publishers: 
+ * /rosout (http://ubuntu-ros:33071/)
+
+Subscribers: None
+
+

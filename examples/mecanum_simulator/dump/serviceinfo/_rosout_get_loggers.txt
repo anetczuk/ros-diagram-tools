@@ -1,0 +1,4 @@
+Node: /rosout
+URI: rosrpc://ubuntu-ros:44551
+Type: roscpp/GetLoggers
+Args: 

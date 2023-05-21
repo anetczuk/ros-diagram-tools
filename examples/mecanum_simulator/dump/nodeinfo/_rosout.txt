@@ -1,0 +1,34 @@
+--------------------------------------------------------------------------------
+Node [/rosout]
+Publications: 
+ * /rosout_agg [rosgraph_msgs/Log]
+
+Subscriptions: 
+ * /clock [rosgraph_msgs/Clock]
+ * /rosout [rosgraph_msgs/Log]
+
+Services: 
+ * /rosout/get_loggers
+ * /rosout/set_logger_level
+
+
+contacting node http://ubuntu-ros:33071/ ...
+Pid: 51957
+Connections:
+ * topic: /clock
+    * to: /gazebo (http://ubuntu-ros:35425/)
+    * direction: inbound (38960 - ubuntu-ros:49123) [19]
+    * transport: TCPROS
+ * topic: /rosout
+    * to: /robot_state_publisher (http://ubuntu-ros:34989/)
+    * direction: inbound (59286 - ubuntu-ros:48007) [13]
+    * transport: TCPROS
+ * topic: /rosout
+    * to: /gazebo (http://ubuntu-ros:35425/)
+    * direction: inbound (38894 - ubuntu-ros:49123) [16]
+    * transport: TCPROS
+ * topic: /rosout
+    * to: /gazebo_gui (http://ubuntu-ros:44583/)
+    * direction: inbound (57486 - ubuntu-ros:53595) [18]
+    * transport: TCPROS
+

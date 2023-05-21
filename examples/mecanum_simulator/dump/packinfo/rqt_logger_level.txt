@@ -1,0 +1,6 @@
+python_qt_binding
+rosnode
+rosservice
+rospy
+rqt_gui
+rqt_gui_py

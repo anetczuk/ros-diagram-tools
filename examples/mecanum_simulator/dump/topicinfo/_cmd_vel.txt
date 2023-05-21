@@ -1,0 +1,8 @@
+Type: geometry_msgs/Twist
+
+Publishers: None
+
+Subscribers: 
+ * /gazebo (http://ubuntu-ros:35425/)
+
+
