@@ -38,4 +38,4 @@ $TOOL_PATH/rosdiagramtools.py catkinschedule -f "$BUILD_LOG_FILE" -st 1 -sp 80 -
 
 ## converting images
 $SCRIPT_DIR/../convert_plantuml.sh "$OUT_DIR"
-convert -density 600 "$OUT_DIR/schedule.svg" "$OUT_DIR/build-schedule.png"
+convert "$OUT_DIR/schedule.svg" -density 600 "$OUT_DIR/build-schedule.png"

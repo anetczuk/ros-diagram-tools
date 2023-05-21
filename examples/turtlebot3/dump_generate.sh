@@ -11,6 +11,6 @@ $SCRIPT_DIR/create_ws.sh "turtlebot3"
 cd "turtlebot3"
 
 $SCRIPT_DIR/codedistribution.sh
-$SCRIPT_DIR/catkinschedule.sh
 $SCRIPT_DIR/catkintree.sh
+$SCRIPT_DIR/catkinschedule.sh
 $SCRIPT_DIR/rosverify.sh
