@@ -134,7 +134,7 @@ def generate_common_graph( left_topics_dict, right_topics_dict, left_label: str 
 
 
 def configure_parser( parser ):
-    parser.description = 'rostopic flow graph'
+    parser.description = 'rostopic flow graph (tool is obsolete, use rosnodetree)'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '--dump_dir', action='store', required=False, default="",

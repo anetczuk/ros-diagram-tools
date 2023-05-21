@@ -147,7 +147,7 @@ def generate_compact_graph( nodes_dict, show_services=True, labels_dict=None ) -
 
 def generate_pages( nodes_dict, out_dir, nodes_labels=None,
                     topics_dump_dir=None, msgs_dump_dir=None, services_dump_dir=None, srvs_dump_dir=None,
-                    paint_function=None
+                    paint_function=None, main_full_graph=False
                     ):
     if nodes_labels is None:
         nodes_labels = fix_names( nodes_dict )
@@ -171,7 +171,11 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
 
     all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
 
-    main_graph: Graph = generate_compact_graph( nodes_dict, show_services=True, labels_dict=nodes_labels )
+    main_graph: Graph = None
+    if main_full_graph:
+        main_graph = generate_full_graph( nodes_dict, labels_dict=nodes_labels )
+    else:
+        main_graph = generate_compact_graph( nodes_dict, show_services=True, labels_dict=nodes_labels )
     if paint_function:
         paint_function( main_graph )
 
@@ -191,8 +195,12 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
         pubs_list  = topic_data.get( "pubs", [] )
         subs_list  = topic_data.get( "subs", [] )
 
-        pubs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in pubs_list ]
-        subs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in subs_list ]
+        pubs_names = []
+        if pubs_list:
+            pubs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in pubs_list ]
+        subs_names = []
+        if subs_list:
+            subs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in subs_list ]
 
         sub_dict = topics_subpages_dict[ topic_id ]
         sub_dict[ "item_type" ]   = "topic"
@@ -309,6 +317,8 @@ def configure_parser( parser ):
                          help="Dump directory containing 'rosservice' output data" )
     parser.add_argument( '--srvs_dump_dir', action='store', required=False, default="",
                          help="Dump directory containing 'rossrv' output data" )
+    parser.add_argument( '-mfg', '--mainfullgraph', action='store_true', help="Generate main full graph instead of compact one" )
+    parser.add_argument( '-iri', '--includerosinternals', action='store_true', help="Include ROS internal items like /rosout and /record_*" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
     parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
@@ -327,7 +337,8 @@ def process_arguments( args ):
         _LOGGER.warning( "no data found in %s", args.dump_dir )
         return
 
-    filter_ros_nodes_dict( nodes_dict )
+    if not args.includerosinternals:
+        filter_ros_nodes_dict( nodes_dict )
 
     label_dict = fix_names( nodes_dict )
     # info_dict  = get_node_info_dict( nodes_dict, label_dict, args.msgs_dump_dir, args.srvs_dump_dir )
@@ -350,7 +361,8 @@ def process_arguments( args ):
                         topics_dump_dir=args.topics_dump_dir,
                         msgs_dump_dir=args.msgs_dump_dir,
                         services_dump_dir=args.services_dump_dir,
-                        srvs_dump_dir=args.srvs_dump_dir
+                        srvs_dump_dir=args.srvs_dump_dir,
+                        main_full_graph=args.mainfullgraph
                         )
 
 

@@ -150,8 +150,8 @@ def generate_pages( schedule: Schedule, out_dir, config_params_dict=None, scale_
     if config_params_dict is None:
         config_params_dict = {}
 
-    draw_path = os.path.join( out_dir, 'schedule.png' )
-    draw_shedule( schedule, draw_path )
+    # draw_path = os.path.join( out_dir, 'schedule.png' )
+    # draw_shedule( schedule, draw_path )
 
     graph_path = os.path.join( out_dir, 'schedule.puml' )
     generate_plant_graph( schedule, graph_path, scale_sec_step, scale_px_num )

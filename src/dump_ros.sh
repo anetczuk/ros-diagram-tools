@@ -9,7 +9,7 @@ set -e
 
 
 if [ "$#" -ne 1 ]; then
-    echo "Illegal number of parameters -- expected one parameter (output directory)"
+    echo "Illegal number of parameters -- expected one parameter: {output directory}"
     exit 1
 fi
 
@@ -40,5 +40,6 @@ $SCRIPT_DIR/dump_rossrv.sh "$INFO_DIR/srvinfo"
 echo "executing: $SCRIPT_DIR/dump_rosmsg.sh $INFO_DIR/msginfo"
 $SCRIPT_DIR/dump_rosmsg.sh "$INFO_DIR/msginfo"
 
+## $SCRIPT_DIR/dump_roslaunch.sh requires to pass launch file
 
 echo -e "\nDone."

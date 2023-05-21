@@ -184,7 +184,7 @@ def configure_parser( parser ):
     # pylint: disable=C0301
     parser.add_argument( '-f', '--file', action='store', required=False, default="",
                          help="Read 'catkin list' output from file" )
-    parser.add_argument( '--node_shape', action='store', required=False, default=None, help="Graph RAW output" )
+    parser.add_argument( '--node_shape', action='store', required=False, default=None, help="Shape of node: 'box', 'octagon' or other handled by GraphViz dot" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
     parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
