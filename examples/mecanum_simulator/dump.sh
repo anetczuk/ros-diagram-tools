@@ -48,7 +48,9 @@ set -u
 
 $TOOL_PATH/dump_cloc.py --cloc_dir "$CATKIN_DIR/src" --out_path "$DUMP_DIR/source_cloc.txt"
 
+cd $CATKIN_DIR
 $TOOL_PATH/dump_catkin.sh $DUMP_CATKIN_DIR
+cd $CURR_DIR
 
 $SCRIPT_DIR/rosverify.sh
 
