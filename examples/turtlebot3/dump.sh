@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -eu
+set -m
 
 ## works both under bash and sh
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
@@ -10,12 +11,13 @@ TOOL_PATH="$SCRIPT_DIR/../../src/"
 
 CATKIN_DIR="$(pwd)/catkin_ws"
 DUMP_DIR="$(pwd)/dump"
-OUT_DIR="$(pwd)/out/catkinschedule_out"
+DUMP_CATKIN_DIR="$(pwd)/dump/catkin"
 BUILD_LOG_FILE="$DUMP_DIR/build.log.txt"
 
 
+mkdir -p $CATKIN_DIR
 mkdir -p $DUMP_DIR
-mkdir -p $OUT_DIR
+mkdir -p $DUMP_CATKIN_DIR
 
 
 set +u
@@ -23,7 +25,10 @@ source /opt/ros/noetic/setup.bash
 set -u
 
 
+CURR_DIR="$(pwd)"
 cd $CATKIN_DIR
+
+$SCRIPT_DIR/create_ws.sh
 
 echo "clearing catkin workspace"
 catkin clean -y
@@ -31,11 +36,16 @@ catkin clean -y
 echo "building catkin workspace"
 catkin build > "$BUILD_LOG_FILE"
 
-
-echo "generating data"
-$TOOL_PATH/rosdiagramtools.py catkinschedule -f "$BUILD_LOG_FILE" -st 1 -sp 80 --outhtml --outdir "$OUT_DIR"
+cd $CURR_DIR
 
 
-## converting images
-$SCRIPT_DIR/../convert_plantuml.sh "$OUT_DIR"
-convert "$OUT_DIR/schedule.svg" -density 600 "$OUT_DIR/build-schedule.png"
+set +u
+source $CATKIN_DIR/devel/setup.bash
+set -u
+
+
+$TOOL_PATH/dump_cloc.py --cloc_dir "$CATKIN_DIR/src" --out_path "$DUMP_DIR/source_cloc.txt"
+
+$TOOL_PATH/dump_catkin.sh $DUMP_CATKIN_DIR
+
+$SCRIPT_DIR/rosverify.sh

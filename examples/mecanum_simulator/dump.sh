@@ -16,17 +16,21 @@ DUMP_ROSLAUNCH_DIR="$(pwd)/dump/roslaunch"
 BUILD_LOG_FILE="$DUMP_DIR/build.log.txt"
 
 
+mkdir -p $CATKIN_DIR
 mkdir -p $DUMP_DIR
 mkdir -p $DUMP_CATKIN_DIR
 mkdir -p $DUMP_ROSLAUNCH_DIR
 
 
 set +u
-source $CATKIN_DIR/devel/setup.bash
+source /opt/ros/noetic/setup.bash
 set -u
 
 
+CURR_DIR="$(pwd)"
 cd $CATKIN_DIR
+
+$SCRIPT_DIR/create_ws.sh
 
 echo "clearing catkin workspace"
 catkin clean -y
@@ -34,10 +38,19 @@ catkin clean -y
 echo "building catkin workspace"
 catkin build > "$BUILD_LOG_FILE"
 
+cd $CURR_DIR
+
+
+set +u
+source $CATKIN_DIR/devel/setup.bash
+set -u
+
 
 $TOOL_PATH/dump_cloc.py --cloc_dir "$CATKIN_DIR/src" --out_path "$DUMP_DIR/source_cloc.txt"
 
 $TOOL_PATH/dump_catkin.sh $DUMP_CATKIN_DIR
+
+$SCRIPT_DIR/rosverify.sh
 
 $TOOL_PATH/dump_roslaunch.sh "$CATKIN_DIR/src/nexus_4wd_mecanum_gazebo/launch/nexus_4wd_mecanum_world.launch" $DUMP_ROSLAUNCH_DIR
 
