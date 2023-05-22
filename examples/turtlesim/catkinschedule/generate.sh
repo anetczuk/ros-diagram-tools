@@ -20,6 +20,8 @@ $TOOL_DIR/rosdiagramtools.py catkinschedule -la \
                                          -st 1 -sp 150 \
                                          --outhtml --outdir $OUT_DIR $@
 
+cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
+
 
 files_list=$(find $OUT_DIR -type f -name "*.puml")
 

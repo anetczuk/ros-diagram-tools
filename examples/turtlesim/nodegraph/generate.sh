@@ -24,5 +24,8 @@ $TOOL_DIR/rosdiagramtools.py rosnodetree -la \
                                          --outpng "$OUT_DIR/graph.png" --outraw "$OUT_DIR/graph.gv.txt" \
                                          --outhtml --outdir $OUT_DIR $@
 
+cutycapt --url=file://$OUT_DIR/nodes/n__turtlesim.html --out=$OUT_DIR/node-page.png
+cutycapt --url=file://$OUT_DIR/nodes/t__turtle1_cmd_vel.html --out=$OUT_DIR/service-page.png
+
 
 ## dot -Tpng graph.gv.txt -o graph2.png

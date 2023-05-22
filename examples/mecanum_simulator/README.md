@@ -1,25 +1,23 @@
-## Example of diagrams over Nexus 4WD Mecanum Simulator
+# Example of diagrams over Nexus 4WD Mecanum Simulator
 
 *Nexus 4WD Mecanum Simulator* project is taken from (https://github.com/RBinsonB/nexus_4wd_mecanum_simulator) (commit `e26640c600050b3da95312885d6a6e4de0786ff6`).
 Project is published on GPL-3.0 license.
 
 
 
-### Generation
+## Generation
 
 Dumping required data is done by script `dump.sh`. Script have to be run from environment with installed *ROS*.
 Script `generate.sh` generates diagrams and views from duped data.
 
 
 
-### Diagrams
-
-#### `codedistribution`
+## `codedistribution`
 
 [![code distribution chart](out/codedistribution-small.png "code distribution chart")](out/codedistribution.png)
 
 
-#### `catkintree`
+## `catkintree`
 
 Generated diagram:
 
@@ -34,7 +32,7 @@ Generated package graph view:
 [![package graph view](out/catkintree/node-page-small.png "package graph view")](out/catkintree/node-page.png)
 
 
-#### `catkinschedule`
+## `catkinschedule`
 
 Generated diagram:
 
@@ -45,7 +43,7 @@ Generated main graph view:
 [![main graph view](out/catkinschedule/main-page-small.png "main graph view")](out/catkinschedule/main-page.png)
 
 
-#### `classifynodes`
+## `classifynodes`
 
 ```
 {
@@ -76,7 +74,7 @@ Generated main graph view:
 ```
 
 
-#### `rosverify`
+## `rosverify`
 
 ```
 INFO:rosdiagram.tool.rosverify:found workspaces: ['/home/vbox/rosdiagrams/turtlebot3/catkin_ws', '/opt/ros/noetic']
@@ -86,7 +84,7 @@ INFO:rosdiagram.tool.rosverify:workspace overlay packages: []
 ```
 
 
-#### `rosnodetree`
+## `rosnodetree`
 
 Generated diagram:
 
@@ -109,6 +107,6 @@ Generated service graph view:
 [![service graph view](out/nodetree/service-page-small.png "service graph view")](out/nodetree/service-page.png)
 
 
-#### `rostopictree`
+## `rostopictree`
 
 [![ROS nodes and topics graph](out/topictree/graph-small.png "ROS nodes and topics graph")](out/topictree/graph.png)

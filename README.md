@@ -46,10 +46,10 @@ Moreover there are additional required packages: `python3-catkin-tools` (for `ca
 ## Examples
 
 In `/examples` there are few examples of generated diagrams:
-- artificial [sample](examples/sample)
-- [turtlesim](examples/turtlesim)
-- [turtlebot3](examples/turtlebot3)
-- [mecanum_simulator](examples/mecanum_simulator)
+- artificial [sample](examples/simple)
+- [turtlesim](examples/turtlesim): build schedule, ros connections, rosbag sequence
+- [turtlebot3](examples/turtlebot3): code distribution, packages tree, build schedule, ros verify
+- [mecanum_simulator](examples/mecanum_simulator): code distribution, packages tree, build schedule, nodes classification, ros verify, ros connections
 
 
 
@@ -114,7 +114,7 @@ Then graph will be available through file: `output_dir/full_graph.html`.
 
 More real-life example is presented on folowing image:
 
-[![Non-trivial build schedule graph](doc/schedule-advanced-small.png "Non-trivial build schedule graph")](doc/schedule-advanced.png)
+[![Non-trivial build schedule view](examples/mecanum_simulator/out/catkinschedule/main-page-small.png "Non-trivial build schedule view")](examples/mecanum_simulator/out/catkinschedule/main-page.png)
 
 
 ### `rosdiagramtools.py rosverify`
@@ -144,6 +144,14 @@ In addition, for given graph interactive web page can be generated, [example her
 Following animation shows navigation thorough nodes of graph:
 
 ![HTML graph](doc/html_graph.gif "HTML graph")
+
+Examlpe of topic graph view:
+
+[![topic graph view](examples/mecanum_simulator/out/nodetree/topic-page-small.png "topic graph view")](examples/mecanum_simulator/out/nodetree/topic-page.png)
+
+Examlpe of service graph view:
+
+[![service graph view](examples/mecanum_simulator/out/nodetree/service-page-small.png "service graph view")](examples/mecanum_simulator/out/nodetree/service-page.png)
 
 
 ### `rosdiagramtools.py rostopictree`

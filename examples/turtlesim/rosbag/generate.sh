@@ -24,6 +24,9 @@ $SCRIPT_DIR/generate_chart.py -la \
                             --exclude_list_path "$EXCLUDE_PATH" \
                             --outdir $OUT_DIR $@
 
+cutycapt --url=file://$OUT_DIR/nodes/_turtlesim_2807_1673907554697.html --out=$OUT_DIR/node-page.png
+cutycapt --url=file://$OUT_DIR/msgs/0000751_msg.html --out=$OUT_DIR/message-page.png
+
 
 files_list=$(find $OUT_DIR -type f -name "*.puml")
 
