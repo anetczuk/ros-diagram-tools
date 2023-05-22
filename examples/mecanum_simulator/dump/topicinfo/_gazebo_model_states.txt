@@ -1,7 +1,7 @@
 Type: gazebo_msgs/ModelStates
 
 Publishers: 
- * /gazebo (http://ubuntu-ros:35425/)
+ * /gazebo (http://ubuntu-ros:44937/)
 
 Subscribers: None
 

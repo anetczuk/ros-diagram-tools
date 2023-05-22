@@ -9,10 +9,10 @@ concise "thread 1" as queue1
 
 @queue0
 0 is "catkin_tools_prebuild" #red
-4 is "nexus_4wd_mecanum_description" 
-7 is {hidden}
+1 is "nexus_4wd_mecanum_description" 
+3 is {hidden}
 
 @queue1
-4 is "nexus_4wd_mecanum_gazebo" #red
-33 is {hidden}
+1 is "nexus_4wd_mecanum_gazebo" #red
+19 is {hidden}
 @enduml

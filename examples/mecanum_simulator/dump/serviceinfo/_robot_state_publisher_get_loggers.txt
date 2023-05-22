@@ -1,4 +1,4 @@
 Node: /robot_state_publisher
-URI: rosrpc://ubuntu-ros:48007
+URI: rosrpc://ubuntu-ros:45235
 Type: roscpp/GetLoggers
 Args: 

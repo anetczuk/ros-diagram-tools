@@ -14,15 +14,15 @@ Services:
  * /robot_state_publisher/set_logger_level
 
 
-contacting node http://ubuntu-ros:34989/ ...
-Pid: 51974
+contacting node http://ubuntu-ros:41405/ ...
+Pid: 92274
 Connections:
  * topic: /rosout
     * to: /rosout
-    * direction: outbound (48007 - 127.0.0.1:59286) [11]
+    * direction: outbound (45235 - 127.0.0.1:34740) [11]
     * transport: TCPROS
  * topic: /clock
-    * to: /gazebo (http://ubuntu-ros:35425/)
-    * direction: inbound (38966 - ubuntu-ros:49123) [13]
+    * to: /gazebo (http://ubuntu-ros:44937/)
+    * direction: inbound (45722 - ubuntu-ros:44789) [13]
     * transport: TCPROS
 

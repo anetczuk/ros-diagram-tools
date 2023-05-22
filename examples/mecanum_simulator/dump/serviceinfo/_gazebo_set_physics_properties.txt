@@ -1,4 +1,4 @@
 Node: /gazebo
-URI: rosrpc://ubuntu-ros:49123
+URI: rosrpc://ubuntu-ros:44789
 Type: gazebo_msgs/SetPhysicsProperties
 Args: time_step max_update_rate gravity ode_config

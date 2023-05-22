@@ -54,8 +54,8 @@ message_generation /opt/ros/noetic/share/message_generation
 message_runtime /opt/ros/noetic/share/message_runtime
 mk /opt/ros/noetic/share/mk
 nav_msgs /opt/ros/noetic/share/nav_msgs
-nexus_4wd_mecanum_description /home/bob/stuff/new/mecanum/catkin_ws/src/nexus_4wd_mecanum_description
-nexus_4wd_mecanum_gazebo /home/bob/stuff/new/mecanum/catkin_ws/src/nexus_4wd_mecanum_gazebo
+nexus_4wd_mecanum_description /home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description
+nexus_4wd_mecanum_gazebo /home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_gazebo
 nodelet /opt/ros/noetic/share/nodelet
 nodelet_topic_tools /opt/ros/noetic/share/nodelet_topic_tools
 nodelet_tutorial_math /opt/ros/noetic/share/nodelet_tutorial_math

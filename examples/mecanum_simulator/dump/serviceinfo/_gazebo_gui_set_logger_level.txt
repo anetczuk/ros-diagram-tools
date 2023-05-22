@@ -1,4 +1,4 @@
 Node: /gazebo_gui
-URI: rosrpc://ubuntu-ros:53595
+URI: rosrpc://ubuntu-ros:46215
 Type: roscpp/SetLoggerLevel
 Args: logger level
