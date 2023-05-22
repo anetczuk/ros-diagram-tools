@@ -4,8 +4,33 @@
 Project is published on Apache-2.0 license.
 
 
-### generation
 
-Diagrams generation and dumping required data is done by script `dump_generate.sh`.
+### Generation
 
-Generation only based on predumped data is done by script `generate-all.sh`.
+Dumping required data is done by script `dump.sh`. Script have to be run from environment with installed *ROS*.
+Script `generate.sh` generates diagrams and views from duped data.
+
+
+
+### Diagrams
+
+#### `codedistribution`
+
+[![code distribution chart](out/codedistribution-small.png "code distribution chart")](out/codedistribution.png)
+
+#### `catkintree`
+
+[![catkin packages tree](out/catkintree/full_graph-small.png "catkin packages tree")](out/catkintree/full_graph.png)
+
+#### `catkinschedule`
+
+[![catkin packages tree](out/catkinschedule/schedule-small.png "catkin packages tree")](out/catkinschedule/schedule.png)
+
+#### `rosverify`
+
+```
+INFO:rosdiagram.tool.rosverify:found workspaces: ['/home/vbox/rosdiagrams/turtlebot3/catkin_ws', '/opt/ros/noetic']
+INFO:rosdiagram.tool.rosverify:all overlay packages: []
+INFO:rosdiagram.tool.rosverify:workspace overlay packages: []
+
+```

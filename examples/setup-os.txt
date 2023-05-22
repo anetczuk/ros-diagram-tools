@@ -1,0 +1,6 @@
+Install ROS (http://wiki.ros.org/noetic/Installation/Ubuntu) and required dependencies:
+    1. sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+    2. curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+    3. sudo apt update
+    4. sudo apt install ros-noetic-desktop ros-build-essential python3-catkin-tools ros-noetic-gazebo-ros ros-noetic-gazebo-plugins
+    5. sudo apt install build-essential cmake-gui python3-pip

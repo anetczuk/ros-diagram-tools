@@ -4,8 +4,41 @@
 Project is published on GPL-3.0 license.
 
 
-### generation
 
-Dumping required data is done by script `dump.sh`. It requires running `roscore` (it can be done by script `run.sh`).
+### Generation
 
-Generation only based on predumped data is done by script `generate-all.sh`.
+Dumping required data is done by script `dump.sh`. Script have to be run from environment with installed *ROS*.
+Script `generate.sh` generates diagrams and views from duped data.
+
+
+
+### Diagrams
+
+#### `codedistribution`
+
+[![code distribution chart](out/codedistribution-small.png "code distribution chart")](out/codedistribution.png)
+
+#### `catkintree`
+
+[![catkin packages tree](out/catkintree/full_graph-small.png "catkin packages tree")](out/catkintree/full_graph.png)
+
+#### `catkinschedule`
+
+[![catkin packages tree](out/catkinschedule/schedule-small.png "catkin packages tree")](out/catkinschedule/schedule.png)
+
+#### `rosverify`
+
+```
+INFO:rosdiagram.tool.rosverify:found workspaces: ['/home/vbox/rosdiagrams/turtlebot3/catkin_ws', '/opt/ros/noetic']
+INFO:rosdiagram.tool.rosverify:all overlay packages: []
+INFO:rosdiagram.tool.rosverify:workspace overlay packages: []
+
+```
+
+#### `rosnodetree`
+
+[![ROS nodes, topics and services graph](out/nodetree/full_graph-small.png "ROS nodes, topics and services graph")](out/nodetree/full_graph.png)
+
+#### `rostopictree`
+
+[![ROS nodes and topics graph](out/topictree/graph-small.png "ROS nodes and topics graph")](out/topictree/graph.png)

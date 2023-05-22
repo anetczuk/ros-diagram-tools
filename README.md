@@ -1,6 +1,6 @@
 # ROS diagram tools
 
-Generate various aspects of *Robot Operating System* workspace in form of diagrams and graphs.
+Generate various aspects of *Robot Operating System* workspace in form of diagrams, graphs and interactive views.
 To produce results package uses *Grpahviz* and *PlanutUML* diagram tools.
 
 Package can produce following diagrams:
@@ -12,7 +12,7 @@ Package can produce following diagrams:
 
 In addition there is `rosverifier` tool detecting packages overlay in *catkin* workspace.
 
-Main motivation for the project was to present variuos aspects of *ROS* workspace in friendly form.
+Main motivation for the project was to present variuos aspects of *ROS* workspace in easy to understand form.
 
 
 
@@ -43,6 +43,16 @@ Moreover there are additional required packages: `python3-catkin-tools` (for `ca
 
 
 
+## Examples
+
+In `/examples` there are few examples of generated diagrams:
+- artificial [sample](examples/sample)
+- [turtlesim](examples/turtlesim)
+- [turtlebot3](examples/turtlebot3)
+- [mecanum_simulator](examples/mecanum_simulator)
+
+
+
 ## Tools
 
 Tools are divided into following categories:
@@ -50,8 +60,13 @@ Tools are divided into following categories:
 - working on catkin workspace: `catkintree`, `catkinschedule`, `rosverify`, `classifynodes`,
 - working on running system: `rosnodetree`, `rostopictree`, `rosbagflow`.
 
+From other perspective tools can be split into:
+- ones working only with dumped data: `codedistribution`, `catkintree`, `catkinschedule`, `classifynodes`, `rosnodetree`, `rostopictree`, `rosbagflow`,
+- ones requiring direct access: `rosverify`
+
 
 List of tools:
+
 
 ### `rosdiagramtools.py codedistribution`
 
