@@ -18,13 +18,32 @@ Script `generate.sh` generates diagrams and views from duped data.
 
 [![code distribution chart](out/codedistribution-small.png "code distribution chart")](out/codedistribution.png)
 
+
 #### `catkintree`
+
+Generated diagram:
 
 [![catkin packages tree](out/catkintree/full_graph-small.png "catkin packages tree")](out/catkintree/full_graph.png)
 
+Generated main graph view:
+
+[![main graph view](out/catkintree/main-page-small.png "main graph view")](out/catkintree/main-page.png)
+
+Generated package graph view:
+
+[![package graph view](out/catkintree/node-page-small.png "package graph view")](out/catkintree/node-page.png)
+
+
 #### `catkinschedule`
 
+Generated diagram:
+
 [![catkin packages tree](out/catkinschedule/schedule-small.png "catkin packages tree")](out/catkinschedule/schedule.png)
+
+Generated main graph view:
+
+[![main graph view](out/catkinschedule/main-page-small.png "main graph view")](out/catkinschedule/main-page.png)
+
 
 #### `rosverify`
 
