@@ -44,10 +44,10 @@ cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
 #### classifynodes requires dumped data from main launch file
 
 
+#### rosnodegraph requires dumped data from running roscore
+
+
 #### rostopictree requires dumped data from running roscore
-
-
-#### rosnodetree requires dumped data from running roscore
 
 
 #### rosbagflow requires rosbag file

@@ -15,15 +15,15 @@ OUT_DIR="$SCRIPT_DIR/out"
 mkdir -p $OUT_DIR
 
 
-$TOOL_DIR/rosdiagramtools.py rosnodetree -la \
-                                         --dump_dir $SCRIPT_DIR/../dump/nodeinfo \
-                                         --topics_dump_dir $SCRIPT_DIR/../dump/topicinfo \
-                                         --msgs_dump_dir $SCRIPT_DIR/../dump/msginfo \
-                                         --services_dump_dir $SCRIPT_DIR/../dump/serviceinfo \
-                                         --srvs_dump_dir $SCRIPT_DIR/../dump/srvinfo \
-                                         --mainfullgraph \
-                                         --outpng "$OUT_DIR/whole_graph.png" --outraw "$OUT_DIR/whole_graph.gv.txt" \
-                                         --outhtml --outdir $OUT_DIR $@
+$TOOL_DIR/rosdiagramtools.py rosnodegraph -la \
+                                          --dump_dir $SCRIPT_DIR/../dump/nodeinfo \
+                                          --topics_dump_dir $SCRIPT_DIR/../dump/topicinfo \
+                                          --msgs_dump_dir $SCRIPT_DIR/../dump/msginfo \
+                                          --services_dump_dir $SCRIPT_DIR/../dump/serviceinfo \
+                                          --srvs_dump_dir $SCRIPT_DIR/../dump/srvinfo \
+                                          --mainfullgraph \
+                                          --outpng "$OUT_DIR/whole_graph.png" --outraw "$OUT_DIR/whole_graph.gv.txt" \
+                                          --outhtml --outdir $OUT_DIR $@
 
 cutycapt --url=file://$OUT_DIR/nodes/n__turtlesim.html --out=$OUT_DIR/node-page.png
 cutycapt --url=file://$OUT_DIR/nodes/t__turtle1_cmd_vel.html --out=$OUT_DIR/topic-page.png

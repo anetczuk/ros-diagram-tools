@@ -58,10 +58,10 @@ In `/examples` there are few examples of generated diagrams:
 Tools are divided into following categories:
 - working on source code: `codedistribution`,
 - working on catkin workspace: `packagetree`, `buildtime`, `rosverify`, `classifynodes`,
-- working on running system: `rosnodetree`, `rostopictree`, `rosbagflow`.
+- working on running system: `rosnodegraph`, `rostopictree`, `rosbagflow`.
 
 From other perspective tools can be split into:
-- ones working only with dumped data: `codedistribution`, `packagetree`, `buildtime`, `classifynodes`, `rosnodetree`, `rostopictree`, `rosbagflow`,
+- ones working only with dumped data: `codedistribution`, `packagetree`, `buildtime`, `classifynodes`, `rosnodegraph`, `rostopictree`, `rosbagflow`,
 - ones requiring direct access: `rosverify`
 
 
@@ -133,11 +133,11 @@ INFO:rosdiagram.tool.rosverify:workspace overlay packages: []
 ```
 
 
-### `rosdiagramtools.py rosnodetree`
+### `rosdiagramtools.py rosnodegraph`
 
 Presents dependecy of *ROS* nodes, topics and services in form of data flow graph.
 
-Execution: `./src/rosdiagramtools.py rosnodetree --help`
+Execution: `./src/rosdiagramtools.py rosnodegraph --help`
 
 [![ROS nodes, topics and services graph](examples/simple/rosnodelist/out/full_graph-small.png "ROS nodes, topics and services graph")](examples/simple/rosnodelist/out/full_graph.png)
 
@@ -164,7 +164,7 @@ Execution: `./src/rosdiagramtools.py rostopictree --help`
 
 [![ROS nodes and topics graph](examples/simple/rostopiclist/out/graph-small.png "ROS nodes and topics graph")](examples/simple/rostopiclist/out/graph.png)
 
-Note: tool is considered deprecated, so please use `rosnodetree` tool.
+Note: tool is considered deprecated, so please use `rosnodegraph` tool.
 
 
 ### `rosdiagramtools.py rosbagflow`

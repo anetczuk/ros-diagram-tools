@@ -1,7 +1,7 @@
 ## rosdiagramtools.py --help
 ```
 usage: rosdiagramtools.py [-h] [-la] [--listtools]
-                          {codedistribution,packagetree,classifynodes,buildtime,rosnodetree,rostopictree,rosbagflow,rosverify}
+                          {codedistribution,packagetree,classifynodes,buildtime,rosnodegraph,rostopictree,rosbagflow,rosverify}
                           ...
 
 ROS diagram tools
@@ -14,13 +14,13 @@ optional arguments:
 subcommands:
   use one of tools
 
-  {codedistribution,packagetree,classifynodes,buildtime,rosnodetree,rostopictree,rosbagflow,rosverify}
+  {codedistribution,packagetree,classifynodes,buildtime,rosnodegraph,rostopictree,rosbagflow,rosverify}
                         one of tools
     codedistribution    source code distribution over packages
     packagetree         catkin packages graph
     classifynodes       match nodes to packages
     buildtime           catkin build time
-    rosnodetree         rosnode connection graph
+    rosnodegraph        rosnode connection graph
     rostopictree        rostopic connection graph
     rosbagflow          generate sequence diagram based on messages from
                         rosbag
@@ -116,16 +116,16 @@ optional arguments:
 
 
 
-## rosdiagramtools.py rosnodetree --help
+## rosdiagramtools.py rosnodegraph --help
 ```
-usage: rosdiagramtools.py rosnodetree [-h] [-la] [--dump_dir DUMP_DIR]
-                                      [--topics_dump_dir TOPICS_DUMP_DIR]
-                                      [--msgs_dump_dir MSGS_DUMP_DIR]
-                                      [--services_dump_dir SERVICES_DUMP_DIR]
-                                      [--srvs_dump_dir SRVS_DUMP_DIR] [-mfg]
-                                      [-iri] [--outraw OUTRAW]
-                                      [--outpng OUTPNG] [--outhtml]
-                                      [--outdir OUTDIR]
+usage: rosdiagramtools.py rosnodegraph [-h] [-la] [--dump_dir DUMP_DIR]
+                                       [--topics_dump_dir TOPICS_DUMP_DIR]
+                                       [--msgs_dump_dir MSGS_DUMP_DIR]
+                                       [--services_dump_dir SERVICES_DUMP_DIR]
+                                       [--srvs_dump_dir SRVS_DUMP_DIR] [-mfg]
+                                       [-iri] [--outraw OUTRAW]
+                                       [--outpng OUTPNG] [--outhtml]
+                                       [--outdir OUTDIR]
 
 rosnode connection graph
 
@@ -158,7 +158,7 @@ optional arguments:
 usage: rosdiagramtools.py rostopictree [-h] [-la] [--dump_dir DUMP_DIR]
                                        [--outraw OUTRAW] [--outpng OUTPNG]
 
-rostopic flow graph (tool is obsolete, use rosnodetree)
+rostopic flow graph (tool is obsolete, use rosnodegraph)
 
 optional arguments:
   -h, --help           show this help message and exit

@@ -49,18 +49,18 @@ $TOOL_PATH/rosdiagramtools.py classifynodes --pack_list_file $DUMP_DIR/packinfo/
                                             --out_file $OUT_DIR/nodes_classification.txt
 
 
-echo "running rosnodetree"
+echo "running rosnodegraph"
 OUT_DIR="$WORK_DIR/out/nodetree"
 mkdir -p $OUT_DIR
-$TOOL_PATH/rosdiagramtools.py rosnodetree -la \
-                                          --dump_dir $DUMP_DIR/nodeinfo \
-                                          --topics_dump_dir $DUMP_DIR/topicinfo \
-                                          --msgs_dump_dir $DUMP_DIR/msginfo \
-                                          --services_dump_dir $DUMP_DIR/serviceinfo \
-                                          --srvs_dump_dir $DUMP_DIR/srvinfo \
-                                          --includerosinternals \
-                                          --outpng "$OUT_DIR/whole_graph.png" --outraw "$OUT_DIR/graph.gv.txt" \
-                                          --outhtml --outdir $OUT_DIR
+$TOOL_PATH/rosdiagramtools.py rosnodegraph -la \
+                                           --dump_dir $DUMP_DIR/nodeinfo \
+                                           --topics_dump_dir $DUMP_DIR/topicinfo \
+                                           --msgs_dump_dir $DUMP_DIR/msginfo \
+                                           --services_dump_dir $DUMP_DIR/serviceinfo \
+                                           --srvs_dump_dir $DUMP_DIR/srvinfo \
+                                           --includerosinternals \
+                                           --outpng "$OUT_DIR/whole_graph.png" --outraw "$OUT_DIR/graph.gv.txt" \
+                                           --outhtml --outdir $OUT_DIR
 cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
 cutycapt --url=file://$OUT_DIR/nodes/n__gazebo.html --out=$OUT_DIR/node-page.png
 cutycapt --url=file://$OUT_DIR/nodes/t__clock.html --out=$OUT_DIR/topic-page.png

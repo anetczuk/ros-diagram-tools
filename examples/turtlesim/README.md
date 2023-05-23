@@ -21,7 +21,7 @@ Generated main graph view:
 [![main graph view](catkinschedule/out/main-page-small.png "main graph view")](catkinschedule/out/main-page.png)
 
 
-## `rosnodetree`
+## `rosnodegraph`
 
 Generated diagram:
 

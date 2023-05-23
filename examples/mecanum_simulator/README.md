@@ -84,7 +84,7 @@ INFO:rosdiagram.tool.rosverify:workspace overlay packages: []
 ```
 
 
-## `rosnodetree`
+## `rosnodegraph`
 
 Generated full diagram:
 

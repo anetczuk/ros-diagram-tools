@@ -15,7 +15,7 @@ import rosdiagram.tool.codedistribution as codedistribution
 import rosdiagram.tool.packagetree as packagetree
 import rosdiagram.tool.classifynodes as classifynodes
 import rosdiagram.tool.buildtime as buildtime
-import rosdiagram.tool.rosnodetree as rosnodetree
+import rosdiagram.tool.rosnodegraph as rosnodegraph
 import rosdiagram.tool.rostopictree as rostopictree
 import rosdiagram.tool.rosbagflow as rosbagflow
 import rosdiagram.tool.rosverify as rosverify
@@ -62,9 +62,9 @@ def main():
 
     ## =================================================
 
-    subparser = subparsers.add_parser('rosnodetree', help='rosnode connection graph')
-    subparser.set_defaults( func=rosnodetree.process_arguments )
-    rosnodetree.configure_parser( subparser )
+    subparser = subparsers.add_parser('rosnodegraph', help='rosnode connection graph')
+    subparser.set_defaults( func=rosnodegraph.process_arguments )
+    rosnodegraph.configure_parser( subparser )
 
     ## =================================================
 
