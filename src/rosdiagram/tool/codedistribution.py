@@ -92,8 +92,8 @@ def configure_parser( parser ):
     parser.description = 'source code distribution over packages'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
-    parser.add_argument( '--cloc_path', action='store', required=False, default="",
-                         help="File with 'cloc' results" )
+    parser.add_argument( '--clocpath', action='store', required=False, default="",
+                         help="Path to file with dumped 'cloc' results" )
     parser.add_argument( '--highlight', action='store', required=False, default="",
                          help="List with items to highlight" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
@@ -113,7 +113,7 @@ def process_arguments( args ):
     if len( args.highlight ) > 0:
         highlight_list = read_list( args.highlight )
 
-    graph = generate( args.cloc_path )
+    graph = generate( args.clocpath )
     paint_nodes( graph, highlight_list )
 
     if len( args.outraw ) > 0:

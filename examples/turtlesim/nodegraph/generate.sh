@@ -16,11 +16,11 @@ mkdir -p $OUT_DIR
 
 
 $TOOL_DIR/rosdiagramtools.py rosnodegraph -la \
-                                          --dump_dir $SCRIPT_DIR/../dump/nodeinfo \
-                                          --topics_dump_dir $SCRIPT_DIR/../dump/topicinfo \
-                                          --msgs_dump_dir $SCRIPT_DIR/../dump/msginfo \
-                                          --services_dump_dir $SCRIPT_DIR/../dump/serviceinfo \
-                                          --srvs_dump_dir $SCRIPT_DIR/../dump/srvinfo \
+                                          --nodesdumppath $SCRIPT_DIR/../dump/nodeinfo \
+                                          --topicsdumppath $SCRIPT_DIR/../dump/topicinfo \
+                                          --msgsdumppath $SCRIPT_DIR/../dump/msginfo \
+                                          --servicesdumppath $SCRIPT_DIR/../dump/serviceinfo \
+                                          --srvsdumppath $SCRIPT_DIR/../dump/srvinfo \
                                           --mainfullgraph \
                                           --outpng "$OUT_DIR/whole_graph.png" --outraw "$OUT_DIR/whole_graph.gv.txt" \
                                           --outhtml --outdir $OUT_DIR $@

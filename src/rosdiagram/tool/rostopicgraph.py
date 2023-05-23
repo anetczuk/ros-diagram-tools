@@ -137,8 +137,8 @@ def configure_parser( parser ):
     parser.description = 'rostopic flow graph (tool is obsolete, use rosnodegraph)'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
-    parser.add_argument( '--dump_dir', action='store', required=False, default="",
-                         help="Dump directory containing 'rostopic list' output data" )
+    parser.add_argument( '--topicsdumppath', action='store', required=False, default="",
+                         help="Path to directory containing dumped 'rostopic list' output" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
 
@@ -150,7 +150,7 @@ def process_arguments( args ):
     else:
         logging.getLogger().setLevel( logging.WARNING )
 
-    graph = generate( args.dump_dir )
+    graph = generate( args.topicsdumppath )
 
     if len( args.outraw ) > 0:
         graph.writeRAW( args.outraw )

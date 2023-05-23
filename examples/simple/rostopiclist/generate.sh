@@ -15,7 +15,7 @@ OUT_DIR="$SCRIPT_DIR/out"
 mkdir -p $OUT_DIR
 
 
-$TOOL_DIR/rosdiagramtools.py rostopicgraph --dump_dir $SCRIPT_DIR/dump \
+$TOOL_DIR/rosdiagramtools.py rostopicgraph --topicsdumppath $SCRIPT_DIR/dump \
                                            --outraw $OUT_DIR/graph.gv.txt \
                                            --outpng $OUT_DIR/graph.png $@
 

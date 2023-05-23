@@ -18,11 +18,11 @@ mkdir -p $OUT_DIR
 
 
 $SCRIPT_DIR/generate_chart.py -la \
-                            --bag_path "$SCRIPT_DIR/2023-01-16-23-19-09.bag" \
-                            --topic_dump_dir $SCRIPT_DIR/../dump/topicinfo \
-                            --write_messages \
-                            --exclude_list_path "$EXCLUDE_PATH" \
-                            --outdir $OUT_DIR $@
+                              --rosbagpath "$SCRIPT_DIR/2023-01-16-23-19-09.bag" \
+                              --topicsdumppath $SCRIPT_DIR/../dump/topicinfo \
+                              --writemessages \
+                              --excludelistpath "$EXCLUDE_PATH" \
+                              --outdir $OUT_DIR $@
 
 cutycapt --url=file://$OUT_DIR/nodes/_turtlesim_2807_1673907554697.html --out=$OUT_DIR/node-page.png
 cutycapt --url=file://$OUT_DIR/msgs/0000751_msg.html --out=$OUT_DIR/message-page.png

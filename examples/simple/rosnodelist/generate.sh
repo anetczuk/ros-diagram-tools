@@ -16,7 +16,7 @@ mkdir -p $OUT_DIR
 
 
 $TOOL_DIR/rosdiagramtools.py rosnodegraph -la \
-                                          --dump_dir $SCRIPT_DIR/dump \
+                                          --nodesdumppath $SCRIPT_DIR/dump \
                                           --mainfullgraph \
                                           --outdir $OUT_DIR \
                                           --outpng "$OUT_DIR/whole_graph.png" \

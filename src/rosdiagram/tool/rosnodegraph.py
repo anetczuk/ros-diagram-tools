@@ -307,16 +307,16 @@ def configure_parser( parser ):
     parser.description = 'rosnode connection graph'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
-    parser.add_argument( '--dump_dir', action='store', required=False, default="",
-                         help="Dump directory containing 'rosnode' output data" )
-    parser.add_argument( '--topics_dump_dir', action='store', required=False, default="",
-                         help="Dump directory containing 'rostopic' output data" )
-    parser.add_argument( '--msgs_dump_dir', action='store', required=False, default="",
-                         help="Dump directory containing 'rosmsg' output data" )
-    parser.add_argument( '--services_dump_dir', action='store', required=False, default="",
-                         help="Dump directory containing 'rosservice' output data" )
-    parser.add_argument( '--srvs_dump_dir', action='store', required=False, default="",
-                         help="Dump directory containing 'rossrv' output data" )
+    parser.add_argument( '--nodesdumppath', action='store', required=False, default="",
+                         help="Path to directory containing dumped 'rosnode' output" )
+    parser.add_argument( '--topicsdumppath', action='store', required=False, default="",
+                         help="Path to directory containing dumped 'rostopic' output" )
+    parser.add_argument( '--msgsdumppath', action='store', required=False, default="",
+                         help="Path to directory containing dumped 'rosmsg' output" )
+    parser.add_argument( '--servicesdumppath', action='store', required=False, default="",
+                         help="Path to directory containing dumped 'rosservice' output" )
+    parser.add_argument( '--srvsdumppath', action='store', required=False, default="",
+                         help="Path to directory containing dumped 'rossrv' output" )
     parser.add_argument( '-mfg', '--mainfullgraph', action='store_true', help="Generate main full graph instead of compact one" )
     parser.add_argument( '-iri', '--includerosinternals', action='store_true', help="Include ROS internal items like /rosout and /record_*" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
@@ -332,16 +332,16 @@ def process_arguments( args ):
     else:
         logging.getLogger().setLevel( logging.INFO )
 
-    nodes_dict = read_nodes( args.dump_dir )
+    nodes_dict = read_nodes( args.nodesdumppath )
     if not nodes_dict:
-        _LOGGER.warning( "no data found in %s", args.dump_dir )
+        _LOGGER.warning( "no data found in %s", args.nodesdumppath )
         return
 
     if not args.includerosinternals:
         filter_ros_nodes_dict( nodes_dict )
 
     label_dict = fix_names( nodes_dict )
-    # info_dict  = get_node_info_dict( nodes_dict, label_dict, args.msgs_dump_dir, args.srvs_dump_dir )
+    # info_dict  = get_node_info_dict( nodes_dict, label_dict, args.msgsdumppath, args.srvsdumppath )
 
     if len( args.outraw ) > 0 or len( args.outpng ) > 0:
         graph = generate_full_graph( nodes_dict )
@@ -358,10 +358,10 @@ def process_arguments( args ):
         os.makedirs( args.outdir, exist_ok=True )
         generate_pages( nodes_dict, args.outdir,
                         nodes_labels=label_dict,
-                        topics_dump_dir=args.topics_dump_dir,
-                        msgs_dump_dir=args.msgs_dump_dir,
-                        services_dump_dir=args.services_dump_dir,
-                        srvs_dump_dir=args.srvs_dump_dir,
+                        topics_dump_dir=args.topicsdumppath,
+                        msgs_dump_dir=args.msgsdumppath,
+                        services_dump_dir=args.servicesdumppath,
+                        srvs_dump_dir=args.srvsdumppath,
                         main_full_graph=args.mainfullgraph
                         )
 

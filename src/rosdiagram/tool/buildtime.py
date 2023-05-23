@@ -539,8 +539,8 @@ def configure_parser( parser ):
     # pylint: disable=C0301
     parser.add_argument( '-f', '--file', action='store', required=False, default="",
                          help="Read catkin build log file" )
-    parser.add_argument( '-st', '--scale_sec_step', action='store', required=False, default=20, help="Scale time step" )
-    parser.add_argument( '-sp', '--scale_px_num', action='store', required=False, default=100, help="Scale pixel number" )
+    parser.add_argument( '-st', '--scalesecstep', action='store', required=False, default=20, help="Scale time step. Timeline will be divided into steps of given size." )
+    parser.add_argument( '-sp', '--scalepxnum', action='store', required=False, default=100, help="Scale pixel number - width in pixels of each timeline step." )
     parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
     parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 
@@ -561,8 +561,8 @@ def process_arguments( args ):
     ##
     if args.outhtml and len( args.outdir ) > 0:
         _LOGGER.info( "generating HTML graph" )
-        scale_sec_step = args.scale_sec_step
-        scale_px_num   = args.scale_px_num
+        scale_sec_step = args.scalesecstep
+        scale_px_num   = args.scalepxnum
         generate_pages( schedule, args.outdir, scale_sec_step=scale_sec_step, scale_px_num=scale_px_num )
 
 

@@ -184,7 +184,7 @@ def configure_parser( parser ):
     # pylint: disable=C0301
     parser.add_argument( '-f', '--file', action='store', required=False, default="",
                          help="Read 'catkin list' output from file" )
-    parser.add_argument( '--node_shape', action='store', required=False, default=None, help="Shape of node: 'box', 'octagon' or other handled by GraphViz dot" )
+    parser.add_argument( '--nodeshape', action='store', required=False, default=None, help="Shape of node: 'box', 'octagon' or other value supprted by GraphViz dot" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
     parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
@@ -198,7 +198,7 @@ def process_arguments( args ):
     else:
         logging.getLogger().setLevel( logging.WARNING )
 
-    node_shape = args.node_shape
+    node_shape = args.nodeshape
     if node_shape is None:
         node_shape = "octagon"
 

@@ -50,11 +50,11 @@ def configure_parser( parser ):
     parser.description = 'match nodes to packages'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
-    parser.add_argument( '--pack_list_file', action='store', required=True, default="",
-                         help="Dump file containing 'rospack' output" )
-    parser.add_argument( '--launch_dump_dir', action='store', required=True, default="",
-                         help="Dump directory containing 'roslaunch' output data" )
-    parser.add_argument( '--out_file', action='store', required=False, default="", help="Output map file" )
+    parser.add_argument( '--packdumppath', action='store', required=True, default="",
+                         help="Path to file containing dumped 'rospack' output" )
+    parser.add_argument( '--launchdumppath', action='store', required=True, default="",
+                         help="Path fo directory containing dumped 'roslaunch' output" )
+    parser.add_argument( '--outfile', action='store', required=False, default="", help="Path to output file" )
 
 
 def process_arguments( args ):
@@ -64,14 +64,14 @@ def process_arguments( args ):
     else:
         logging.getLogger().setLevel( logging.INFO )
 
-    pack_list = read_pack( args.pack_list_file )
+    pack_list = read_pack( args.packdumppath )
     if len(pack_list) < 1:
-        _LOGGER.warning( "no data found in %s", args.pack_list_file )
+        _LOGGER.warning( "no data found in %s", args.packdumppath )
         return
 
-    launch_dict = read_launch( args.launch_dump_dir )
+    launch_dict = read_launch( args.launchdumppath )
     if len(launch_dict) < 1:
-        _LOGGER.warning( "no data found in %s", args.launch_dump_dir )
+        _LOGGER.warning( "no data found in %s", args.launchdumppath )
         return
 
     pack_nodes_dict = {}
@@ -90,10 +90,10 @@ def process_arguments( args ):
                                              "nodes": nodes_list,
                                              }
 
-    if args.out_file:
+    if args.outfile:
         # content = str( pack_nodes_dict )
         content = json.dumps( pack_nodes_dict, indent=4 )
-        write_file( args.out_file, content )
+        write_file( args.outfile, content )
 
 
 def main():

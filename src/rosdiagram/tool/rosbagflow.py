@@ -669,17 +669,17 @@ def configure_parser( parser ):
     parser.description = 'rosbag sequence diagram'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
-    parser.add_argument( '--bag_path', action='store', required=True, default="",
+    parser.add_argument( '--rosbagpath', action='store', required=True, default="",
                          help="Path to rosbag file" )
-    parser.add_argument( '--topic_dump_dir', action='store', required=False, default="",
-                         help="Dump directory containing 'rostopic' output data" )
+    parser.add_argument( '--topicsdumppath', action='store', required=False, default="",
+                         help="Path to directory containing dumped 'rostopic' output" )
+    parser.add_argument( '--groupcalls', action='store_true', help="Group calls to same topic" )
+    parser.add_argument( '--grouptopics', action='store_true', help="Group multiple topics in one call" )
+    parser.add_argument( '--groupsubs', action='store_true', help="Group topic's subscribers in one UML group" )
+    parser.add_argument( '--detectloops', action='store_true', help="Detect message loops and group in one UML loop" )
+    parser.add_argument( '--writemessages', action='store_true', help="Write message subpages" )
+    parser.add_argument( '--excludelistpath', action='store', help="Exclude list path" )
     parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
-    parser.add_argument( '--group_calls', action='store_true', help="Group calls to same topic" )
-    parser.add_argument( '--group_topics', action='store_true', help="Group multiple topics in one call" )
-    parser.add_argument( '--group_subs', action='store_true', help="Group topic's subscribers in one UML group" )
-    parser.add_argument( '--detect_loops', action='store_true', help="Detect message loops and group in one UML loop" )
-    parser.add_argument( '--write_messages', action='store_true', help="Write message subpages" )
-    parser.add_argument( '--exclude_list_path', action='store', help="Exclude list path" )
 
 
 def process_arguments( args, notes_functor=None ):
@@ -690,19 +690,19 @@ def process_arguments( args, notes_functor=None ):
         logging.getLogger().setLevel( logging.INFO )
 
     try:
-        exclude_list = read_list( args.exclude_list_path )
+        exclude_list = read_list( args.excludelistpath )
     except TypeError as ex:
         _LOGGER.warning( "unable to load exception list: %s", ex )
         exclude_list = []
 
-    params = { "group_calls": args.group_calls,
-               "group_topics": args.group_topics,
-               "group_subs": args.group_subs,
-               "detect_loops": args.detect_loops,
-               "write_messages": args.write_messages,
+    params = { "group_calls": args.groupcalls,
+               "group_topics": args.grouptopics,
+               "group_subs": args.groupsubs,
+               "detect_loops": args.detectloops,
+               "write_messages": args.writemessages,
                "notes_functor": notes_functor
                }
-    generate( args.bag_path, args.topic_dump_dir, args.outdir, exclude_list, params )
+    generate( args.rosbagpath, args.topicsdumppath, args.outdir, exclude_list, params )
 
 
 def main( notes_functor=None ):

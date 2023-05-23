@@ -89,9 +89,9 @@ def parse_code( content, language="SUM:" ):
 def main():
     parser = argparse.ArgumentParser(description='cloc dump')
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
-    parser.add_argument( '--cloc_dir', action='store', required=False, default="",
+    parser.add_argument( '--clocrundir', action='store', required=False, default="",
                          help="Directory to analyze by 'cloc'" )
-    parser.add_argument( '--out_path', action='store', required=False, default="", help="Output file" )
+    parser.add_argument( '--outfile', action='store', required=False, default="", help="Output file" )
 
     args = parser.parse_args()
 
@@ -101,7 +101,7 @@ def main():
     else:
         logging.getLogger().setLevel( logging.INFO )
 
-    read_data( args.cloc_dir, args.out_path )
+    read_data( args.clocrundir, args.outfile )
 
 
 if __name__ == '__main__':
