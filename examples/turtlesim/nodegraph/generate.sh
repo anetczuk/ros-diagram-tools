@@ -27,6 +27,7 @@ $TOOL_DIR/rosdiagramtools.py rosnodetree -la \
 
 cutycapt --url=file://$OUT_DIR/nodes/n__turtlesim.html --out=$OUT_DIR/node-page.png
 cutycapt --url=file://$OUT_DIR/nodes/t__turtle1_cmd_vel.html --out=$OUT_DIR/topic-page.png
+cutycapt --url=file://$OUT_DIR/nodes/s__spawn.html --out=$OUT_DIR/service-page.png
 
 
 ## dot -Tpng graph.gv.txt -o graph2.png

@@ -35,6 +35,10 @@ Generated topic graph view:
 
 [![topic graph view](nodegraph/out/topic-page-small.png "topic graph view")](nodegraph/out/topic-page.png)
 
+Generated service graph view:
+
+[![service graph view](nodegraph/out/service-page-small.png "service graph view")](nodegraph/out/service-page.png)
+
 
 ## `rosbagflow`
 
