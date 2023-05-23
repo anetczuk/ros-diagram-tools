@@ -10,7 +10,7 @@ Script `generate-all.sh` generates diagrams and views from duped data.
 
 
 
-## `catkinschedule`
+## `buildtime`
 
 Generated diagram:
 

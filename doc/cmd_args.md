@@ -1,7 +1,7 @@
 ## rosdiagramtools.py --help
 ```
 usage: rosdiagramtools.py [-h] [-la] [--listtools]
-                          {codedistribution,packagetree,classifynodes,catkinschedule,rosnodetree,rostopictree,rosbagflow,rosverify}
+                          {codedistribution,packagetree,classifynodes,buildtime,rosnodetree,rostopictree,rosbagflow,rosverify}
                           ...
 
 ROS diagram tools
@@ -14,12 +14,12 @@ optional arguments:
 subcommands:
   use one of tools
 
-  {codedistribution,packagetree,classifynodes,catkinschedule,rosnodetree,rostopictree,rosbagflow,rosverify}
+  {codedistribution,packagetree,classifynodes,buildtime,rosnodetree,rostopictree,rosbagflow,rosverify}
                         one of tools
     codedistribution    source code distribution over packages
     packagetree         catkin packages graph
     classifynodes       match nodes to packages
-    catkinschedule      catkin build schedule
+    buildtime           catkin build time
     rosnodetree         rosnode connection graph
     rostopictree        rostopic connection graph
     rosbagflow          generate sequence diagram based on messages from
@@ -94,12 +94,11 @@ optional arguments:
 
 
 
-## rosdiagramtools.py catkinschedule --help
+## rosdiagramtools.py buildtime --help
 ```
-usage: rosdiagramtools.py catkinschedule [-h] [-la] [-f FILE]
-                                         [-st SCALE_SEC_STEP]
-                                         [-sp SCALE_PX_NUM] [--outhtml]
-                                         [--outdir OUTDIR]
+usage: rosdiagramtools.py buildtime [-h] [-la] [-f FILE] [-st SCALE_SEC_STEP]
+                                    [-sp SCALE_PX_NUM] [--outhtml]
+                                    [--outdir OUTDIR]
 
 catkin build schedule
 

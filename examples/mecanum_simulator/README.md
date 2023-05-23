@@ -32,7 +32,7 @@ Generated package graph view:
 [![package graph view](out/catkintree/node-page-small.png "package graph view")](out/catkintree/node-page.png)
 
 
-## `catkinschedule`
+## `buildtime`
 
 Generated diagram:
 

@@ -57,11 +57,11 @@ In `/examples` there are few examples of generated diagrams:
 
 Tools are divided into following categories:
 - working on source code: `codedistribution`,
-- working on catkin workspace: `packagetree`, `catkinschedule`, `rosverify`, `classifynodes`,
+- working on catkin workspace: `packagetree`, `buildtime`, `rosverify`, `classifynodes`,
 - working on running system: `rosnodetree`, `rostopictree`, `rosbagflow`.
 
 From other perspective tools can be split into:
-- ones working only with dumped data: `codedistribution`, `packagetree`, `catkinschedule`, `classifynodes`, `rosnodetree`, `rostopictree`, `rosbagflow`,
+- ones working only with dumped data: `codedistribution`, `packagetree`, `buildtime`, `classifynodes`, `rosnodetree`, `rostopictree`, `rosbagflow`,
 - ones requiring direct access: `rosverify`
 
 
@@ -94,11 +94,11 @@ of text file.
 Output example: [mecanum_simulator](examples/mecanum_simulator)
 
 
-### `rosdiagramtools.py catkinschedule`
+### `rosdiagramtools.py buildtime`
 
 Presents schedule graph of workspace build consisting of build time of packages.
 
-Execution: `./src/rosdiagramtools.py catkinschedule --help`
+Execution: `./src/rosdiagramtools.py buildtime --help`
 
 [![turtlesim build times](doc/turtlesim_catkinschedule-small.png "turtlesim build times")](doc/turtlesim_catkinschedule.png)
 
@@ -106,10 +106,10 @@ To generate graph execute following steps:
 1. build workspace with command `catkin build > build_log.txt`
 2. execute tool: 
 ```
-rosdiagramtools.py catkinschedule -la \
-                                  -f build_log.txt \
-                                  -st 1 -sp 150 \
-                                  --outhtml --outdir output_dir
+rosdiagramtools.py buildtime -la \
+                             -f build_log.txt \
+                             -st 1 -sp 150 \
+                             --outhtml --outdir output_dir
 ```
 
 Then graph will be available through file: `output_dir/full_graph.html`.

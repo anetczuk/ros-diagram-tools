@@ -15,10 +15,10 @@ OUT_DIR="$SCRIPT_DIR/out"
 mkdir -p $OUT_DIR
 
 
-$TOOL_DIR/rosdiagramtools.py catkinschedule -la \
-                                         -f $SCRIPT_DIR/build.log.txt \
-                                         -st 1 -sp 150 \
-                                         --outhtml --outdir $OUT_DIR $@
+$TOOL_DIR/rosdiagramtools.py buildtime -la \
+                                       -f $SCRIPT_DIR/build.log.txt \
+                                       -st 1 -sp 150 \
+                                       --outhtml --outdir $OUT_DIR $@
 
 cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
 
