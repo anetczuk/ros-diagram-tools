@@ -1,7 +1,7 @@
 ## rosdiagramtools.py --help
 ```
 usage: rosdiagramtools.py [-h] [-la] [--listtools]
-                          {codedistribution,packagetree,classifynodes,buildtime,rosnodegraph,rostopictree,rosbagflow,rosverify}
+                          {codedistribution,packagetree,classifynodes,buildtime,rosnodegraph,rostopicgraph,rosbagflow,rosverify}
                           ...
 
 ROS diagram tools
@@ -14,14 +14,14 @@ optional arguments:
 subcommands:
   use one of tools
 
-  {codedistribution,packagetree,classifynodes,buildtime,rosnodegraph,rostopictree,rosbagflow,rosverify}
+  {codedistribution,packagetree,classifynodes,buildtime,rosnodegraph,rostopicgraph,rosbagflow,rosverify}
                         one of tools
     codedistribution    source code distribution over packages
     packagetree         catkin packages graph
     classifynodes       match nodes to packages
     buildtime           catkin build time
     rosnodegraph        rosnode connection graph
-    rostopictree        rostopic connection graph
+    rostopicgraph       rostopic connection graph
     rosbagflow          generate sequence diagram based on messages from
                         rosbag
     rosverify           verify ROS packages
@@ -153,10 +153,10 @@ optional arguments:
 
 
 
-## rosdiagramtools.py rostopictree --help
+## rosdiagramtools.py rostopicgraph --help
 ```
-usage: rosdiagramtools.py rostopictree [-h] [-la] [--dump_dir DUMP_DIR]
-                                       [--outraw OUTRAW] [--outpng OUTPNG]
+usage: rosdiagramtools.py rostopicgraph [-h] [-la] [--dump_dir DUMP_DIR]
+                                        [--outraw OUTRAW] [--outpng OUTPNG]
 
 rostopic flow graph (tool is obsolete, use rosnodegraph)
 

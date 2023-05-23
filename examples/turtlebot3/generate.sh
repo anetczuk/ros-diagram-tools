@@ -47,7 +47,7 @@ cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
 #### rosnodegraph requires dumped data from running roscore
 
 
-#### rostopictree requires dumped data from running roscore
+#### rostopicgraph requires dumped data from running roscore
 
 
 #### rosbagflow requires rosbag file

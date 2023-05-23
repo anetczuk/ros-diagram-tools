@@ -67,12 +67,12 @@ cutycapt --url=file://$OUT_DIR/nodes/t__clock.html --out=$OUT_DIR/topic-page.png
 cutycapt --url=file://$OUT_DIR/nodes/s__gazebo_set_model_state.html --out=$OUT_DIR/service-page.png
 
 
-echo "running rostopictree"
+echo "running rostopicgraph"
 OUT_DIR="$WORK_DIR/out/topictree"
 mkdir -p $OUT_DIR
-$TOOL_PATH/rosdiagramtools.py rostopictree --dump_dir $DUMP_DIR/topicinfo \
-                                           --outraw $OUT_DIR/graph.gv.txt \
-                                           --outpng $OUT_DIR/graph.png
+$TOOL_PATH/rosdiagramtools.py rostopicgraph --dump_dir $DUMP_DIR/topicinfo \
+                                            --outraw $OUT_DIR/graph.gv.txt \
+                                            --outpng $OUT_DIR/graph.png
 
                                             
 #### rosbagflow requires rosbag file

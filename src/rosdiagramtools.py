@@ -16,7 +16,7 @@ import rosdiagram.tool.packagetree as packagetree
 import rosdiagram.tool.classifynodes as classifynodes
 import rosdiagram.tool.buildtime as buildtime
 import rosdiagram.tool.rosnodegraph as rosnodegraph
-import rosdiagram.tool.rostopictree as rostopictree
+import rosdiagram.tool.rostopicgraph as rostopicgraph
 import rosdiagram.tool.rosbagflow as rosbagflow
 import rosdiagram.tool.rosverify as rosverify
 
@@ -68,9 +68,9 @@ def main():
 
     ## =================================================
 
-    subparser = subparsers.add_parser('rostopictree', help='rostopic connection graph')
-    subparser.set_defaults( func=rostopictree.process_arguments )
-    rostopictree.configure_parser( subparser )
+    subparser = subparsers.add_parser('rostopicgraph', help='rostopic connection graph')
+    subparser.set_defaults( func=rostopicgraph.process_arguments )
+    rostopicgraph.configure_parser( subparser )
 
     ## =================================================
 

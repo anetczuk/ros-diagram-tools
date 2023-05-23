@@ -107,6 +107,6 @@ Generated service graph view:
 [![service graph view](out/nodetree/service-page-small.png "service graph view")](out/nodetree/service-page.png)
 
 
-## `rostopictree`
+## `rostopicgraph`
 
 [![ROS nodes and topics graph](out/topictree/graph-small.png "ROS nodes and topics graph")](out/topictree/graph.png)
