@@ -91,6 +91,8 @@ Execution: `./src/rosdiagramtools.py catkintree --help`
 Tool tries to match ROS nodes (given by `rosnode` command) to source packages where nodes are implemented. Result is presented in form 
 of text file.
 
+Output example: [mecanum_simulator](examples/mecanum_simulator)
+
 
 ### `rosdiagramtools.py catkinschedule`
 
@@ -112,7 +114,7 @@ rosdiagramtools.py catkinschedule -la \
 
 Then graph will be available through file: `output_dir/full_graph.html`.
 
-More real-life example is presented on folowing image:
+More real-life example with full view is presented on folowing image:
 
 [![Non-trivial build schedule view](examples/mecanum_simulator/out/catkinschedule/main-page-small.png "Non-trivial build schedule view")](examples/mecanum_simulator/out/catkinschedule/main-page.png)
 
@@ -179,6 +181,7 @@ Tool generates sequence diagram and interactive web page with following function
 
 The web page output is stored [here](examples/turtlesim/rosbag/out/full_graph.html).
 
+Example of node and message view preview can be found here: [turtlesim](examples/turtlesim) 
 
 
 ## Dumping information

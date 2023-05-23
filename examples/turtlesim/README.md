@@ -14,7 +14,7 @@ Script `generate-all.sh` generates diagrams and views from duped data.
 
 Generated diagram:
 
-[![catkin packages tree](catkinschedule/out/schedule-small.png "catkin packages tree")](catkinschedule/out/schedule.png)
+[![catkin packages tree](catkinschedule/out/build-schedule-small.png "catkin packages tree")](catkinschedule/out/build-schedule.png)
 
 Generated main graph view:
 
@@ -25,7 +25,7 @@ Generated main graph view:
 
 Generated diagram:
 
-[![ROS nodes, topics and services graph](nodegraph/out/full_graph-small.png "ROS nodes, topics and services graph")](nodegraph/out/full_graph.png)
+[![ROS nodes, topics and services graph](nodegraph/out/full_graph.png "ROS nodes, topics and services graph")](nodegraph/out/full_graph.png)
 
 Generated node graph view:
 
@@ -37,10 +37,6 @@ Generated topic graph view:
 
 
 ## `rosbagflow`
-
-Generated diagram:
-
-[![ROS bag sequence graph](rosbag/out/graph-small.png "ROS bag sequence graph")](rosbag/out/graph.png)
 
 Generated node view:
 
