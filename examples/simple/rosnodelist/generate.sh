@@ -17,9 +17,10 @@ mkdir -p $OUT_DIR
 
 $TOOL_DIR/rosdiagramtools.py rosnodetree -la \
                                          --dump_dir $SCRIPT_DIR/dump \
+                                         --mainfullgraph \
                                          --outdir $OUT_DIR \
-                                         --outpng "$OUT_DIR/graph.png" \
-                                         --outraw "$OUT_DIR/graph.gv.txt" \
+                                         --outpng "$OUT_DIR/whole_graph.png" \
+                                         --outraw "$OUT_DIR/whole_graph.gv.txt" \
                                          --outhtml $@
 
 

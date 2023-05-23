@@ -147,11 +147,11 @@ Following animation shows navigation thorough nodes of graph:
 
 ![HTML graph](doc/html_graph.gif "HTML graph")
 
-Examlpe of topic graph view:
+Example of topic graph view:
 
 [![topic graph view](examples/mecanum_simulator/out/nodetree/topic-page-small.png "topic graph view")](examples/mecanum_simulator/out/nodetree/topic-page.png)
 
-Examlpe of service graph view:
+Example of service graph view:
 
 [![service graph view](examples/mecanum_simulator/out/nodetree/service-page-small.png "service graph view")](examples/mecanum_simulator/out/nodetree/service-page.png)
 
@@ -163,6 +163,8 @@ Present dependecy of *ROS* nodes and topics in form of dependency graph.
 Execution: `./src/rosdiagramtools.py rostopictree --help`
 
 [![ROS nodes and topics graph](examples/simple/rostopiclist/out/graph-small.png "ROS nodes and topics graph")](examples/simple/rostopiclist/out/graph.png)
+
+Note: tool is considered deprecated, so please use `rosnodetree` tool.
 
 
 ### `rosdiagramtools.py rosbagflow`

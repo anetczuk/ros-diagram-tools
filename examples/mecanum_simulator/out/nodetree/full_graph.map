@@ -1,25 +1,10 @@
 <map id="full_graph" name="full_graph">
 <area shape="rect" id="node1" href="nodes/n__gazebo.html" title="node: /gazebo
-30 services" alt="" coords="384,271,515,321"/>
-<area shape="poly" id="node2" href="nodes/t__clock.html" title="node: /clock" alt="" coords="825,296,822,289,815,282,804,277,791,273,775,272,760,273,746,277,735,282,728,289,726,296,728,303,735,310,746,315,760,319,775,320,791,319,804,315,815,310,822,303"/>
-<area shape="poly" id="node3" href="nodes/t__gazebo_link_states.html" title="node: /gazebo/link_states" alt="" coords="907,440,901,433,882,426,853,421,816,417,775,416,735,417,698,421,669,426,650,433,644,440,650,447,669,454,698,459,735,463,775,464,816,463,853,459,882,454,901,447"/>
-<area shape="poly" id="node4" href="nodes/t__gazebo_model_states.html" title="node: /gazebo/model_states" alt="" coords="923,512,915,505,895,498,862,493,821,489,775,488,730,489,689,493,656,498,635,505,628,512,635,519,656,526,689,531,730,535,775,536,821,535,862,531,895,526,915,519"/>
-<area shape="poly" id="node5" href="nodes/t__gazebo_parameter_descriptions.html" title="node: /gazebo/parameter_descriptions" alt="" coords="988,584,977,577,947,570,900,565,841,561,775,560,710,561,651,565,604,570,573,577,563,584,573,591,604,598,651,603,710,607,775,608,841,607,900,603,947,598,977,591"/>
-<area shape="poly" id="node6" href="nodes/t__gazebo_parameter_updates.html" title="node: /gazebo/parameter_updates" alt="" coords="962,29,953,22,926,15,885,10,833,7,775,5,718,7,666,10,625,15,598,22,589,29,598,37,625,43,666,49,718,52,775,53,833,52,885,49,926,43,953,37"/>
-<area shape="poly" id="node7" href="nodes/t__gazebo_performance_metrics.html" title="node: /gazebo/performance_metrics" alt="" coords="972,101,962,94,934,87,891,82,836,79,775,77,715,79,660,82,616,87,588,94,579,101,588,109,616,115,660,121,715,124,775,125,836,124,891,121,934,115,962,109"/>
-<area shape="poly" id="node8" href="nodes/t__odom.html" title="node: /odom" alt="" coords="827,173,825,166,817,159,806,154,791,151,775,149,759,151,745,154,733,159,726,166,723,173,726,181,733,187,745,193,759,196,775,197,791,196,806,193,817,187,825,181"/>
-<area shape="poly" id="node9" href="nodes/t__rosout.html" title="node: /rosout" alt="" coords="1445,297,1442,290,1434,283,1421,278,1405,275,1387,273,1369,275,1353,278,1340,283,1332,290,1329,297,1332,305,1340,311,1353,317,1369,320,1387,321,1405,320,1421,317,1434,311,1442,305"/>
-<area shape="rect" id="node13" href="nodes/n__gazebo_gui.html" title="node: /gazebo_gui
-2 services" alt="" coords="1086,272,1220,323"/>
-<area shape="rect" id="node14" href="nodes/n__robot_state_publisher.html" title="node: /robot_state_publisher
-2 services" alt="" coords="1036,397,1270,448"/>
-<area shape="rect" id="node18" href="nodes/n__rosout.html" title="node: /rosout
-2 services" alt="" coords="1503,304,1622,355"/>
-<area shape="poly" id="node10" href="nodes/t__cmd_vel.html" title="node: /cmd_vel" alt="" coords="239,224,236,217,226,210,211,205,192,201,171,200,150,201,131,205,115,210,106,217,102,224,106,231,115,238,131,243,150,247,171,248,192,247,211,243,226,238,236,231"/>
-<area shape="poly" id="node11" href="nodes/t__gazebo_set_link_state.html" title="node: /gazebo/set_link_state" alt="" coords="321,296,313,289,292,282,259,277,217,273,171,272,125,273,83,277,50,282,28,289,21,296,28,303,50,310,83,315,125,319,171,320,217,319,259,315,292,310,313,303"/>
-<area shape="poly" id="node12" href="nodes/t__gazebo_set_model_state.html" title="node: /gazebo/set_model_state" alt="" coords="336,368,328,361,305,354,268,349,222,345,171,344,120,345,74,349,37,354,13,361,5,368,13,375,37,382,74,387,120,391,171,392,222,391,268,387,305,382,328,375"/>
-<area shape="poly" id="node15" href="nodes/t__tf.html" title="node: /tf" alt="" coords="1423,493,1421,486,1416,479,1408,474,1398,471,1387,469,1376,471,1366,474,1358,479,1353,486,1351,493,1353,501,1358,507,1366,513,1376,516,1387,517,1398,516,1408,513,1416,507,1421,501"/>
-<area shape="poly" id="node16" href="nodes/t__tf_static.html" title="node: /tf_static" alt="" coords="1455,421,1452,414,1442,407,1427,402,1408,399,1387,397,1366,399,1347,402,1331,407,1322,414,1318,421,1322,429,1331,435,1347,441,1366,444,1387,445,1408,444,1427,441,1442,435,1452,429"/>
-<area shape="poly" id="node17" href="nodes/t__joint_states.html" title="node: /joint_states" alt="" coords="865,368,861,361,848,354,828,349,803,345,775,344,748,345,722,349,702,354,690,361,685,368,690,375,702,382,722,387,748,391,775,392,803,391,828,387,848,382,861,375"/>
-<area shape="poly" id="node19" href="nodes/t__rosout_agg.html" title="node: /rosout_agg" alt="" coords="1843,329,1839,322,1827,315,1808,310,1783,307,1757,305,1730,307,1706,310,1686,315,1674,322,1670,329,1674,337,1686,343,1706,349,1730,352,1757,353,1783,352,1808,349,1827,343,1839,337"/>
+30 services" alt="" coords="5,80,136,131"/>
+<area shape="rect" id="node2" href="nodes/n__gazebo_gui.html" title="node: /gazebo_gui
+2 services" alt="" coords="247,5,382,56"/>
+<area shape="rect" id="node3" href="nodes/n__robot_state_publisher.html" title="node: /robot_state_publisher
+2 services" alt="" coords="197,80,432,131"/>
+<area shape="rect" id="node4" href="nodes/n__rosout.html" title="node: /rosout
+2 services" alt="" coords="493,80,612,131"/>
 </map>

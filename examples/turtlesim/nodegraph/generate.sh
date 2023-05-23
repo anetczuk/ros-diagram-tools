@@ -21,7 +21,8 @@ $TOOL_DIR/rosdiagramtools.py rosnodetree -la \
                                          --msgs_dump_dir $SCRIPT_DIR/../dump/msginfo \
                                          --services_dump_dir $SCRIPT_DIR/../dump/serviceinfo \
                                          --srvs_dump_dir $SCRIPT_DIR/../dump/srvinfo \
-                                         --outpng "$OUT_DIR/graph.png" --outraw "$OUT_DIR/graph.gv.txt" \
+                                         --mainfullgraph \
+                                         --outpng "$OUT_DIR/whole_graph.png" --outraw "$OUT_DIR/whole_graph.gv.txt" \
                                          --outhtml --outdir $OUT_DIR $@
 
 cutycapt --url=file://$OUT_DIR/nodes/n__turtlesim.html --out=$OUT_DIR/node-page.png

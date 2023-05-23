@@ -86,9 +86,9 @@ INFO:rosdiagram.tool.rosverify:workspace overlay packages: []
 
 ## `rosnodetree`
 
-Generated diagram:
+Generated full diagram:
 
-[![ROS nodes, topics and services graph](out/nodetree/full_graph-small.png "ROS nodes, topics and services graph")](out/nodetree/full_graph.png)
+[![ROS nodes, topics and services graph](out/nodetree/whole_graph-small.png "ROS nodes, topics and services graph")](out/nodetree/whole_graph.png)
 
 Generated main graph view:
 

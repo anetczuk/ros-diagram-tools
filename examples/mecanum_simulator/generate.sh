@@ -58,9 +58,8 @@ $TOOL_PATH/rosdiagramtools.py rosnodetree -la \
                                           --msgs_dump_dir $DUMP_DIR/msginfo \
                                           --services_dump_dir $DUMP_DIR/serviceinfo \
                                           --srvs_dump_dir $DUMP_DIR/srvinfo \
-                                          --mainfullgraph \
                                           --includerosinternals \
-                                          --outpng "$OUT_DIR/graph.png" --outraw "$OUT_DIR/graph.gv.txt" \
+                                          --outpng "$OUT_DIR/whole_graph.png" --outraw "$OUT_DIR/graph.gv.txt" \
                                           --outhtml --outdir $OUT_DIR
 cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
 cutycapt --url=file://$OUT_DIR/nodes/n__gazebo.html --out=$OUT_DIR/node-page.png
