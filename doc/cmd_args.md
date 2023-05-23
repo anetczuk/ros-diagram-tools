@@ -1,7 +1,7 @@
 ## rosdiagramtools.py --help
 ```
 usage: rosdiagramtools.py [-h] [-la] [--listtools]
-                          {codedistribution,catkintree,classifynodes,catkinschedule,rosnodetree,rostopictree,rosbagflow,rosverify}
+                          {codedistribution,packagetree,classifynodes,catkinschedule,rosnodetree,rostopictree,rosbagflow,rosverify}
                           ...
 
 ROS diagram tools
@@ -14,10 +14,10 @@ optional arguments:
 subcommands:
   use one of tools
 
-  {codedistribution,catkintree,classifynodes,catkinschedule,rosnodetree,rostopictree,rosbagflow,rosverify}
+  {codedistribution,packagetree,classifynodes,catkinschedule,rosnodetree,rostopictree,rosbagflow,rosverify}
                         one of tools
     codedistribution    source code distribution over packages
-    catkintree          catkin packages graph
+    packagetree         catkin packages graph
     classifynodes       match nodes to packages
     catkinschedule      catkin build schedule
     rosnodetree         rosnode connection graph
@@ -50,12 +50,12 @@ optional arguments:
 
 
 
-## rosdiagramtools.py catkintree --help
+## rosdiagramtools.py packagetree --help
 ```
-usage: rosdiagramtools.py catkintree [-h] [-la] [-f FILE]
-                                     [--node_shape NODE_SHAPE]
-                                     [--outraw OUTRAW] [--outpng OUTPNG]
-                                     [--outhtml] [--outdir OUTDIR]
+usage: rosdiagramtools.py packagetree [-h] [-la] [-f FILE]
+                                      [--node_shape NODE_SHAPE]
+                                      [--outraw OUTRAW] [--outpng OUTPNG]
+                                      [--outhtml] [--outdir OUTDIR]
 
 catkin packages graph
 
@@ -64,7 +64,8 @@ optional arguments:
   -la, --logall         Log all messages
   -f FILE, --file FILE  Read 'catkin list' output from file
   --node_shape NODE_SHAPE
-                        Graph RAW output
+                        Shape of node: 'box', 'octagon' or other handled by
+                        GraphViz dot
   --outraw OUTRAW       Graph RAW output
   --outpng OUTPNG       Graph PNG output
   --outhtml             Output HTML
@@ -122,9 +123,10 @@ usage: rosdiagramtools.py rosnodetree [-h] [-la] [--dump_dir DUMP_DIR]
                                       [--topics_dump_dir TOPICS_DUMP_DIR]
                                       [--msgs_dump_dir MSGS_DUMP_DIR]
                                       [--services_dump_dir SERVICES_DUMP_DIR]
-                                      [--srvs_dump_dir SRVS_DUMP_DIR]
-                                      [--outraw OUTRAW] [--outpng OUTPNG]
-                                      [--outhtml] [--outdir OUTDIR]
+                                      [--srvs_dump_dir SRVS_DUMP_DIR] [-mfg]
+                                      [-iri] [--outraw OUTRAW]
+                                      [--outpng OUTPNG] [--outhtml]
+                                      [--outdir OUTDIR]
 
 rosnode connection graph
 
@@ -140,6 +142,10 @@ optional arguments:
                         Dump directory containing 'rosservice' output data
   --srvs_dump_dir SRVS_DUMP_DIR
                         Dump directory containing 'rossrv' output data
+  -mfg, --mainfullgraph
+                        Generate main full graph instead of compact one
+  -iri, --includerosinternals
+                        Include ROS internal items like /rosout and /record_*
   --outraw OUTRAW       Graph RAW output
   --outpng OUTPNG       Graph PNG output
   --outhtml             Output HTML
@@ -153,7 +159,7 @@ optional arguments:
 usage: rosdiagramtools.py rostopictree [-h] [-la] [--dump_dir DUMP_DIR]
                                        [--outraw OUTRAW] [--outpng OUTPNG]
 
-rostopic flow graph
+rostopic flow graph (tool is obsolete, use rosnodetree)
 
 optional arguments:
   -h, --help           show this help message and exit

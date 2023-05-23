@@ -57,11 +57,11 @@ In `/examples` there are few examples of generated diagrams:
 
 Tools are divided into following categories:
 - working on source code: `codedistribution`,
-- working on catkin workspace: `catkintree`, `catkinschedule`, `rosverify`, `classifynodes`,
+- working on catkin workspace: `packagetree`, `catkinschedule`, `rosverify`, `classifynodes`,
 - working on running system: `rosnodetree`, `rostopictree`, `rosbagflow`.
 
 From other perspective tools can be split into:
-- ones working only with dumped data: `codedistribution`, `catkintree`, `catkinschedule`, `classifynodes`, `rosnodetree`, `rostopictree`, `rosbagflow`,
+- ones working only with dumped data: `codedistribution`, `packagetree`, `catkinschedule`, `classifynodes`, `rosnodetree`, `rostopictree`, `rosbagflow`,
 - ones requiring direct access: `rosverify`
 
 
@@ -77,11 +77,11 @@ Execution: `./src/rosdiagramtools.py codedistribution --help`
 [![code distribution chart](examples/simple/codedistribution/out/graph-small.png "code distribution chart")](examples/simple/codedistribution/out/graph.png)
 
 
-### `rosdiagramtools.py catkintree`
+### `rosdiagramtools.py packagetree`
 
 Show workspace packages in form of dependency tree.
 
-Execution: `./src/rosdiagramtools.py catkintree --help`
+Execution: `./src/rosdiagramtools.py packagetree --help`
 
 [![catkin packages tree](examples/simple/catkinlist/out/graph-small.png "catkin packages tree")](examples/simple/catkinlist/out/graph.png)
 

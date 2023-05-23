@@ -12,7 +12,7 @@ import logging
 import argparse
 
 import rosdiagram.tool.codedistribution as codedistribution
-import rosdiagram.tool.catkintree as catkintree
+import rosdiagram.tool.packagetree as packagetree
 import rosdiagram.tool.classifynodes as classifynodes
 import rosdiagram.tool.catkinschedule as catkinschedule
 import rosdiagram.tool.rosnodetree as rosnodetree
@@ -44,9 +44,9 @@ def main():
 
     ## =================================================
 
-    subparser = subparsers.add_parser('catkintree', help='catkin packages graph')
-    subparser.set_defaults( func=catkintree.process_arguments )
-    catkintree.configure_parser( subparser )
+    subparser = subparsers.add_parser('packagetree', help='catkin packages graph')
+    subparser.set_defaults( func=packagetree.process_arguments )
+    packagetree.configure_parser( subparser )
 
     ## =================================================
 

@@ -17,7 +17,7 @@ Script `generate.sh` generates diagrams and views from duped data.
 [![code distribution chart](out/codedistribution-small.png "code distribution chart")](out/codedistribution.png)
 
 
-## `catkintree`
+## `packagetree`
 
 Generated diagram:
 
