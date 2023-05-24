@@ -21,7 +21,7 @@ Main motivation for the project was to present variuos aspects of *ROS* workspac
 1. [How to use?](#how_to_use)
 2. [Requirements](#Requirements)
 3. [Examples](#Examples)
-4. [Tools](#Tools)
+4. [The Tools](#Tools)
 5. [Comparison with ROS tools](#comparison_ros)
 6. [Dumping information](#requirements)
 7. [References](#References)
@@ -68,7 +68,7 @@ In `/examples` there are few examples of generated diagrams:
 
 
 
-## Tools
+## <a name="Tools"></a> The Tools
 
 Tools are divided into following categories:
 - working on source code: `codedistribution`,
@@ -239,8 +239,8 @@ Dumping required data is split into several scripts:
 - [PlantUML](https://plantuml.com/)
 - [GraphViz gallery](https://graphviz.org/gallery/)
 - [Texthon](texthon.chipsforbrain.org/)
-- [ROS Robotics Projects](https://github.com/PacktPublishing/ROS-Robotics-Projects)
-- [ROS tutorial with examples](https://github.com/ros/ros_tutorials)
+- [Turtlebot3](https://github.com/ROBOTIS-GIT/turtlebot3)
+- [Nexus 4WD Mecanum Simulator](https://github.com/RBinsonB/nexus_4wd_mecanum_simulator)
 
 
 
