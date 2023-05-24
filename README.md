@@ -16,7 +16,20 @@ Main motivation for the project was to present variuos aspects of *ROS* workspac
 
 
 
-## How to use?
+## Table of content
+
+1. [How to use?](#how_to_use)
+2. [Requirements](#Requirements)
+3. [Examples](#Examples)
+4. [Tools](#Tools)
+5. [Comparison with ROS tools](#comparison_ros)
+6. [Dumping information](#requirements)
+7. [References](#References)
+8. [License](#License)
+
+
+
+## <a name="how_to_use"></a> How to use?
 
 1. run *dump* scripts to collect data
 2. run one of diagram tools: `./src/rosdiagramtools.py {tool} {args}`
@@ -38,7 +51,9 @@ Required dependency packages are needed to be installed before first run of main
 - `pip3 install -r ./src/requirements.txt`
 
 Moreover there are additional required packages: `python3-catkin-tools` (for `catkin`), `python3-rosdep`, `cloc`, 
-`imagemagick`, `plantuml`. Installation: 
+`imagemagick`, `plantuml`. 
+
+Installation: 
 `sudo apt install python3-catkin-tools python3-rosdep cloc imagemagick plantuml`.
 
 
@@ -57,11 +72,11 @@ In `/examples` there are few examples of generated diagrams:
 
 Tools are divided into following categories:
 - working on source code: `codedistribution`,
-- working on catkin workspace: `packagexmltree`, `buildtime`, `rosverify`, `classifynodes`,
+- working on ROS workspace: `packagexmltree`, `buildtime`, `rosverify`, `classifynodes`,
 - working on running system: `rosnodegraph`, `rostopictree`, `rosbagflow`.
 
 From other perspective tools can be split into:
-- ones working only with dumped data: `codedistribution`, `packagexmltree`, `buildtime`, `classifynodes`, `rosnodegraph`, `rostopictree`, `rosbagflow`,
+- ones working with dumped data: `codedistribution`, `packagexmltree`, `buildtime`, `classifynodes`, `rosnodegraph`, `rostopictree`, `rosbagflow`,
 - ones requiring direct access: `rosverify`
 
 
@@ -79,11 +94,11 @@ Execution: `./src/rosdiagramtools.py codedistribution --help`
 
 ### `rosdiagramtools.py packagexmltree`
 
-Show workspace packages in form of dependency tree.
+Show workspace packages in form of dependency tree. Graph presents package build dependencies defined in *package.xml*.
 
 Execution: `./src/rosdiagramtools.py packagexmltree --help`
 
-[![catkin packages tree](examples/simple/catkinlist/out/graph-small.png "catkin packages tree")](examples/simple/catkinlist/out/graph.png)
+[![turtlebot3 packages tree](examples/turtlebot3/out/catkintree/full_graph-small.png "turtlebot3 packages tree")](examples/turtlebot3/out/catkintree/full_graph.png)
 
 
 ### `rosdiagramtools.py classifynodes`
@@ -96,7 +111,7 @@ Output example: [mecanum_simulator](examples/mecanum_simulator)
 
 ### `rosdiagramtools.py buildtime`
 
-Presents schedule graph of workspace build consisting of build time of packages.
+Presents build time and order of packages in workspace.
 
 Execution: `./src/rosdiagramtools.py buildtime --help`
 
@@ -116,7 +131,7 @@ Then graph will be available through file: `output_dir/full_graph.html`.
 
 More real-life example with full view is presented on folowing image:
 
-[![Non-trivial build schedule view](examples/mecanum_simulator/out/catkinschedule/main-page-small.png "Non-trivial build schedule view")](examples/mecanum_simulator/out/catkinschedule/main-page.png)
+[![turtlebot3 build time view](examples/turtlebot3/out/catkinschedule/main-page-small.png "turtlebot3 build time view")](examples/turtlebot3/out/catkinschedule/main-page.png)
 
 
 ### `rosdiagramtools.py rosverify`
@@ -184,6 +199,28 @@ Tool generates sequence diagram and interactive web page with following function
 The web page output is stored [here](examples/turtlesim/rosbag/out/full_graph.html).
 
 Example of node and message view preview can be found here: [turtlesim](examples/turtlesim) 
+
+
+
+## <a name="comparison_ros"></a> Comparison with ROS tools
+
+- `codedistribution` does not have equivalent,
+- `packagexmltree` presents similar results to `rqt_dep`, but limited only to workspace packages and it's build 
+dependencies. `rqt_dep` presents packages full tree of runtime dependencies,
+- `classifynodes` does not have equivalent,
+- `buildtime` does not have equivalent,
+- `rosverify` does not have equivalent,
+- `rosnodegraph` presents similar results to `rqt_graph`. Focuses more on connections between nodes and messages,
+- `rostopictree` presents similar results to `rqt_graph`. Presents connection graph of nodes,
+- `rosbagflow` presents similar results to `rqt_bag`. Emphasises communication between nodes and time relation between messages.
+Using `rqt_bag` it is hardly possible to read senders and receivers of messages.
+
+Moreover with *diagram tools* it is possible to generate and store diagram images in automated way serving for example 
+for documentation purposes.
+
+From the other hand, diagram tools are not capable of presenting state changes of running system like in `rqt_bag`. The 
+tools just makes snapshot of the system in certain moment.  
+
 
 
 ## Dumping information
