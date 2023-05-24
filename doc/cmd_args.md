@@ -1,7 +1,7 @@
 ## rosdiagramtools.py --help
 ```
 usage: rosdiagramtools.py [-h] [-la] [--listtools]
-                          {codedistribution,packagetree,classifynodes,buildtime,rosnodegraph,rostopicgraph,rosbagflow,rosverify}
+                          {codedistribution,packagexmltree,classifynodes,buildtime,rosnodegraph,rostopicgraph,rosbagflow,rosverify}
                           ...
 
 ROS diagram tools
@@ -14,10 +14,10 @@ optional arguments:
 subcommands:
   use one of tools
 
-  {codedistribution,packagetree,classifynodes,buildtime,rosnodegraph,rostopicgraph,rosbagflow,rosverify}
+  {codedistribution,packagexmltree,classifynodes,buildtime,rosnodegraph,rostopicgraph,rosbagflow,rosverify}
                         one of tools
     codedistribution    source code distribution over packages
-    packagetree         catkin packages graph
+    packagexmltree      packages graph based on dependencies in package.xml
     classifynodes       match nodes to packages
     buildtime           catkin build time
     rosnodegraph        rosnode connection graph
@@ -49,12 +49,12 @@ optional arguments:
 
 
 
-## rosdiagramtools.py packagetree --help
+## rosdiagramtools.py packagexmltree --help
 ```
-usage: rosdiagramtools.py packagetree [-h] [-la] [-f FILE]
-                                      [--nodeshape NODESHAPE]
-                                      [--outraw OUTRAW] [--outpng OUTPNG]
-                                      [--outhtml] [--outdir OUTDIR]
+usage: rosdiagramtools.py packagexmltree [-h] [-la] [-f FILE]
+                                         [--nodeshape NODESHAPE]
+                                         [--outraw OUTRAW] [--outpng OUTPNG]
+                                         [--outhtml] [--outdir OUTDIR]
 
 catkin packages graph
 
