@@ -72,7 +72,7 @@ def get_items_list( deps_dict ):
 
 
 def generate_pkg_graph( deps_dict, node_shape="octagon", 
-                        top_items=None, hightlight_items=None, preserve_neighbour_items=None, paint_function=None ):
+                        top_items=None, highlight_items=None, preserve_neighbour_items=None, paint_function=None ):
     pkg_graph: Graph = generate_graph( deps_dict, node_shape=node_shape )
     if top_items:
         preserve_top_subgraph( pkg_graph, top_items )
@@ -81,7 +81,7 @@ def generate_pkg_graph( deps_dict, node_shape="octagon",
     set_min_max_rank( pkg_graph )
     if paint_function:
         paint_function( pkg_graph )
-    paint_nodes( pkg_graph, hightlight_items )
+    paint_nodes( pkg_graph, highlight_items )
     return pkg_graph
 
     
@@ -122,11 +122,11 @@ def paint_nodes( graph: Graph, paint_list ):
 
 
 def generate( catkin_list_file, node_shape="box",
-              top_items=None, hightlight_items=None, preserve_neighbour_items=None, paint_function=None ):
+              top_items=None, highlight_items=None, preserve_neighbour_items=None, paint_function=None ):
     content   = read_file( catkin_list_file )
     data_dict = parse_content( content, build_deps=False )
     graph     = generate_pkg_graph( data_dict, node_shape,
-                                    top_items=top_items, hightlight_items=hightlight_items, preserve_neighbour_items=preserve_neighbour_items, paint_function=paint_function )
+                                    top_items=top_items, highlight_items=highlight_items, preserve_neighbour_items=preserve_neighbour_items, paint_function=paint_function )
     return graph
 
 
@@ -138,7 +138,7 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
     highlight_list = config_params_dict.get( "highlight_list", [] )
     paint_function = config_params_dict.get( "paint_function", None )
 
-    main_graph: Graph = generate_pkg_graph( deps_dict, top_items=top_list, hightlight_items=highlight_list, paint_function=paint_function )
+    main_graph: Graph = generate_pkg_graph( deps_dict, top_items=top_list, highlight_items=highlight_list, paint_function=paint_function )
 
     all_items = sorted( main_graph.getNodeNamesAll() )
 
@@ -166,7 +166,7 @@ def generate_subpages_dict( deps_dict, items_list, highlight_list=None, top_list
         sub_items[ item_id ] = item_dict
 
         item_graph: Graph = generate_pkg_graph( deps_dict, 
-                                                top_items=top_list, hightlight_items=highlight_list, preserve_neighbour_items=[item_id], 
+                                                top_items=top_list, highlight_items=highlight_list, preserve_neighbour_items=[item_id], 
                                                 paint_function=paint_function )
 
         item_dict[ "graph" ]       = item_graph
@@ -189,7 +189,7 @@ def configure_parser( parser ):
     parser.add_argument( '-f', '--file', action='store', required=False, default="",
                          help="Read 'catkin list' output from file" )
     parser.add_argument( '--nodeshape', action='store', required=False, default=None, help="Shape of node: 'box', 'octagon' or other value supprted by GraphViz dot" )
-    parser.add_argument( '--topitems', action='store', required=False, default="", help="File with list of items to put on top" )
+    parser.add_argument( '--topitems', action='store', required=False, default="", help="File with list of items to filter on top" )
     parser.add_argument( '--highlightitems', action='store', required=False, default="", help="File with list of items to highlight" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
@@ -214,7 +214,7 @@ def process_arguments( args, paint_function=None ):
     highlight_list = read_list( args.highlightitems )
 
     _LOGGER.info( "generating packages graph" )
-    graph = generate_pkg_graph( data_dict, node_shape, top_items=top_list, hightlight_items=highlight_list, paint_function=paint_function )
+    graph = generate_pkg_graph( data_dict, node_shape, top_items=top_list, highlight_items=highlight_list, paint_function=paint_function )
 
     if len( args.outraw ) > 0:
         graph.writeRAW( args.outraw )
