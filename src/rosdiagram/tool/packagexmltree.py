@@ -9,7 +9,7 @@ import os
 import logging
 import argparse
 
-from showgraph.io import read_file
+from showgraph.io import read_file, read_list
 from showgraph.graphviz import Graph, preserve_neighbour_nodes, set_nodes_style,\
     preserve_top_subgraph
 
@@ -71,6 +71,20 @@ def get_items_list( deps_dict ):
     return ret_list
 
 
+def generate_pkg_graph( deps_dict, node_shape="octagon", 
+                        top_items=None, hightlight_items=None, preserve_neighbour_items=None, paint_function=None ):
+    pkg_graph: Graph = generate_graph( deps_dict, node_shape=node_shape )
+    if top_items:
+        preserve_top_subgraph( pkg_graph, top_items )
+    if preserve_neighbour_items:
+        preserve_neighbour_nodes( pkg_graph, preserve_neighbour_items, 0 )
+    set_min_max_rank( pkg_graph )
+    if paint_function:
+        paint_function( pkg_graph )
+    paint_nodes( pkg_graph, hightlight_items )
+    return pkg_graph
+
+    
 def generate_graph( deps_dict, node_shape="octagon" ):
     dot_graph = Graph()
     base_graph = dot_graph.base_graph
@@ -107,11 +121,12 @@ def paint_nodes( graph: Graph, paint_list ):
 ## ===============================================================
 
 
-def generate( catkin_list_file, node_shape="box" ):
+def generate( catkin_list_file, node_shape="box",
+              top_items=None, hightlight_items=None, preserve_neighbour_items=None, paint_function=None ):
     content   = read_file( catkin_list_file )
     data_dict = parse_content( content, build_deps=False )
-    graph     = generate_graph( data_dict, node_shape )
-    set_min_max_rank( graph )
+    graph     = generate_pkg_graph( data_dict, node_shape,
+                                    top_items=top_items, hightlight_items=hightlight_items, preserve_neighbour_items=preserve_neighbour_items, paint_function=paint_function )
     return graph
 
 
@@ -123,13 +138,7 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
     highlight_list = config_params_dict.get( "highlight_list", [] )
     paint_function = config_params_dict.get( "paint_function", None )
 
-    main_graph: Graph = generate_graph( deps_dict )
-    if top_list:
-        preserve_top_subgraph( main_graph, top_list )
-    set_min_max_rank( main_graph )
-    if paint_function:
-        paint_function( main_graph )
-    paint_nodes( main_graph, highlight_list )
+    main_graph: Graph = generate_pkg_graph( deps_dict, top_items=top_list, hightlight_items=highlight_list, paint_function=paint_function )
 
     all_items = sorted( main_graph.getNodeNamesAll() )
 
@@ -156,14 +165,9 @@ def generate_subpages_dict( deps_dict, items_list, highlight_list=None, top_list
         item_dict = {}
         sub_items[ item_id ] = item_dict
 
-        item_graph = generate_graph( deps_dict )
-        if top_list:
-            preserve_top_subgraph( item_graph, top_list )
-        preserve_neighbour_nodes( item_graph, [item_id], 0 )
-        set_min_max_rank( item_graph )
-        if paint_function:
-            paint_function( item_graph )
-        paint_nodes( item_graph, highlight_list )
+        item_graph: Graph = generate_pkg_graph( deps_dict, 
+                                                top_items=top_list, hightlight_items=highlight_list, preserve_neighbour_items=[item_id], 
+                                                paint_function=paint_function )
 
         item_dict[ "graph" ]       = item_graph
         item_dict[ "msg_type" ]    = ""
@@ -185,13 +189,15 @@ def configure_parser( parser ):
     parser.add_argument( '-f', '--file', action='store', required=False, default="",
                          help="Read 'catkin list' output from file" )
     parser.add_argument( '--nodeshape', action='store', required=False, default=None, help="Shape of node: 'box', 'octagon' or other value supprted by GraphViz dot" )
+    parser.add_argument( '--topitems', action='store', required=False, default="", help="File with list of items to put on top" )
+    parser.add_argument( '--highlightitems', action='store', required=False, default="", help="File with list of items to highlight" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
     parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
     parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 
 
-def process_arguments( args ):
+def process_arguments( args, paint_function=None ):
     logging.basicConfig()
     if args.logall is True:
         logging.getLogger().setLevel( logging.DEBUG )
@@ -202,7 +208,13 @@ def process_arguments( args ):
     if node_shape is None:
         node_shape = "octagon"
 
-    graph = generate( args.file, node_shape )
+    content        = read_file( args.file )
+    data_dict      = parse_content( content, build_deps=False )
+    top_list       = read_list( args.topitems )
+    highlight_list = read_list( args.highlightitems )
+
+    _LOGGER.info( "generating packages graph" )
+    graph = generate_pkg_graph( data_dict, node_shape, top_items=top_list, hightlight_items=highlight_list, paint_function=paint_function )
 
     if len( args.outraw ) > 0:
         graph.writeRAW( args.outraw )
@@ -214,9 +226,12 @@ def process_arguments( args ):
     ##
     if args.outhtml and len( args.outdir ) > 0:
         _LOGGER.info( "generating HTML graph" )
-        content   = read_file( args.file )
-        data_dict = parse_content( content, build_deps=False )
-        generate_pages( data_dict, args.outdir )
+        os.makedirs( args.outdir, exist_ok=True )
+        config_params_dict = {  "top_list": top_list,
+                                "highlight_list": highlight_list,
+                                "paint_function": paint_function
+                                }
+        generate_pages( data_dict, args.outdir, config_params_dict )
 
 
 def main():
