@@ -21,7 +21,7 @@ Main motivation for the project was to present variuos aspects of *ROS* workspac
 1. [How to use?](#how_to_use)
 2. [Requirements](#Requirements)
 3. [Examples](#Examples)
-4. [The Tools](#Tools)
+4. [The Tools](#tools)
 5. [Comparison with ROS tools](#comparison_ros)
 6. [Dumping information](#requirements)
 7. [References](#References)
@@ -68,7 +68,7 @@ In `/examples` there are few examples of generated diagrams:
 
 
 
-## <a name="Tools"></a> The Tools
+## <a name="tools"></a> The Tools
 
 Tools are divided into following categories:
 - working on source code: `codedistribution`,
@@ -209,11 +209,12 @@ Example of node and message view preview can be found here: [turtlesim](examples
 dependencies. `rqt_dep` presents packages full tree of runtime dependencies,
 - `classifynodes` does not have equivalent,
 - `buildtime` does not have equivalent,
-- `rosverify` does not have equivalent,
 - `rosnodegraph` presents similar results to `rqt_graph`. Focuses more on connections between nodes and messages,
 - `rostopictree` presents similar results to `rqt_graph`. Presents connection graph of nodes,
 - `rosbagflow` presents similar results to `rqt_bag`. Emphasises communication between nodes and time relation between messages.
-Using `rqt_bag` it is hardly possible to read senders and receivers of messages.
+Using `rqt_bag` it is hardly possible to read senders and receivers of messages,
+- `rosverify` and `rosbagflow` can be used to verify certain aspects of system. ROS also have tool dedicated for looking 
+for potential issues - it is `roswtf`. 
 
 Moreover with *diagram tools* it is possible to generate and store diagram images in automated way serving for example 
 for documentation purposes.
