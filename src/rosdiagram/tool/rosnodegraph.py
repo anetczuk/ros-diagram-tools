@@ -39,7 +39,7 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 
 def painter_wrapper( graph: Graph, highlight_list, base_painter=None ):
     if base_painter:
-        base_painter()
+        base_painter( graph )
     if highlight_list:
         style = { "style": "filled",
                   "fillcolor": "yellow"
