@@ -1,6 +1,6 @@
 digraph nodes_graph {
 rankdir=LR;
-"n_/turtlesim" [label="/turtlesim", shape=box];
+"n_/turtlesim" [label="/turtlesim\n9 services", shape=box];
 "t_/turtle1/color_sensor" [label="/turtle1/color_sensor", shape=ellipse];
 "t_/turtle1/pose" [label="/turtle1/pose", shape=ellipse];
 "t_/turtle1/cmd_vel" [label="/turtle1/cmd_vel", shape=ellipse];

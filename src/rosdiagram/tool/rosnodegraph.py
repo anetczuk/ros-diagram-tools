@@ -15,7 +15,8 @@ from typing import Dict, Any
 from rosdiagram.ros import rostopicdata
 from rosdiagram.ros import rosservicedata
 
-from showgraph.graphviz import Graph, set_node_labels, preserve_neighbour_nodes
+from showgraph.io import read_list
+from showgraph.graphviz import Graph, set_node_labels, preserve_neighbour_nodes, set_nodes_style
 
 from rosdiagram.utils import get_create_item
 from rosdiagram.ros.rosnodedata import get_topics, get_services,\
@@ -34,6 +35,30 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 
 
 ## ===================================================================
+
+
+def painter_wrapper( graph: Graph, highlight_list, base_painter=None ):
+    if base_painter:
+        base_painter()
+    if highlight_list:
+        style = { "style": "filled",
+                  "fillcolor": "yellow"
+                  }
+        set_nodes_style( graph, highlight_list, style )
+
+
+## ===================================================================
+
+
+def generate_graph( nodes_dict, labels_dict=None, show_services=True, full_graph=True, paint_function=None ):
+    graph: Graph = None
+    if full_graph:
+        graph = generate_full_graph( nodes_dict, labels_dict=labels_dict, services_as_labels=show_services )
+    else:
+        graph = generate_compact_graph( nodes_dict, show_services=show_services, labels_dict=labels_dict )
+    if paint_function:
+        paint_function( graph )
+    return graph
 
 
 def generate_full_graph( nodes_dict, labels_dict=None, services_as_labels=True, services_as_nodes=False ) -> Graph:
@@ -171,13 +196,7 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
 
     all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
 
-    main_graph: Graph = None
-    if main_full_graph:
-        main_graph = generate_full_graph( nodes_dict, labels_dict=nodes_labels )
-    else:
-        main_graph = generate_compact_graph( nodes_dict, show_services=True, labels_dict=nodes_labels )
-    if paint_function:
-        paint_function( main_graph )
+    main_graph: Graph = generate_graph( nodes_dict, labels_dict=nodes_labels, full_graph=main_full_graph, paint_function=paint_function )
 
     nodes_subpages_dict    = generate_subpages_dict( nodes_dict, all_nodes, nodes_labels, 1,
                                                      paint_function=paint_function )
@@ -317,6 +336,7 @@ def configure_parser( parser ):
                          help="Path to directory containing dumped 'rosservice' output" )
     parser.add_argument( '--srvsdumppath', action='store', required=False, default="",
                          help="Path to directory containing dumped 'rossrv' output" )
+    parser.add_argument( '--highlightitems', action='store', required=False, default="", help="File with list of items to highlight" )
     parser.add_argument( '-mfg', '--mainfullgraph', action='store_true', help="Generate main full graph instead of compact one" )
     parser.add_argument( '-iri', '--includerosinternals', action='store_true', help="Include ROS internal items like /rosout and /record_*" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
@@ -325,7 +345,7 @@ def configure_parser( parser ):
     parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 
 
-def process_arguments( args ):
+def process_arguments( args, paint_function=None ):
     logging.basicConfig()
     if args.logall is True:
         logging.getLogger().setLevel( logging.DEBUG )
@@ -340,12 +360,15 @@ def process_arguments( args ):
     if not args.includerosinternals:
         filter_ros_nodes_dict( nodes_dict )
 
-    label_dict = fix_names( nodes_dict )
-    # info_dict  = get_node_info_dict( nodes_dict, label_dict, args.msgsdumppath, args.srvsdumppath )
+    labels_dict = fix_names( nodes_dict )
+    # info_dict  = get_node_info_dict( nodes_dict, labels_dict, args.msgsdumppath, args.srvsdumppath )
+
+    highlight_list = read_list( args.highlightitems )
+    painter = lambda graph: painter_wrapper( graph, highlight_list, paint_function )
 
     if len( args.outraw ) > 0 or len( args.outpng ) > 0:
-        graph = generate_full_graph( nodes_dict )
-        set_node_labels( graph, label_dict )
+        _LOGGER.info( "generating main graph" )
+        graph: Graph = generate_graph( nodes_dict, labels_dict=labels_dict, full_graph=args.mainfullgraph, paint_function=painter )
         if len( args.outraw ) > 0:
             graph.writeRAW( args.outraw )
         if len( args.outpng ) > 0:
@@ -355,13 +378,15 @@ def process_arguments( args ):
     ## generate HTML data
     ##
     if args.outhtml and len( args.outdir ) > 0:
+        _LOGGER.info( "generating HTML graph" )
         os.makedirs( args.outdir, exist_ok=True )
         generate_pages( nodes_dict, args.outdir,
-                        nodes_labels=label_dict,
+                        nodes_labels=labels_dict,
                         topics_dump_dir=args.topicsdumppath,
                         msgs_dump_dir=args.msgsdumppath,
                         services_dump_dir=args.servicesdumppath,
                         srvs_dump_dir=args.srvsdumppath,
+                        paint_function=painter,
                         main_full_graph=args.mainfullgraph
                         )
 
