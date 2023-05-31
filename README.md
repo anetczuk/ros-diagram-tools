@@ -31,7 +31,7 @@ Main motivation for the project was to present variuos aspects of *ROS* workspac
 
 ## <a name="how_to_use"></a> How to use?
 
-1. run *dump* scripts to collect data
+1. run *dump* tools to collect data
 2. run one of diagram tools: `./src/rosdiagramtools.py {tool} {args}`
 
 Depending on desired tool, user can run subset of *dump* scripts. 
@@ -40,7 +40,7 @@ Examples of provided diagrams can be seen in `/examples/` repo directory.
 First example (`sample`) contains synthetic data. Example `turtlesim` presents 
 structure of *turtlesim* tool.
 
-Whole commands list with description can be found [here](doc/cmd_args.md) by calling `rosdiagramtools.py --help`.
+Whole commands list with description can be found [here](doc/cmd_args_tools.md) or by calling `rosdiagramtools.py --help`.
 
 
 
@@ -73,7 +73,7 @@ In `/examples` there are few examples of generated diagrams:
 Tools are divided into following categories:
 - working on source code: `codedistribution`,
 - working on ROS workspace: `packagexmltree`, `buildtime`, `rosverify`, `classifynodes`,
-- working on running system: `rosnodegraph`, `rostopictree`, `rosbagflow`.
+- working on running ROS master: `rosnodegraph`, `rostopictree`, `rosbagflow`.
 
 From other perspective tools can be split into:
 - ones working with dumped data: `codedistribution`, `packagexmltree`, `buildtime`, `classifynodes`, `rosnodegraph`, `rostopictree`, `rosbagflow`,
@@ -106,7 +106,7 @@ Execution: `./src/rosdiagramtools.py packagexmltree --help`
 Tool tries to match ROS nodes (given by `rosnode` command) to source packages where nodes are implemented. Result is presented in form 
 of text file.
 
-Output example: [mecanum_simulator](examples/mecanum_simulator)
+Output example: [mecanum_simulator](examples/mecanum_simulator#classifynodes)
 
 
 ### `rosdiagramtools.py buildtime`
@@ -220,16 +220,32 @@ Moreover with *diagram tools* it is possible to generate and store diagram image
 for documentation purposes.
 
 From the other hand, diagram tools are not capable of presenting state changes of running system like in `rqt_bag`. The 
-tools just makes snapshot of the system in certain moment.  
+tools just makes snapshot of the system in certain moment.
 
 
 
 ## Dumping information
 
-Dumping required data is split into several scripts:
-- `./src/dump_cloc.py` - stores source code info using `cloc` 
-- `./src/dump_ros.sh` - stores *ROS* data using *ROS* tools (requires `rosmaster` to be run)
-- `./src/dump_roslaunch.sh` - extracts nodes list spawned by given launch file
+Dumping data is done through `rosdiagramdump.py` script. Description of arguments can be found [here](doc/cmd_args_dump.md) or 
+by calling `rosdiagramdump.py --help`.
+
+Dump tools:
+- `dumpclocdir` - dump result of `cloc` command on given directory
+- `dumpcatkindeps` - dump catkin dependencies of packages in workspace (from package.xml)
+- `dumprospack` - dump data from `rospack`
+- `dumprosmsg` - dump messages info
+- `dumprossrv` - dump services definitions
+- `dumprosnode` - dump nodes info
+- `dumprostopic` - dump topics info
+- `dumprosservice` - dump services info
+- `dumproslaunch` - dump node names of launch file
+- `dumpros` - dump majority of data (uses above mentioned dump tools)
+- `extractscripts` - extract embedded scripts to files
+
+Tools can be divided into following categories:
+- working on source code: `dumpclocdir`,
+- working on ROS workspace: `dumpcatkindeps`, `dumprospack`, `dumprosmsg`,`dumprossrv`, `dumproslaunch`,
+- working on running ROS master: `dumprosnode`, `dumprostopic`, `dumprosservice`, `dumpros`.
 
 
 

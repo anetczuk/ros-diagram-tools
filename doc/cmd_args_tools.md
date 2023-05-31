@@ -53,6 +53,8 @@ optional arguments:
 ```
 usage: rosdiagramtools.py packagexmltree [-h] [-la] [-f FILE]
                                          [--nodeshape NODESHAPE]
+                                         [--topitems TOPITEMS]
+                                         [--highlightitems HIGHLIGHTITEMS]
                                          [--outraw OUTRAW] [--outpng OUTPNG]
                                          [--outhtml] [--outdir OUTDIR]
 
@@ -65,6 +67,9 @@ optional arguments:
   --nodeshape NODESHAPE
                         Shape of node: 'box', 'octagon' or other value
                         supprted by GraphViz dot
+  --topitems TOPITEMS   File with list of items to filter on top
+  --highlightitems HIGHLIGHTITEMS
+                        File with list of items to highlight
   --outraw OUTRAW       Graph RAW output
   --outpng OUTPNG       Graph PNG output
   --outhtml             Output HTML
@@ -124,8 +129,9 @@ usage: rosdiagramtools.py rosnodegraph [-h] [-la]
                                        [--topicsdumppath TOPICSDUMPPATH]
                                        [--msgsdumppath MSGSDUMPPATH]
                                        [--servicesdumppath SERVICESDUMPPATH]
-                                       [--srvsdumppath SRVSDUMPPATH] [-mfg]
-                                       [-iri] [--outraw OUTRAW]
+                                       [--srvsdumppath SRVSDUMPPATH]
+                                       [--highlightitems HIGHLIGHTITEMS]
+                                       [-mfg] [-iri] [--outraw OUTRAW]
                                        [--outpng OUTPNG] [--outhtml]
                                        [--outdir OUTDIR]
 
@@ -145,6 +151,8 @@ optional arguments:
                         output
   --srvsdumppath SRVSDUMPPATH
                         Path to directory containing dumped 'rossrv' output
+  --highlightitems HIGHLIGHTITEMS
+                        File with list of items to highlight
   -mfg, --mainfullgraph
                         Generate main full graph instead of compact one
   -iri, --includerosinternals

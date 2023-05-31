@@ -142,18 +142,6 @@ def main():
     parser.add_argument( '--listtools', action='store_true', help='List tools' )
     
     subparsers = parser.add_subparsers( help='one of tools', description="use one of tools", dest='tool', required=False )
-    
-    ## =================================================
-    
-    subparser = subparsers.add_parser('extractscripts', help="extract embedded scripts to files")
-    subparser.set_defaults( func=extract_scripts )
-    subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
-
-    ## =================================================
-
-    subparser = subparsers.add_parser('dumpros', help="dump majority of data")
-    subparser.set_defaults( func=dumpros )
-    subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
 
     ## =================================================
     
@@ -165,23 +153,28 @@ def main():
 
     ## =================================================
 
-    subparser = subparsers.add_parser('dumpcatkindeps', help="dump catkin build deps of workspace packages")
+    subparser = subparsers.add_parser('dumpcatkindeps', help="dump catkin dependencies of packages in workspace (from package.xml)")
     subparser.set_defaults( func=dumpcatkindeps )
     subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
 
     ## =================================================
 
-    subparser = subparsers.add_parser('dumproslaunch', help="dump node names of launch file")
-    subparser.set_defaults( func=dumproslaunch )
-    subparser.add_argument( '--launchfile', action='store', required=True, default="", help="Launch file" )
+    subparser = subparsers.add_parser('dumprospack', help="dump data from 'rospack'")
+    subparser.set_defaults( func=dumprospack )
     subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
-    
+
     ## =================================================
 
     subparser = subparsers.add_parser('dumprosmsg', help="dump messages info")
     subparser.set_defaults( func=dumprosmsg )
     subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
-    
+
+    ## =================================================
+
+    subparser = subparsers.add_parser('dumprossrv', help="dump services definitions")
+    subparser.set_defaults( func=dumprossrv )
+    subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
+
     ## =================================================
 
     subparser = subparsers.add_parser('dumprosnode', help="dump nodes info")
@@ -190,28 +183,35 @@ def main():
     
     ## =================================================
 
-    subparser = subparsers.add_parser('dumprospack', help="dump data from 'rospack'")
-    subparser.set_defaults( func=dumprospack )
+    subparser = subparsers.add_parser('dumprostopic', help="dump topics info")
+    subparser.set_defaults( func=dumprostopic )
     subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
-    
+
     ## =================================================
 
     subparser = subparsers.add_parser('dumprosservice', help="dump services info")
     subparser.set_defaults( func=dumprosservice )
     subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
-    
+
     ## =================================================
 
-    subparser = subparsers.add_parser('dumprossrv', help="dump services definitions")
-    subparser.set_defaults( func=dumprossrv )
+    subparser = subparsers.add_parser('dumproslaunch', help="dump node names of launch file")
+    subparser.set_defaults( func=dumproslaunch )
+    subparser.add_argument( '--launchfile', action='store', required=True, default="", help="Launch file" )
     subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
-    
+
     ## =================================================
 
-    subparser = subparsers.add_parser('dumprostopic', help="dump topics info")
-    subparser.set_defaults( func=dumprostopic )
+    subparser = subparsers.add_parser('dumpros', help="dump majority of data")
+    subparser.set_defaults( func=dumpros )
     subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
 
+    ## =================================================
+    
+    subparser = subparsers.add_parser('extractscripts', help="extract embedded scripts to files")
+    subparser.set_defaults( func=extract_scripts )
+    subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
+    
     ## =================================================
 
     args = parser.parse_args()
