@@ -1,4 +1,11 @@
 #!/bin/bash
+#
+# Copyright (c) 2022, Arkadiusz Netczuk <dev.arnet@gmail.com>
+# All rights reserved.
+#
+# This source code is licensed under the BSD 3-Clause license found in the
+# LICENSE file in the root directory of this source tree.
+#
 
 ##
 ## Dump rostopic info to files
@@ -25,15 +32,15 @@ mkdir -p $INFO_DIR
 echo "Dumping data to $INFO_DIR"
 
 
-rospack list > "$INFO_DIR/list.txt"
+rostopic list > "$INFO_DIR/list.txt"
 
+items_list=$(rostopic list)
 
-items_list=$(rospack list-names)
 
 for item in $items_list; do
     out_file="$INFO_DIR/"$(echo "$item" | sed "s/\//_/g")".txt"
     echo "Writing $out_file"
-    rospack depends1 $item > $out_file
+    rostopic info $item > $out_file
 done
 
 echo -e "\nDone.\n"
