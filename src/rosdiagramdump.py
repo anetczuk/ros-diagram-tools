@@ -29,12 +29,18 @@ _LOGGER = logging.getLogger(__name__)
 
 SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 
+TMP_DIR="/tmp/rosdiagramdump"
+
 
 ## =============================================================
 
 
 def extract_scripts( args ):
     out_dir = args.outdir
+    extract_scripts_to( out_dir )
+
+
+def extract_scripts_to( out_dir ):
     os.makedirs( out_dir, exist_ok=True )
     for script_data in dumpscripts.SCRIPTS_LIST:
         script_name = script_data[0]
@@ -47,13 +53,15 @@ def execute_script( script_data, args=None ):
     if args is None:
         args = []
 
-    script_name = script_data[0]
-    script_out_path = os.path.join( "/tmp", script_name )
-    extract_script( script_data, script_out_path )
+    ## extract all scripts, because some scripts can depend on other scripts (e.g. dump_ros.sh)
+    extract_scripts_to( TMP_DIR )
 
-    os.system( f"chmod +x '{script_out_path}'" )
+    script_name = script_data[0]
+    script_out_path = os.path.join( TMP_DIR, script_name )
+
     args_string = " ".join( args )
-    os.system( f"{script_out_path} {args_string}" )
+    if os.system( f"{script_out_path} {args_string}" ) != 0:
+        raise RuntimeError( f"failed executing script: {script_out_path}" )
 
 
 def extract_script( script_data, script_out_path ):
@@ -61,6 +69,8 @@ def extract_script( script_data, script_out_path ):
         content = script_data[1]
         decoded_content = decode_content( content )
         script.write( decoded_content )
+    if os.system( f"chmod +x '{script_out_path}'" ) != 0:
+        raise RuntimeError( f"unable to set executable attribute to script: {script_out_path}" )
 
 
 def decode_content( content ):
