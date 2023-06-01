@@ -1,8 +1,0 @@
-Type: tf2_msgs/TFMessage
-
-Publishers: 
- * /robot_state_publisher (http://ubuntu-ros:41405/)
-
-Subscribers: None
-
-

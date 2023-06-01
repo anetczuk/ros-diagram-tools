@@ -1,7 +1,7 @@
 Type: gazebo_msgs/LinkStates
 
 Publishers: 
- * /gazebo (http://ubuntu-ros:44937/)
+ * /gazebo (http://ubuntu-ros:33153/)
 
 Subscribers: None
 

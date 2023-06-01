@@ -3,6 +3,6 @@ Type: geometry_msgs/Twist
 Publishers: None
 
 Subscribers: 
- * /gazebo (http://ubuntu-ros:44937/)
+ * /gazebo (http://ubuntu-ros:33153/)
 
 

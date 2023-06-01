@@ -1,4 +1,4 @@
 Node: /gazebo
-URI: rosrpc://ubuntu-ros:44789
+URI: rosrpc://ubuntu-ros:49593
 Type: gazebo_msgs/ApplyJointEffort
 Args: joint_name effort start_time duration

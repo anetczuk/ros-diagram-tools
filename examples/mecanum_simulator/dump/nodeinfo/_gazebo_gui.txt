@@ -11,15 +11,15 @@ Services:
  * /gazebo_gui/set_logger_level
 
 
-contacting node http://ubuntu-ros:43993/ ...
-Pid: 92339
+contacting node http://ubuntu-ros:34037/ ...
+Pid: 20622
 Connections:
  * topic: /rosout
     * to: /rosout
-    * direction: outbound (46215 - 127.0.0.1:33880) [40]
+    * direction: outbound (56455 - 127.0.0.1:50280) [43]
     * transport: TCPROS
  * topic: /clock
-    * to: /gazebo (http://ubuntu-ros:44937/)
-    * direction: inbound (45724 - ubuntu-ros:44789) [87]
+    * to: /gazebo (http://ubuntu-ros:33153/)
+    * direction: inbound (42796 - ubuntu-ros:49593) [42]
     * transport: TCPROS
 

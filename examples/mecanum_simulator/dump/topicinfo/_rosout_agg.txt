@@ -1,7 +1,7 @@
 Type: rosgraph_msgs/Log
 
 Publishers: 
- * /rosout (http://ubuntu-ros:46275/)
+ * /rosout (http://ubuntu-ros:35095/)
 
 Subscribers: None
 

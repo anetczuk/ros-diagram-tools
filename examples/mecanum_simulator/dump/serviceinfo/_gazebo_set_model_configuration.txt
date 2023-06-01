@@ -1,4 +1,4 @@
 Node: /gazebo
-URI: rosrpc://ubuntu-ros:44789
+URI: rosrpc://ubuntu-ros:49593
 Type: gazebo_msgs/SetModelConfiguration
 Args: model_name urdf_param_name joint_names joint_positions

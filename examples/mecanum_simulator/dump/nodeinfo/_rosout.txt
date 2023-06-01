@@ -12,23 +12,19 @@ Services:
  * /rosout/set_logger_level
 
 
-contacting node http://ubuntu-ros:46275/ ...
-Pid: 92257
+contacting node http://ubuntu-ros:35095/ ...
+Pid: 4848
 Connections:
  * topic: /clock
-    * to: /gazebo (http://ubuntu-ros:44937/)
-    * direction: inbound (45710 - ubuntu-ros:44789) [19]
+    * to: /gazebo (http://ubuntu-ros:33153/)
+    * direction: inbound (39640 - ubuntu-ros:49593) [19]
     * transport: TCPROS
  * topic: /rosout
-    * to: /robot_state_publisher (http://ubuntu-ros:41405/)
-    * direction: inbound (34740 - ubuntu-ros:45235) [13]
+    * to: /gazebo (http://ubuntu-ros:33153/)
+    * direction: inbound (39586 - ubuntu-ros:49593) [16]
     * transport: TCPROS
  * topic: /rosout
-    * to: /gazebo (http://ubuntu-ros:44937/)
-    * direction: inbound (45650 - ubuntu-ros:44789) [18]
-    * transport: TCPROS
- * topic: /rosout
-    * to: /gazebo_gui (http://ubuntu-ros:43993/)
-    * direction: inbound (33880 - ubuntu-ros:46215) [14]
+    * to: /gazebo_gui (http://ubuntu-ros:34037/)
+    * direction: inbound (50280 - ubuntu-ros:56455) [15]
     * transport: TCPROS
 
