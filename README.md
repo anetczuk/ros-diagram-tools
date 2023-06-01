@@ -58,6 +58,15 @@ Installation:
 
 
 
+## Installation
+
+Installation of package can be done by:
+ - `install-package.sh` to install package in standard way through `pip`
+ - `install-devel.sh` to install package in developer mode
+ - to install package from downloaded ZIP file execute: `pip3 install --user file:ros-diagram-tools-master.zip#subdirectory=src`
+
+
+
 ## Examples
 
 In `/examples` there are few examples of generated diagrams:

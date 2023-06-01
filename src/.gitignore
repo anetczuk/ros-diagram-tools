@@ -1,0 +1,3 @@
+## ignore directories created during installation of packages
+/*.egg-info/
+/build/
