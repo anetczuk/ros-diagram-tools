@@ -44,10 +44,10 @@ source $CATKIN_DIR/devel/setup.bash
 set -u
 
 
-$TOOL_PATH/dump_cloc.py --clocrundir "$CATKIN_DIR/src" --outfile "$DUMP_DIR/source_cloc.txt"
+$TOOL_PATH/rosdiagramdump.py dumpclocdir --clocrundir "$CATKIN_DIR/src" --outfile "$DUMP_DIR/source_cloc.txt"
 
 cd $CATKIN_DIR
-$TOOL_PATH/dump_catkin.sh $DUMP_CATKIN_DIR
+$TOOL_PATH/rosdiagramdump.py dumpcatkindeps --outdir $DUMP_CATKIN_DIR
 cd $CURR_DIR
 
 $SCRIPT_DIR/rosverify.sh

@@ -19,7 +19,7 @@ mkdir -p $OUT_DIR
 
 
 ## comment to prevent permament changes
-# $TOOL_DIR/dump_cloc.py --clocrundir $CHECK_DIR --outfile $DUMP_DIR/cloc.txt $@
+# $TOOL_DIR/rosdiagramdump.py dumpclocdir --clocrundir $CHECK_DIR --outfile $DUMP_DIR/cloc.txt $@
 
 $TOOL_DIR/rosdiagramtools.py codedistribution --clocpath $DUMP_DIR/cloc.txt \
                                               --highlight "$SCRIPT_DIR/highlight.txt" \
