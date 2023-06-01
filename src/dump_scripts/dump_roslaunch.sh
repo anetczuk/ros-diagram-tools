@@ -30,18 +30,37 @@ INFO_DIR="$2"
 mkdir -p $INFO_DIR
 
 
+path_to_local() {
+        local file_path="$1"
+        echo "$INFO_DIR/"$(echo "$file_path" | sed "s/\//_/g")".txt"
+}
+
+
 echo "Dumping data to $INFO_DIR"
 
 
-roslaunch $LAUNCH_FILE --files > "$INFO_DIR/list.txt"
-
-items_list=$(roslaunch $LAUNCH_FILE --files)
+LIST_FILE_PATH="$INFO_DIR/list.txt"
 
 
-for item in $items_list; do
-    out_file="$INFO_DIR/"$(echo "$item" | sed "s/\//_/g")".txt"
-    echo "Writing $out_file"
-    roslaunch $item --nodes > $out_file
+roslaunch $LAUNCH_FILE --files > "$LIST_FILE_PATH"
+
+## removing old files
+while read launch_file_output; do
+    #echo "$launch_file_output"
+    launch_file=$(path_to_local "$launch_file_output")
+    rm $launch_file || true
+done < "$LIST_FILE_PATH"
+
+
+## dumping nodes data
+nodes_list=$(roslaunch --nodes $LAUNCH_FILE)
+
+for item in $nodes_list; do
+    node_file=$(roslaunch $LAUNCH_FILE --find-node="$item")
+    echo "$item: $node_file"
+
+    out_file=$(path_to_local "$node_file") 
+    echo $item >> $out_file
 done
 
 echo -e "\nDone.\n"
