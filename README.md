@@ -23,7 +23,7 @@ Main motivation for the project was to present variuos aspects of *ROS* workspac
 3. [Examples](#Examples)
 4. [The Tools](#tools)
 5. [Comparison with ROS tools](#comparison_ros)
-6. [Dumping information](#requirements)
+6. [Dumping information](#dumping_info)
 7. [References](#References)
 8. [License](#License)
 
@@ -233,7 +233,7 @@ tools just makes snapshot of the system in certain moment.
 
 
 
-## Dumping information
+## <a name="dumping_info"></a> Dumping information
 
 Dumping data is done through `rosdiagramdump.py` script. Description of arguments can be found [here](doc/cmd_args_dump.md) or 
 by calling `rosdiagramdump.py --help`.
