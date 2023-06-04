@@ -1,7 +1,7 @@
 ## rosdiagramdump.py --help
 ```
 usage: rosdiagramdump.py [-h] [-la] [--listtools]
-                         {dumpclocdir,dumpcatkindeps,dumprospack,dumprosmsg,dumprossrv,dumprosnode,dumprostopic,dumprosservice,dumproslaunch,dumpros,extractscripts}
+                         {dumpclocdir,dumpclocpack,dumpcatkindeps,dumprospack,dumprosmsg,dumprossrv,dumprosnode,dumprostopic,dumprosservice,dumproslaunch,dumpros,extractscripts}
                          ...
 
 ROS diagram tools
@@ -14,9 +14,10 @@ optional arguments:
 subcommands:
   use one of tools
 
-  {dumpclocdir,dumpcatkindeps,dumprospack,dumprosmsg,dumprossrv,dumprosnode,dumprostopic,dumprosservice,dumproslaunch,dumpros,extractscripts}
+  {dumpclocdir,dumpclocpack,dumpcatkindeps,dumprospack,dumprosmsg,dumprossrv,dumprosnode,dumprostopic,dumprosservice,dumproslaunch,dumpros,extractscripts}
                         one of tools
     dumpclocdir         dump result of 'cloc' command on given directory
+    dumpclocpack        dump result of 'cloc' command on pack data
     dumpcatkindeps      dump catkin dependencies of packages in workspace
                         (from package.xml)
     dumprospack         dump data from 'rospack'
@@ -34,14 +35,26 @@ subcommands:
 
 ## rosdiagramdump.py dumpclocdir --help
 ```
-usage: rosdiagramdump.py dumpclocdir [-h] --clocrundir CLOCRUNDIR --outfile
-                                     OUTFILE
+usage: rosdiagramdump.py dumpclocdir [-h] --clocrundir CLOCRUNDIR --outdir
+                                     OUTDIR
 
 optional arguments:
   -h, --help            show this help message and exit
   --clocrundir CLOCRUNDIR
                         Directory to analyze by 'cloc'
-  --outfile OUTFILE     Output file
+  --outdir OUTDIR       Output directory
+```
+
+
+
+## rosdiagramdump.py dumpclocpack --help
+```
+usage: rosdiagramdump.py dumpclocpack [-h] --packfile PACKFILE --outdir OUTDIR
+
+optional arguments:
+  -h, --help           show this help message and exit
+  --packfile PACKFILE  List file dumped with `dumprospack` tool
+  --outdir OUTDIR      Output directory
 ```
 
 

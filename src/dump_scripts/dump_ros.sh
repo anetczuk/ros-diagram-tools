@@ -32,6 +32,9 @@ mkdir -p $INFO_DIR
 echo "executing: $SCRIPT_DIR/dump_rospack.sh $INFO_DIR/packinfo"
 $SCRIPT_DIR/dump_rospack.sh "$INFO_DIR/packinfo"
 
+echo "executing: $SCRIPT_DIR/dump_clocpack.sh $INFO_DIR/clocpack"
+$SCRIPT_DIR/dump_clocpack.sh "$INFO_DIR/packinfo/list.txt" "$INFO_DIR/clocpack"
+
 echo "executing: $SCRIPT_DIR/dump_rosnode.sh $INFO_DIR/nodeinfo"
 $SCRIPT_DIR/dump_rosnode.sh "$INFO_DIR/nodeinfo"
 

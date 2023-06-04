@@ -25,7 +25,7 @@ OUT_ROOT_DIR="$WORK_DIR/out"
 echo "generating codedistribution"
 OUT_DIR="$OUT_ROOT_DIR"
 mkdir -p $OUT_DIR
-$TOOL_PATH/rosdiagramtools.py codedistribution --clocpath "$DUMP_DIR/source_cloc.txt" --outpng "$OUT_DIR/codedistribution.png"
+$TOOL_PATH/rosdiagramtools.py codedistribution --clocjsonpath "$DUMP_DIR/source_cloc.txt" --outpng "$OUT_DIR/codedistribution.png"
 
 
 echo "generating packagexmltree"

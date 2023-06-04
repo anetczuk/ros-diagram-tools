@@ -13,7 +13,9 @@ import json
 import argparse
 
 from showgraph.graphviz import Graph, set_nodes_style
-from showgraph.io import read_list
+from showgraph.io import read_list, prepare_filesystem_name
+
+from rosdiagram.clocparser import parse_cloc_file
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -24,10 +26,32 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 ## ===================================================================
 
 
-def read_data( cloc_path ):
+def read_json_data( cloc_path ):
     with open( cloc_path, 'r', encoding='utf-8' ) as content_file:
         content = content_file.read()
         return json.loads( content )
+
+
+def read_dir_data( dump_path ):
+    if not dump_path:
+        return None
+    cloc_dict = {}
+    cloc_list_path = os.path.join( dump_path, "list.txt" )
+    _LOGGER.debug( "reading cloc list file: %s", cloc_list_path )
+    cloc_list = read_list( cloc_list_path )
+    for item in cloc_list:
+        node_filename  = prepare_filesystem_name( item )
+        node_item_path = os.path.join( dump_path, node_filename + ".txt" )
+        total_lines = parse_cloc_file( node_item_path )
+        if total_lines <= 0:
+            _LOGGER.warning( "unable to parse: %s", node_item_path )
+            continue
+        pkg_name = os.path.basename( item )
+        cloc_dict[ pkg_name ] = total_lines
+    return cloc_dict
+
+
+## ===================================================================
 
 
 def generate_graph( cloc_dict ):
@@ -80,7 +104,7 @@ def paint_nodes( graph: Graph, paint_list ):
 
 
 def generate( cloc_path ):
-    data_dict = read_data( cloc_path )
+    data_dict = read_json_data( cloc_path )
     graph     = generate_graph( data_dict )
     return graph
 
@@ -89,11 +113,13 @@ def generate( cloc_path ):
 
 
 def configure_parser( parser ):
-    parser.description = 'source code distribution over packages'
+    parser.description = 'Source code distribution over packages. Tool can be feed with JSON or with path to output of dumpclocpack tool.'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
-    parser.add_argument( '--clocpath', action='store', required=False, default="",
-                         help="Path to file with dumped 'cloc' results" )
+    parser.add_argument( '--clocjsonpath', action='store', required=False, default="",
+                         help="Path to JSON file with dumped 'cloc' results" )
+    parser.add_argument( '--clocdumpdir', action='store', required=False, default="",
+                         help="Path to directory with dumped 'cloc' results" )
     parser.add_argument( '--highlight', action='store', required=False, default="",
                          help="List with items to highlight" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
@@ -113,13 +139,20 @@ def process_arguments( args ):
     if len( args.highlight ) > 0:
         highlight_list = read_list( args.highlight )
 
-    graph = generate( args.clocpath )
-    paint_nodes( graph, highlight_list )
+    graph = None
+    if args.clocjsonpath:
+        graph = generate( args.clocjsonpath )
+    elif args.clocdumpdir:
+        data_dict = read_dir_data( args.clocdumpdir )
+        graph     = generate_graph( data_dict )
 
-    if len( args.outraw ) > 0:
-        graph.writeRAW( args.outraw )
-    if len( args.outpng ) > 0:
-        graph.writePNG( args.outpng )
+    if graph != None:
+        paint_nodes( graph, highlight_list )
+
+        if len( args.outraw ) > 0:
+            graph.writeRAW( args.outraw )
+        if len( args.outpng ) > 0:
+            graph.writePNG( args.outpng )
 
 
 def main():

@@ -14,6 +14,8 @@ import re
 import json
 import subprocess
 
+from showgraph.io import read_file
+
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -64,6 +66,11 @@ def cloc_directory( sources_dir ):
     return overall_code - json_code
 
 
+def parse_cloc_file( file_path, language="SUM:" ):
+    content = read_file( file_path )
+    return parse_code( content, language=language )
+
+
 def parse_code( content, language="SUM:" ):
     for line in content.splitlines():
         if len(line) < 1:
@@ -87,7 +94,7 @@ def parse_code( content, language="SUM:" ):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='cloc dump')
+    parser = argparse.ArgumentParser(description='parse cloc')
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     parser.add_argument( '--clocrundir', action='store', required=True, default="",
                          help="Directory to analyze by 'cloc'" )

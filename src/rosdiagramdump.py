@@ -89,9 +89,16 @@ def dumpros( args ):
 
 def dumpclocdir( args ):
     args_list = []
-    args_list.append( f"--clocrundir {args.clocrundir}" )
-    args_list.append( f"--outfile {args.outfile}" )
-    execute_script( dumpscripts.DUMP_CLOC_PY, args_list )
+    args_list.append( f"{args.clocrundir}" )
+    args_list.append( f"{args.outdir}" )
+    execute_script( dumpscripts.DUMP_CLOCDIR_SH, args_list )
+
+
+def dumpclocpath( args ):
+    args_list = []
+    args_list.append( f"{args.clocrundir}" )
+    args_list.append( f"{args.outdir}" )
+    execute_script( dumpscripts.DUMP_CLOCPACK_SH, args_list )
 
 
 def dumpcatkindeps( args ):
@@ -159,7 +166,15 @@ def main():
     subparser.set_defaults( func=dumpclocdir )
     subparser.add_argument( '--clocrundir', action='store', required=True, default="",
                             help="Directory to analyze by 'cloc'" )
-    subparser.add_argument( '--outfile', action='store', required=True, default="", help="Output file" )
+    subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
+
+    ## =================================================
+    
+    subparser = subparsers.add_parser('dumpclocpack', help="dump result of 'cloc' command on pack data")
+    subparser.set_defaults( func=dumpclocdir )
+    subparser.add_argument( '--packfile', action='store', required=True, default="",
+                            help="List file dumped with `dumprospack` tool" )
+    subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
 
     ## =================================================
 

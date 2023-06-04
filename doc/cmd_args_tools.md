@@ -31,16 +31,22 @@ subcommands:
 
 ## rosdiagramtools.py codedistribution --help
 ```
-usage: rosdiagramtools.py codedistribution [-h] [-la] [--clocpath CLOCPATH]
+usage: rosdiagramtools.py codedistribution [-h] [-la]
+                                           [--clocjsonpath CLOCJSONPATH]
+                                           [--clocdumpdir CLOCDUMPDIR]
                                            [--highlight HIGHLIGHT]
                                            [--outraw OUTRAW] [--outpng OUTPNG]
 
-source code distribution over packages
+Source code distribution over packages. Tool can be feed with JSON or with
+path to output of dumpclocpack tool.
 
 optional arguments:
   -h, --help            show this help message and exit
   -la, --logall         Log all messages
-  --clocpath CLOCPATH   Path to file with dumped 'cloc' results
+  --clocjsonpath CLOCJSONPATH
+                        Path to JSON file with dumped 'cloc' results
+  --clocdumpdir CLOCDUMPDIR
+                        Path to directory with dumped 'cloc' results
   --highlight HIGHLIGHT
                         List with items to highlight
   --outraw OUTRAW       Graph RAW output
