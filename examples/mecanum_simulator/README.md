@@ -17,7 +17,7 @@ Script `generate.sh` generates diagrams and views from duped data.
 [![code distribution chart](out/codedistribution-small.png "code distribution chart")](out/codedistribution.png)
 
 
-## `packagetree`
+## `packagetree` over `dumpcatkindeps` dump
 
 Generated diagram:
 
@@ -30,6 +30,17 @@ Generated main graph view:
 Generated package graph view:
 
 [![package graph view](out/catkintree/node-page-small.png "package graph view")](out/catkintree/node-page.png)
+
+
+## `packagetree` over `dumprospack` dump
+
+Generated diagram:
+
+[![runtime packages tree](out/packagestree/full_graph-small.png "runtime packages tree")](out/packagestree/full_graph.png)
+
+Generated main graph view:
+
+[![main graph view](out/packagestree/main-page-small.png "main graph view")](out/packagestree/main-page.png)
 
 
 ## `buildtime`

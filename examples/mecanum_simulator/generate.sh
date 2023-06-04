@@ -47,7 +47,7 @@ $TOOL_PATH/rosdiagramtools.py packagetree --packdumppath $DUMP_DIR/packinfo \
                                           --highlightitems $DUMP_DIR/catkin/packages.txt \
                                           --topitems $DUMP_DIR/catkin/packages.txt \
                                           --outhtml --outdir $OUT_DIR
-#cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
+cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
 #cutycapt --url=file://$OUT_DIR/nodes/nexus_4wd_mecanum_gazebo.html --out=$OUT_DIR/node-page.png
 
 
