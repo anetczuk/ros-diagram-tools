@@ -1,0 +1,5 @@
+<map id="rospack" name="rospack">
+<area shape="poly" id="node1" href="roslib.html" title="node: roslib" alt="" coords="112,39,112,19,81,5,37,5,5,19,5,39,37,53,81,53"/>
+<area shape="poly" id="node2" href="rospack.html" title="node: rospack" alt="" coords="295,39,295,19,256,5,200,5,160,19,160,39,200,53,256,53"/>
+<area shape="poly" id="node3" href="ros_environment.html" title="node: ros_environment" alt="" coords="600,39,600,19,525,5,419,5,343,19,343,39,419,53,525,53"/>
+</map>

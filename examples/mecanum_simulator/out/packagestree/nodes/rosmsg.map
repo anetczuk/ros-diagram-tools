@@ -1,0 +1,9 @@
+<map id="rosmsg" name="rosmsg">
+<area shape="poly" id="node1" href="rosmsg.html" title="node: rosmsg" alt="" coords="352,183,352,163,314,149,260,149,222,163,222,183,260,197,314,197"/>
+<area shape="poly" id="node2" href="catkin.html" title="node: catkin" alt="" coords="524,39,524,19,491,5,445,5,412,19,412,39,445,53,491,53"/>
+<area shape="poly" id="node3" href="genmsg.html" title="node: genmsg" alt="" coords="537,111,537,91,496,77,440,77,400,91,400,111,440,125,496,125"/>
+<area shape="poly" id="node4" href="genpy.html" title="node: genpy" alt="" coords="524,183,524,163,491,149,445,149,412,163,412,183,445,197,491,197"/>
+<area shape="poly" id="node5" href="rosbag.html" title="node: rosbag" alt="" coords="529,255,529,235,493,221,443,221,407,235,407,255,443,269,493,269"/>
+<area shape="poly" id="node6" href="roslib.html" title="node: roslib" alt="" coords="522,327,522,307,490,293,446,293,415,307,415,327,446,341,490,341"/>
+<area shape="poly" id="node7" href="rosservice.html" title="node: rosservice" alt="" coords="174,183,174,163,125,149,55,149,5,163,5,183,55,197,125,197"/>
+</map>

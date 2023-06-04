@@ -1,0 +1,8 @@
+<map id="trajectory_msgs" name="trajectory_msgs">
+<area shape="poly" id="node1" href="gazebo_msgs.html" title="node: gazebo_msgs" alt="" coords="214,147,214,127,153,113,66,113,5,127,5,147,66,161,153,161"/>
+<area shape="poly" id="node2" href="trajectory_msgs.html" title="node: trajectory_msgs" alt="" coords="507,147,507,127,435,113,334,113,262,127,262,147,334,161,435,161"/>
+<area shape="poly" id="node3" href="message_runtime.html" title="node: message_runtime" alt="" coords="855,39,855,19,777,5,666,5,587,19,587,39,666,53,777,53"/>
+<area shape="poly" id="node4" href="geometry_msgs.html" title="node: geometry_msgs" alt="" coords="842,111,842,91,771,77,671,77,600,91,600,111,671,125,771,125"/>
+<area shape="poly" id="node5" href="std_msgs.html" title="node: std_msgs" alt="" coords="799,183,799,163,754,149,689,149,643,163,643,183,689,197,754,197"/>
+<area shape="poly" id="node6" href="rosbag_migration_rule.html" title="node: rosbag_migration_rule" alt="" coords="887,255,887,235,790,221,653,221,555,235,555,255,653,269,790,269"/>
+</map>

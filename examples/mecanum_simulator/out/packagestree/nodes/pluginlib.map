@@ -1,0 +1,5 @@
+<map id="pluginlib" name="pluginlib">
+<area shape="poly" id="node1" href="rosbag_storage.html" title="node: rosbag_storage" alt="" coords="242,39,242,19,172,5,75,5,5,19,5,39,75,53,172,53"/>
+<area shape="poly" id="node2" href="pluginlib.html" title="node: pluginlib" alt="" coords="440,75,440,55,396,41,334,41,290,55,290,75,334,89,396,89"/>
+<area shape="poly" id="node3" href="urdf.html" title="node: urdf" alt="" coords="168,111,168,91,142,77,105,77,79,91,79,111,105,125,142,125"/>
+</map>
