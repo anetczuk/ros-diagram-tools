@@ -34,10 +34,19 @@ echo "generating packagetree"
 OUT_DIR="$OUT_ROOT_DIR/catkintree"
 mkdir -p $OUT_DIR
 $TOOL_PATH/rosdiagramtools.py packagetree --catkinlistfile $DUMP_DIR/catkin/list.txt \
-                                          --highlightitems $SCRIPT_DIR/pkg_highlight.txt \
+                                          --highlightitems $DUMP_DIR/catkin/packages.txt \
                                           --outhtml --outdir $OUT_DIR
 cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
 cutycapt --url=file://$OUT_DIR/nodes/nexus_4wd_mecanum_gazebo.html --out=$OUT_DIR/node-page.png
+
+OUT_DIR="$OUT_ROOT_DIR/packagestree"
+mkdir -p $OUT_DIR
+$TOOL_PATH/rosdiagramtools.py packagetree --packdumppath $DUMP_DIR/packinfo \
+                                          --highlightitems $DUMP_DIR/catkin/packages.txt \
+                                          --topitems $DUMP_DIR/catkin/packages.txt \
+                                          --outhtml --outdir $OUT_DIR
+#cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
+#cutycapt --url=file://$OUT_DIR/nodes/nexus_4wd_mecanum_gazebo.html --out=$OUT_DIR/node-page.png
 
 
 echo "generating buildtime"

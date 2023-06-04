@@ -9,7 +9,7 @@ import os
 import logging
 import argparse
 
-from showgraph.io import read_file, read_list
+from showgraph.io import read_file, read_list, prepare_filesystem_name
 from showgraph.graphviz import Graph, preserve_neighbour_nodes, set_nodes_style,\
     preserve_top_subgraph
 
@@ -24,7 +24,7 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 ## ===================================================================
 
 
-def parse_content( content, build_deps=True ):
+def parse_catkin_content( content, build_deps=True ):
     deps_dict = {}
 
     package = None
@@ -61,6 +61,21 @@ def parse_content( content, build_deps=True ):
         _LOGGER.warning( "unhandled case: %s", line )
 
     return deps_dict
+
+
+def read_pack_data( pack_dump_dir ):
+    pack_dict = {}
+    launch_path = os.path.join( pack_dump_dir, "list.txt" )
+    launch_list = read_list( launch_path )
+    for item in launch_list:
+        data = item.split(" ")
+        package_name = data[0]
+        # package_path = data[1]
+        pack_data_filename  = prepare_filesystem_name( package_name )
+        pack_data_path = os.path.join( pack_dump_dir, pack_data_filename + ".txt" )
+        deps_list = read_list( pack_data_path )
+        pack_dict[ package_name ] = deps_list
+    return pack_dict
 
 
 def get_items_list( deps_dict ):
@@ -124,7 +139,7 @@ def paint_nodes( graph: Graph, paint_list ):
 def generate( catkin_list_file, node_shape="box",
               top_items=None, highlight_items=None, preserve_neighbour_items=None, paint_function=None ):
     content   = read_file( catkin_list_file )
-    data_dict = parse_content( content, build_deps=False )
+    data_dict = parse_catkin_content( content, build_deps=False )
     graph     = generate_pkg_graph( data_dict, node_shape,
                                     top_items=top_items, highlight_items=highlight_items, preserve_neighbour_items=preserve_neighbour_items, paint_function=paint_function )
     return graph
@@ -183,11 +198,13 @@ def generate_subpages_dict( deps_dict, items_list, highlight_list=None, top_list
 
 
 def configure_parser( parser ):
-    parser.description = 'catkin packages graph'
+    parser.description = 'Packages graph. Tool can be feed with catkin putput (based on package.xml) or with rospack output.'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '--catkinlistfile', action='store', required=False, default="",
-                         help="Read 'catkin list' output from file" )
+                         help="Read 'catkin list' data from file" )
+    parser.add_argument( '--packdumppath', action='store', required=False, default="",
+                         help="Path to directory containing dumped 'rospack' output" )
     parser.add_argument( '--nodeshape', action='store', required=False, default=None, help="Shape of node: 'box', 'octagon' or other value supprted by GraphViz dot" )
     parser.add_argument( '--topitems', action='store', required=False, default="", help="File with list of items to filter on top" )
     parser.add_argument( '--highlightitems', action='store', required=False, default="", help="File with list of items to highlight" )
@@ -208,8 +225,13 @@ def process_arguments( args, paint_function=None ):
     if node_shape is None:
         node_shape = "octagon"
 
-    content        = read_file( args.catkinlistfile )
-    data_dict      = parse_content( content, build_deps=False )
+    data_dict = {}
+    if args.catkinlistfile:
+        content   = read_file( args.catkinlistfile )
+        data_dict = parse_catkin_content( content, build_deps=False )
+    else:
+        data_dict = read_pack_data( args.packdumppath )
+
     top_list       = read_list( args.topitems )
     highlight_list = read_list( args.highlightitems )
 

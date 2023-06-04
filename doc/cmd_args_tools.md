@@ -59,19 +59,23 @@ optional arguments:
 ```
 usage: rosdiagramtools.py packagetree [-h] [-la]
                                       [--catkinlistfile CATKINLISTFILE]
+                                      [--packdumppath PACKDUMPPATH]
                                       [--nodeshape NODESHAPE]
                                       [--topitems TOPITEMS]
                                       [--highlightitems HIGHLIGHTITEMS]
                                       [--outraw OUTRAW] [--outpng OUTPNG]
                                       [--outhtml] [--outdir OUTDIR]
 
-catkin packages graph
+Packages graph. Tool can be feed with catkin putput (based on package.xml) or
+with rospack output.
 
 optional arguments:
   -h, --help            show this help message and exit
   -la, --logall         Log all messages
   --catkinlistfile CATKINLISTFILE
-                        Read 'catkin list' output from file
+                        Read 'catkin list' data from file
+  --packdumppath PACKDUMPPATH
+                        Path to directory containing dumped 'rospack' output
   --nodeshape NODESHAPE
                         Shape of node: 'box', 'octagon' or other value
                         supprted by GraphViz dot
