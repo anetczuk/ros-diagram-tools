@@ -186,7 +186,7 @@ def configure_parser( parser ):
     parser.description = 'catkin packages graph'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
-    parser.add_argument( '-f', '--file', action='store', required=False, default="",
+    parser.add_argument( '--catkinlistfile', action='store', required=False, default="",
                          help="Read 'catkin list' output from file" )
     parser.add_argument( '--nodeshape', action='store', required=False, default=None, help="Shape of node: 'box', 'octagon' or other value supprted by GraphViz dot" )
     parser.add_argument( '--topitems', action='store', required=False, default="", help="File with list of items to filter on top" )
@@ -208,7 +208,7 @@ def process_arguments( args, paint_function=None ):
     if node_shape is None:
         node_shape = "octagon"
 
-    content        = read_file( args.file )
+    content        = read_file( args.catkinlistfile )
     data_dict      = parse_content( content, build_deps=False )
     top_list       = read_list( args.topitems )
     highlight_list = read_list( args.highlightitems )

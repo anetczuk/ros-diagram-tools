@@ -57,7 +57,8 @@ optional arguments:
 
 ## rosdiagramtools.py packagetree --help
 ```
-usage: rosdiagramtools.py packagetree [-h] [-la] [-f FILE]
+usage: rosdiagramtools.py packagetree [-h] [-la]
+                                      [--catkinlistfile CATKINLISTFILE]
                                       [--nodeshape NODESHAPE]
                                       [--topitems TOPITEMS]
                                       [--highlightitems HIGHLIGHTITEMS]
@@ -69,7 +70,8 @@ catkin packages graph
 optional arguments:
   -h, --help            show this help message and exit
   -la, --logall         Log all messages
-  -f FILE, --file FILE  Read 'catkin list' output from file
+  --catkinlistfile CATKINLISTFILE
+                        Read 'catkin list' output from file
   --nodeshape NODESHAPE
                         Shape of node: 'box', 'octagon' or other value
                         supprted by GraphViz dot
