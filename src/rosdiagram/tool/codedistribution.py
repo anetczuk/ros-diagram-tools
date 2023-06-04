@@ -120,6 +120,7 @@ def configure_parser( parser ):
                          help="Path to JSON file with dumped 'cloc' results" )
     parser.add_argument( '--clocdumpdir', action='store', required=False, default="",
                          help="Path to directory with dumped 'cloc' results" )
+    parser.add_argument( '--filteritems', action='store', required=False, default="", help="File with list of items to filter" )
     parser.add_argument( '--highlight', action='store', required=False, default="",
                          help="List with items to highlight" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
@@ -135,16 +136,23 @@ def process_arguments( args ):
     else:
         logging.getLogger().setLevel( logging.INFO )
 
-    highlight_list = []
-    if len( args.highlight ) > 0:
-        highlight_list = read_list( args.highlight )
+    filter_list    = read_list( args.filteritems )
+    highlight_list = read_list( args.highlight )
 
-    graph = None
+    data_dict = {}
     if args.clocjsonpath:
-        graph = generate( args.clocjsonpath )
+        data_dict = read_json_data( args.clocjsonpath )
     elif args.clocdumpdir:
         data_dict = read_dir_data( args.clocdumpdir )
-        graph     = generate_graph( data_dict )
+
+    if filter_list:
+        all_packages = list( data_dict.keys() )
+        for item in all_packages:
+            if item in filter_list:
+                continue
+            del data_dict[ item ]
+
+    graph = generate_graph( data_dict )
 
     if graph != None:
         paint_nodes( graph, highlight_list )

@@ -34,6 +34,7 @@ subcommands:
 usage: rosdiagramtools.py codedistribution [-h] [-la]
                                            [--clocjsonpath CLOCJSONPATH]
                                            [--clocdumpdir CLOCDUMPDIR]
+                                           [--filteritems FILTERITEMS]
                                            [--highlight HIGHLIGHT]
                                            [--outraw OUTRAW] [--outpng OUTPNG]
 
@@ -47,6 +48,8 @@ optional arguments:
                         Path to JSON file with dumped 'cloc' results
   --clocdumpdir CLOCDUMPDIR
                         Path to directory with dumped 'cloc' results
+  --filteritems FILTERITEMS
+                        File with list of items to filter
   --highlight HIGHLIGHT
                         List with items to highlight
   --outraw OUTRAW       Graph RAW output
