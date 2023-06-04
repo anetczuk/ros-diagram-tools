@@ -1,7 +1,7 @@
 ## rosdiagramtools.py --help
 ```
 usage: rosdiagramtools.py [-h] [-la] [--listtools]
-                          {codedistribution,packagexmltree,classifynodes,buildtime,rosnodegraph,rostopicgraph,rosbagflow,rosverify}
+                          {codedistribution,packagetree,classifynodes,buildtime,rosnodegraph,rostopicgraph,rosbagflow,rosverify}
                           ...
 
 ROS diagram tools
@@ -14,10 +14,10 @@ optional arguments:
 subcommands:
   use one of tools
 
-  {codedistribution,packagexmltree,classifynodes,buildtime,rosnodegraph,rostopicgraph,rosbagflow,rosverify}
+  {codedistribution,packagetree,classifynodes,buildtime,rosnodegraph,rostopicgraph,rosbagflow,rosverify}
                         one of tools
     codedistribution    source code distribution over packages
-    packagexmltree      packages graph based on dependencies in package.xml
+    packagetree         packages graph
     classifynodes       match nodes to packages
     buildtime           catkin build time
     rosnodegraph        rosnode connection graph
@@ -55,14 +55,14 @@ optional arguments:
 
 
 
-## rosdiagramtools.py packagexmltree --help
+## rosdiagramtools.py packagetree --help
 ```
-usage: rosdiagramtools.py packagexmltree [-h] [-la] [-f FILE]
-                                         [--nodeshape NODESHAPE]
-                                         [--topitems TOPITEMS]
-                                         [--highlightitems HIGHLIGHTITEMS]
-                                         [--outraw OUTRAW] [--outpng OUTPNG]
-                                         [--outhtml] [--outdir OUTDIR]
+usage: rosdiagramtools.py packagetree [-h] [-la] [-f FILE]
+                                      [--nodeshape NODESHAPE]
+                                      [--topitems TOPITEMS]
+                                      [--highlightitems HIGHLIGHTITEMS]
+                                      [--outraw OUTRAW] [--outpng OUTPNG]
+                                      [--outhtml] [--outdir OUTDIR]
 
 catkin packages graph
 

@@ -81,11 +81,11 @@ In `/examples` there are few examples of generated diagrams:
 
 Tools are divided into following categories:
 - working on source code: `codedistribution`,
-- working on ROS workspace: `packagexmltree`, `buildtime`, `rosverify`, `classifynodes`,
+- working on ROS workspace: `packagetree`, `buildtime`, `rosverify`, `classifynodes`,
 - working on running ROS master: `rosnodegraph`, `rostopictree`, `rosbagflow`.
 
 From other perspective tools can be split into:
-- ones working with dumped data: `codedistribution`, `packagexmltree`, `buildtime`, `classifynodes`, `rosnodegraph`, `rostopictree`, `rosbagflow`,
+- ones working with dumped data: `codedistribution`, `packagetree`, `buildtime`, `classifynodes`, `rosnodegraph`, `rostopictree`, `rosbagflow`,
 - ones requiring direct access: `rosverify`
 
 
@@ -101,11 +101,11 @@ Execution: `./src/rosdiagramtools.py codedistribution --help`
 [![code distribution chart](examples/simple/codedistribution/out/graph-small.png "code distribution chart")](examples/simple/codedistribution/out/graph.png)
 
 
-### `rosdiagramtools.py packagexmltree`
+### `rosdiagramtools.py packagetree`
 
 Show workspace packages in form of dependency tree. Graph presents package build dependencies defined in *package.xml*.
 
-Execution: `./src/rosdiagramtools.py packagexmltree --help`
+Execution: `./src/rosdiagramtools.py packagetree --help`
 
 [![turtlebot3 packages tree](examples/turtlebot3/out/catkintree/full_graph-small.png "turtlebot3 packages tree")](examples/turtlebot3/out/catkintree/full_graph.png)
 
@@ -214,7 +214,7 @@ Example of node and message view preview can be found here: [turtlesim](examples
 ## <a name="comparison_ros"></a> Comparison with ROS tools
 
 - `codedistribution` does not have equivalent,
-- `packagexmltree` presents similar results to `rqt_dep`, but limited only to workspace packages and it's build 
+- `packagetree` presents similar results to `rqt_dep`, but limited only to workspace packages and it's build 
 dependencies. `rqt_dep` presents packages full tree of runtime dependencies,
 - `classifynodes` does not have equivalent,
 - `buildtime` does not have equivalent,

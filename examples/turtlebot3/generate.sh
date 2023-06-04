@@ -28,10 +28,10 @@ mkdir -p $OUT_DIR
 $TOOL_PATH/rosdiagramtools.py codedistribution --clocjsonpath "$DUMP_DIR/source_cloc.txt" --outpng "$OUT_DIR/codedistribution.png"
 
 
-echo "generating packagexmltree"
+echo "generating packagetree"
 OUT_DIR="$OUT_ROOT_DIR/catkintree"
 mkdir -p $OUT_DIR
-$TOOL_PATH/rosdiagramtools.py packagexmltree -f $DUMP_DIR/catkin/list.txt --outhtml --outdir $OUT_DIR
+$TOOL_PATH/rosdiagramtools.py packagetree -f $DUMP_DIR/catkin/list.txt --outhtml --outdir $OUT_DIR
 cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
 cutycapt --url=file://$OUT_DIR/nodes/turtlebot3_bringup.html --out=$OUT_DIR/node-page.png
 

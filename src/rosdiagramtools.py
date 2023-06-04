@@ -12,7 +12,7 @@ import logging
 import argparse
 
 import rosdiagram.tool.codedistribution as codedistribution
-import rosdiagram.tool.packagexmltree as packagexmltree
+import rosdiagram.tool.packagetree as packagetree
 import rosdiagram.tool.classifynodes as classifynodes
 import rosdiagram.tool.buildtime as buildtime
 import rosdiagram.tool.rosnodegraph as rosnodegraph
@@ -44,9 +44,9 @@ def main():
 
     ## =================================================
 
-    subparser = subparsers.add_parser('packagexmltree', help='packages graph based on dependencies in package.xml')
-    subparser.set_defaults( func=packagexmltree.process_arguments )
-    packagexmltree.configure_parser( subparser )
+    subparser = subparsers.add_parser('packagetree', help='packages graph')
+    subparser.set_defaults( func=packagetree.process_arguments )
+    packagetree.configure_parser( subparser )
 
     ## =================================================
 

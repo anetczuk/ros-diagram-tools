@@ -15,15 +15,6 @@ import base64
 
 import rosdiagram.dumpscripts as dumpscripts
 
-# import rosdiagram.tool.codedistribution as codedistribution
-# import rosdiagram.tool.packagexmltree as packagexmltree
-# import rosdiagram.tool.classifynodes as classifynodes
-# import rosdiagram.tool.buildtime as buildtime
-# import rosdiagram.tool.rosnodegraph as rosnodegraph
-# import rosdiagram.tool.rostopicgraph as rostopicgraph
-# import rosdiagram.tool.rosbagflow as rosbagflow
-# import rosdiagram.tool.rosverify as rosverify
-
 
 _LOGGER = logging.getLogger(__name__)
 
