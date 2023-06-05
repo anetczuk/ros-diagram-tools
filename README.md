@@ -82,10 +82,10 @@ In `/examples` there are few examples of generated diagrams:
 Tools are divided into following categories:
 - working on source code: `codedistribution`,
 - working on ROS workspace: `packagetree`, `buildtime`, `rosverify`, `classifynodes`,
-- working on running ROS master: `rosnodegraph`, `rostopictree`, `rosbagflow`.
+- working on running ROS master: `rosnodegraph`, `rostopicgraph`, `rosbagflow`.
 
 From other perspective tools can be split into:
-- ones working with dumped data: `codedistribution`, `packagetree`, `buildtime`, `classifynodes`, `rosnodegraph`, `rostopictree`, `rosbagflow`,
+- ones working with dumped data: `codedistribution`, `packagetree`, `buildtime`, `classifynodes`, `rosnodegraph`, `rostopicgraph`, `rosbagflow`,
 - ones requiring direct access: `rosverify`
 
 
@@ -180,11 +180,11 @@ Example of service graph view:
 [![service graph view](examples/mecanum_simulator/out/nodetree/service-page-small.png "service graph view")](examples/mecanum_simulator/out/nodetree/service-page.png)
 
 
-### `rosdiagramtools.py rostopictree`
+### `rosdiagramtools.py rostopicgraph`
 
 Present dependecy of *ROS* nodes and topics in form of dependency graph.
 
-Execution: `./src/rosdiagramtools.py rostopictree --help`
+Execution: `./src/rosdiagramtools.py rostopicgraph --help`
 
 [![ROS nodes and topics graph](examples/simple/rostopiclist/out/graph-small.png "ROS nodes and topics graph")](examples/simple/rostopiclist/out/graph.png)
 
@@ -219,7 +219,7 @@ dependencies. `rqt_dep` presents packages full tree of runtime dependencies,
 - `classifynodes` does not have equivalent,
 - `buildtime` does not have equivalent,
 - `rosnodegraph` presents similar results to `rqt_graph`. Focuses more on connections between nodes and messages,
-- `rostopictree` presents similar results to `rqt_graph`. Presents connection graph of nodes,
+- `rostopicgraph` presents similar results to `rqt_graph`. Presents connection graph of nodes,
 - `rosbagflow` presents similar results to `rqt_bag`. Emphasises communication between nodes and time relation between messages.
 Using `rqt_bag` it is hardly possible to read senders and receivers of messages,
 - `rosverify` and `rosbagflow` can be used to verify certain aspects of system. ROS also have tool dedicated for looking 
