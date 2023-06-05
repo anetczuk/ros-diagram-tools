@@ -1,0 +1,128 @@
+digraph G {
+    rankdir=LR;
+
+    /// tools
+    node [shape=box, style=filled, fillcolor=springgreen];
+
+    invisible_tool [style=invis];
+    codedistribution;
+
+    packagetree;
+    classifynodes;
+    buildtime;
+    rosverify;
+
+    rosnodegraph;
+    rostopicgraph;
+    rosbagflow;
+
+    /// dumps
+    node [shape=hexagon, style=filled, fillcolor=skyblue1];
+
+    dumpclocdir;
+    dumpclocpack;
+    dumpcatkindeps;
+    dumprospack;
+    dumprosmsg;
+    dumprossrv;
+    dumprosnode;
+    dumprostopic;
+    dumprosservice;
+    dumproslaunch;
+    dumpros;
+
+    /// sys deps
+    node [shape=octagon, style=filled, fillcolor=khaki1];
+
+    cloc;
+    catkin;
+    rospack;
+    rosnode;
+    rostopic;
+    rosmsg;
+    rosservice;
+    rossrv;
+    roslaunch;
+    rosrecord;
+
+
+    /// tools edges
+    codedistribution -> dumpclocdir;
+    codedistribution -> dumpclocpack;
+
+    packagetree -> dumpcatkindeps;
+    packagetree -> dumprospack;
+
+    classifynodes -> dumprospack;
+    classifynodes -> dumproslaunch;
+
+    buildtime -> catkin;
+
+    rosnodegraph -> dumprosnode;
+    rosnodegraph -> dumprostopic;
+    rosnodegraph -> dumprosmsg;
+    rosnodegraph -> dumprosservice;
+    rosnodegraph -> dumprossrv;
+
+    rostopicgraph -> dumprostopic;
+
+    rosbagflow -> rosrecord;
+    rosbagflow -> dumprostopic;
+
+    rosverify -> dumprostopic;
+    rosverify -> catkin;
+    
+    invisible_tool -> dumpros [style=invis];
+    
+    /// dump edges
+    dumpclocdir -> cloc;
+    dumpclocpack -> cloc;
+    dumpclocpack -> dumprospack;
+    dumpcatkindeps -> catkin;
+    dumprospack -> rospack;
+    dumprosmsg -> rosmsg;
+    dumprossrv -> rossrv;
+    dumprosnode -> rosnode;
+    dumprostopic -> rostopic;
+    dumprosservice -> rosservice;
+    dumproslaunch -> roslaunch;
+
+    dumpros -> dumprospack;
+    dumpros -> dumpclocpack;
+    dumpros -> dumprosnode;
+    dumpros -> dumprostopic;
+    dumpros -> dumprosservice;
+    dumpros -> dumprossrv;
+    dumpros -> dumprosmsg;
+
+
+    {
+        rank=min;
+
+        codedistribution [shape=box];
+    
+        packagetree [shape=box];
+        classifynodes [shape=box];
+        buildtime [shape=box];
+        rosverify [shape=box];
+    
+        rosnodegraph [shape=box];
+        rostopicgraph [shape=box];
+        rosbagflow [shape=box];
+    }
+
+    {
+        rank=max;
+
+        cloc [shape=octagon];
+        catkin [shape=octagon];
+        rospack [shape=octagon];
+        rosnode [shape=octagon];
+        rostopic [shape=octagon];
+        rosmsg [shape=octagon];
+        rosservice [shape=octagon];
+        rossrv [shape=octagon];
+        roslaunch [shape=octagon];
+        rosrecord [shape=octagon];
+    }
+}

@@ -257,6 +257,11 @@ Tools can be divided into following categories:
 - working on running ROS master: `dumprosnode`, `dumprostopic`, `dumprosservice`, `dumpros`.
 
 
+Dependency graph between tools, dump scripts and external executables is presented on following graph:
+
+[![Tools dependencies](doc/tools_graph/tools_graph-small.png "Tools dependencies")](doc/tools_graph/tools_graph.png)
+
+
 
 ## References
 

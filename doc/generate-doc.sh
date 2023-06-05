@@ -60,5 +60,9 @@ generate_dump_help() {
 }
 
 
+$SCRIPT_DIR/tools_graph/generate.sh
+
 generate_tools_help
 generate_dump_help
+
+$SCRIPT_DIR/generate_small.sh
