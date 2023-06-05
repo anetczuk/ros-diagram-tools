@@ -87,7 +87,7 @@ def dumpclocdir( args ):
 
 def dumpclocpath( args ):
     args_list = []
-    args_list.append( f"{args.clocrundir}" )
+    args_list.append( f"{args.packfile}" )
     args_list.append( f"{args.outdir}" )
     execute_script( dumpscripts.DUMP_CLOCPACK_SH, args_list )
 
@@ -95,7 +95,7 @@ def dumpclocpath( args ):
 def dumpcatkindeps( args ):
     args_list = []
     args_list.append( args.outdir )
-    execute_script( dumpscripts.DUMP_CATKIN_SH, args_list )
+    execute_script( dumpscripts.DUMP_CATKINDEPS_SH, args_list )
 
 
 def dumproslaunch( args ):
@@ -166,7 +166,7 @@ def main():
     description = "dump result of 'cloc' command on pack data"
     subparser = subparsers.add_parser('dumpclocpack', help=description)
     subparser.description = description
-    subparser.set_defaults( func=dumpclocdir )
+    subparser.set_defaults( func=dumpclocpath )
     subparser.add_argument( '--packfile', action='store', required=True, default="",
                             help="List file dumped with `dumprospack` tool" )
     subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
