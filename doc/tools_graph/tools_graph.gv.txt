@@ -31,6 +31,9 @@ digraph G {
     dumproslaunch;
     dumpros;
 
+    catkin_log [ label="catkin log", style=solid ];
+    bag_file [ label="bag file", style=solid ];
+
     /// sys deps
     node [shape=octagon, style=filled, fillcolor=khaki1];
 
@@ -56,7 +59,7 @@ digraph G {
     classifynodes -> dumprospack;
     classifynodes -> dumproslaunch;
 
-    buildtime -> catkin;
+    buildtime -> catkin_log;
 
     rosnodegraph -> dumprosnode;
     rosnodegraph -> dumprostopic;
@@ -66,7 +69,7 @@ digraph G {
 
     rostopicgraph -> dumprostopic;
 
-    rosbagflow -> rosrecord;
+    rosbagflow -> bag_file;
     rosbagflow -> dumprostopic;
 
     rosverify -> dumprostopic;
@@ -94,6 +97,9 @@ digraph G {
     dumpros -> dumprosservice;
     dumpros -> dumprossrv;
     dumpros -> dumprosmsg;
+    
+    catkin_log -> catkin;
+    bag_file -> rosrecord;
 
 
     {
