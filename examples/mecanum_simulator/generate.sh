@@ -54,7 +54,7 @@ cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
 echo "generating buildtime"
 OUT_DIR="$OUT_ROOT_DIR/catkinschedule"
 mkdir -p $OUT_DIR
-$TOOL_PATH/rosdiagramtools.py buildtime -f "$DUMP_DIR/build.log.txt" -st 1 -sp 80 --outhtml --outdir "$OUT_DIR"
+$TOOL_PATH/rosdiagramtools.py buildtime --buildlogfile "$DUMP_DIR/build.log.txt" -st 1 -sp 80 --outhtml --outdir "$OUT_DIR"
 $SCRIPT_DIR/../convert_plantuml.sh "$OUT_DIR"
 convert "$OUT_DIR/schedule.svg" -strip -density 600 "$OUT_DIR/schedule.png"
 cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png

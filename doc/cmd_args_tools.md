@@ -115,16 +115,17 @@ optional arguments:
 
 ## rosdiagramtools.py buildtime --help
 ```
-usage: rosdiagramtools.py buildtime [-h] [-la] [-f FILE] [-st SCALESECSTEP]
-                                    [-sp SCALEPXNUM] [--outhtml]
-                                    [--outdir OUTDIR]
+usage: rosdiagramtools.py buildtime [-h] [-la] --buildlogfile BUILDLOGFILE
+                                    [-st SCALESECSTEP] [-sp SCALEPXNUM]
+                                    [--outhtml] [--outdir OUTDIR]
 
 catkin build schedule
 
 optional arguments:
   -h, --help            show this help message and exit
   -la, --logall         Log all messages
-  -f FILE, --file FILE  Read catkin build log file
+  --buildlogfile BUILDLOGFILE
+                        Path to catkin build log file
   -st SCALESECSTEP, --scalesecstep SCALESECSTEP
                         Scale time step. Timeline will be divided into steps
                         of given size.

@@ -1,7 +1,7 @@
 # ROS diagram tools
 
 Generate various aspects of *Robot Operating System* workspace in form of diagrams, graphs and interactive views.
-To produce results package uses *Grpahviz* and *PlanutUML* diagram tools.
+To produce results package uses *Grpahviz* and *PlantUML* diagram tools.
 
 Package can produce following diagrams:
 - source code distribution chart
@@ -131,7 +131,7 @@ To generate graph execute following steps:
 2. execute tool: 
 ```
 rosdiagramtools.py buildtime -la \
-                             -f build_log.txt \
+                             --buildlogfile build_log.txt \
                              -st 1 -sp 150 \
                              --outhtml --outdir output_dir
 ```

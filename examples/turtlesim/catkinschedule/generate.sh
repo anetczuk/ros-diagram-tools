@@ -16,7 +16,7 @@ mkdir -p $OUT_DIR
 
 
 $TOOL_DIR/rosdiagramtools.py buildtime -la \
-                                       -f $SCRIPT_DIR/build.log.txt \
+                                       --buildlogfile $SCRIPT_DIR/build.log.txt \
                                        -st 1 -sp 150 \
                                        --outhtml --outdir $OUT_DIR $@
 

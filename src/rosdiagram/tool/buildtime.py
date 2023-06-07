@@ -537,8 +537,8 @@ def configure_parser( parser ):
     parser.description = 'catkin build schedule'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
-    parser.add_argument( '-f', '--file', action='store', required=False, default="",
-                         help="Read catkin build log file" )
+    parser.add_argument( '--buildlogfile', action='store', required=True,
+                         help="Path to catkin build log file" )
     parser.add_argument( '-st', '--scalesecstep', action='store', required=False, default=20, help="Scale time step. Timeline will be divided into steps of given size." )
     parser.add_argument( '-sp', '--scalepxnum', action='store', required=False, default=100, help="Scale pixel number - width in pixels of each timeline step." )
     parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
@@ -552,7 +552,7 @@ def process_arguments( args ):
     else:
         logging.getLogger().setLevel( logging.INFO )
 
-    schedule = read_build_log( args.file )
+    schedule = read_build_log( args.buildlogfile )
     if schedule is None:
         return
 
