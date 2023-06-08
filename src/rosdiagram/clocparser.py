@@ -66,9 +66,21 @@ def cloc_directory( sources_dir ):
     return overall_code - json_code
 
 
-def parse_cloc_file( file_path, language="SUM:" ):
-    content = read_file( file_path )
-    return parse_code( content, language=language )
+def parse_cloc_file( file_path, language="SUM:", ignore=None ):
+    if ignore is None:
+        ignore = []
+    try:
+        content = read_file( file_path )
+        language_lines = parse_code( content, language=language )
+        ignore_sum = 0
+        for ignore_item in ignore:
+            ignore_lines = parse_code( content, language=ignore_item )
+            if ignore_lines > 0:
+                ignore_sum += ignore_lines
+        return language_lines - ignore_sum
+    except BaseException as exc:
+        _LOGGER.error( "error while loading file: %s content:\n%s", file_path, content )
+        raise
 
 
 def parse_code( content, language="SUM:" ):

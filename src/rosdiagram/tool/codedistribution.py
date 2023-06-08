@@ -42,7 +42,7 @@ def read_dir_data( dump_path ):
     for item in cloc_list:
         node_filename  = prepare_filesystem_name( item )
         node_item_path = os.path.join( dump_path, node_filename + ".txt" )
-        total_lines = parse_cloc_file( node_item_path )
+        total_lines = parse_cloc_file( node_item_path, ignore=["JSON"] )
         if total_lines <= 0:
             _LOGGER.warning( "unable to parse: %s", node_item_path )
             continue
