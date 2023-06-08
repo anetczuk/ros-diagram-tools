@@ -31,8 +31,12 @@ mkdir -p $OUT_DIR
 
 
 path_to_local() {
+        ## have to match Python function "showgraph.io.prepare_filesystem_name()"
         local file_path="$1"
-        echo "$OUT_DIR/"$(echo "$file_path" | sed "s/\//_/g")".txt"
+        file_path=$(echo "$file_path" | sed "s/\//_/g")
+        file_path=$(echo "$file_path" | sed "s/|/_/g")
+        file_path=$(echo "$file_path" | sed "s/-/_/g")
+        echo "$OUT_DIR/${file_path}.txt"
 }
 
 
@@ -48,7 +52,8 @@ for dir in ${SCAN_DIR}/*/; do
     src_dir=$(realpath "$dir")
     out_file=$(path_to_local "$src_dir")
     echo "$src_dir -> $out_file"
-    cloc --sum-one --follow-links "${src_dir}" > "$out_file"
+    ## cloc will fail on broken symlinks, so prevent stopping the script
+    cloc --sum-one --follow-links "${src_dir}" > "$out_file" || true
     echo "$src_dir" >> "$LIST_PATH"
 done
 

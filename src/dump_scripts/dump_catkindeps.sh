@@ -32,7 +32,7 @@ mkdir -p $INFO_DIR
 echo "Dumping data to $INFO_DIR"
 
 
-catkin list -u > "$INFO_DIR/pacakges.txt"
+catkin list -u > "$INFO_DIR/packages.txt"
 
 catkin list --deps > "$INFO_DIR/list.txt"
 

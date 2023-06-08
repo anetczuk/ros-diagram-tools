@@ -25,21 +25,25 @@ fi
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 
 LAUNCH_FILE="$1"
-INFO_DIR="$2"
+OUT_DIR="$2"
 
-mkdir -p $INFO_DIR
+mkdir -p $OUT_DIR
 
 
 path_to_local() {
+        ## have to match Python function "showgraph.io.prepare_filesystem_name()"
         local file_path="$1"
-        echo "$INFO_DIR/"$(echo "$file_path" | sed "s/\//_/g")".txt"
+        file_path=$(echo "$file_path" | sed "s/\//_/g")
+        file_path=$(echo "$file_path" | sed "s/|/_/g")
+        file_path=$(echo "$file_path" | sed "s/-/_/g")
+        echo "$OUT_DIR/${file_path}.txt"
 }
 
 
-echo "Dumping data to $INFO_DIR"
+echo "Dumping data to $OUT_DIR"
 
 
-LIST_FILE_PATH="$INFO_DIR/list.txt"
+LIST_FILE_PATH="$OUT_DIR/list.txt"
 
 
 roslaunch $LAUNCH_FILE --files > "$LIST_FILE_PATH"
