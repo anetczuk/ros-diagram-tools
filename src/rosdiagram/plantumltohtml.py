@@ -62,7 +62,7 @@ def write_seq_main_page( output_dir, params_dict: dict ):
     NodeData.sortList( nodes_data )
     # TopicData.sortList( topics_data )
 
-    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_seq_main_page.html.tmpl" )
+    template_path = os.path.join( SCRIPT_DIR, "template", "rosbagflow", "baggraph_seq_main_page.html.tmpl" )
     texttemplate.generate( template_path, main_out_path, INPUT_DICT=params_dict )
 
 
@@ -71,7 +71,7 @@ def write_seq_node_page( params_dict: dict ):
 
     _LOGGER.info( "writing node page: file://%s", out_path )
 
-    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_seq_node_page.html.tmpl" )
+    template_path = os.path.join( SCRIPT_DIR, "template", "rosbagflow", "baggraph_seq_node_page.html.tmpl" )
     texttemplate.generate( template_path, out_path, INPUT_DICT=params_dict )
 
 
@@ -81,7 +81,7 @@ def write_seq_msg_page( params_dict: dict ):
 
     _LOGGER.info( "writing message page: %s %s %s", out_path, item.index, item.topics )
 
-    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_message.html.tmpl" )
+    template_path = os.path.join( SCRIPT_DIR, "template", "rosbagflow", "baggraph_message.html.tmpl" )
     texttemplate.generate( template_path, out_path, INPUT_DICT=params_dict )
 
 
@@ -91,7 +91,7 @@ def write_seq_msgtype_page( params_dict: dict ):
 
     _LOGGER.info( "writing message type page: %s %s", out_path, msgtype )
 
-    template_path = os.path.join( SCRIPT_DIR, "template", "baggraph_messagetype.html.tmpl" )
+    template_path = os.path.join( SCRIPT_DIR, "template", "rosbagflow", "baggraph_messagetype.html.tmpl" )
     texttemplate.generate( template_path, out_path, INPUT_DICT=params_dict )
 
 
