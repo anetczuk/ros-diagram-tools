@@ -11,6 +11,7 @@
 #import showgraph.datadict as data_dict
 
 #load "../footer.html.tmpl" as footer
+#load "../utils.tmpl" as tmpl_utils
 
 
 #template main( INPUT_DICT )
@@ -65,41 +66,20 @@ ${DATA_DICT.get('head_css_style', '')}
 #{ if main_page_link:
         <a href="${main_page_link}">back to Main graph</a>
 #}
-#{     else:
-        Main graph
-#}
         <br />
-    </div>
-    <div class="top_content">
-${DATA_DICT.get('top_content', '')}
     </div>
     <div class="center_content">
 #!
 #! graph_image_path = DATA_DICT.get('graph_image_path')
 #{ if graph_image_path:
         <img src="$graph_image_path" alt="${DATA_DICT.get('graph_image_alt_text', '')}" usemap="#${DATA_DICT.get('graph_name', '')}">
-${DATA_DICT.get('graph_map', '')}
+${DATA_DICT.get('graph_map', '')}$>
 #}
     </div>
+
 #!
-#! page_type = DATA_DICT.get('item_type', '')
-#!
-#{ if page_type == "topic":
-${ ros_topic_info( DATA_DICT ) }
-#}
-#{ if page_type == "service":
 ${ ros_service_info( DATA_DICT ) }
-#}
-    <div class="bottom_content">
-${DATA_DICT.get('bottom_content', '')}
-    </div>
 #!
-#! groups_lists = DATA_DICT.get('items_lists', [])
-#{ for group_dict in groups_lists:
-#!     title      = group_dict.get( "title", "Items" )
-#!     items_list = group_dict.get( "items", [] )
-        ${ ros_link_list( items_list, title ) }
-#}
 
 ${ footer.print() }
 </body>
@@ -108,47 +88,6 @@ ${ footer.print() }
 
 
 #*******************************************************
-
-
-#template ros_topic_info( DATA_DICT )
-#!
-#! topic_name  = DATA_DICT.get('topic_name')
-#! topic_pubs  = DATA_DICT.get('topic_pubs')
-#! topic_subs  = DATA_DICT.get('topic_subs')
-#! msg_type    = DATA_DICT.get('msg_type')
-#! msg_content = DATA_DICT.get('msg_content')
-    <div class="info_content">
-        <table>
-#{ if topic_name:
-            <tr>
-                <td>Topic name:</td>
-                <td><code>${topic_name}</code></td>
-            </tr>
-#}
-#{ if msg_type:
-            <tr>
-                <td>Data type:</td>
-                <td><code>${msg_type}</code></td>
-            </tr>
-#}
-            <tr>
-                <td>Publishers:</td>
-                <td><code>${ " ".join(topic_pubs) }</code></td>
-            </tr>
-            <tr>
-                <td>Subscribers:</td>
-                <td><code>${ " ".join(topic_subs) }</code></td>
-            </tr>
-        </table>
-    </div>
-
-#{ if msg_content:
-    <div class="info_content">
-        <div style="margin-bottom: 12px">Message:</div>
-        <pre><code>${msg_content}</code></pre>
-    </div>
-#}
-#end template
 
 
 #template ros_service_info( DATA_DICT )
@@ -171,7 +110,7 @@ ${ footer.print() }
 #}
             <tr>
                 <td>Listener:</td>
-                <td>${ ros_item_link( srv_listener ) }</td>
+                <td>${ tmpl_utils.ros_item_link( srv_listener ) }</td>
             </tr>
         </table>
     </div>
@@ -183,35 +122,5 @@ ${ footer.print() }
         <pre><code>${msg_content}</code></pre>
     </div>
 #}
-#}
-#end template
-
-
-#*******************************************************
-
-
-#template ros_link_list( items_list, list_title )
-#{ if items_list:
-    <div class="bottom_content">
-        $list_title (${ len(items_list) }):
-        <ul>
-#{     for items_pair in items_list:
-            <li>${ ros_item_link( items_pair ) }</li>
-#}
-        </ul>
-        <br />
-    </div>
-#}
-#end template
-
-
-#template ros_item_link( item_pair )
-#! item_name = item_pair[0]
-#! item_url  = item_pair[1]
-#{ if item_url:
-<a href="${item_url}"><code>${item_name}</code></a>$>
-#}
-#{ else:
-<code>${item_name}</code>$>
 #}
 #end template

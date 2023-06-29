@@ -25,7 +25,7 @@ from rosdiagram.ros.rosnodedata import get_topics, get_services,\
     get_services_from_dict, read_nodes, ROSNodeData, get_topics_info, filter_ros_nodes_dict,\
     get_topics_dict, get_services_dict
 from rosdiagram.graphviztohtml import generate_from_template, set_node_graph_ranks,\
-    DEFAULT_ACTIVE_NODE_STYLE, prepare_item_link, convert_links_dict, set_node_html_attribs
+    DEFAULT_ACTIVE_NODE_STYLE, prepare_item_link, convert_links_dict, set_node_html_attribs, convert_links_list
 from rosdiagram.ros.rostopicdata import read_topics, filter_ros_topics_dict
 from rosdiagram.ros.rosservicedata import read_services
 
@@ -199,13 +199,16 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
 
     ## generate main page
     all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
-    main_items_list = generate_items_lists( all_nodes, all_topics, all_services )
-    main_items_list = convert_links_dict( main_items_list, subpages_dict, nodes_labels, OUTPUT_NODES_REL_DIR )
+    nodes_data_list    = convert_links_list( all_nodes, subpages_dict, nodes_labels, OUTPUT_NODES_REL_DIR )
+    topics_data_list   = convert_links_list( all_topics, subpages_dict, nodes_labels, OUTPUT_NODES_REL_DIR )
+    services_data_list = convert_links_list( all_services, subpages_dict, nodes_labels, OUTPUT_NODES_REL_DIR )
 
     main_dict = {   "style": {},
                     "graph": main_graph,
                     "graph_label": nodes_labels.get( main_graph_name, main_graph_name ),
-                    "items_lists": main_items_list
+                    "nodes_list": nodes_data_list,
+                    "topics_list": topics_data_list,
+                    "services_list": services_data_list
                 }
     template = "rosnodegraph/nodegraph_main.html"
     generate_from_template( out_dir, main_dict, template_name=template )
@@ -246,7 +249,6 @@ def generate_subpages( sub_output_dir, nodes_dict, topics_dump_dir,
 
     for _, node_data in nodes_subpages_dict.items():
         node_data[ "template_name" ] = "rosnodegraph/nodegraph_node.html"
-        node_data[ "item_type" ]     = "node"
 
     #topics_info = nodes_data.getTopicsInfo()
     topics_info = get_topics_info( nodes_dict, topics_dict, msgs_dump_dir )
@@ -262,8 +264,7 @@ def generate_subpages( sub_output_dir, nodes_dict, topics_dump_dir,
             subs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in subs_list ]
 
         sub_dict = topics_subpages_dict[ topic_id ]
-        sub_dict[ "template_name" ] = "rosnodegraph/nodegraph_service.html"
-        sub_dict[ "item_type" ]     = "topic"
+        sub_dict[ "template_name" ] = "rosnodegraph/nodegraph_topic.html"
         sub_dict[ "topic_name" ]    = get_label( topic_labels, topic_id, "<unknown>" )
         sub_dict[ "topic_pubs" ]    = pubs_names
         sub_dict[ "topic_subs" ]    = subs_names
@@ -273,8 +274,7 @@ def generate_subpages( sub_output_dir, nodes_dict, topics_dump_dir,
     services_info = get_services_info( nodes_dict, services_dict, srvs_dump_dir )
     for service_id, service_data in services_info.items():
         sub_dict = services_subpages_dict[ service_id ]
-        sub_dict[ "template_name" ] = "rosnodegraph/nodegraph_topic.html"
-        sub_dict[ "item_type" ]     = "service"
+        sub_dict[ "template_name" ] = "rosnodegraph/nodegraph_service.html"
         sub_dict[ "srv_name" ]      = get_label( services_labels, service_id, "<unknown>" )
         sub_dict[ "msg_type" ]      = service_data.get( "type", "" )
         sub_dict[ "msg_content" ]   = service_data.get( "content", "" )
@@ -304,9 +304,12 @@ def generate_subpages( sub_output_dir, nodes_dict, topics_dump_dir,
 
         item_dict[ "main_page_link" ] = main_page_link
 
-        items_lists = item_dict.get( "items_lists", [] )
-        converted_lists = convert_links_dict( items_lists, subpages_dict, nodes_labels, "" )
-        item_dict[ "items_lists" ] = converted_lists
+        nodes_list                   = item_dict.get( "nodes_list", [] )
+        item_dict[ "nodes_list" ]    = convert_links_list( nodes_list, subpages_dict, nodes_labels, "" )
+        topics_list                  = item_dict.get( "topics_list", [] )
+        item_dict[ "topics_list" ]   = convert_links_list( topics_list, subpages_dict, nodes_labels, "" )
+        services_list                = item_dict.get( "services_list", [] )
+        item_dict[ "services_list" ] = convert_links_list( services_list, subpages_dict, nodes_labels, "" )
 
         _LOGGER.info( "preparing page for item %s", item_id )
         template = item_dict.get( "template_name", None )
@@ -326,38 +329,22 @@ def generate_items_dict( nodes_dict, items_list, label_dict, neighbour_range, pa
         if paint_function:
             paint_function( item_graph )
 
-        graph_names = list( item_graph.getNodeNamesAll() )
-        nodes_list  = sorted( filter_nodes( nodes_dict, graph_names ) )
-        item_dict[ "graph" ]    = item_graph
+        item_dict[ "graph" ]       = item_graph
         item_dict[ "msg_name" ]    = ""
         item_dict[ "msg_type" ]    = ""
         item_dict[ "msg_content" ] = ""
 
+        ## get lists of node pubs, subs and servs
+        graph_names   = list( item_graph.getNodeNamesAll() )
+        nodes_list    = sorted( filter_nodes( nodes_dict, graph_names ) )
         topics_list   = sorted( filter_topics( nodes_dict, graph_names ) )
         services_list = sorted( get_services_from_dict( nodes_dict, [ item_id ] ) )
 
-        ## get lists of node pubs, subs and servs
-        group_lists = []
-        graph_items = generate_items_lists( nodes_list, topics_list, services_list )
-        group_lists.extend( graph_items )
-
-        item_dict[ "items_lists" ] = group_lists
+        item_dict[ "nodes_list" ]    = nodes_list
+        item_dict[ "topics_list" ]   = topics_list
+        item_dict[ "services_list" ] = services_list
 
     return sub_items
-
-
-def generate_items_lists( nodes_list, topics_list, services_list ):
-    ret_list = [ { "title": "ROS nodes",
-                   "items": nodes_list
-                   },
-                 { "title": "ROS topics",
-                   "items": topics_list
-                   },
-                 { "title": "ROS services",
-                   "items": services_list
-                   }
-                 ]
-    return ret_list
 
 
 ## ===================================================================

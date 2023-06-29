@@ -176,14 +176,13 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
                                        top_list=top_list, paint_function=paint_function )
 
     ## generate main page 
-    converted_list  = convert_links_list( all_items, subpages_dict, {}, OUTPUT_NODES_REL_DIR )
-    main_items_list = [{ "title": "Graph items", "items": converted_list }]
+    packages_data_list = convert_links_list( all_items, subpages_dict, {}, OUTPUT_NODES_REL_DIR )
 
     main_dict = {   "style": {},
                     "graph": main_graph,
                     #"graph_label": "packages graph",
                     "graph_label": main_graph_name,
-                    "items_lists": main_items_list
+                    "graph_packages": packages_data_list
                 }
     template = "packagetree.html"
     generate_from_template( out_dir, main_dict, template_name=template )
@@ -220,8 +219,7 @@ def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link
 
         nodes_list     = sorted( list( item_graph.getNodeNamesAll() ) )
         converted_list = convert_links_list( nodes_list, sub_items_list, {}, "" )
-        items_list     = [ { "title": "Graph items", "items": converted_list } ]
-        item_dict[ "items_lists" ] = items_list
+        item_dict[ "graph_packages" ] = converted_list
 
         _LOGGER.info( "preparing page for item %s", item_id )
         generate_from_template( sub_output_dir, item_dict, template_name=template )

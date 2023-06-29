@@ -1,0 +1,36 @@
+#*
+#* Python is accessible by following methods:
+#* - $variable -- printing value of variable to document
+#* - ${ <expression> } -- single expression to evaluate and print to document
+#* - #! -- general purpose line of any Python code
+#* 
+#* Any non-python content and non-template content is treated as text. 
+#* 
+
+
+#template ros_link_list( items_list, list_title )
+#{ if items_list:
+    <div class="bottom_content">
+        $list_title (${ len(items_list) }):
+        <ul>
+#{     for items_pair in items_list:
+            <li>${ ros_item_link( items_pair ) }</li>
+#}
+        </ul>
+        <br />
+    </div>
+
+#}
+#end template
+
+
+#template ros_item_link( item_pair )
+#! item_name = item_pair[0]
+#! item_url  = item_pair[1]
+#{ if item_url:
+<a href="${item_url}"><code>${item_name}</code></a>$>
+#}
+#{ else:
+<code>${item_name}</code>$>
+#}
+#end template

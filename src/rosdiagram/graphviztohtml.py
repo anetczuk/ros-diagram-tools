@@ -70,6 +70,7 @@ def generate( output_dir, params_dict, template_id = "" ):
                             "graph_image_alt_text": graph_label,
                             "graph_map":            graph_map,
                             } )
+    page_params.setdefault( "head_css_style", "" )
 
     template_path    = os.path.join( SCRIPT_DIR, "template", template_id )
     output_html_file = os.path.join( output_dir, graph_filename + ".html" )
