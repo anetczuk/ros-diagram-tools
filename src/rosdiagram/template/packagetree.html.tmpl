@@ -77,24 +77,21 @@ ${DATA_DICT.get('top_content', '')}
 #!
 #! graph_image_path = DATA_DICT.get('graph_image_path')
 #{ if graph_image_path:
-        <img src="$graph_image_path" alt="${DATA_DICT.get('alt_text', '')}" usemap="#${DATA_DICT.get('graph_name', '')}">
+        <img src="$graph_image_path" alt="${DATA_DICT.get('graph_image_alt_text', '')}" usemap="#${DATA_DICT.get('graph_name', '')}">
 ${DATA_DICT.get('graph_map', '')}
 #}
     </div>
 #!
-#! page_type = DATA_DICT.get('item_type')
+#! page_type = DATA_DICT.get('item_type', '')
 #!
 #{ if page_type == "topic":
 ${ ros_topic_info( DATA_DICT ) }
-#}
-#{ if page_type == "service":
-${ ros_service_info( DATA_DICT ) }
 #}
     <div class="bottom_content">
 ${DATA_DICT.get('bottom_content', '')}
     </div>
 #!
-#! groups_lists = DATA_DICT.get('lists', [])
+#! groups_lists = DATA_DICT.get('items_lists', [])
 #{ for group_dict in groups_lists:
 #!     title      = group_dict.get( "title", "Items" )
 #!     items_list = group_dict.get( "items", [] )
@@ -147,42 +144,6 @@ ${ footer.print() }
         <div style="margin-bottom: 12px">Message:</div>
         <pre><code>${msg_content}</code></pre>
     </div>
-#}
-#end template
-
-
-#template ros_service_info( DATA_DICT )
-#!
-#! srv_name     = DATA_DICT.get('srv_name')
-#! srv_listener = DATA_DICT.get('srv_listener')
-#! msg_type     = DATA_DICT.get('msg_type')
-#{ if srv_name and srv_listener:
-    <div class="info_content">
-        <table>
-            <tr>
-                <td>Name:</td>
-                <td><code>${srv_name}</code></td>
-            </tr>
-#{ if msg_type:
-            <tr>
-                <td>Data type:</td>
-                <td><code>${msg_type}</code></td>
-            </tr>
-#}
-            <tr>
-                <td>Listener:</td>
-                <td>${ ros_item_link( srv_listener ) }</td>
-            </tr>
-        </table>
-    </div>
-#!
-#!     msg_content = DATA_DICT.get('msg_content')
-#{     if msg_content:
-    <div class="info_content">
-        <div style="margin-bottom: 12px">Message:</div>
-        <pre><code>${msg_content}</code></pre>
-    </div>
-#}
 #}
 #end template
 

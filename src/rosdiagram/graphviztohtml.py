@@ -10,8 +10,7 @@ import logging
 
 from showgraph.io import read_file, prepare_filesystem_name
 from showgraph.graphviz import Graph, \
-    unquote_name, set_nodes_style, unquote_name_list, \
-    get_node_label
+    unquote_name, unquote_name_list, get_node_label
 
 from rosdiagram import texttemplate
 
@@ -24,207 +23,58 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 ## ===================================================================
 
 
-LABEL_DICT_KEY       = "label_dict"
-NEIGHBOURS_RANGE_KEY = "neighbours_range"
+DEFAULT_ACTIVE_NODE_STYLE = { "style": "filled",
+                              "fillcolor": "brown1"
+                              }
 
 
-def generate_graph_html( output_dir, params_dict=None ):
-    if params_dict is None:
-        params_dict = {}
-    generator = HtmlGenerator( params_dict )
-    generator.output_dir = output_dir
-    generator.generate()
+## generate graph page
+def generate_from_template( output_dir, params_dict=None, template_name="dotgraph_page.html" ):
+    template_id = f"{template_name}.tmpl"
+    generate( output_dir, params_dict, template_id )
 
 
-## =============================================================
+## uses keys: "graph", "graph_label", "style", "labels_dict" (deprecated)
+def generate( output_dir, params_dict, template_id = "" ):
+    page_params = params_dict.copy()
 
+    node_graph = page_params.get( "graph" )
+    if node_graph is None:
+        raise RuntimeError( f"'graph' not set in params dict" )
 
-class HtmlGenerator():
+    store_graph_to_html( node_graph, output_dir )
 
-    OUTPUT_NODES_REL_DIR = os.path.join( "nodes" )
+    graph_id       = node_graph.getName()                       ## usually node id
+    graph_filename = prepare_filesystem_name( graph_id )
 
-    def __init__(self, params_dict=None):
-        if isinstance( params_dict, ParamsDict ) is False:
-            params_dict   = ParamsDict( params=params_dict )
-        self.params       = params_dict
-        self.labels_dict  = self.params.get( "labels_dict", {} )
-        self.output_dir   = None
+    graph_map = ""
+    graph_image_path = ""
+    if not node_graph.empty():
+        map_out   = os.path.join( output_dir, graph_filename + ".map" )
+        graph_map = read_file( map_out )
+        graph_image_path = f"{graph_filename}.png"
 
-        self._main_graph  = None
+    graph_label = page_params.get( "graph_label", None )
+    if graph_label is None:
+        labels_dict  = page_params.get( "labels_dict", {} )
+        graph_label = labels_dict.get( graph_id, graph_id )
 
-    def generate(self):
-#         params_out_file = os.path.join( self.output_dir, "params.txt" )
-#         params_dict = self.params.getDict()
-#         write_dict( params_dict, params_out_file, 4 )
+    style_dict = page_params.get( "style", {} )
 
-        self._main_graph = self._getMainGraph()
-        set_node_html_attribs( self._main_graph, self.OUTPUT_NODES_REL_DIR )
-        self._generateGraphMainPage()
+    ## prepare input for template
+    page_params.update( {   "body_color":       style_dict.get( "body_color", "#bbbbbb" ),
 
-        self._generateNodes()
+                            ## graph image specific fields
+                            "graph_name":           graph_id,
+                            "graph_image_path":     graph_image_path,
+                            "graph_image_alt_text": graph_label,
+                            "graph_map":            graph_map,
+                            } )
 
-    ## generate and store neighbour graphs
-    def _generateNodes( self ):
-        sub_items_dict = self.params.get( "sub_pages", {} )
+    template_path    = os.path.join( SCRIPT_DIR, "template", template_id )
+    output_html_file = os.path.join( output_dir, graph_filename + ".html" )
 
-        active_node_style = self.params.getValue( "active_node_style", DEFAULT_ACTIVE_NODE_STYLE )
-
-        all_items = set( sub_items_dict.keys() )
-        for node_id in all_items:
-            _LOGGER.info( "preparing page for item %s", node_id )
-
-            ## generate subgraph
-            node_graph: Graph = self._getNodeGraph( node_id )
-
-            ### set rank for neighbour nodes
-            node_graph.setNodesRankByName( [node_id], 100 )
-
-            source_layers = node_graph.getSourceNames( node_id, 0 )
-            if len(source_layers) > 0:
-                source_names = source_layers[0]
-                source_names = unquote_name_list( source_names )
-                node_graph.setNodesRankByName( source_names, 50 )
-
-            destination_layers = node_graph.getDestinationNames( node_id, 0 )
-            if len(destination_layers) > 0:
-                destination_names = destination_layers[0]
-                destination_names = unquote_name_list( destination_names )
-                node_graph.setNodesRankByName( destination_names, 150 )
-
-            set_nodes_style( node_graph, [node_id], style_dict=active_node_style )
-            set_node_html_attribs( node_graph, "", filter_nodes=all_items )
-
-            self._generateGraphNodePage( node_graph, node_id )
-
-    def _generateGraphMainPage( self ):
-        main_item_dict = self.params.get( "main_page", {} )
-        self._generateGraphPage( self._main_graph, main_item_dict, self.output_dir )
-
-    def _generateGraphNodePage( self, graph, node_id ):
-        node_out_dir = os.path.join( self.output_dir, self.OUTPUT_NODES_REL_DIR )
-        os.makedirs( node_out_dir, exist_ok=True )
-
-        sub_items_dict   = self.params.get( "sub_pages", {} )
-        node_config_dict = sub_items_dict.get( node_id, {} )
-        self._generateGraphPage( graph, node_config_dict, node_out_dir )
-
-    def _generateGraphPage( self, graph, item_config_dict, output_dir ):
-        page_params = item_config_dict.copy()
-
-        ## ensure field
-        page_params[ "item_type" ]      = page_params.get( "item_type", "" )
-        page_params[ "head_css_style" ] = page_params.get( "head_css_style", "" )
-        page_params[ "top_content" ]    = page_params.get( "top_content", "" )
-        page_params[ "bottom_content" ] = page_params.get( "bottom_content", "" )
-
-        is_mainpage = self.output_dir == output_dir
-
-        store_graph_to_html( graph, output_dir )
-
-        graph_id       = graph.getName()                       ## usually node id
-        graph_filename = prepare_filesystem_name( graph_id )
-
-        graph_label = self.labels_dict.get( graph_id, graph_id )
-
-        graph_map = ""
-        graph_image_path = ""
-        if not graph.empty():
-            map_out          = os.path.join( output_dir, graph_filename + ".map" )
-            graph_map        = read_file( map_out )
-            graph_image_path = f"{graph_filename}.png"
-
-        alt_text = graph_label
-#         if len(self.type_label) > 0:
-#             alt_text = self.type_label + " " + alt_text
-
-        link_subdir = ""
-        if is_mainpage:
-            link_subdir = self.OUTPUT_NODES_REL_DIR
-
-        listener = ""
-        listener_id = item_config_dict.get( "svr_listener", "" )
-        if listener_id:
-            link_list = self._getROSItemLinkList( [listener_id], link_subdir )
-            if link_list:
-                listener = link_list[0]
-
-        converted_lists = []
-        items_lists = item_config_dict.get( "lists", [] )
-        for list_dict in items_lists:
-            title = list_dict.get( "title", "Items" )
-            items = list_dict.get( "items", [] )
-            converted_list = self._getROSItemLinkList( items, link_subdir )
-            converted_dict = { "title": title, "items": converted_list }
-            converted_lists.append( converted_dict )
-
-        main_page_link = ""
-        if not is_mainpage:
-            full_graph_name = self._main_graph.getName()
-            item_filename   = prepare_filesystem_name( full_graph_name )
-            main_page_link  = os.path.join( os.pardir, item_filename + ".html" )
-
-        ## prepare input for template
-        page_params.update( {   "body_color":       self._getStyle( "body_color", "#bbbbbb" ),
-                                "main_page_link":   main_page_link,
-
-                                "lists": converted_lists,
-
-                                ## graph image specific fields
-                                "graph_name":        graph_id,
-                                "graph_image_path":  graph_image_path,
-                                "alt_text":          alt_text,
-                                "graph_map":         graph_map,
-
-                                ## service specific fields
-                                "srv_listener": listener
-                                } )
-
-        template_path = os.path.join( SCRIPT_DIR, "template", "nodegraph_page.html.tmpl" )
-        html_out      = os.path.join( output_dir, graph_filename + ".html" )
-
-        texttemplate.generate( template_path, html_out, INPUT_DICT=page_params )
-
-    def _getMainGraph(self) -> Graph:
-        main_dict = self.params.get( "main_page", {} )
-        graph     = main_dict.get( "graph", None )
-        if graph is None:
-            return None
-        graph.setName( "full_graph" )
-        return graph
-
-    def _getNodeGraph(self, node_id) -> Graph:
-        sub_items_dict = self.params.get( "sub_pages", {} )
-        item_dict      = sub_items_dict.get( node_id, {} )
-        node_graph     = item_dict.get( "graph", None )
-        if node_graph is None:
-            raise RuntimeError( f"'graph' not set for item '{node_id}'" )
-        node_graph.setName( node_id )
-        return node_graph
-
-    def _getROSItemLinkList(self, item_list, link_subdir="" ):
-        ret_list = []
-        for item_id in item_list:
-            label = self.labels_dict.get( item_id, item_id )
-            if self._isSubPage( item_id ):
-                item_filename = prepare_filesystem_name( item_id )
-                if link_subdir:
-                    ret_list.append( (label, f"{link_subdir}/{item_filename}.html") )
-                else:
-                    ret_list.append( (label, f"{item_filename}.html") )
-            else:
-                ret_list.append( (label, None) )
-        return ret_list
-
-    def _getStyle( self, item_id, default_value ):
-        style_dict = self.params.get( "style", {} )
-        return style_dict.get( item_id, default_value )
-
-    def _isSubPage(self, item_id):
-        sub_items_dict = self.params.get( "sub_pages", {} )
-        return item_id in sub_items_dict
-
-
-## =============================================================
+    texttemplate.generate( template_path, output_html_file, INPUT_DICT=page_params )
 
 
 def store_graph_to_html( graph: Graph, output_dir ):
@@ -240,11 +90,6 @@ def store_graph_to_html( graph: Graph, output_dir ):
     graph.writePNG( data_out )
     data_out = os.path.join( output_dir, item_filename + ".map" )
     graph.writeMap( data_out )
-
-
-DEFAULT_ACTIVE_NODE_STYLE = { "style": "filled",
-                              "fillcolor": "brown1"
-                              }
 
 
 ##
@@ -286,7 +131,55 @@ class ParamsDict():
         return key_value
 
 
-## ============================================================================
+## ===================================================================
+
+
+def convert_links_dict( items_lists, sub_items_list, labels_dict, link_subdir ):
+    converted_lists = []
+    for list_dict in items_lists:
+        title = list_dict.get( "title", "Items" )
+        items = list_dict.get( "items", [] )
+        converted_list = convert_links_list( items, sub_items_list, labels_dict, link_subdir )
+        converted_dict = { "title": title, "items": converted_list }
+        converted_lists.append( converted_dict )
+    return converted_lists
+
+
+def convert_links_list( items_lists, sub_items_list, labels_dict, link_subdir ):
+    converted_list = []
+    for item_id in items_lists:
+        label = labels_dict.get( item_id, item_id )
+        is_subpage = item_id in sub_items_list
+        item_link = prepare_item_link( item_id, label, is_subpage, link_subdir )
+        converted_list.append( item_link )
+    return converted_list
+
+
+## returns pair: ( <label>, <URL> )
+def prepare_item_link( item_id, label, is_subpage, link_subdir="" ):
+    if not is_subpage:
+        return (label, None)
+    item_filename = prepare_filesystem_name( item_id )
+    if link_subdir:
+        return (label, f"{link_subdir}/{item_filename}.html")
+    return (label, f"{item_filename}.html")
+
+
+def set_node_graph_ranks( node_graph, node_id ):
+    node_graph.setName( node_id )
+    node_graph.setNodesRankByName( [node_id], 100 )
+
+    source_layers = node_graph.getSourceNames( node_id, 0 )
+    if len(source_layers) > 0:
+        source_names = source_layers[0]
+        source_names = unquote_name_list( source_names )
+        node_graph.setNodesRankByName( source_names, 50 )
+
+    destination_layers = node_graph.getDestinationNames( node_id, 0 )
+    if len(destination_layers) > 0:
+        destination_names = destination_layers[0]
+        destination_names = unquote_name_list( destination_names )
+        node_graph.setNodesRankByName( destination_names, 150 )
 
 
 def set_node_html_attribs( graph, node_local_dir, filter_nodes=None ):

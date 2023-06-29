@@ -15,8 +15,8 @@ from typing import Dict, Any
 from rosdiagram.ros import rostopicdata
 from rosdiagram.ros import rosservicedata
 
-from showgraph.io import read_list
-from showgraph.graphviz import Graph, set_node_labels, preserve_neighbour_nodes, set_nodes_style
+from showgraph.io import read_list, prepare_filesystem_name
+from showgraph.graphviz import Graph, preserve_neighbour_nodes, set_nodes_style
 
 from rosdiagram.utils import get_create_item
 from rosdiagram.ros.rosnodedata import get_topics, get_services,\
@@ -24,7 +24,8 @@ from rosdiagram.ros.rosnodedata import get_topics, get_services,\
     get_services_info, filter_nodes, filter_topics,\
     get_services_from_dict, read_nodes, ROSNodeData, get_topics_info, filter_ros_nodes_dict,\
     get_topics_dict, get_services_dict
-from rosdiagram.graphviztohtml import generate_graph_html
+from rosdiagram.graphviztohtml import generate_from_template, set_node_graph_ranks,\
+    DEFAULT_ACTIVE_NODE_STYLE, prepare_item_link, convert_links_dict, set_node_html_attribs
 from rosdiagram.ros.rostopicdata import read_topics, filter_ros_topics_dict
 from rosdiagram.ros.rosservicedata import read_services
 
@@ -177,82 +178,37 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
     if nodes_labels is None:
         nodes_labels = fix_names( nodes_dict )
 
-    topics_dict = read_topics( topics_dump_dir )
-    if topics_dict is None:
-        topics_dict = get_topics_dict( nodes_dict, nodes_labels )
+    OUTPUT_NODES_REL_DIR = os.path.join( "nodes" )
+    main_graph_name = "full_graph"
 
-    filter_ros_topics_dict( topics_dict )
-
-    topic_labels = rostopicdata.fix_names( topics_dict )
-
-    services_dict = read_services( services_dump_dir )
-    if services_dict is None:
-        services_dict = get_services_dict( nodes_dict, nodes_labels )
-
-    services_labels = rosservicedata.fix_names( services_dict )
-
-    nodes_data: ROSNodeData = ROSNodeData( nodes_dict )
-    nodes_data.nodes_label_dict = nodes_labels
-
-    all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
-
+    ## generate main page graph
     main_graph: Graph = generate_graph( nodes_dict, labels_dict=nodes_labels, full_graph=main_full_graph, paint_function=paint_function )
+    main_graph.setName( main_graph_name )
+    set_node_html_attribs( main_graph, OUTPUT_NODES_REL_DIR )
 
-    nodes_subpages_dict    = generate_subpages_dict( nodes_dict, all_nodes, nodes_labels, 1,
-                                                     paint_function=paint_function )
-    topics_subpages_dict   = generate_subpages_dict( nodes_dict, all_topics, nodes_labels, 0,
-                                                     paint_function=paint_function )
-    services_subpages_dict = generate_subpages_dict( nodes_dict, all_services, nodes_labels, 0,
-                                                     paint_function=paint_function )
+    ## generate sup pages
+    sub_output_dir = os.path.join( out_dir, OUTPUT_NODES_REL_DIR )
+    os.makedirs( sub_output_dir, exist_ok=True )
 
-    for _, node_data in nodes_subpages_dict.items():
-        node_data[ "item_type" ] = "node"
+    item_filename  = prepare_filesystem_name( main_graph_name )
+    main_page_link = os.path.join( os.pardir, item_filename + ".html" )
 
-    #topics_info = nodes_data.getTopicsInfo()
-    topics_info = get_topics_info( nodes_dict, topics_dict, msgs_dump_dir )
-    for topic_id, topic_data in topics_info.items():
-        pubs_list  = topic_data.get( "pubs", [] )
-        subs_list  = topic_data.get( "subs", [] )
+    subpages_dict = generate_subpages( sub_output_dir, nodes_dict,
+                                       topics_dump_dir, msgs_dump_dir, services_dump_dir, srvs_dump_dir, 
+                                       nodes_labels, main_page_link, paint_function=paint_function )
 
-        pubs_names = []
-        if pubs_list:
-            pubs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in pubs_list ]
-        subs_names = []
-        if subs_list:
-            subs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in subs_list ]
+    ## generate main page
+    all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
+    main_items_list = generate_items_lists( all_nodes, all_topics, all_services )
+    main_items_list = convert_links_dict( main_items_list, subpages_dict, nodes_labels, OUTPUT_NODES_REL_DIR )
 
-        sub_dict = topics_subpages_dict[ topic_id ]
-        sub_dict[ "item_type" ]   = "topic"
-        sub_dict[ "topic_name" ]  = get_label( topic_labels, topic_id, "<unknown>" )
-        sub_dict[ "topic_pubs" ]  = pubs_names
-        sub_dict[ "topic_subs" ]  = subs_names
-        sub_dict[ "msg_type" ]    = topic_data.get( "type", "" )
-        sub_dict[ "msg_content" ] = topic_data.get( "content", "" )
-
-    services_info = get_services_info( nodes_dict, services_dict, srvs_dump_dir )
-    for service_id, service_data in services_info.items():
-        sub_dict = services_subpages_dict[ service_id ]
-        sub_dict[ "item_type" ]    = "service"
-        sub_dict[ "srv_name" ]     = get_label( services_labels, service_id, "<unknown>" )
-        sub_dict[ "svr_listener" ] = service_data.get( "listener", "" )
-        sub_dict[ "msg_type" ]     = service_data.get( "type", "" )
-        sub_dict[ "msg_content" ]  = service_data.get( "content", "" )
-
-    sub_items = {}
-    sub_items.update( nodes_subpages_dict )
-    sub_items.update( topics_subpages_dict )
-    sub_items.update( services_subpages_dict )
-
-    params_dict = { "style": {},
-                    "labels_dict": nodes_labels,
-                    "main_page": { "graph": main_graph,
-                                   "lists": generate_items_lists( all_nodes, all_topics, all_services )
-                                   },
-                    "sub_pages": sub_items
-                    }
-
-    os.makedirs( out_dir, exist_ok=True )
-    generate_graph_html( out_dir, params_dict )
+    main_dict = {   "style": {},
+                    "graph": main_graph,
+                    "graph_label": nodes_labels.get( main_graph_name, main_graph_name ),
+                    "items_lists": main_items_list
+                }
+    template = "rosnodegraph/nodegraph_main.html"
+    generate_from_template( out_dir, main_dict, template_name=template )
 
 
 def get_label( label_dict, item_id, default_name="<unknown>" ):
@@ -262,7 +218,105 @@ def get_label( label_dict, item_id, default_name="<unknown>" ):
     return default_name
 
 
-def generate_subpages_dict( nodes_dict, items_list, label_dict, neighbour_range, paint_function=None ):
+## returns dict: { <item_id>: <item_data_dict> }
+def generate_subpages( sub_output_dir, nodes_dict, topics_dump_dir, 
+                       msgs_dump_dir, services_dump_dir, srvs_dump_dir,
+                       nodes_labels, main_page_link, paint_function=None ):
+    topics_dict = read_topics( topics_dump_dir )
+    if topics_dict is None:
+        topics_dict = get_topics_dict( nodes_dict, nodes_labels )
+
+    filter_ros_topics_dict( topics_dict )
+    
+    services_dict = read_services( services_dump_dir )
+    if services_dict is None:
+        services_dict = get_services_dict( nodes_dict, nodes_labels )
+    
+    all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
+    
+    topic_labels    = rostopicdata.fix_names( topics_dict )
+    services_labels = rosservicedata.fix_names( services_dict )
+
+    nodes_subpages_dict    = generate_items_dict( nodes_dict, all_nodes, nodes_labels, 1,
+                                                  paint_function=paint_function )
+    topics_subpages_dict   = generate_items_dict( nodes_dict, all_topics, nodes_labels, 0,
+                                                  paint_function=paint_function )
+    services_subpages_dict = generate_items_dict( nodes_dict, all_services, nodes_labels, 0,
+                                                  paint_function=paint_function )
+
+    for _, node_data in nodes_subpages_dict.items():
+        node_data[ "template_name" ] = "rosnodegraph/nodegraph_node.html"
+        node_data[ "item_type" ]     = "node"
+
+    #topics_info = nodes_data.getTopicsInfo()
+    topics_info = get_topics_info( nodes_dict, topics_dict, msgs_dump_dir )
+    for topic_id, topic_data in topics_info.items():
+        pubs_list = topic_data.get( "pubs", [] )
+        subs_list = topic_data.get( "subs", [] )
+
+        pubs_names = []
+        if pubs_list:
+            pubs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in pubs_list ]
+        subs_names = []
+        if subs_list:
+            subs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in subs_list ]
+
+        sub_dict = topics_subpages_dict[ topic_id ]
+        sub_dict[ "template_name" ] = "rosnodegraph/nodegraph_service.html"
+        sub_dict[ "item_type" ]     = "topic"
+        sub_dict[ "topic_name" ]    = get_label( topic_labels, topic_id, "<unknown>" )
+        sub_dict[ "topic_pubs" ]    = pubs_names
+        sub_dict[ "topic_subs" ]    = subs_names
+        sub_dict[ "msg_type" ]      = topic_data.get( "type", "" )
+        sub_dict[ "msg_content" ]   = topic_data.get( "content", "" )
+
+    services_info = get_services_info( nodes_dict, services_dict, srvs_dump_dir )
+    for service_id, service_data in services_info.items():
+        sub_dict = services_subpages_dict[ service_id ]
+        sub_dict[ "template_name" ] = "rosnodegraph/nodegraph_topic.html"
+        sub_dict[ "item_type" ]     = "service"
+        sub_dict[ "srv_name" ]      = get_label( services_labels, service_id, "<unknown>" )
+        sub_dict[ "msg_type" ]      = service_data.get( "type", "" )
+        sub_dict[ "msg_content" ]   = service_data.get( "content", "" )
+
+        listener_id = service_data.get( "listener", "" )
+        if listener_id:
+            label = nodes_labels.get( listener_id, listener_id )
+            is_subpage = listener_id in nodes_dict
+            srv_link = prepare_item_link( listener_id, label, is_subpage, "" )
+            if srv_link:
+                sub_dict[ "srv_listener" ] = srv_link
+
+    subpages_dict = {}
+    subpages_dict.update( nodes_subpages_dict )
+    subpages_dict.update( topics_subpages_dict )
+    subpages_dict.update( services_subpages_dict )
+
+    for item_id, item_dict in subpages_dict.items():
+        item_graph = item_dict.get( "graph" )
+        if item_graph:
+            set_node_graph_ranks( item_graph, item_id )
+            set_nodes_style( item_graph, [item_id], style_dict=DEFAULT_ACTIVE_NODE_STYLE )
+            set_node_html_attribs( item_graph, "" )
+
+            sub_graph_name = item_graph.getName()
+            item_dict[ "graph_label" ] = nodes_labels.get( sub_graph_name, sub_graph_name )
+
+        item_dict[ "main_page_link" ] = main_page_link
+
+        items_lists = item_dict.get( "items_lists", [] )
+        converted_lists = convert_links_dict( items_lists, subpages_dict, nodes_labels, "" )
+        item_dict[ "items_lists" ] = converted_lists
+
+        _LOGGER.info( "preparing page for item %s", item_id )
+        template = item_dict.get( "template_name", None )
+        if template:
+            generate_from_template( sub_output_dir, item_dict, template_name=template )
+
+    return subpages_dict
+
+
+def generate_items_dict( nodes_dict, items_list, label_dict, neighbour_range, paint_function=None ):
     sub_items = {}
     for item_id in items_list:
         item_dict = {}
@@ -282,25 +336,12 @@ def generate_subpages_dict( nodes_dict, items_list, label_dict, neighbour_range,
         topics_list   = sorted( filter_topics( nodes_dict, graph_names ) )
         services_list = sorted( get_services_from_dict( nodes_dict, [ item_id ] ) )
 
-        group_lists = []
-
         ## get lists of node pubs, subs and servs
-#         node_data = nodes_dict.get( item_id, None )
-#         if node_data is not None:
-#             node_pubs = node_data.get( "pubs", [] )
-#             node_pubs = [ item[0] for item in node_pubs ]
-#             node_subs = node_data.get( "subs", [] )
-#             node_subs = [ item[0] for item in node_subs ]
-#             node_srvs = node_data.get( "servs", [] )
-#             node_srvs = [ item[0] for item in node_srvs ]
-#             group_lists.append( { "title": "Publications", "items": node_pubs } )
-#             group_lists.append( { "title": "Subscriptions", "items": node_subs } )
-#             group_lists.append( { "title": "Services", "items": node_srvs } )
-
+        group_lists = []
         graph_items = generate_items_lists( nodes_list, topics_list, services_list )
         group_lists.extend( graph_items )
 
-        item_dict[ "lists" ] = group_lists
+        item_dict[ "items_lists" ] = group_lists
 
     return sub_items
 

@@ -13,7 +13,8 @@ from showgraph.io import read_file, read_list, prepare_filesystem_name
 from showgraph.graphviz import Graph, preserve_neighbour_nodes, set_nodes_style,\
     preserve_top_subgraph
 
-from rosdiagram.graphviztohtml import generate_graph_html
+from rosdiagram.graphviztohtml import generate_from_template, set_node_graph_ranks,\
+    DEFAULT_ACTIVE_NODE_STYLE, convert_links_list, set_node_html_attribs
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -136,6 +137,7 @@ def paint_nodes( graph: Graph, paint_list ):
 ## ===============================================================
 
 
+## generate packages graph
 def generate( catkin_list_file, node_shape="box",
               top_items=None, highlight_items=None, preserve_neighbour_items=None, paint_function=None ):
     content   = read_file( catkin_list_file )
@@ -153,45 +155,78 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
     highlight_list = config_params_dict.get( "highlight_list", [] )
     paint_function = config_params_dict.get( "paint_function", None )
 
+    OUTPUT_NODES_REL_DIR = os.path.join( "nodes" )
+    main_graph_name = "full_graph"
+
+    ## generate main page graph
     main_graph: Graph = generate_pkg_graph( deps_dict, top_items=top_list, highlight_items=highlight_list, paint_function=paint_function )
+    main_graph.setName( main_graph_name )
+    set_node_html_attribs( main_graph, OUTPUT_NODES_REL_DIR )
 
-    all_items = sorted( main_graph.getNodeNamesAll() )
+    ## generate sub pages
+    sub_output_dir = os.path.join( out_dir, OUTPUT_NODES_REL_DIR )
+    os.makedirs( sub_output_dir, exist_ok=True )
 
-    params_dict = { "style": {},
-                    "labels_dict": {},
-                    "main_page": { "graph": main_graph,
-                                   "lists": [ { "title": "Graph items", "items": all_items } ]
-                                   },
-                    "sub_pages": generate_subpages_dict( deps_dict, all_items, highlight_list,
-                                                         top_list=top_list, paint_function=paint_function )
-                    }
+    all_items = sorted( main_graph.getNodeNamesAll() )          ## graph contains filtered nodes
 
-    generate_graph_html( out_dir, params_dict )
+    item_filename  = prepare_filesystem_name( main_graph_name )
+    main_page_link = os.path.join( os.pardir, item_filename + ".html" )
+
+    subpages_dict = generate_subpages( sub_output_dir, deps_dict, all_items, main_page_link, highlight_list,
+                                       top_list=top_list, paint_function=paint_function )
+
+    ## generate main page 
+    converted_list  = convert_links_list( all_items, subpages_dict, {}, OUTPUT_NODES_REL_DIR )
+    main_items_list = [{ "title": "Graph items", "items": converted_list }]
+
+    main_dict = {   "style": {},
+                    "graph": main_graph,
+                    #"graph_label": "packages graph",
+                    "graph_label": main_graph_name,
+                    "items_lists": main_items_list
+                }
+    template = "packagetree.html"
+    generate_from_template( out_dir, main_dict, template_name=template )
 
 
-def generate_subpages_dict( deps_dict, items_list, highlight_list=None, top_list=None, paint_function=None ):
+## returns dict: { <item_id>: <item_data_dict> }
+def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link, 
+                       highlight_list=None, top_list=None, paint_function=None ):
     if highlight_list is None:
         highlight_list = []
 
-    sub_items = {}
-    for item_id in items_list:
+    template = "packagetree.html"
+    subpages_dict = {}
+    for item_id in sub_items_list:
         _LOGGER.info( "preparing subpage data for %s", item_id )
 
         item_dict = {}
-        sub_items[ item_id ] = item_dict
+        subpages_dict[ item_id ] = item_dict
 
         item_graph: Graph = generate_pkg_graph( deps_dict, 
                                                 top_items=top_list, highlight_items=highlight_list, preserve_neighbour_items=[item_id], 
                                                 paint_function=paint_function )
 
-        item_dict[ "graph" ]       = item_graph
-        item_dict[ "msg_type" ]    = ""
-        item_dict[ "msg_content" ] = ""
+        set_node_graph_ranks( item_graph, item_id )
+        set_nodes_style( item_graph, [item_id], style_dict=DEFAULT_ACTIVE_NODE_STYLE )
+        set_node_html_attribs( item_graph, "" )
 
-        nodes_list = sorted( list( item_graph.getNodeNamesAll() ) )
-        item_dict[ "lists" ] = [ { "title": "Graph items", "items": nodes_list } ]
+        item_dict[ "graph" ]          = item_graph
+        #item_dict[ "graph_label" ]    = f"package '{item_id}' graph"
+        item_dict[ "graph_label" ]    = item_graph.getName()
+        item_dict[ "main_page_link" ] = main_page_link
+        item_dict[ "msg_type" ]       = ""
+        item_dict[ "msg_content" ]    = ""
 
-    return sub_items
+        nodes_list     = sorted( list( item_graph.getNodeNamesAll() ) )
+        converted_list = convert_links_list( nodes_list, sub_items_list, {}, "" )
+        items_list     = [ { "title": "Graph items", "items": converted_list } ]
+        item_dict[ "items_lists" ] = items_list
+
+        _LOGGER.info( "preparing page for item %s", item_id )
+        generate_from_template( sub_output_dir, item_dict, template_name=template )
+
+    return subpages_dict
 
 
 ## ===================================================================
