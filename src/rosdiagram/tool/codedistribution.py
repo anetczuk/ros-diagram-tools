@@ -113,7 +113,8 @@ def generate( cloc_path ):
 
 
 def configure_parser( parser ):
-    parser.description = 'Source code distribution over packages. Tool can be feed with JSON or with path to output of dumpclocpack tool.'
+    parser.description = 'Source code distribution over packages. ' \
+                         'Tool can be feed with JSON or with path to output of dumpclocpack tool.'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '--clocjsonpath', action='store', required=False, default="",
@@ -154,7 +155,7 @@ def process_arguments( args ):
 
     graph = generate_graph( data_dict )
 
-    if graph != None:
+    if graph is not None:
         paint_nodes( graph, highlight_list )
 
         if len( args.outraw ) > 0:

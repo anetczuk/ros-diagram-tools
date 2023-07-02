@@ -11,7 +11,7 @@ import argparse
 import re
 import hashlib
 import pprint
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Tuple
 
 from dataclasses import dataclass
 
@@ -96,7 +96,7 @@ class Schedule():
         queue_time_list.append( ( "OVERALL", jobs_duration, jobs_duration / pipeline_duration / q_size ) )
         return queue_time_list
 
-    def getCriticalPath( self ) -> List[Job]:
+    def getCriticalPath( self ) -> Tuple[ List[Job], float ]:
         ret_list = []
         infinity = float("inf")
         last_job: Job = self.getBefore( infinity )
@@ -212,11 +212,11 @@ def generate_graph_page( schedule: Schedule, item_config_dict, output_dir ):
 ## ===================================================================
 
 
-def read_build_log( log_path ) -> List[Job]:
+def read_build_log( log_path ) -> Schedule:
     content = read_file( log_path )
     if content is None:
         _LOGGER.warning( "unable to read content from file '%s'", log_path )
-        return
+        return None
 
     order_list = []
     start_dict = {}

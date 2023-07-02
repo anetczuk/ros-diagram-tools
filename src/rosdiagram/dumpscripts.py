@@ -11,8 +11,7 @@
 
 
 ## dump_catkindeps.sh
-DUMP_CATKINDEPS_SH = ( "dump_catkindeps.sh",
-"""\
+DUMP_CATKINDEPS_SH = ( "dump_catkindeps.sh", """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
 IGNvZGUgaXMgbGljZW5zZWQgdW5kZXIgdGhlIEJTRCAzLUNsYXVzZSBsaWNlbnNlIGZvdW5kIGlu
@@ -26,13 +25,11 @@ CgpJTkZPX0RJUj0iJDEiCgpta2RpciAtcCAkSU5GT19ESVIKCgplY2hvICJEdW1waW5nIGRhdGEg
 dG8gJElORk9fRElSIgoKCmNhdGtpbiBsaXN0IC11ID4gIiRJTkZPX0RJUi9wYWNrYWdlcy50eHQi
 CgpjYXRraW4gbGlzdCAtLWRlcHMgPiAiJElORk9fRElSL2xpc3QudHh0IgoKZWNobyAtZSAiXG5E
 b25lLlxuIgo=
-"""
-)
+""" )
 
 
 ## dump_clocdir.sh
-DUMP_CLOCDIR_SH = ( "dump_clocdir.sh",
-"""\
+DUMP_CLOCDIR_SH = ( "dump_clocdir.sh", """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
 IGNvZGUgaXMgbGljZW5zZWQgdW5kZXIgdGhlIEJTRCAzLUNsYXVzZSBsaWNlbnNlIGZvdW5kIGlu
@@ -57,13 +54,11 @@ IGZhaWwgb24gYnJva2VuIHN5bWxpbmtzLCBzbyBwcmV2ZW50IHN0b3BwaW5nIHRoZSBzY3JpcHQK
 ICAgIGNsb2MgLS1zdW0tb25lIC0tZm9sbG93LWxpbmtzICIke3NyY19kaXJ9IiA+ICIkb3V0X2Zp
 bGUiIHx8IHRydWUKICAgIGVjaG8gIiRzcmNfZGlyIiA+PiAiJExJU1RfUEFUSCIKZG9uZQoKZWNo
 byAtZSAiXG5Eb25lLlxuIgo=
-"""
-)
+""" )
 
 
 ## dump_clocpack.sh
-DUMP_CLOCPACK_SH = ( "dump_clocpack.sh",
-"""\
+DUMP_CLOCPACK_SH = ( "dump_clocpack.sh", """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
 IGNvZGUgaXMgbGljZW5zZWQgdW5kZXIgdGhlIEJTRCAzLUNsYXVzZSBsaWNlbnNlIGZvdW5kIGlu
@@ -90,13 +85,11 @@ cHBpbmcgdGhlIHNjcmlwdAogICAgY2xvYyAtLXN1bS1vbmUgLS1mb2xsb3ctbGlua3MgIiR7c3Jj
 X2Rpcn0iID4gIiRvdXRfZmlsZSIgfHwgdHJ1ZQogICAgZWNobyAiJHNyY19kaXIiID4+ICIkTElT
 VF9QQVRIIgpkb25lIDwgIiRQQUNLQUdFU19MSVNUX0ZJTEUiCgplY2hvIC1lICJcbkRvbmUuXG4i
 Cg==
-"""
-)
+""" )
 
 
 ## dump_roslaunch.sh
-DUMP_ROSLAUNCH_SH = ( "dump_roslaunch.sh",
-"""\
+DUMP_ROSLAUNCH_SH = ( "dump_roslaunch.sh", """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
 IGNvZGUgaXMgbGljZW5zZWQgdW5kZXIgdGhlIEJTRCAzLUNsYXVzZSBsaWNlbnNlIGZvdW5kIGlu
@@ -124,13 +117,11 @@ bm9kZXNfbGlzdDsgZG8KICAgIG5vZGVfZmlsZT0kKHJvc2xhdW5jaCAkTEFVTkNIX0ZJTEUgLS1m
 aW5kLW5vZGU9IiRpdGVtIikKICAgIGVjaG8gIiRpdGVtOiAkbm9kZV9maWxlIgoKICAgIG91dF9m
 aWxlPSQocGF0aF90b19sb2NhbCAiJG5vZGVfZmlsZSIpIAogICAgZWNobyAkaXRlbSA+PiAkb3V0
 X2ZpbGUKZG9uZQoKZWNobyAtZSAiXG5Eb25lLlxuIgo=
-"""
-)
+""" )
 
 
 ## dump_rosmsg.sh
-DUMP_ROSMSG_SH = ( "dump_rosmsg.sh",
-"""\
+DUMP_ROSMSG_SH = ( "dump_rosmsg.sh", """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
 IGNvZGUgaXMgbGljZW5zZWQgdW5kZXIgdGhlIEJTRCAzLUNsYXVzZSBsaWNlbnNlIGZvdW5kIGlu
@@ -146,13 +137,11 @@ KQoKCmZvciBpdGVtIGluICRpdGVtc19saXN0OyBkbwogICAgb3V0X2ZpbGU9IiRJTkZPX0RJUi8i
 JChlY2hvICIkaXRlbSIgfCBzZWQgInMvXC8vXy9nIikiLnR4dCIKICAgIGVjaG8gIldyaXRpbmcg
 JG91dF9maWxlIgogICAgcm9zbXNnIGluZm8gJGl0ZW0gPiAkb3V0X2ZpbGUKZG9uZQoKZWNobyAt
 ZSAiXG5Eb25lLlxuIgo=
-"""
-)
+""" )
 
 
 ## dump_rosnode.sh
-DUMP_ROSNODE_SH = ( "dump_rosnode.sh",
-"""\
+DUMP_ROSNODE_SH = ( "dump_rosnode.sh", """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
 IGNvZGUgaXMgbGljZW5zZWQgdW5kZXIgdGhlIEJTRCAzLUNsYXVzZSBsaWNlbnNlIGZvdW5kIGlu
@@ -168,13 +157,11 @@ dCkKCgpmb3IgaXRlbSBpbiAkaXRlbXNfbGlzdDsgZG8KICAgIG91dF9maWxlPSIkSU5GT19ESVIv
 IiQoZWNobyAiJGl0ZW0iIHwgc2VkICJzL1wvL18vZyIpIi50eHQiCiAgICBlY2hvICJXcml0aW5n
 ICRvdXRfZmlsZSIKICAgIHJvc25vZGUgaW5mbyAkaXRlbSA+ICRvdXRfZmlsZQpkb25lCgplY2hv
 IC1lICJcbkRvbmUuXG4iCg==
-"""
-)
+""" )
 
 
 ## dump_rospack.sh
-DUMP_ROSPACK_SH = ( "dump_rospack.sh",
-"""\
+DUMP_ROSPACK_SH = ( "dump_rospack.sh", """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
 IGNvZGUgaXMgbGljZW5zZWQgdW5kZXIgdGhlIEJTRCAzLUNsYXVzZSBsaWNlbnNlIGZvdW5kIGlu
@@ -191,13 +178,11 @@ Rk9fRElSLyIkKGVjaG8gIiRpdGVtIiB8IHNlZCAicy9cLy9fL2ciKSIudHh0IgogICAgZWNobyAi
 V3JpdGluZyAkb3V0X2ZpbGUiCiAgICAjIyBzb21lIHBhY2thZ2VzIGNhbiBoYXZlIG5vbi1leGlz
 dGVudCBkZXBlbmRlbmNpZXMKICAgIHJvc3BhY2sgZGVwZW5kczEgJGl0ZW0gPiAkb3V0X2ZpbGUg
 fHwgdHJ1ZQpkb25lCgplY2hvIC1lICJcbkRvbmUuXG4iCg==
-"""
-)
+""" )
 
 
 ## dump_rosservice.sh
-DUMP_ROSSERVICE_SH = ( "dump_rosservice.sh",
-"""\
+DUMP_ROSSERVICE_SH = ( "dump_rosservice.sh", """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
 IGNvZGUgaXMgbGljZW5zZWQgdW5kZXIgdGhlIEJTRCAzLUNsYXVzZSBsaWNlbnNlIGZvdW5kIGlu
@@ -214,13 +199,11 @@ Rk9fRElSLyIkKGVjaG8gIiRpdGVtIiB8IHNlZCAicy9cLy9fL2ciKSIudHh0IgogICAgZWNobyAi
 V3JpdGluZyAkb3V0X2ZpbGUiCiAgICAjIyBjc24gaHNwcHJuIHRoYXQgc29tZSB0eXBlcyBjb3Vs
 ZCBub3QgYmUgbG9hZGVkCiAgICByb3NzZXJ2aWNlIGluZm8gJGl0ZW0gPiAkb3V0X2ZpbGUgfHwg
 dHJ1ZQpkb25lCgplY2hvIC1lICJcbkRvbmUuXG4iCg==
-"""
-)
+""" )
 
 
 ## dump_ros.sh
-DUMP_ROS_SH = ( "dump_ros.sh",
-"""\
+DUMP_ROS_SH = ( "dump_ros.sh", """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
 IGNvZGUgaXMgbGljZW5zZWQgdW5kZXIgdGhlIEJTRCAzLUNsYXVzZSBsaWNlbnNlIGZvdW5kIGlu
@@ -247,13 +230,11 @@ SVIvc3J2aW5mbyIKCmVjaG8gImV4ZWN1dGluZzogJFNDUklQVF9ESVIvZHVtcF9yb3Ntc2cuc2gg
 JElORk9fRElSL21zZ2luZm8iCiRTQ1JJUFRfRElSL2R1bXBfcm9zbXNnLnNoICIkSU5GT19ESVIv
 bXNnaW5mbyIKCiMjICRTQ1JJUFRfRElSL2R1bXBfcm9zbGF1bmNoLnNoIHJlcXVpcmVzIHRvIHBh
 c3MgbGF1bmNoIGZpbGUKCmVjaG8gLWUgIlxuRG9uZS4iCg==
-"""
-)
+""" )
 
 
 ## dump_rossrv.sh
-DUMP_ROSSRV_SH = ( "dump_rossrv.sh",
-"""\
+DUMP_ROSSRV_SH = ( "dump_rossrv.sh", """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
 IGNvZGUgaXMgbGljZW5zZWQgdW5kZXIgdGhlIEJTRCAzLUNsYXVzZSBsaWNlbnNlIGZvdW5kIGlu
@@ -269,13 +250,11 @@ KQoKCmZvciBpdGVtIGluICRpdGVtc19saXN0OyBkbwogICAgb3V0X2ZpbGU9IiRJTkZPX0RJUi8i
 JChlY2hvICIkaXRlbSIgfCBzZWQgInMvXC8vXy9nIikiLnR4dCIKICAgIGVjaG8gIldyaXRpbmcg
 JG91dF9maWxlIgogICAgcm9zc3J2IGluZm8gJGl0ZW0gPiAkb3V0X2ZpbGUKZG9uZQoKZWNobyAt
 ZSAiXG5Eb25lLlxuIgo=
-"""
-)
+""" )
 
 
 ## dump_rostopic.sh
-DUMP_ROSTOPIC_SH = ( "dump_rostopic.sh",
-"""\
+DUMP_ROSTOPIC_SH = ( "dump_rostopic.sh", """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
 IGNvZGUgaXMgbGljZW5zZWQgdW5kZXIgdGhlIEJTRCAzLUNsYXVzZSBsaWNlbnNlIGZvdW5kIGlu
@@ -291,9 +270,19 @@ bGlzdCkKCgpmb3IgaXRlbSBpbiAkaXRlbXNfbGlzdDsgZG8KICAgIG91dF9maWxlPSIkSU5GT19E
 SVIvIiQoZWNobyAiJGl0ZW0iIHwgc2VkICJzL1wvL18vZyIpIi50eHQiCiAgICBlY2hvICJXcml0
 aW5nICRvdXRfZmlsZSIKICAgIHJvc3RvcGljIGluZm8gJGl0ZW0gPiAkb3V0X2ZpbGUKZG9uZQoK
 ZWNobyAtZSAiXG5Eb25lLlxuIgo=
-"""
-)
+""" )
 
 
 # all scripts
-SCRIPTS_LIST = [ DUMP_ROSTOPIC_SH, DUMP_ROSSRV_SH, DUMP_ROS_SH, DUMP_ROSSERVICE_SH, DUMP_ROSPACK_SH, DUMP_ROSNODE_SH, DUMP_ROSMSG_SH, DUMP_ROSLAUNCH_SH, DUMP_CLOCPACK_SH, DUMP_CLOCDIR_SH, DUMP_CATKINDEPS_SH,  ]
+SCRIPTS_LIST = [ DUMP_ROSTOPIC_SH,
+                 DUMP_ROSSRV_SH,
+                 DUMP_ROS_SH,
+                 DUMP_ROSSERVICE_SH,
+                 DUMP_ROSPACK_SH,
+                 DUMP_ROSNODE_SH,
+                 DUMP_ROSMSG_SH,
+                 DUMP_ROSLAUNCH_SH,
+                 DUMP_CLOCPACK_SH,
+                 DUMP_CLOCDIR_SH,
+                 DUMP_CATKINDEPS_SH,
+                 ]

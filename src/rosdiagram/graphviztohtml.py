@@ -35,12 +35,12 @@ def generate_from_template( output_dir, params_dict=None, template_name="dotgrap
 
 
 ## uses keys: "graph", "graph_label", "style", "labels_dict" (deprecated)
-def generate( output_dir, params_dict, template_id = "" ):
+def generate( output_dir, params_dict, template_id="" ):
     page_params = params_dict.copy()
 
     node_graph = page_params.get( "graph" )
     if node_graph is None:
-        raise RuntimeError( f"'graph' not set in params dict" )
+        raise RuntimeError( "'graph' not set in params dict" )
 
     store_graph_to_html( node_graph, output_dir )
 

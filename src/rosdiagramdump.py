@@ -7,20 +7,21 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-import sys, os
+import sys
+import os
 import logging
 import argparse
 
 import base64
 
-import rosdiagram.dumpscripts as dumpscripts
+from rosdiagram import dumpscripts
 
 
 _LOGGER = logging.getLogger(__name__)
 
 SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 
-TMP_DIR="/tmp/rosdiagramdump"
+TMP_DIR = "/tmp/rosdiagramdump"
 
 
 ## =============================================================
@@ -56,7 +57,7 @@ def execute_script( script_data, args=None ):
 
 
 def extract_script( script_data, script_out_path ):
-    with open( script_out_path, "w") as script:
+    with open( script_out_path, "w", encoding='utf-8' ) as script:
         content = script_data[1]
         decoded_content = decode_content( content )
         script.write( decoded_content )
@@ -144,12 +145,13 @@ def dumprostopic( args ):
 ## =============================================================
 
 
-def main():
+def main():                                                             # pylint: disable=R0915
     parser = argparse.ArgumentParser(description='dump tools')
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     parser.add_argument( '--listtools', action='store_true', help='List tools' )
 
-    subparsers = parser.add_subparsers( help='one of tools', description="use one of tools", dest='tool', required=False )
+    subparsers = parser.add_subparsers( help='one of tools', description="use one of tools",
+                                        dest='tool', required=False )
 
     ## =================================================
 

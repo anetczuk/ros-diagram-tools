@@ -39,23 +39,21 @@ for FILE in $DUMP_DIR/*; do
 
     echo "appending $FILE"
     echo "## $BASENAME" >> $OUTPUT_PATH
-    echo "$VAR_NAME = ( \"$BASENAME\"," >> $OUTPUT_PATH
+    echo "$VAR_NAME = ( \"$BASENAME\", \"\"\"\\" >> $OUTPUT_PATH
     
     ## insert content of file 
-    echo '"""\' >> $OUTPUT_PATH
     base64 $FILE >> $OUTPUT_PATH
     #cat $FILE >> $OUTPUT_PATH
-    echo '"""' >> $OUTPUT_PATH
+    echo '""" )' >> $OUTPUT_PATH
     
-    echo ')' >> $OUTPUT_PATH 
     echo -e "\n" >> $OUTPUT_PATH
 
-    SCRIPTS_LIST="$VAR_NAME, ${SCRIPTS_LIST}" 
+    SCRIPTS_LIST="$VAR_NAME,\n                 ${SCRIPTS_LIST}" 
 done
 
 
 echo "# all scripts"  >> $OUTPUT_PATH
-echo "SCRIPTS_LIST = [ $SCRIPTS_LIST ]"  >> $OUTPUT_PATH
+echo -e "SCRIPTS_LIST = [ $SCRIPTS_LIST]"  >> $OUTPUT_PATH
 
 
 echo "done"

@@ -143,7 +143,8 @@ def generate( catkin_list_file, node_shape="box",
     content   = read_file( catkin_list_file )
     data_dict = parse_catkin_content( content, build_deps=False )
     graph     = generate_pkg_graph( data_dict, node_shape,
-                                    top_items=top_items, highlight_items=highlight_items, preserve_neighbour_items=preserve_neighbour_items, paint_function=paint_function )
+                                    top_items=top_items, highlight_items=highlight_items,
+                                    preserve_neighbour_items=preserve_neighbour_items, paint_function=paint_function )
     return graph
 
 
@@ -159,7 +160,8 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
     main_graph_name = "full_graph"
 
     ## generate main page graph
-    main_graph: Graph = generate_pkg_graph( deps_dict, top_items=top_list, highlight_items=highlight_list, paint_function=paint_function )
+    main_graph: Graph = generate_pkg_graph( deps_dict, top_items=top_list, highlight_items=highlight_list,
+                                            paint_function=paint_function )
     main_graph.setName( main_graph_name )
     set_node_html_attribs( main_graph, OUTPUT_NODES_REL_DIR )
 
@@ -183,7 +185,7 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
                     #"graph_label": "packages graph",
                     "graph_label": main_graph_name,
                     "graph_packages": packages_data_list
-                }
+                    }
     template = "packagetree.html"
     generate_from_template( out_dir, main_dict, template_name=template )
 
@@ -203,7 +205,8 @@ def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link
         subpages_dict[ item_id ] = item_dict
 
         item_graph: Graph = generate_pkg_graph( deps_dict,
-                                                top_items=top_list, highlight_items=highlight_list, preserve_neighbour_items=[item_id],
+                                                top_items=top_list, highlight_items=highlight_list,
+                                                preserve_neighbour_items=[item_id],
                                                 paint_function=paint_function )
 
         set_node_graph_ranks( item_graph, item_id )
@@ -231,7 +234,8 @@ def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link
 
 
 def configure_parser( parser ):
-    parser.description = 'Packages graph. Tool can be feed with catkin putput (based on package.xml) or with rospack output.'
+    parser.description = 'Packages graph. Tool can be feed with catkin putput (based on package.xml) ' \
+                         'or with rospack output.'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '--catkinlistfile', action='store', required=False, default="",
@@ -269,7 +273,8 @@ def process_arguments( args, paint_function=None ):
     highlight_list = read_list( args.highlightitems )
 
     _LOGGER.info( "generating packages graph" )
-    graph = generate_pkg_graph( data_dict, node_shape, top_items=top_list, highlight_items=highlight_list, paint_function=paint_function )
+    graph = generate_pkg_graph( data_dict, node_shape, top_items=top_list,
+                                highlight_items=highlight_list, paint_function=paint_function )
 
     if len( args.outraw ) > 0:
         graph.writeRAW( args.outraw )

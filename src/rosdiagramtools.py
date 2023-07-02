@@ -7,18 +7,19 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-import sys, os
+import sys
+import os
 import logging
 import argparse
 
-import rosdiagram.tool.codedistribution as codedistribution
-import rosdiagram.tool.packagetree as packagetree
-import rosdiagram.tool.classifynodes as classifynodes
-import rosdiagram.tool.buildtime as buildtime
-import rosdiagram.tool.rosnodegraph as rosnodegraph
-import rosdiagram.tool.rostopicgraph as rostopicgraph
-import rosdiagram.tool.rosbagflow as rosbagflow
-import rosdiagram.tool.rosverify as rosverify
+from rosdiagram.tool import codedistribution
+from rosdiagram.tool import packagetree
+from rosdiagram.tool import classifynodes
+from rosdiagram.tool import buildtime
+from rosdiagram.tool import rosnodegraph
+from rosdiagram.tool import rostopicgraph
+from rosdiagram.tool import rosbagflow
+from rosdiagram.tool import rosverify
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -34,7 +35,8 @@ def main():
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     parser.add_argument( '--listtools', action='store_true', help='List tools' )
 
-    subparsers = parser.add_subparsers( help='one of tools', description="use one of tools", dest='tool', required=False )
+    subparsers = parser.add_subparsers( help='one of tools', description="use one of tools",
+                                        dest='tool', required=False )
 
     ## =================================================
 

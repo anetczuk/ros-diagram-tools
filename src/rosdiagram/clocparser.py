@@ -78,7 +78,7 @@ def parse_cloc_file( file_path, language="SUM:", ignore=None ):
             if ignore_lines > 0:
                 ignore_sum += ignore_lines
         return language_lines - ignore_sum
-    except BaseException as exc:
+    except BaseException:
         _LOGGER.error( "error while loading file: %s content:\n%s", file_path, content )
         raise
 

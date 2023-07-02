@@ -443,6 +443,7 @@ def split_to_groups( nodes_dict ):
     all_nodes    = set( nodes_dict.keys() )
     all_topics   = set()
     all_services = set()
+
     for _, lists in nodes_dict.items():
         topics: set = get_topics( lists )
         all_topics.update( topics )

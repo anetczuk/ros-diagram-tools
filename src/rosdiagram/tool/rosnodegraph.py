@@ -12,20 +12,19 @@ import argparse
 
 from typing import Dict, Any
 
-from rosdiagram.ros import rostopicdata
-from rosdiagram.ros import rosservicedata
-
 from showgraph.io import read_list, prepare_filesystem_name
 from showgraph.graphviz import Graph, preserve_neighbour_nodes, set_nodes_style
 
 from rosdiagram.utils import get_create_item
+from rosdiagram.ros import rostopicdata
+from rosdiagram.ros import rosservicedata
 from rosdiagram.ros.rosnodedata import get_topics, get_services,\
     get_names_from_list, create_topics_dict, fix_names, split_to_groups,\
     get_services_info, filter_nodes, filter_topics,\
-    get_services_from_dict, read_nodes, ROSNodeData, get_topics_info, filter_ros_nodes_dict,\
+    get_services_from_dict, read_nodes, get_topics_info, filter_ros_nodes_dict,\
     get_topics_dict, get_services_dict
 from rosdiagram.graphviztohtml import generate_from_template, set_node_graph_ranks,\
-    DEFAULT_ACTIVE_NODE_STYLE, prepare_item_link, convert_links_dict, set_node_html_attribs, convert_links_list
+    DEFAULT_ACTIVE_NODE_STYLE, prepare_item_link, set_node_html_attribs, convert_links_list
 from rosdiagram.ros.rostopicdata import read_topics, filter_ros_topics_dict
 from rosdiagram.ros.rosservicedata import read_services
 
@@ -182,7 +181,8 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
     main_graph_name = "full_graph"
 
     ## generate main page graph
-    main_graph: Graph = generate_graph( nodes_dict, labels_dict=nodes_labels, full_graph=main_full_graph, paint_function=paint_function )
+    main_graph: Graph = generate_graph( nodes_dict, labels_dict=nodes_labels,
+                                        full_graph=main_full_graph, paint_function=paint_function )
     main_graph.setName( main_graph_name )
     set_node_html_attribs( main_graph, OUTPUT_NODES_REL_DIR )
 
@@ -209,21 +209,14 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
                     "nodes_list": nodes_data_list,
                     "topics_list": topics_data_list,
                     "services_list": services_data_list
-                }
+                    }
     template = "rosnodegraph/nodegraph_main.html"
     generate_from_template( out_dir, main_dict, template_name=template )
 
 
-def get_label( label_dict, item_id, default_name="<unknown>" ):
-    item_name = label_dict.get( item_id, None )
-    if item_name:
-        return item_name
-    return default_name
-
-
 ## returns dict: { <item_id>: <item_data_dict> }
-def generate_subpages( sub_output_dir, nodes_dict, topics_dump_dir,
-                       msgs_dump_dir, services_dump_dir, srvs_dump_dir,
+def generate_subpages( sub_output_dir, nodes_dict,
+                       topics_dump_dir, msgs_dump_dir, services_dump_dir, srvs_dump_dir,
                        nodes_labels, main_page_link, paint_function=None ):
     topics_dict = read_topics( topics_dump_dir )
     if topics_dict is None:
@@ -237,55 +230,19 @@ def generate_subpages( sub_output_dir, nodes_dict, topics_dump_dir,
 
     all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
 
-    topic_labels    = rostopicdata.fix_names( topics_dict )
-    services_labels = rosservicedata.fix_names( services_dict )
-
-    nodes_subpages_dict    = generate_items_dict( nodes_dict, all_nodes, nodes_labels, 1,
-                                                  paint_function=paint_function )
-    topics_subpages_dict   = generate_items_dict( nodes_dict, all_topics, nodes_labels, 0,
-                                                  paint_function=paint_function )
-    services_subpages_dict = generate_items_dict( nodes_dict, all_services, nodes_labels, 0,
-                                                  paint_function=paint_function )
+    nodes_subpages_dict    = get_items_dict( nodes_dict, all_nodes, nodes_labels, 1,
+                                             paint_function=paint_function )
+    topics_subpages_dict   = get_items_dict( nodes_dict, all_topics, nodes_labels, 0,
+                                             paint_function=paint_function )
+    services_subpages_dict = get_items_dict( nodes_dict, all_services, nodes_labels, 0,
+                                             paint_function=paint_function )
 
     for _, node_data in nodes_subpages_dict.items():
         node_data[ "template_name" ] = "rosnodegraph/nodegraph_node.html"
 
-    #topics_info = nodes_data.getTopicsInfo()
-    topics_info = get_topics_info( nodes_dict, topics_dict, msgs_dump_dir )
-    for topic_id, topic_data in topics_info.items():
-        pubs_list = topic_data.get( "pubs", [] )
-        subs_list = topic_data.get( "subs", [] )
-
-        pubs_names = []
-        if pubs_list:
-            pubs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in pubs_list ]
-        subs_names = []
-        if subs_list:
-            subs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in subs_list ]
-
-        sub_dict = topics_subpages_dict[ topic_id ]
-        sub_dict[ "template_name" ] = "rosnodegraph/nodegraph_topic.html"
-        sub_dict[ "topic_name" ]    = get_label( topic_labels, topic_id, "<unknown>" )
-        sub_dict[ "topic_pubs" ]    = pubs_names
-        sub_dict[ "topic_subs" ]    = subs_names
-        sub_dict[ "msg_type" ]      = topic_data.get( "type", "" )
-        sub_dict[ "msg_content" ]   = topic_data.get( "content", "" )
-
-    services_info = get_services_info( nodes_dict, services_dict, srvs_dump_dir )
-    for service_id, service_data in services_info.items():
-        sub_dict = services_subpages_dict[ service_id ]
-        sub_dict[ "template_name" ] = "rosnodegraph/nodegraph_service.html"
-        sub_dict[ "srv_name" ]      = get_label( services_labels, service_id, "<unknown>" )
-        sub_dict[ "msg_type" ]      = service_data.get( "type", "" )
-        sub_dict[ "msg_content" ]   = service_data.get( "content", "" )
-
-        listener_id = service_data.get( "listener", "" )
-        if listener_id:
-            label = nodes_labels.get( listener_id, listener_id )
-            is_subpage = listener_id in nodes_dict
-            srv_link = prepare_item_link( listener_id, label, is_subpage, "" )
-            if srv_link:
-                sub_dict[ "srv_listener" ] = srv_link
+    topics_subpages_dict   = get_topic_subpages( topics_subpages_dict, nodes_dict, topics_dict, msgs_dump_dir )
+    services_subpages_dict = get_service_subpages( services_subpages_dict, nodes_dict,
+                                                   nodes_labels, services_dict, srvs_dump_dir )
 
     subpages_dict = {}
     subpages_dict.update( nodes_subpages_dict )
@@ -319,7 +276,53 @@ def generate_subpages( sub_output_dir, nodes_dict, topics_dump_dir,
     return subpages_dict
 
 
-def generate_items_dict( nodes_dict, items_list, label_dict, neighbour_range, paint_function=None ):
+def get_topic_subpages( topics_subpages_dict, nodes_dict, topics_dict, msgs_dump_dir ):
+    topic_labels = rostopicdata.fix_names( topics_dict )
+    topics_info  = get_topics_info( nodes_dict, topics_dict, msgs_dump_dir )
+
+    for topic_id, topic_data in topics_info.items():
+        pubs_list = topic_data.get( "pubs", [] )
+        subs_list = topic_data.get( "subs", [] )
+
+        pubs_names = []
+        if pubs_list:
+            pubs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in pubs_list ]
+        subs_names = []
+        if subs_list:
+            subs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in subs_list ]
+
+        sub_dict = topics_subpages_dict[ topic_id ]
+        sub_dict[ "template_name" ] = "rosnodegraph/nodegraph_topic.html"
+        sub_dict[ "topic_name" ]    = get_label( topic_labels, topic_id, "<unknown>" )
+        sub_dict[ "topic_pubs" ]    = pubs_names
+        sub_dict[ "topic_subs" ]    = subs_names
+        sub_dict[ "msg_type" ]      = topic_data.get( "type", "" )
+        sub_dict[ "msg_content" ]   = topic_data.get( "content", "" )
+    return topics_subpages_dict
+
+
+def get_service_subpages( services_subpages_dict, nodes_dict, nodes_labels, services_dict, srvs_dump_dir ):
+    services_labels = rosservicedata.fix_names( services_dict )
+    services_info = get_services_info( nodes_dict, services_dict, srvs_dump_dir )
+
+    for service_id, service_data in services_info.items():
+        sub_dict = services_subpages_dict[ service_id ]
+        sub_dict[ "template_name" ] = "rosnodegraph/nodegraph_service.html"
+        sub_dict[ "srv_name" ]      = get_label( services_labels, service_id, "<unknown>" )
+        sub_dict[ "msg_type" ]      = service_data.get( "type", "" )
+        sub_dict[ "msg_content" ]   = service_data.get( "content", "" )
+
+        listener_id = service_data.get( "listener", "" )
+        if listener_id:
+            label = nodes_labels.get( listener_id, listener_id )
+            is_subpage = listener_id in nodes_dict
+            srv_link = prepare_item_link( listener_id, label, is_subpage, "" )
+            if srv_link:
+                sub_dict[ "srv_listener" ] = srv_link
+    return services_subpages_dict
+
+
+def get_items_dict( nodes_dict, items_list, label_dict, neighbour_range, paint_function=None ):
     sub_items = {}
     for item_id in items_list:
         item_dict = {}
@@ -345,6 +348,13 @@ def generate_items_dict( nodes_dict, items_list, label_dict, neighbour_range, pa
         item_dict[ "services_list" ] = services_list
 
     return sub_items
+
+
+def get_label( label_dict, item_id, default_name="<unknown>" ):
+    item_name = label_dict.get( item_id, None )
+    if item_name:
+        return item_name
+    return default_name
 
 
 ## ===================================================================
@@ -392,11 +402,13 @@ def process_arguments( args, paint_function=None ):
     # info_dict  = get_node_info_dict( nodes_dict, labels_dict, args.msgsdumppath, args.srvsdumppath )
 
     highlight_list = read_list( args.highlightitems )
-    painter = lambda graph: painter_wrapper( graph, highlight_list, paint_function )
 
     if len( args.outraw ) > 0 or len( args.outpng ) > 0:
         _LOGGER.info( "generating main graph" )
-        graph: Graph = generate_graph( nodes_dict, labels_dict=labels_dict, full_graph=args.mainfullgraph, paint_function=painter )
+        graph: Graph = generate_graph( nodes_dict, labels_dict=labels_dict, full_graph=args.mainfullgraph,
+                                       paint_function=lambda graph: painter_wrapper( graph, highlight_list,
+                                                                                     paint_function )
+                                       )
         if len( args.outraw ) > 0:
             graph.writeRAW( args.outraw )
         if len( args.outpng ) > 0:
@@ -414,7 +426,7 @@ def process_arguments( args, paint_function=None ):
                         msgs_dump_dir=args.msgsdumppath,
                         services_dump_dir=args.servicesdumppath,
                         srvs_dump_dir=args.srvsdumppath,
-                        paint_function=painter,
+                        paint_function=lambda graph: painter_wrapper( graph, highlight_list, paint_function ),
                         main_full_graph=args.mainfullgraph
                         )
 
