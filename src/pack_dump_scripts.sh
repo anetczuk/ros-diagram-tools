@@ -39,7 +39,7 @@ for FILE in $DUMP_DIR/*; do
 
     echo "appending $FILE"
     echo "## $BASENAME" >> $OUTPUT_PATH
-    echo "$VAR_NAME = ( \"$BASENAME\", " >> $OUTPUT_PATH
+    echo "$VAR_NAME = ( \"$BASENAME\"," >> $OUTPUT_PATH
     
     ## insert content of file 
     echo '"""\' >> $OUTPUT_PATH

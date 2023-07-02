@@ -11,7 +11,7 @@
 
 
 ## dump_catkindeps.sh
-DUMP_CATKINDEPS_SH = ( "dump_catkindeps.sh", 
+DUMP_CATKINDEPS_SH = ( "dump_catkindeps.sh",
 """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
@@ -31,7 +31,7 @@ b25lLlxuIgo=
 
 
 ## dump_clocdir.sh
-DUMP_CLOCDIR_SH = ( "dump_clocdir.sh", 
+DUMP_CLOCDIR_SH = ( "dump_clocdir.sh",
 """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
@@ -62,7 +62,7 @@ byAtZSAiXG5Eb25lLlxuIgo=
 
 
 ## dump_clocpack.sh
-DUMP_CLOCPACK_SH = ( "dump_clocpack.sh", 
+DUMP_CLOCPACK_SH = ( "dump_clocpack.sh",
 """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
@@ -95,7 +95,7 @@ Cg==
 
 
 ## dump_roslaunch.sh
-DUMP_ROSLAUNCH_SH = ( "dump_roslaunch.sh", 
+DUMP_ROSLAUNCH_SH = ( "dump_roslaunch.sh",
 """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
@@ -129,7 +129,7 @@ X2ZpbGUKZG9uZQoKZWNobyAtZSAiXG5Eb25lLlxuIgo=
 
 
 ## dump_rosmsg.sh
-DUMP_ROSMSG_SH = ( "dump_rosmsg.sh", 
+DUMP_ROSMSG_SH = ( "dump_rosmsg.sh",
 """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
@@ -151,7 +151,7 @@ ZSAiXG5Eb25lLlxuIgo=
 
 
 ## dump_rosnode.sh
-DUMP_ROSNODE_SH = ( "dump_rosnode.sh", 
+DUMP_ROSNODE_SH = ( "dump_rosnode.sh",
 """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
@@ -173,7 +173,7 @@ IC1lICJcbkRvbmUuXG4iCg==
 
 
 ## dump_rospack.sh
-DUMP_ROSPACK_SH = ( "dump_rospack.sh", 
+DUMP_ROSPACK_SH = ( "dump_rospack.sh",
 """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
@@ -196,7 +196,7 @@ fHwgdHJ1ZQpkb25lCgplY2hvIC1lICJcbkRvbmUuXG4iCg==
 
 
 ## dump_rosservice.sh
-DUMP_ROSSERVICE_SH = ( "dump_rosservice.sh", 
+DUMP_ROSSERVICE_SH = ( "dump_rosservice.sh",
 """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
@@ -219,7 +219,7 @@ dHJ1ZQpkb25lCgplY2hvIC1lICJcbkRvbmUuXG4iCg==
 
 
 ## dump_ros.sh
-DUMP_ROS_SH = ( "dump_ros.sh", 
+DUMP_ROS_SH = ( "dump_ros.sh",
 """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
@@ -252,7 +252,7 @@ c3MgbGF1bmNoIGZpbGUKCmVjaG8gLWUgIlxuRG9uZS4iCg==
 
 
 ## dump_rossrv.sh
-DUMP_ROSSRV_SH = ( "dump_rossrv.sh", 
+DUMP_ROSSRV_SH = ( "dump_rossrv.sh",
 """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl
@@ -274,7 +274,7 @@ ZSAiXG5Eb25lLlxuIgo=
 
 
 ## dump_rostopic.sh
-DUMP_ROSTOPIC_SH = ( "dump_rostopic.sh", 
+DUMP_ROSTOPIC_SH = ( "dump_rostopic.sh",
 """\
 IyEvYmluL2Jhc2gKIwojIENvcHlyaWdodCAoYykgMjAyMiwgQXJrYWRpdXN6IE5ldGN6dWsgPGRl
 di5hcm5ldEBnbWFpbC5jb20+CiMgQWxsIHJpZ2h0cyByZXNlcnZlZC4KIwojIFRoaXMgc291cmNl

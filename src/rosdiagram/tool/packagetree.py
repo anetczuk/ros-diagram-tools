@@ -87,7 +87,7 @@ def get_items_list( deps_dict ):
     return ret_list
 
 
-def generate_pkg_graph( deps_dict, node_shape="octagon", 
+def generate_pkg_graph( deps_dict, node_shape="octagon",
                         top_items=None, highlight_items=None, preserve_neighbour_items=None, paint_function=None ):
     pkg_graph: Graph = generate_graph( deps_dict, node_shape=node_shape )
     if top_items:
@@ -100,7 +100,7 @@ def generate_pkg_graph( deps_dict, node_shape="octagon",
     paint_nodes( pkg_graph, highlight_items )
     return pkg_graph
 
-    
+
 def generate_graph( deps_dict, node_shape="octagon" ):
     dot_graph = Graph()
     base_graph = dot_graph.base_graph
@@ -175,7 +175,7 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
     subpages_dict = generate_subpages( sub_output_dir, deps_dict, all_items, main_page_link, highlight_list,
                                        top_list=top_list, paint_function=paint_function )
 
-    ## generate main page 
+    ## generate main page
     packages_data_list = convert_links_list( all_items, subpages_dict, {}, OUTPUT_NODES_REL_DIR )
 
     main_dict = {   "style": {},
@@ -189,7 +189,7 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
 
 
 ## returns dict: { <item_id>: <item_data_dict> }
-def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link, 
+def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link,
                        highlight_list=None, top_list=None, paint_function=None ):
     if highlight_list is None:
         highlight_list = []
@@ -202,8 +202,8 @@ def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link
         item_dict = {}
         subpages_dict[ item_id ] = item_dict
 
-        item_graph: Graph = generate_pkg_graph( deps_dict, 
-                                                top_items=top_list, highlight_items=highlight_list, preserve_neighbour_items=[item_id], 
+        item_graph: Graph = generate_pkg_graph( deps_dict,
+                                                top_items=top_list, highlight_items=highlight_list, preserve_neighbour_items=[item_id],
                                                 paint_function=paint_function )
 
         set_node_graph_ranks( item_graph, item_id )

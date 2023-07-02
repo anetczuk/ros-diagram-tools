@@ -193,9 +193,9 @@ def generate_graph_page( schedule: Schedule, item_config_dict, output_dir ):
                             "high_load_duration": time_to_string( schedule.high_load_duration ),
                             "start_gap_duration": time_to_string( schedule.start_gap_duration ),
                             "critical_gap_duration": time_to_string( crit_gap ),
-                            
+
                             "pipeline_times": pipeline_times,
-                            
+
                             "critical_path": critical_path,
                             "duration_list": dur_list,
                             "packages_list": packages_list
@@ -258,7 +258,7 @@ def read_build_log( log_path ) -> List[Job]:
 
 #             time_line = split_content[1]
 #             time_line = time_line.strip()
-# 
+#
 #             numbers = re.findall( r"(\d*\.*\d+)", time_line )
 #             total_seconds = 0.0
 #             if len(numbers) == 1:

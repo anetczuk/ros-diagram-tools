@@ -194,7 +194,7 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
     main_page_link = os.path.join( os.pardir, item_filename + ".html" )
 
     subpages_dict = generate_subpages( sub_output_dir, nodes_dict,
-                                       topics_dump_dir, msgs_dump_dir, services_dump_dir, srvs_dump_dir, 
+                                       topics_dump_dir, msgs_dump_dir, services_dump_dir, srvs_dump_dir,
                                        nodes_labels, main_page_link, paint_function=paint_function )
 
     ## generate main page
@@ -222,7 +222,7 @@ def get_label( label_dict, item_id, default_name="<unknown>" ):
 
 
 ## returns dict: { <item_id>: <item_data_dict> }
-def generate_subpages( sub_output_dir, nodes_dict, topics_dump_dir, 
+def generate_subpages( sub_output_dir, nodes_dict, topics_dump_dir,
                        msgs_dump_dir, services_dump_dir, srvs_dump_dir,
                        nodes_labels, main_page_link, paint_function=None ):
     topics_dict = read_topics( topics_dump_dir )
@@ -230,13 +230,13 @@ def generate_subpages( sub_output_dir, nodes_dict, topics_dump_dir,
         topics_dict = get_topics_dict( nodes_dict, nodes_labels )
 
     filter_ros_topics_dict( topics_dict )
-    
+
     services_dict = read_services( services_dump_dir )
     if services_dict is None:
         services_dict = get_services_dict( nodes_dict, nodes_labels )
-    
+
     all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
-    
+
     topic_labels    = rostopicdata.fix_names( topics_dict )
     services_labels = rosservicedata.fix_names( services_dict )
 

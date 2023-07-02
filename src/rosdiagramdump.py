@@ -148,11 +148,11 @@ def main():
     parser = argparse.ArgumentParser(description='dump tools')
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     parser.add_argument( '--listtools', action='store_true', help='List tools' )
-    
+
     subparsers = parser.add_subparsers( help='one of tools', description="use one of tools", dest='tool', required=False )
 
     ## =================================================
-    
+
     description = "dump result of 'cloc' command on given directory"
     subparser = subparsers.add_parser('dumpclocdir', help=description)
     subparser.description = description
@@ -162,7 +162,7 @@ def main():
     subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
 
     ## =================================================
-    
+
     description = "dump result of 'cloc' command on pack data"
     subparser = subparsers.add_parser('dumpclocpack', help=description)
     subparser.description = description
@@ -210,7 +210,7 @@ def main():
     subparser.description = description
     subparser.set_defaults( func=dumprosnode )
     subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
-    
+
     ## =================================================
 
     description = "dump topics info"
@@ -251,7 +251,7 @@ def main():
     subparser.description = description
     subparser.set_defaults( func=extract_scripts )
     subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
-    
+
     ## =================================================
 
     args = parser.parse_args()
