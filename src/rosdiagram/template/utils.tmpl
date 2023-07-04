@@ -24,9 +24,36 @@
 #end template
 
 
+#template ros_link_table( items_list, list_title )
+#{ if items_list:
+    <div class="bottom_content">
+        <table>
+            <tr>
+                <th>$list_title (${ len(items_list) }):</th>
+                <th>Description:</th>
+            </tr>
+#{     for item_data in items_list:
+            <tr>
+                <td>${ ros_link( item_data[0], item_data[1] ) }</td>
+                <td>${ item_data[2] if len(item_data) > 2 else "" }</td>
+            </tr>
+#}
+        </table>
+        <br />
+    </div>
+
+#}
+#end template
+
+
 #template ros_item_link( item_pair )
 #! item_name = item_pair[0]
 #! item_url  = item_pair[1]
+${ ros_link( item_name, item_url ) }$>
+#end template
+
+
+#template ros_link( item_name, item_url )
 #{ if item_url:
 <a href="${item_url}"><code>${item_name}</code></a>$>
 #}
