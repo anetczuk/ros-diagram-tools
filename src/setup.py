@@ -24,7 +24,7 @@ def read_list( file_path ):
 packages_list = find_packages( include=['rosdiagram', 'rosdiagram.*'] )
 
 ## additional data to install
-packages_data = { "rosdiagram": ["*.txt", "template/**/*.tmpl"] }
+packages_data = { "rosdiagram": ["*.txt", "template/*.tmpl", "template/**/*.tmpl"] }
 
 ## additional scripts to install
 additional_scripts = ['rosdiagramdump.py', 'rosdiagramtools.py']
