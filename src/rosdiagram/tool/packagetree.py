@@ -9,7 +9,7 @@ import os
 import logging
 import argparse
 
-from showgraph.io import read_file, read_list, prepare_filesystem_name
+from showgraph.io import read_file, read_list, read_dict, prepare_filesystem_name
 from showgraph.graphviz import Graph, preserve_neighbour_nodes, set_nodes_style,\
     preserve_top_subgraph
 
@@ -152,9 +152,10 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
     if config_params_dict is None:
         config_params_dict = {}
 
-    top_list       = config_params_dict.get( "top_list", [] )
-    highlight_list = config_params_dict.get( "highlight_list", [] )
-    paint_function = config_params_dict.get( "paint_function", None )
+    top_list          = config_params_dict.get( "top_list", [] )
+    highlight_list    = config_params_dict.get( "highlight_list", [] )
+    nodes_description = config_params_dict.get( "nodes_description", {} )
+    paint_function    = config_params_dict.get( "paint_function", None )
 
     OUTPUT_NODES_REL_DIR = os.path.join( "nodes" )
     main_graph_name = "full_graph"
@@ -174,11 +175,13 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
     item_filename  = prepare_filesystem_name( main_graph_name )
     main_page_link = os.path.join( os.pardir, item_filename + ".html" )
 
-    subpages_dict = generate_subpages( sub_output_dir, deps_dict, all_items, main_page_link, highlight_list,
+    subpages_dict = generate_subpages( sub_output_dir, deps_dict, all_items, main_page_link,
+                                       highlight_list, nodes_description,
                                        top_list=top_list, paint_function=paint_function )
 
     ## generate main page
-    packages_data_list = convert_links_list( all_items, subpages_dict, OUTPUT_NODES_REL_DIR )
+    packages_desc = nodes_description.get( "package", None )
+    packages_data_list = convert_links_list( all_items, subpages_dict, OUTPUT_NODES_REL_DIR, nodes_description=packages_desc )
 
     main_dict = {   "style": {},
                     "graph": main_graph,
@@ -192,9 +195,13 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
 
 ## returns dict: { <item_id>: <item_data_dict> }
 def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link,
-                       highlight_list=None, top_list=None, paint_function=None ):
+                       highlight_list=None, nodes_description=None, top_list=None, paint_function=None ):
     if highlight_list is None:
         highlight_list = []
+    if nodes_description is None:
+        nodes_description = {}
+
+    packages_desc = nodes_description.get( "package", None )
 
     template = "packagetree.html"
     subpages_dict = {}
@@ -221,7 +228,7 @@ def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link
         item_dict[ "msg_content" ]    = ""
 
         nodes_list     = sorted( list( item_graph.getNodeNamesAll() ) )
-        converted_list = convert_links_list( nodes_list, sub_items_list, "" )
+        converted_list = convert_links_list( nodes_list, sub_items_list, "", nodes_description=packages_desc )
         item_dict[ "graph_packages" ] = converted_list
 
         _LOGGER.info( "preparing page for item %s", item_id )
@@ -245,6 +252,7 @@ def configure_parser( parser ):
     parser.add_argument( '--nodeshape', action='store', required=False, default=None, help="Shape of node: 'box', 'octagon' or other value supprted by GraphViz dot" )
     parser.add_argument( '--topitems', action='store', required=False, default="", help="File with list of items to filter on top" )
     parser.add_argument( '--highlightitems', action='store', required=False, default="", help="File with list of items to highlight" )
+    parser.add_argument( '--descriptionjson', action='store', required=False, default="", help="Path to JSON file with items description" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
     parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
@@ -272,6 +280,8 @@ def process_arguments( args, paint_function=None ):
     top_list       = read_list( args.topitems )
     highlight_list = read_list( args.highlightitems )
 
+    description_dict = read_dict( args.descriptionjson )
+
     _LOGGER.info( "generating packages graph" )
     graph = generate_pkg_graph( data_dict, node_shape, top_items=top_list,
                                 highlight_items=highlight_list, paint_function=paint_function )
@@ -289,6 +299,7 @@ def process_arguments( args, paint_function=None ):
         os.makedirs( args.outdir, exist_ok=True )
         config_params_dict = {  "top_list": top_list,
                                 "highlight_list": highlight_list,
+                                "nodes_description": description_dict,
                                 "paint_function": paint_function
                                 }
         generate_pages( data_dict, args.outdir, config_params_dict )

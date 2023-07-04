@@ -66,6 +66,7 @@ usage: rosdiagramtools.py packagetree [-h] [-la]
                                       [--nodeshape NODESHAPE]
                                       [--topitems TOPITEMS]
                                       [--highlightitems HIGHLIGHTITEMS]
+                                      [--descriptionjson DESCRIPTIONJSON]
                                       [--outraw OUTRAW] [--outpng OUTPNG]
                                       [--outhtml] [--outdir OUTDIR]
 
@@ -85,6 +86,8 @@ optional arguments:
   --topitems TOPITEMS   File with list of items to filter on top
   --highlightitems HIGHLIGHTITEMS
                         File with list of items to highlight
+  --descriptionjson DESCRIPTIONJSON
+                        Path to JSON file with items description
   --outraw OUTRAW       Graph RAW output
   --outpng OUTPNG       Graph PNG output
   --outhtml             Output HTML

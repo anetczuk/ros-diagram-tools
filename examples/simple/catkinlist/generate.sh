@@ -16,6 +16,7 @@ mkdir -p $OUT_DIR
 
 
 $TOOL_DIR/rosdiagramtools.py packagetree --catkinlistfile $SCRIPT_DIR/catkin_list.txt \
+                                         --descriptionjson "$SCRIPT_DIR/../description.json" \
                                          --outraw $OUT_DIR/graph.gv.txt --outpng $OUT_DIR/graph.png \
                                          --outhtml \
                                          --outdir $OUT_DIR $@

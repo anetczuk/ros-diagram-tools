@@ -1,4 +1,9 @@
 {
+    ## description of packages
+    "package": { "package_c": "important package",
+                 "roscpp": "other important package"
+               },
+
     ## description of nodes
     "node": { "/node2": "description example",
               "/topic5": "other important node"

@@ -39,7 +39,10 @@ Project is distributed under the BSD 3-Clause license.
                     padding: 0px;
                  }
 
-        td { padding: 0 16 0 0; }
+        th { padding: 0 20px 0 0;
+             text-align: left; 
+           }
+        td { padding: 0 20px 0 0; }
 
         .footer { margin-top:48px;
                   width: 100%;
@@ -82,7 +85,7 @@ ${DATA_DICT.get('graph_map', '')}$>
 
 #!
 #! packages_list = DATA_DICT.get('graph_packages', [])
-${ tmpl_utils.ros_link_list( packages_list, "Graph packages" ) }$>
+${ tmpl_utils.ros_link_table( packages_list, "Graph packages" ) }$>
 #!
 
 ${ footer.print() }
