@@ -140,18 +140,25 @@ def convert_links_dict( items_lists, sub_items_list, labels_dict, link_subdir ):
     for list_dict in items_lists:
         title = list_dict.get( "title", "Items" )
         items = list_dict.get( "items", [] )
-        converted_list = convert_links_list( items, sub_items_list, labels_dict, link_subdir )
+        converted_list = convert_links_list( items, sub_items_list, link_subdir, labels_dict )
         converted_dict = { "title": title, "items": converted_list }
         converted_lists.append( converted_dict )
     return converted_lists
 
 
-def convert_links_list( items_lists, sub_items_list, labels_dict, link_subdir ):
+def convert_links_list( items_lists, sub_items_list, link_subdir, labels_dict=None, nodes_description=None ):
+    if labels_dict is None:
+        labels_dict = {}
+    if nodes_description is None:
+        nodes_description = {}
     converted_list = []
     for item_id in items_lists:
         label = labels_dict.get( item_id, item_id )
+        description = nodes_description.get( label, None )
         is_subpage = item_id in sub_items_list
         item_link = prepare_item_link( item_id, label, is_subpage, link_subdir )
+        if description:
+            item_link = ( *item_link, description )
         converted_list.append( item_link )
     return converted_list
 

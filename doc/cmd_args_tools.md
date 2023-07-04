@@ -147,6 +147,7 @@ usage: rosdiagramtools.py rosnodegraph [-h] [-la]
                                        [--servicesdumppath SERVICESDUMPPATH]
                                        [--srvsdumppath SRVSDUMPPATH]
                                        [--highlightitems HIGHLIGHTITEMS]
+                                       [--descriptionjson DESCRIPTIONJSON]
                                        [-mfg] [-iri] [--outraw OUTRAW]
                                        [--outpng OUTPNG] [--outhtml]
                                        [--outdir OUTDIR]
@@ -169,6 +170,8 @@ optional arguments:
                         Path to directory containing dumped 'rossrv' output
   --highlightitems HIGHLIGHTITEMS
                         File with list of items to highlight
+  --descriptionjson DESCRIPTIONJSON
+                        Path to JSON file with items description
   -mfg, --mainfullgraph
                         Generate main full graph instead of compact one
   -iri, --includerosinternals

@@ -1,0 +1,15 @@
+{
+    ## description of nodes
+    "node": { "/node2": "description example",
+              "/topic5": "other important node"
+            },
+
+    ## description of topics
+    "topic": { "/topic3": "important topic",
+               "/topic5": "description of other topic"
+             },
+
+    ## description of services
+    "service": { "/service2": "service waiting for call"
+               }
+}

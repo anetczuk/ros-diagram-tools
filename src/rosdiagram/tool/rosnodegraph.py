@@ -12,7 +12,7 @@ import argparse
 
 from typing import Dict, Any
 
-from showgraph.io import read_list, prepare_filesystem_name
+from showgraph.io import read_list, read_dict, prepare_filesystem_name
 from showgraph.graphviz import Graph, preserve_neighbour_nodes, set_nodes_style
 
 from rosdiagram.utils import get_create_item
@@ -170,12 +170,14 @@ def generate_compact_graph( nodes_dict, show_services=True, labels_dict=None ) -
 ## =====================================================
 
 
-def generate_pages( nodes_dict, out_dir, nodes_labels=None,
+def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=None,
                     topics_dump_dir=None, msgs_dump_dir=None, services_dump_dir=None, srvs_dump_dir=None,
                     paint_function=None, main_full_graph=False
                     ):
     if nodes_labels is None:
         nodes_labels = fix_names( nodes_dict )
+    if nodes_description is None:
+        nodes_description = {}
 
     OUTPUT_NODES_REL_DIR = os.path.join( "nodes" )
     main_graph_name = "full_graph"
@@ -195,13 +197,18 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
 
     subpages_dict = generate_subpages( sub_output_dir, nodes_dict,
                                        topics_dump_dir, msgs_dump_dir, services_dump_dir, srvs_dump_dir,
-                                       nodes_labels, main_page_link, paint_function=paint_function )
+                                       nodes_labels, nodes_description, main_page_link, paint_function=paint_function )
+
+    nodes_desc    = nodes_description.get( "node", None )
+    topics_desc   = nodes_description.get( "topic", None )
+    services_desc = nodes_description.get( "service", None )
 
     ## generate main page
     all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
-    nodes_data_list    = convert_links_list( all_nodes, subpages_dict, nodes_labels, OUTPUT_NODES_REL_DIR )
-    topics_data_list   = convert_links_list( all_topics, subpages_dict, nodes_labels, OUTPUT_NODES_REL_DIR )
-    services_data_list = convert_links_list( all_services, subpages_dict, nodes_labels, OUTPUT_NODES_REL_DIR )
+
+    nodes_data_list    = convert_links_list( all_nodes, subpages_dict, OUTPUT_NODES_REL_DIR, nodes_labels, nodes_description=nodes_desc )
+    topics_data_list   = convert_links_list( all_topics, subpages_dict, OUTPUT_NODES_REL_DIR, nodes_labels, nodes_description=topics_desc )
+    services_data_list = convert_links_list( all_services, subpages_dict, OUTPUT_NODES_REL_DIR, nodes_labels, nodes_description=services_desc )
 
     main_dict = {   "style": {},
                     "graph": main_graph,
@@ -217,7 +224,7 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None,
 ## returns dict: { <item_id>: <item_data_dict> }
 def generate_subpages( sub_output_dir, nodes_dict,
                        topics_dump_dir, msgs_dump_dir, services_dump_dir, srvs_dump_dir,
-                       nodes_labels, main_page_link, paint_function=None ):
+                       nodes_labels, nodes_description, main_page_link, paint_function=None ):
     topics_dict = read_topics( topics_dump_dir )
     if topics_dict is None:
         topics_dict = get_topics_dict( nodes_dict, nodes_labels )
@@ -249,6 +256,10 @@ def generate_subpages( sub_output_dir, nodes_dict,
     subpages_dict.update( topics_subpages_dict )
     subpages_dict.update( services_subpages_dict )
 
+    nodes_desc    = nodes_description.get( "node", None )
+    topics_desc   = nodes_description.get( "topic", None )
+    services_desc = nodes_description.get( "service", None )
+
     for item_id, item_dict in subpages_dict.items():
         item_graph = item_dict.get( "graph" )
         if item_graph:
@@ -262,11 +273,11 @@ def generate_subpages( sub_output_dir, nodes_dict,
         item_dict[ "main_page_link" ] = main_page_link
 
         nodes_list                   = item_dict.get( "nodes_list", [] )
-        item_dict[ "nodes_list" ]    = convert_links_list( nodes_list, subpages_dict, nodes_labels, "" )
+        item_dict[ "nodes_list" ]    = convert_links_list( nodes_list, subpages_dict, "", nodes_labels, nodes_description=nodes_desc )
         topics_list                  = item_dict.get( "topics_list", [] )
-        item_dict[ "topics_list" ]   = convert_links_list( topics_list, subpages_dict, nodes_labels, "" )
+        item_dict[ "topics_list" ]   = convert_links_list( topics_list, subpages_dict, "", nodes_labels, nodes_description=topics_desc )
         services_list                = item_dict.get( "services_list", [] )
-        item_dict[ "services_list" ] = convert_links_list( services_list, subpages_dict, nodes_labels, "" )
+        item_dict[ "services_list" ] = convert_links_list( services_list, subpages_dict, "", nodes_labels, nodes_description=services_desc )
 
         _LOGGER.info( "preparing page for item %s", item_id )
         template = item_dict.get( "template_name", None )
@@ -375,6 +386,7 @@ def configure_parser( parser ):
     parser.add_argument( '--srvsdumppath', action='store', required=False, default="",
                          help="Path to directory containing dumped 'rossrv' output" )
     parser.add_argument( '--highlightitems', action='store', required=False, default="", help="File with list of items to highlight" )
+    parser.add_argument( '--descriptionjson', action='store', required=False, default="", help="Path to JSON file with items description" )
     parser.add_argument( '-mfg', '--mainfullgraph', action='store_true', help="Generate main full graph instead of compact one" )
     parser.add_argument( '-iri', '--includerosinternals', action='store_true', help="Include ROS internal items like /rosout and /record_*" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
@@ -403,6 +415,8 @@ def process_arguments( args, paint_function=None ):
 
     highlight_list = read_list( args.highlightitems )
 
+    description_dict = read_dict( args.descriptionjson )
+
     if len( args.outraw ) > 0 or len( args.outpng ) > 0:
         _LOGGER.info( "generating main graph" )
         graph: Graph = generate_graph( nodes_dict, labels_dict=labels_dict, full_graph=args.mainfullgraph,
@@ -422,6 +436,7 @@ def process_arguments( args, paint_function=None ):
         os.makedirs( args.outdir, exist_ok=True )
         generate_pages( nodes_dict, args.outdir,
                         nodes_labels=labels_dict,
+                        nodes_description=description_dict,
                         topics_dump_dir=args.topicsdumppath,
                         msgs_dump_dir=args.msgsdumppath,
                         services_dump_dir=args.servicesdumppath,
