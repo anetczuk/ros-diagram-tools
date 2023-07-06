@@ -1,5 +1,11 @@
 #!/bin/bash
 
+
+##
+## Generate diagrams based on data in local 'dump' dir
+##
+
+
 set -eu
 
 

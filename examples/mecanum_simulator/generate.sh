@@ -29,7 +29,7 @@ $TOOL_PATH/rosdiagramtools.py codedistribution --clocdumpdir "$DUMP_DIR/clocsrc"
 $TOOL_PATH/rosdiagramtools.py codedistribution --clocdumpdir "$DUMP_DIR/clocpack" \
                                                --filteritems $DUMP_DIR/catkin/packages.txt \
                                                --outpng "$OUT_DIR/codedistribution_pack.png"
-$TOOL_PATH/rosdiagramtools.py codedistribution --clocjsonpath "$DUMP_DIR/source_cloc.txt" --outpng "$OUT_DIR/codedistribution_json.png"
+#$TOOL_PATH/rosdiagramtools.py codedistribution --clocjsonpath "$DUMP_DIR/source_cloc.txt" --outpng "$OUT_DIR/codedistribution_json.png"
 
 
 echo "generating packagetree"
@@ -38,6 +38,7 @@ mkdir -p $OUT_DIR
 $TOOL_PATH/rosdiagramtools.py packagetree --catkinlistfile $DUMP_DIR/catkin/list.txt \
                                           --highlightitems $DUMP_DIR/catkin/packages.txt \
                                           --outhtml --outdir $OUT_DIR
+## generate image from html
 cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
 cutycapt --url=file://$OUT_DIR/nodes/nexus_4wd_mecanum_gazebo.html --out=$OUT_DIR/node-page.png
 

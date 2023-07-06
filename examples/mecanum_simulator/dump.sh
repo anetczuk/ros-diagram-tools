@@ -1,6 +1,12 @@
 #!/bin/bash
 
-set -eu
+
+##
+## Configure catkin, build project, start roscore and dump data.
+##
+
+
+set -eux
 set -m
 
 ## works both under bash and sh
@@ -22,31 +28,39 @@ mkdir -p $DUMP_CATKIN_DIR
 mkdir -p $DUMP_ROSLAUNCH_DIR
 
 
-set +u
-source /opt/ros/noetic/setup.bash
-set -u
-
-
 CURR_DIR="$(pwd)"
-cd $CATKIN_DIR
 
-$SCRIPT_DIR/create_ws.sh
 
-echo "clearing catkin workspace"
-catkin clean -y
+## rebuild project
 
-echo "building catkin workspace"
-catkin build > "$BUILD_LOG_FILE"
+catkin_rebuild() {
+    set +u
+    source /opt/ros/noetic/setup.bash
+    set -u
 
-cd $CURR_DIR
+    cd $CATKIN_DIR
 
+    $SCRIPT_DIR/create_ws.sh
+
+    echo "clearing catkin workspace"
+    catkin clean -y
+    
+    echo "building catkin workspace"
+    catkin build > "$BUILD_LOG_FILE"
+}
+
+catkin_rebuild
+
+
+## dump data
 
 set +u
 source $CATKIN_DIR/devel/setup.bash
 set -u
 
+cd $CURR_DIR
 
-$TOOL_PATH/rosdiagramdump.py dumpclocdir --clocrundir "$CATKIN_DIR/src" --outfile "$DUMP_DIR/source_cloc.txt"
+$TOOL_PATH/rosdiagramdump.py dumpclocdir --clocrundir "$CATKIN_DIR/src" --outdir "$DUMP_DIR/clocsrc"
 
 cd $CATKIN_DIR
 $TOOL_PATH/rosdiagramdump.py dumpcatkindeps --outdir $DUMP_CATKIN_DIR
@@ -64,7 +78,7 @@ roslaunch nexus_4wd_mecanum_gazebo nexus_4wd_mecanum_world.launch &> /tmp/roslau
 ROS_PID=$!
 
 
-terminate() {
+terminate_roscore() {
     ##
     echo "killing roscore"
     kill $ROS_PID
@@ -72,7 +86,7 @@ terminate() {
     exit 0
 }
 
-trap terminate INT TERM
+trap terminate_roscore INT TERM
 
 
 echo "waiting for start"
@@ -84,4 +98,4 @@ echo ""
 $TOOL_PATH/rosdiagramdump.py dumpros --outdir $DUMP_DIR
 
 
-terminate
+terminate_roscore

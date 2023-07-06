@@ -1,0 +1,7 @@
+/home/bob/stuff/rosdiagram-examples/turtlebot3/catkin_ws/src/turtlebot3
+/home/bob/stuff/rosdiagram-examples/turtlebot3/catkin_ws/src/turtlebot3_bringup
+/home/bob/stuff/rosdiagram-examples/turtlebot3/catkin_ws/src/turtlebot3_description
+/home/bob/stuff/rosdiagram-examples/turtlebot3/catkin_ws/src/turtlebot3_example
+/home/bob/stuff/rosdiagram-examples/turtlebot3/catkin_ws/src/turtlebot3_navigation
+/home/bob/stuff/rosdiagram-examples/turtlebot3/catkin_ws/src/turtlebot3_slam
+/home/bob/stuff/rosdiagram-examples/turtlebot3/catkin_ws/src/turtlebot3_teleop

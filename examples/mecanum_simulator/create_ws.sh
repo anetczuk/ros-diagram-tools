@@ -1,5 +1,11 @@
 #!/bin/bash
 
+
+##
+## Configure catkin workspace in current directory.
+##
+
+
 set -eu
 
 ## works both under bash and sh

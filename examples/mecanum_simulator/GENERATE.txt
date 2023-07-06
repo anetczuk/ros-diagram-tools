@@ -1,0 +1,3 @@
+To generate dump data and output execute:
+ 1. dump.sh to build project and dump data
+ 2. generate.sh to build output from dumped data
