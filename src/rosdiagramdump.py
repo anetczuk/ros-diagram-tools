@@ -99,6 +99,13 @@ def dumpcatkindeps( args ):
     execute_script( dumpscripts.DUMP_CATKINDEPS_SH, args_list )
 
 
+def dumprosparam( args ):
+    args_list = []
+    args_list.append( args.launchfile )
+    args_list.append( args.outdir )
+    execute_script( dumpscripts.DUMP_ROSPARAM_SH, args_list )
+
+
 def dumproslaunch( args ):
     args_list = []
     args_list.append( args.launchfile )
@@ -179,6 +186,14 @@ def main():                                                             # pylint
     subparser = subparsers.add_parser('dumpcatkindeps', help=description)
     subparser.description = description
     subparser.set_defaults( func=dumpcatkindeps )
+    subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
+
+    ## =================================================
+
+    description = "dump data from 'rosparam'"
+    subparser = subparsers.add_parser('dumprosparam', help=description)
+    subparser.description = description
+    subparser.set_defaults( func=dumprosparam )
     subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
 
     ## =================================================

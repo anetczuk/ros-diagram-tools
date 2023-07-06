@@ -29,6 +29,9 @@ INFO_DIR="$1"
 mkdir -p $INFO_DIR
 
 
+echo "executing: $SCRIPT_DIR/dump_rosparam.sh $INFO_DIR/paraminfo"
+$SCRIPT_DIR/dump_rosparam.sh "$INFO_DIR/paraminfo"
+
 echo "executing: $SCRIPT_DIR/dump_rospack.sh $INFO_DIR/packinfo"
 $SCRIPT_DIR/dump_rospack.sh "$INFO_DIR/packinfo"
 

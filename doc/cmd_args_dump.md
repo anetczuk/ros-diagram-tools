@@ -1,7 +1,7 @@
 ## rosdiagramdump.py --help
 ```
 usage: rosdiagramdump.py [-h] [-la] [--listtools]
-                         {dumpclocdir,dumpclocpack,dumpcatkindeps,dumprospack,dumprosmsg,dumprossrv,dumprosnode,dumprostopic,dumprosservice,dumproslaunch,dumpros,extractscripts}
+                         {dumpclocdir,dumpclocpack,dumpcatkindeps,dumprosparam,dumprospack,dumprosmsg,dumprossrv,dumprosnode,dumprostopic,dumprosservice,dumproslaunch,dumpros,extractscripts}
                          ...
 
 dump tools
@@ -14,12 +14,13 @@ optional arguments:
 subcommands:
   use one of tools
 
-  {dumpclocdir,dumpclocpack,dumpcatkindeps,dumprospack,dumprosmsg,dumprossrv,dumprosnode,dumprostopic,dumprosservice,dumproslaunch,dumpros,extractscripts}
+  {dumpclocdir,dumpclocpack,dumpcatkindeps,dumprosparam,dumprospack,dumprosmsg,dumprossrv,dumprosnode,dumprostopic,dumprosservice,dumproslaunch,dumpros,extractscripts}
                         one of tools
     dumpclocdir         dump result of 'cloc' command on given directory
     dumpclocpack        dump result of 'cloc' command on pack data
     dumpcatkindeps      dump catkin dependencies of packages in workspace
                         (from package.xml)
+    dumprosparam        dump data from 'rosparam'
     dumprospack         dump data from 'rospack'
     dumprosmsg          dump messages info
     dumprossrv          dump services definitions
@@ -68,6 +69,19 @@ optional arguments:
 usage: rosdiagramdump.py dumpcatkindeps [-h] --outdir OUTDIR
 
 dump catkin dependencies of packages in workspace (from package.xml)
+
+optional arguments:
+  -h, --help       show this help message and exit
+  --outdir OUTDIR  Output directory
+```
+
+
+
+## rosdiagramdump.py dumprosparam --help
+```
+usage: rosdiagramdump.py dumprosparam [-h] --outdir OUTDIR
+
+dump data from 'rosparam'
 
 optional arguments:
   -h, --help       show this help message and exit
