@@ -206,9 +206,12 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=No
     ## generate main page
     all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
 
-    nodes_data_list    = convert_links_list( all_nodes, subpages_dict, OUTPUT_NODES_REL_DIR, nodes_labels, nodes_description=nodes_desc )
-    topics_data_list   = convert_links_list( all_topics, subpages_dict, OUTPUT_NODES_REL_DIR, nodes_labels, nodes_description=topics_desc )
-    services_data_list = convert_links_list( all_services, subpages_dict, OUTPUT_NODES_REL_DIR, nodes_labels, nodes_description=services_desc )
+    nodes_data_list    = convert_links_list( all_nodes, subpages_dict, OUTPUT_NODES_REL_DIR,
+                                             nodes_labels, nodes_description=nodes_desc )
+    topics_data_list   = convert_links_list( all_topics, subpages_dict, OUTPUT_NODES_REL_DIR,
+                                             nodes_labels, nodes_description=topics_desc )
+    services_data_list = convert_links_list( all_services, subpages_dict, OUTPUT_NODES_REL_DIR,
+                                             nodes_labels, nodes_description=services_desc )
 
     main_dict = {   "style": {},
                     "graph": main_graph,
@@ -273,11 +276,14 @@ def generate_subpages( sub_output_dir, nodes_dict,
         item_dict[ "main_page_link" ] = main_page_link
 
         nodes_list                   = item_dict.get( "nodes_list", [] )
-        item_dict[ "nodes_list" ]    = convert_links_list( nodes_list, subpages_dict, "", nodes_labels, nodes_description=nodes_desc )
+        item_dict[ "nodes_list" ]    = convert_links_list( nodes_list, subpages_dict, "",
+                                                           nodes_labels, nodes_description=nodes_desc )
         topics_list                  = item_dict.get( "topics_list", [] )
-        item_dict[ "topics_list" ]   = convert_links_list( topics_list, subpages_dict, "", nodes_labels, nodes_description=topics_desc )
+        item_dict[ "topics_list" ]   = convert_links_list( topics_list, subpages_dict, "",
+                                                           nodes_labels, nodes_description=topics_desc )
         services_list                = item_dict.get( "services_list", [] )
-        item_dict[ "services_list" ] = convert_links_list( services_list, subpages_dict, "", nodes_labels, nodes_description=services_desc )
+        item_dict[ "services_list" ] = convert_links_list( services_list, subpages_dict, "",
+                                                           nodes_labels, nodes_description=services_desc )
 
         _LOGGER.info( "preparing page for item %s", item_id )
         template = item_dict.get( "template_name", None )

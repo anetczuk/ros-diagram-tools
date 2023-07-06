@@ -38,6 +38,8 @@ def read_dir_data( dump_path ):
     cloc_dict = {}
     cloc_list_path = os.path.join( dump_path, "list.txt" )
     _LOGGER.debug( "reading cloc list file: %s", cloc_list_path )
+    if not os.path.isfile( cloc_list_path ):
+        raise FileNotFoundError( f"unable to find file: {cloc_list_path}" )
     cloc_list = read_list( cloc_list_path )
     for item in cloc_list:
         node_filename  = prepare_filesystem_name( item )

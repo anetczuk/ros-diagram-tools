@@ -181,7 +181,8 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
 
     ## generate main page
     packages_desc = nodes_description.get( "package", None )
-    packages_data_list = convert_links_list( all_items, subpages_dict, OUTPUT_NODES_REL_DIR, nodes_description=packages_desc )
+    packages_data_list = convert_links_list( all_items, subpages_dict, OUTPUT_NODES_REL_DIR,
+                                             nodes_description=packages_desc )
 
     main_dict = {   "style": {},
                     "graph": main_graph,

@@ -140,7 +140,8 @@ def convert_links_dict( items_lists, sub_items_list, link_subdir, labels_dict, n
     for list_dict in items_lists:
         title = list_dict.get( "title", "Items" )
         items = list_dict.get( "items", [] )
-        converted_list = convert_links_list( items, sub_items_list, link_subdir, labels_dict, nodes_description=nodes_description )
+        converted_list = convert_links_list( items, sub_items_list, link_subdir,
+                                             labels_dict, nodes_description=nodes_description )
         converted_dict = { "title": title, "items": converted_list }
         converted_lists.append( converted_dict )
     return converted_lists
