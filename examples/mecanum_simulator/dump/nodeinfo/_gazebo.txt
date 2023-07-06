@@ -49,12 +49,12 @@ Services:
  * /gazebo/unpause_physics
 
 
-contacting node http://ubuntu-ros:33153/ ...
-Pid: 4922
+contacting node http://ubuntu-ros:35833/ ...
+Pid: 5533
 Connections:
  * topic: /rosout
     * to: /rosout
-    * direction: outbound (49593 - 127.0.0.1:39586) [22]
+    * direction: outbound (51757 - 127.0.0.1:50982) [24]
     * transport: TCPROS
  * topic: /clock
     * to: /gazebo
@@ -62,14 +62,18 @@ Connections:
     * transport: INTRAPROCESS
  * topic: /clock
     * to: /rosout
-    * direction: outbound (49593 - 127.0.0.1:39640) [53]
+    * direction: outbound (51757 - 127.0.0.1:43792) [44]
+    * transport: TCPROS
+ * topic: /clock
+    * to: /robot_state_publisher
+    * direction: outbound (51757 - 127.0.0.1:43802) [50]
     * transport: TCPROS
  * topic: /clock
     * to: /gazebo_gui
-    * direction: outbound (49593 - 127.0.0.1:42796) [52]
+    * direction: outbound (51757 - 127.0.0.1:43806) [46]
     * transport: TCPROS
  * topic: /clock
-    * to: /gazebo (http://ubuntu-ros:33153/)
+    * to: /gazebo (http://ubuntu-ros:35833/)
     * direction: inbound
     * transport: INTRAPROCESS
 

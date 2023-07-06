@@ -1,4 +1,4 @@
 Node: /gazebo_gui
-URI: rosrpc://ubuntu-ros:56455
+URI: rosrpc://ubuntu-ros:45851
 Type: roscpp/GetLoggers
 Args: 

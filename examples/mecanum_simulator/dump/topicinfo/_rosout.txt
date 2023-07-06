@@ -1,10 +1,11 @@
 Type: rosgraph_msgs/Log
 
 Publishers: 
- * /gazebo (http://ubuntu-ros:33153/)
- * /gazebo_gui (http://ubuntu-ros:34037/)
+ * /robot_state_publisher (http://ubuntu-ros:35923/)
+ * /gazebo (http://ubuntu-ros:35833/)
+ * /gazebo_gui (http://ubuntu-ros:44701/)
 
 Subscribers: 
- * /rosout (http://ubuntu-ros:35095/)
+ * /rosout (http://ubuntu-ros:44215/)
 
 

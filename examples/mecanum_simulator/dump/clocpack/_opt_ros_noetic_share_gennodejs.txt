@@ -2,7 +2,7 @@
 classified 421 filesDuplicate file check 421 files (366 known unique)Unique:      100 files                                          Unique:      200 files                                          Unique:      300 files                                               390 unique files.                              
 Counting:  100Counting:  200Counting:  300      31 files ignored.
 
-github.com/AlDanial/cloc v 1.82  T=0.36 s (1092.3 files/s, 180394.1 lines/s)
+github.com/AlDanial/cloc v 1.82  T=1.24 s (313.3 files/s, 51740.2 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------

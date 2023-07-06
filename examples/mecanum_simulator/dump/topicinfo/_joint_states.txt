@@ -1,0 +1,8 @@
+Type: sensor_msgs/JointState
+
+Publishers: None
+
+Subscribers: 
+ * /robot_state_publisher (http://ubuntu-ros:35923/)
+
+

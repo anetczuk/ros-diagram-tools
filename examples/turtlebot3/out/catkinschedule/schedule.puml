@@ -10,19 +10,20 @@ concise "thread 2" as queue2
 
 @queue0
 0 is "catkin_tools_prebuild" #red
-3 is "turtlebot3_description" 
-7 is "turtlebot3_bringup" #red
-15 is "turtlebot3_example" #red
-25 is "turtlebot3" #red
-28 is {hidden}
+5 is "turtlebot3_description" 
+7 is {hidden}
+8 is "turtlebot3_bringup" #red
+20 is "turtlebot3_example" #red
+28 is "turtlebot3" #red
+29 is {hidden}
 
 @queue1
-3 is "turtlebot3_teleop" #red
-7 is {hidden}
-15 is "turtlebot3_navigation" 
-19 is {hidden}
+5 is "turtlebot3_teleop" #red
+8 is {hidden}
+20 is "turtlebot3_navigation" 
+22 is {hidden}
 
 @queue2
-15 is "turtlebot3_slam" 
+20 is "turtlebot3_slam" 
 25 is {hidden}
 @enduml

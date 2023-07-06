@@ -1,0 +1,4 @@
+Node: /robot_state_publisher
+URI: rosrpc://ubuntu-ros:58227
+Type: roscpp/SetLoggerLevel
+Args: logger level

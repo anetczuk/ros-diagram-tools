@@ -2,7 +2,7 @@
 classified 15 files      15 unique files.                              
        6 files ignored.
 
-github.com/AlDanial/cloc v 1.82  T=0.01 s (904.6 files/s, 31963.1 lines/s)
+github.com/AlDanial/cloc v 1.82  T=0.09 s (103.0 files/s, 3638.7 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------

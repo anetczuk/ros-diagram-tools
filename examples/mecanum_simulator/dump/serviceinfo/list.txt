@@ -30,5 +30,7 @@
 /gazebo/unpause_physics
 /gazebo_gui/get_loggers
 /gazebo_gui/set_logger_level
+/robot_state_publisher/get_loggers
+/robot_state_publisher/set_logger_level
 /rosout/get_loggers
 /rosout/set_logger_level
