@@ -38,42 +38,39 @@ def generate_from_template( output_dir, params_dict=None, template_name="dotgrap
 def generate( output_dir, params_dict, template_id="" ):
     page_params = params_dict.copy()
 
+    page_filename = "main_page"
+
     node_graph = page_params.get( "graph" )
-    if node_graph is None:
-        raise RuntimeError( "'graph' not set in params dict" )
+    if node_graph:
+        store_graph_to_html( node_graph, output_dir )
 
-    store_graph_to_html( node_graph, output_dir )
+        graph_id      = node_graph.getName()                       ## usually node id
+        page_filename = prepare_filesystem_name( graph_id )
 
-    graph_id       = node_graph.getName()                       ## usually node id
-    graph_filename = prepare_filesystem_name( graph_id )
+        graph_map = ""
+        graph_image_path = ""
+        if not node_graph.empty():
+            map_out   = os.path.join( output_dir, page_filename + ".map" )
+            graph_map = read_file( map_out )
+            graph_image_path = f"{page_filename}.png"
 
-    graph_map = ""
-    graph_image_path = ""
-    if not node_graph.empty():
-        map_out   = os.path.join( output_dir, graph_filename + ".map" )
-        graph_map = read_file( map_out )
-        graph_image_path = f"{graph_filename}.png"
+        graph_label = page_params.get( "graph_label", None )
+        if graph_label is None:
+            labels_dict  = page_params.get( "labels_dict", {} )
+            graph_label = labels_dict.get( graph_id, graph_id )
 
-    graph_label = page_params.get( "graph_label", None )
-    if graph_label is None:
-        labels_dict  = page_params.get( "labels_dict", {} )
-        graph_label = labels_dict.get( graph_id, graph_id )
+        page_params.update( {   "graph_name":           graph_id,
+                                "graph_image_path":     graph_image_path,
+                                "graph_image_alt_text": graph_label,
+                                "graph_map":            graph_map
+                                } )
 
     style_dict = page_params.get( "style", {} )
-
-    ## prepare input for template
-    page_params.update( {   "body_color":       style_dict.get( "body_color", "#bbbbbb" ),
-
-                            ## graph image specific fields
-                            "graph_name":           graph_id,
-                            "graph_image_path":     graph_image_path,
-                            "graph_image_alt_text": graph_label,
-                            "graph_map":            graph_map,
-                            } )
+    page_params.update( { "body_color": style_dict.get( "body_color", "#bbbbbb" ) } )
     page_params.setdefault( "head_css_style", "" )
 
     template_path    = os.path.join( SCRIPT_DIR, "template", template_id )
-    output_html_file = os.path.join( output_dir, graph_filename + ".html" )
+    output_html_file = os.path.join( output_dir, page_filename + ".html" )
 
     texttemplate.generate( template_path, output_html_file, INPUT_DICT=page_params )
 

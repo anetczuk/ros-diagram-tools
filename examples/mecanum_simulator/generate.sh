@@ -69,6 +69,15 @@ $TOOL_PATH/rosdiagramtools.py classifynodes --packdumppath $DUMP_DIR/packinfo/li
                                             --outfile $OUT_DIR/nodes_classification.txt
 
 
+echo "running rosparamlist"
+OUT_DIR="$OUT_ROOT_DIR/paramslist"
+mkdir -p $OUT_DIR
+$TOOL_PATH/rosdiagramtools.py rosparamlist -la \
+                                           --dumpyamlfile $DUMP_DIR/paraminfo/params.yml \
+                                           --outdir $OUT_DIR
+cutycapt --url=file://$OUT_DIR/main_page.html --out=$OUT_DIR/main-page.png
+
+
 echo "running rosnodegraph"
 OUT_DIR="$OUT_ROOT_DIR/nodetree"
 mkdir -p $OUT_DIR

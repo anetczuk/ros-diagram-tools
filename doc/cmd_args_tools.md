@@ -1,7 +1,7 @@
 ## rosdiagramtools.py --help
 ```
 usage: rosdiagramtools.py [-h] [-la] [--listtools]
-                          {codedistribution,packagetree,classifynodes,buildtime,rosnodegraph,rostopicgraph,rosbagflow,rosverify}
+                          {codedistribution,packagetree,classifynodes,buildtime,rosparamlist,rosnodegraph,rostopicgraph,rosbagflow,rosverify}
                           ...
 
 ROS diagram tools
@@ -14,12 +14,13 @@ optional arguments:
 subcommands:
   use one of tools
 
-  {codedistribution,packagetree,classifynodes,buildtime,rosnodegraph,rostopicgraph,rosbagflow,rosverify}
+  {codedistribution,packagetree,classifynodes,buildtime,rosparamlist,rosnodegraph,rostopicgraph,rosbagflow,rosverify}
                         one of tools
     codedistribution    source code distribution over packages
     packagetree         packages graph
     classifynodes       match nodes to packages
     buildtime           catkin build time
+    rosparamlist        rosparam parameters list
     rosnodegraph        rosnode connection graph
     rostopicgraph       rostopic connection graph
     rosbagflow          generate sequence diagram based on messages from
@@ -136,6 +137,23 @@ optional arguments:
                         Scale pixel number - width in pixels of each timeline
                         step.
   --outhtml             Output HTML
+  --outdir OUTDIR       Output HTML
+```
+
+
+
+## rosdiagramtools.py rosparamlist --help
+```
+usage: rosdiagramtools.py rosparamlist [-h] [-la] --dumpyamlfile DUMPYAMLFILE
+                                       [--outdir OUTDIR]
+
+rosparam parameters list
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -la, --logall         Log all messages
+  --dumpyamlfile DUMPYAMLFILE
+                        Path to rosparam dump file
   --outdir OUTDIR       Output HTML
 ```
 

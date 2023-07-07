@@ -16,6 +16,7 @@ from rosdiagram.tool import codedistribution
 from rosdiagram.tool import packagetree
 from rosdiagram.tool import classifynodes
 from rosdiagram.tool import buildtime
+from rosdiagram.tool import rosparamlist
 from rosdiagram.tool import rosnodegraph
 from rosdiagram.tool import rostopicgraph
 from rosdiagram.tool import rosbagflow
@@ -61,6 +62,12 @@ def main():
     subparser = subparsers.add_parser('buildtime', help='catkin build time')
     subparser.set_defaults( func=buildtime.process_arguments )
     buildtime.configure_parser( subparser )
+
+    ## =================================================
+
+    subparser = subparsers.add_parser('rosparamlist', help='rosparam parameters list')
+    subparser.set_defaults( func=rosparamlist.process_arguments )
+    rosparamlist.configure_parser( subparser )
 
     ## =================================================
 
