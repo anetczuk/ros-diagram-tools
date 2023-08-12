@@ -21,6 +21,9 @@ if [ "$#" -ne 2 ]; then
 fi
 
 
+## check if cloc is installed
+cloc --version > /dev/null
+
 ## works both under bash and sh
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 
