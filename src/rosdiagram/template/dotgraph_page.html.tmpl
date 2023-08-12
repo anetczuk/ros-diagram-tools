@@ -71,9 +71,11 @@ ${DATA_DICT.get('head_css_style', '')}
 #}
         <br />
     </div>
+
     <div class="top_content">
 ${DATA_DICT.get('top_content', '')}
     </div>
+
     <div class="center_content">
 #!
 #! graph_image_path = DATA_DICT.get('graph_image_path')
@@ -83,10 +85,6 @@ ${DATA_DICT.get('graph_map', '')}$>
 #}
     </div>
 
-    <div class="bottom_content">
-${DATA_DICT.get('bottom_content', '')}
-    </div>
-
 #!
 #! groups_lists = DATA_DICT.get('items_lists', [])
 #{ for group_dict in groups_lists:
@@ -94,6 +92,10 @@ ${DATA_DICT.get('bottom_content', '')}
 #!     items_list = group_dict.get( "items", [] )
         ${ tmpl_utils.ros_link_list( items_list, title ) }
 #}
+
+    <div class="bottom_content">
+${DATA_DICT.get('bottom_content', '')}
+    </div>
 
 ${ footer.print() }
 </body>
