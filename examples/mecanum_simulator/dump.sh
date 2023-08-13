@@ -17,7 +17,7 @@ TOOL_PATH="$SCRIPT_DIR/../../src/"
 
 CATKIN_DIR="$(pwd)/catkin_ws"
 DUMP_DIR="$(pwd)/dump"
-DUMP_CATKIN_DIR="$(pwd)/dump/catkin"
+DUMP_CATKIN_DIR="$(pwd)/dump/catkindeps"
 DUMP_ROSLAUNCH_DIR="$(pwd)/dump/roslaunch"
 BUILD_LOG_FILE="$DUMP_DIR/build.log.txt"
 
@@ -60,7 +60,7 @@ set -u
 
 cd $CURR_DIR
 
-$TOOL_PATH/rosdiagramdump.py dumpclocdir --clocrundir "$CATKIN_DIR/src" --outdir "$DUMP_DIR/clocsrc"
+$TOOL_PATH/rosdiagramdump.py dumpclocdir --clocrundir "$CATKIN_DIR/src" --outdir "$DUMP_DIR/clocdir"
 
 cd $CATKIN_DIR
 $TOOL_PATH/rosdiagramdump.py dumpcatkindeps --outdir $DUMP_CATKIN_DIR

@@ -25,9 +25,9 @@ OUT_ROOT_DIR="$WORK_DIR/out"
 echo "generating codedistribution"
 OUT_DIR="$OUT_ROOT_DIR"
 mkdir -p $OUT_DIR
-$TOOL_PATH/rosdiagramtools.py codedistribution --clocdumpdir "$DUMP_DIR/clocsrc" --outpng "$OUT_DIR/codedistribution_src.png"
+$TOOL_PATH/rosdiagramtools.py codedistribution --clocdumpdir "$DUMP_DIR/clocdir" --outpng "$OUT_DIR/codedistribution_src.png"
 $TOOL_PATH/rosdiagramtools.py codedistribution --clocdumpdir "$DUMP_DIR/clocpackinfo" \
-                                               --filteritems $DUMP_DIR/catkin/packages.txt \
+                                               --filteritems $DUMP_DIR/catkindeps/packages.txt \
                                                --outpng "$OUT_DIR/codedistribution_pack.png"
 #$TOOL_PATH/rosdiagramtools.py codedistribution --clocjsonpath "$DUMP_DIR/source_cloc.txt" --outpng "$OUT_DIR/codedistribution_json.png"
 
@@ -35,8 +35,8 @@ $TOOL_PATH/rosdiagramtools.py codedistribution --clocdumpdir "$DUMP_DIR/clocpack
 echo "generating packagetree"
 OUT_DIR="$OUT_ROOT_DIR/catkintree"
 mkdir -p $OUT_DIR
-$TOOL_PATH/rosdiagramtools.py packagetree --catkinlistfile $DUMP_DIR/catkin/list.txt \
-                                          --highlightitems $DUMP_DIR/catkin/packages.txt \
+$TOOL_PATH/rosdiagramtools.py packagetree --catkinlistfile $DUMP_DIR/catkindeps/list.txt \
+                                          --highlightitems $DUMP_DIR/catkindeps/packages.txt \
                                           --outhtml --outdir $OUT_DIR
 ## generate image from html
 cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
@@ -45,8 +45,8 @@ cutycapt --url=file://$OUT_DIR/nodes/nexus_4wd_mecanum_gazebo.html --out=$OUT_DI
 OUT_DIR="$OUT_ROOT_DIR/packagestree"
 mkdir -p $OUT_DIR
 $TOOL_PATH/rosdiagramtools.py packagetree --packdumppath $DUMP_DIR/packinfo \
-                                          --highlightitems $DUMP_DIR/catkin/packages.txt \
-                                          --topitems $DUMP_DIR/catkin/packages.txt \
+                                          --highlightitems $DUMP_DIR/catkindeps/packages.txt \
+                                          --topitems $DUMP_DIR/catkindeps/packages.txt \
                                           --outhtml --outdir $OUT_DIR
 cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
 #cutycapt --url=file://$OUT_DIR/nodes/nexus_4wd_mecanum_gazebo.html --out=$OUT_DIR/node-page.png
