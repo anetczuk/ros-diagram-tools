@@ -7,6 +7,8 @@ set -eu
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 
 
+$SCRIPT_DIR/dotgraph/generate-all.sh
+
 $SCRIPT_DIR/simple/generate-all.sh
 
 $SCRIPT_DIR/turtlebot3/generate-all.sh
