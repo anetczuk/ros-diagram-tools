@@ -170,6 +170,7 @@ usage: rosdiagramtools.py rosnodegraph [-h] [-la]
                                        [--msgsdumppath MSGSDUMPPATH]
                                        [--servicesdumppath SERVICESDUMPPATH]
                                        [--srvsdumppath SRVSDUMPPATH]
+                                       [--classifynodesfile CLASSIFYNODESFILE]
                                        [--highlightitems HIGHLIGHTITEMS]
                                        [--descriptionjson DESCRIPTIONJSON]
                                        [-mfg] [-iri] [--outraw OUTRAW]
@@ -192,6 +193,8 @@ optional arguments:
                         output
   --srvsdumppath SRVSDUMPPATH
                         Path to directory containing dumped 'rossrv' output
+  --classifynodesfile CLASSIFYNODESFILE
+                        Nodes classification input file
   --highlightitems HIGHLIGHTITEMS
                         File with list of items to highlight
   --descriptionjson DESCRIPTIONJSON

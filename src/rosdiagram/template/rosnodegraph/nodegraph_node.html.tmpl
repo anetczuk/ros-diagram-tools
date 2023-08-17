@@ -81,6 +81,25 @@ ${DATA_DICT.get('graph_map', '')}$>
     </div>
 
 #!
+#! pkg_path = DATA_DICT.get('pkg_path', "")
+#! pkg_name = DATA_DICT.get('pkg_name', "")
+#{ if pkg_path or pkg_name:
+    <div class="info_content">
+        <table>
+            <tr>
+                <td>Package name:</td>
+                <td><code>${pkg_name}</code></td>
+            </tr>
+            <tr>
+                <td>Package path:</td>
+                <td><code>${pkg_path}</code></td>
+            </tr>
+        </table>
+    </div>
+
+#}
+#!
+#!
 #! nodes_list = DATA_DICT.get('nodes_list', [])
 ${ tmpl_utils.ros_link_table( nodes_list, "ROS nodes" ) }$>
 #!

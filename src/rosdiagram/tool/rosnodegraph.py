@@ -172,6 +172,7 @@ def generate_compact_graph( nodes_dict, show_services=True, labels_dict=None ) -
 
 def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=None,
                     topics_dump_dir=None, msgs_dump_dir=None, services_dump_dir=None, srvs_dump_dir=None,
+                    nodes_classify_file=None,
                     paint_function=None, main_full_graph=False
                     ):
     if nodes_labels is None:
@@ -197,6 +198,7 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=No
 
     subpages_dict = generate_subpages( sub_output_dir, nodes_dict,
                                        topics_dump_dir, msgs_dump_dir, services_dump_dir, srvs_dump_dir,
+                                       nodes_classify_file,
                                        nodes_labels, nodes_description, main_page_link, paint_function=paint_function )
 
     nodes_desc    = nodes_description.get( "node", None )
@@ -227,6 +229,7 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=No
 ## returns dict: { <item_id>: <item_data_dict> }
 def generate_subpages( sub_output_dir, nodes_dict,
                        topics_dump_dir, msgs_dump_dir, services_dump_dir, srvs_dump_dir,
+                       nodes_classify_file,
                        nodes_labels, nodes_description, main_page_link, paint_function=None ):
     topics_dict = read_topics( topics_dump_dir )
     if topics_dict is None:
@@ -263,6 +266,17 @@ def generate_subpages( sub_output_dir, nodes_dict,
     topics_desc   = nodes_description.get( "topic", None )
     services_desc = nodes_description.get( "service", None )
 
+    nodes_classify_dict = read_dict( nodes_classify_file )
+    ## transform classification data
+    pkgs_classify_dict = {}
+    for pkg_id, pkg_data in nodes_classify_dict.items():
+        pkg_path = pkg_data.get( "path", "" )
+        pkg_nodes = pkg_data.get( "nodes", [] )
+        for node_id in pkg_nodes:
+            classify_data = pkgs_classify_dict.setdefault( f"n_{node_id}", {} )
+            classify_data[ "package" ] = pkg_id
+            classify_data[ "path" ] = pkg_path
+
     for item_id, item_dict in subpages_dict.items():
         item_graph = item_dict.get( "graph" )
         if item_graph:
@@ -284,6 +298,10 @@ def generate_subpages( sub_output_dir, nodes_dict,
         services_list                = item_dict.get( "services_list", [] )
         item_dict[ "services_list" ] = convert_links_list( services_list, subpages_dict, "",
                                                            nodes_labels, nodes_description=services_desc )
+
+        pkg_classify_data = pkgs_classify_dict.get( item_id, {} )
+        item_dict[ "pkg_name" ] = pkg_classify_data.get( "package", "" )
+        item_dict[ "pkg_path" ] = pkg_classify_data.get( "path", "" )
 
         _LOGGER.info( "preparing page for item %s", item_id )
         template = item_dict.get( "template_name", None )
@@ -391,6 +409,8 @@ def configure_parser( parser ):
                          help="Path to directory containing dumped 'rosservice' output" )
     parser.add_argument( '--srvsdumppath', action='store', required=False, default="",
                          help="Path to directory containing dumped 'rossrv' output" )
+    parser.add_argument( '--classifynodesfile', action='store', required=False, default="",
+                         help="Nodes classification input file" )
     parser.add_argument( '--highlightitems', action='store', required=False, default="", help="File with list of items to highlight" )
     parser.add_argument( '--descriptionjson', action='store', required=False, default="", help="Path to JSON file with items description" )
     parser.add_argument( '-mfg', '--mainfullgraph', action='store_true', help="Generate main full graph instead of compact one" )
@@ -447,6 +467,7 @@ def process_arguments( args, paint_function=None ):
                         msgs_dump_dir=args.msgsdumppath,
                         services_dump_dir=args.servicesdumppath,
                         srvs_dump_dir=args.srvsdumppath,
+                        nodes_classify_file=args.classifynodesfile,
                         paint_function=lambda graph: painter_wrapper( graph, highlight_list, paint_function ),
                         main_full_graph=args.mainfullgraph
                         )

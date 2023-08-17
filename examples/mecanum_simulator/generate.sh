@@ -102,6 +102,7 @@ $TOOL_PATH/rosdiagramtools.py rosnodegraph -la \
                                            --msgsdumppath $DUMP_DIR/msginfo \
                                            --servicesdumppath $DUMP_DIR/serviceinfo \
                                            --srvsdumppath $DUMP_DIR/srvinfo \
+                                           --classifynodesfile $CLASSIFY_NODES_OUT_FILE \
                                            --includerosinternals \
                                            --outhtml --outdir $OUT_DIR
 
