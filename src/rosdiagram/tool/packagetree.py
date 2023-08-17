@@ -37,7 +37,9 @@ def parse_catkin_content( content, build_deps=True ):
         if line[0] != ' ':
             ## new package
             package = line[:-1]
-            deps_dict[ package ] = []
+            deps_dict[ package ] = {"path": "",
+                                    "deps": []
+                                    }
             continue
 
         if package is None:
@@ -55,7 +57,8 @@ def parse_catkin_content( content, build_deps=True ):
 
         if line.startswith( "  - " ):
             ## dependency
-            deps_list = deps_dict[ package ]
+            pkg_data = deps_dict[ package ]
+            deps_list = pkg_data.setdefault("deps", [])
             deps_list.append( line[4:] )
             continue
 
@@ -71,11 +74,13 @@ def read_pack_data( pack_dump_dir ):
     for item in launch_list:
         data = item.split(" ")
         package_name = data[0]
-        # package_path = data[1]
+        package_path = data[1]
         pack_data_filename  = prepare_filesystem_name( package_name )
         pack_data_path = os.path.join( pack_dump_dir, pack_data_filename + ".txt" )
         deps_list = read_list( pack_data_path )
-        pack_dict[ package_name ] = deps_list
+        pack_dict[ package_name ] = {"path": package_path,
+                                     "deps": deps_list              # dependencies of package 
+                                    }
     return pack_dict
 
 
@@ -108,11 +113,12 @@ def generate_graph( deps_dict, node_shape="octagon" ):
     base_graph.set_rankdir( 'LR' )
 
     ## generate main graph
-    for key, vals in deps_dict.items():
-        dot_graph.addNode( key, shape=node_shape )
-        for dep in vals:
+    for pkg_id, pkg_data in deps_dict.items():
+        dot_graph.addNode( pkg_id, shape=node_shape )
+        pkg_deps = pkg_data.get( "deps", [] )
+        for dep in pkg_deps:
             dot_graph.addNode( dep, shape=node_shape )
-            dot_graph.addEdge( key, dep )
+            dot_graph.addEdge( pkg_id, dep )
     return dot_graph
 
 
@@ -154,6 +160,7 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
 
     top_list          = config_params_dict.get( "top_list", [] )
     highlight_list    = config_params_dict.get( "highlight_list", [] )
+    nodes_classification = config_params_dict.get( "nodes_classification", {} )
     nodes_description = config_params_dict.get( "nodes_description", {} )
     paint_function    = config_params_dict.get( "paint_function", None )
 
@@ -176,7 +183,7 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
     main_page_link = os.path.join( os.pardir, item_filename + ".html" )
 
     subpages_dict = generate_subpages( sub_output_dir, deps_dict, all_items, main_page_link,
-                                       highlight_list, nodes_description,
+                                       highlight_list, nodes_classification, nodes_description,
                                        top_list=top_list, paint_function=paint_function )
 
     ## generate main page
@@ -196,9 +203,12 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
 
 ## returns dict: { <item_id>: <item_data_dict> }
 def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link,
-                       highlight_list=None, nodes_description=None, top_list=None, paint_function=None ):
+                       highlight_list=None, nodes_classification=None, nodes_description=None, 
+                       top_list=None, paint_function=None ):
     if highlight_list is None:
         highlight_list = []
+    if nodes_classification is None:
+        nodes_classification = {}
     if nodes_description is None:
         nodes_description = {}
 
@@ -221,12 +231,19 @@ def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link
         set_nodes_style( item_graph, [item_id], style_dict=DEFAULT_ACTIVE_NODE_STYLE )
         set_node_html_attribs( item_graph, "" )
 
+        pkg_classify_data = nodes_classification.get( item_id, {} )
+
+        pkg_data = deps_dict.get( item_id, {} )
+        pkg_path = pkg_data.get( "path", "" )
+        if not pkg_path:
+            pkg_path = pkg_classify_data.get("path", "")
+
         item_dict[ "graph" ]          = item_graph
         #item_dict[ "graph_label" ]    = f"package '{item_id}' graph"
         item_dict[ "graph_label" ]    = item_graph.getName()
         item_dict[ "main_page_link" ] = main_page_link
-        item_dict[ "msg_type" ]       = ""
-        item_dict[ "msg_content" ]    = ""
+        item_dict[ "pkg_path" ]       = pkg_path
+        item_dict[ "pkg_nodes" ]      = pkg_classify_data.get("nodes", [])
 
         nodes_list     = sorted( list( item_graph.getNodeNamesAll() ) )
         converted_list = convert_links_list( nodes_list, sub_items_list, "", nodes_description=packages_desc )
@@ -250,6 +267,8 @@ def configure_parser( parser ):
                          help="Read 'catkin list' data from file" )
     parser.add_argument( '--packdumppath', action='store', required=False, default="",
                          help="Path to directory containing dumped 'rospack' output" )
+    parser.add_argument( '--classifynodesfile', action='store', required=False, default="",
+                         help="Nodes classification input file" )
     parser.add_argument( '--nodeshape', action='store', required=False, default=None, help="Shape of node: 'box', 'octagon' or other value supprted by GraphViz dot" )
     parser.add_argument( '--topitems', action='store', required=False, default="", help="File with list of items to filter on top" )
     parser.add_argument( '--highlightitems', action='store', required=False, default="", help="File with list of items to highlight" )
@@ -278,6 +297,8 @@ def process_arguments( args, paint_function=None ):
     else:
         data_dict = read_pack_data( args.packdumppath )
 
+    nodes_classify_dict = read_dict( args.classifynodesfile )
+
     top_list       = read_list( args.topitems )
     highlight_list = read_list( args.highlightitems )
 
@@ -300,6 +321,7 @@ def process_arguments( args, paint_function=None ):
         os.makedirs( args.outdir, exist_ok=True )
         config_params_dict = {  "top_list": top_list,
                                 "highlight_list": highlight_list,
+                                "nodes_classification": nodes_classify_dict,
                                 "nodes_description": description_dict,
                                 "paint_function": paint_function
                                 }

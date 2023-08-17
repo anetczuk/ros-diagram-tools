@@ -24,7 +24,7 @@
 File was automatically generated using 'ros-diagram-tools' project.
 Project is distributed under the BSD 3-Clause license.
 -->
-    <title>node graph</title>
+    <title>packages graph</title>
     <style>
         body {  padding: 24;
                 background-color: ${DATA_DICT.get('body_color', '')};
@@ -83,6 +83,24 @@ ${DATA_DICT.get('graph_map', '')}$>
 #}
     </div>
 
+#!
+#! pkg_path = DATA_DICT.get('pkg_path', "")
+#! pkg_nodes = DATA_DICT.get('pkg_nodes', [])
+#{ if pkg_path or pkg_nodes:
+    <div class="info_content">
+        <table>
+            <tr>
+                <td>Package path:</td>
+                <td><code>${pkg_path}</code></td>
+            </tr>
+            <tr>
+                <td>Nodes:</td>
+                <td><code>${ " ".join(pkg_nodes) }</code></td>
+            </tr>
+        </table>
+    </div>
+
+#}
 #!
 #! packages_list = DATA_DICT.get('graph_packages', [])
 ${ tmpl_utils.ros_link_table( packages_list, "Graph packages" ) }$>

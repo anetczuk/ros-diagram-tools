@@ -64,6 +64,7 @@ optional arguments:
 usage: rosdiagramtools.py packagetree [-h] [-la]
                                       [--catkinlistfile CATKINLISTFILE]
                                       [--packdumppath PACKDUMPPATH]
+                                      [--classifynodesfile CLASSIFYNODESFILE]
                                       [--nodeshape NODESHAPE]
                                       [--topitems TOPITEMS]
                                       [--highlightitems HIGHLIGHTITEMS]
@@ -81,6 +82,8 @@ optional arguments:
                         Read 'catkin list' data from file
   --packdumppath PACKDUMPPATH
                         Path to directory containing dumped 'rospack' output
+  --classifynodesfile CLASSIFYNODESFILE
+                        Nodes classification input file
   --nodeshape NODESHAPE
                         Shape of node: 'box', 'octagon' or other value
                         supprted by GraphViz dot
