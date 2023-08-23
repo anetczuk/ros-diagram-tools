@@ -9,6 +9,7 @@ import os
 import logging
 
 import argparse
+import json
 import yaml
 import html
 
@@ -46,7 +47,13 @@ def generate_pages( params_dict, out_dir ):
         data_fullpath = os.path.join( out_dir, data_subpath )
         write_file( data_fullpath, str(value) )
 
-        value_str = str(value)
+        value_str = ""
+        if isinstance( value, list ) or isinstance( value, dict ):
+            # try to dump by JSON
+            value_str = json.dumps( value, indent=4 )
+        else:
+            value_str = str(value)
+
         if len(value_str) > 1024 or value_str.count('\n') > 20:
             pos = find_nth_index( value_str, '\n', 20 )
             pos = min( pos, 1020 )
