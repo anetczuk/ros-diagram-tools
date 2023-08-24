@@ -1,7 +1,7 @@
 ## rosdiagramtools.py --help
 ```
 usage: rosdiagramtools.py [-h] [-la] [--listtools]
-                          {codedistribution,packagetree,classifynodes,buildtime,rosparamlist,rosnodegraph,rostopicgraph,rosbagflow,rosverify}
+                          {codedistribution,packagetree,classifynodes,buildtime,rosparamlist,rosnodegraph,rostopicgraph,rosindex,rosbagflow,rosverify}
                           ...
 
 ROS diagram tools
@@ -14,7 +14,7 @@ optional arguments:
 subcommands:
   use one of tools
 
-  {codedistribution,packagetree,classifynodes,buildtime,rosparamlist,rosnodegraph,rostopicgraph,rosbagflow,rosverify}
+  {codedistribution,packagetree,classifynodes,buildtime,rosparamlist,rosnodegraph,rostopicgraph,rosindex,rosbagflow,rosverify}
                         one of tools
     codedistribution    source code distribution over packages
     packagetree         packages graph
@@ -23,6 +23,7 @@ subcommands:
     rosparamlist        rosparam parameters list
     rosnodegraph        rosnode connection graph
     rostopicgraph       rostopic connection graph
+    rosindex            index of diagrams
     rosbagflow          generate sequence diagram based on messages from
                         rosbag
     rosverify           verify ROS packages
@@ -227,6 +228,35 @@ optional arguments:
                         output
   --outraw OUTRAW       Graph RAW output
   --outpng OUTPNG       Graph PNG output
+```
+
+
+
+## rosdiagramtools.py rosindex --help
+```
+usage: rosdiagramtools.py rosindex [-h] [-la] [--packagesview PACKAGESVIEW]
+                                   [--paramsview PARAMSVIEW]
+                                   [--nodesview NODESVIEW]
+                                   [--topicsview TOPICSVIEW]
+                                   [--customlist [CUSTOMLIST [CUSTOMLIST ...]]]
+                                   [--outdir OUTDIR]
+
+index of diagrams
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -la, --logall         Log all messages
+  --packagesview PACKAGESVIEW
+                        Path to packages view
+  --paramsview PARAMSVIEW
+                        Path to params view
+  --nodesview NODESVIEW
+                        Path to nodes view
+  --topicsview TOPICSVIEW
+                        Path to topics view
+  --customlist [CUSTOMLIST [CUSTOMLIST ...]]
+                        Space-separated list of titles and links
+  --outdir OUTDIR       Output HTML
 ```
 
 
