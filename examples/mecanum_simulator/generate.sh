@@ -129,7 +129,17 @@ $TOOL_PATH/rosdiagramtools.py rosindex --packagesview $PKG_OUT_DIR/full_graph.ht
                                        --customlist "catkin build" $BUILD_OUT_DIR/full_graph.html \
                                        --outdir $INDEX_OUT_DIR
 
-cutycapt --url=file://$INDEX_OUT_DIR/main_page.html --out=$INDEX_OUT_DIR/index_page.png
+
+echo "running general script"
+GENERAL_OUT_DIR="$OUT_ROOT_DIR/general"
+mkdir -p $GENERAL_OUT_DIR
+$TOOL_PATH/rosdiagramtools.py rosgeneral --dumprootdir $DUMP_DIR \
+                                         --classifynodesfile $CLASSIFY_NODES_OUT_FILE \
+                                         --pkgsfilterlist $DUMP_DIR/catkindeps/packages.txt \
+                                         --outdir $GENERAL_OUT_DIR
+
+cutycapt --url=file://$GENERAL_OUT_DIR/main_page.html --out=$GENERAL_OUT_DIR/main-page.png
+cutycapt --url=file://$GENERAL_OUT_DIR/paramview/main_page.html --out=$GENERAL_OUT_DIR/paramview-page.png
 
 
 #### rosbagflow requires rosbag file

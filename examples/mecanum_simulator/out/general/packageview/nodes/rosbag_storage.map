@@ -1,0 +1,10 @@
+<map id="rosbag_storage" name="rosbag_storage">
+<area shape="poly" id="node1" href="rosbag.html" title="node: rosbag" alt="" coords="127,219,127,199,92,185,41,185,5,199,5,219,41,233,92,233"/>
+<area shape="poly" id="node2" href="rosbag_storage.html" title="node: rosbag_storage" alt="" coords="412,219,412,199,342,185,245,185,175,199,175,219,245,233,342,233"/>
+<area shape="poly" id="node3" href="cpp_common.html" title="node: cpp_common" alt="" coords="711,39,711,19,651,5,566,5,507,19,507,39,566,53,651,53"/>
+<area shape="poly" id="node4" href="pluginlib.html" title="node: pluginlib" alt="" coords="684,111,684,91,640,77,578,77,534,91,534,111,578,125,640,125"/>
+<area shape="poly" id="node5" href="roscpp_serialization.html" title="node: roscpp_serialization" alt="" coords="758,183,758,163,671,149,547,149,460,163,460,183,547,197,671,197"/>
+<area shape="poly" id="node6" href="roscpp_traits.html" title="node: roscpp_traits" alt="" coords="712,255,712,235,652,221,566,221,506,235,506,255,566,269,652,269"/>
+<area shape="poly" id="node7" href="rostime.html" title="node: rostime" alt="" coords="675,327,675,307,636,293,581,293,542,307,542,327,581,341,636,341"/>
+<area shape="poly" id="node8" href="roslz4.html" title="node: roslz4" alt="" coords="665,399,665,379,632,365,585,365,553,379,553,399,585,413,632,413"/>
+</map>

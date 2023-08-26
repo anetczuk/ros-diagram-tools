@@ -1,0 +1,7 @@
+<map id="rostopic" name="rostopic">
+<area shape="poly" id="node1" href="rosnode.html" title="node: rosnode" alt="" coords="144,111,144,91,103,77,46,77,5,91,5,111,46,125,103,125"/>
+<area shape="poly" id="node2" href="rostopic.html" title="node: rostopic" alt="" coords="331,111,331,91,290,77,233,77,192,91,192,111,233,125,290,125"/>
+<area shape="poly" id="node3" href="genpy.html" title="node: genpy" alt="" coords="496,39,496,19,463,5,417,5,384,19,384,39,417,53,463,53"/>
+<area shape="poly" id="node4" href="rosbag.html" title="node: rosbag" alt="" coords="501,111,501,91,465,77,415,77,379,91,379,111,415,125,465,125"/>
+<area shape="poly" id="node5" href="rospy.html" title="node: rospy" alt="" coords="492,183,492,163,462,149,418,149,387,163,387,183,418,197,462,197"/>
+</map>
