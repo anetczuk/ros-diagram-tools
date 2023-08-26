@@ -1,7 +1,7 @@
 ## rosdiagramtools.py --help
 ```
 usage: rosdiagramtools.py [-h] [-la] [--listtools]
-                          {codedistribution,packagetree,classifynodes,buildtime,rosparamlist,rosnodegraph,rostopicgraph,rosindex,rosbagflow,rosverify}
+                          {codedistribution,packagetree,classifynodes,buildtime,rosparamlist,rosnodegraph,rostopicgraph,rosindex,rosgeneral,rosbagflow,rosverify}
                           ...
 
 ROS diagram tools
@@ -14,7 +14,7 @@ optional arguments:
 subcommands:
   use one of tools
 
-  {codedistribution,packagetree,classifynodes,buildtime,rosparamlist,rosnodegraph,rostopicgraph,rosindex,rosbagflow,rosverify}
+  {codedistribution,packagetree,classifynodes,buildtime,rosparamlist,rosnodegraph,rostopicgraph,rosindex,rosgeneral,rosbagflow,rosverify}
                         one of tools
     codedistribution    source code distribution over packages
     packagetree         packages graph
@@ -24,6 +24,7 @@ subcommands:
     rosnodegraph        rosnode connection graph
     rostopicgraph       rostopic connection graph
     rosindex            index of diagrams
+    rosgeneral          generate diagrams from provided data
     rosbagflow          generate sequence diagram based on messages from
                         rosbag
     rosverify           verify ROS packages
@@ -256,6 +257,35 @@ optional arguments:
                         Path to topics view
   --customlist [CUSTOMLIST [CUSTOMLIST ...]]
                         Space-separated list of titles and links
+  --outdir OUTDIR       Output HTML
+```
+
+
+
+## rosdiagramtools.py rosgeneral --help
+```
+usage: rosdiagramtools.py rosgeneral [-h] [-la] [--dumprootdir DUMPROOTDIR]
+                                     [--launchdumppath LAUNCHDUMPPATH]
+                                     [--classifynodesfile CLASSIFYNODESFILE]
+                                     [--descriptionjsonfile DESCRIPTIONJSONFILE]
+                                     [--pkgsfilterlist PKGSFILTERLIST]
+                                     [--outdir OUTDIR]
+
+index of diagrams
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -la, --logall         Log all messages
+  --dumprootdir DUMPROOTDIR
+                        Path directory with standard dump directories
+  --launchdumppath LAUNCHDUMPPATH
+                        Path fo directory containing dumped 'roslaunch' output
+  --classifynodesfile CLASSIFYNODESFILE
+                        Nodes classification input file
+  --descriptionjsonfile DESCRIPTIONJSONFILE
+                        Path to JSON file with items description
+  --pkgsfilterlist PKGSFILTERLIST
+                        PAth to file with list of packages to filter
   --outdir OUTDIR       Output HTML
 ```
 

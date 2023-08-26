@@ -147,6 +147,8 @@ class Schedule():
 
 
 def generate_pages( schedule: Schedule, out_dir, config_params_dict=None, scale_sec_step=20, scale_px_num=100 ):
+    os.makedirs( out_dir, exist_ok=True )
+
     if config_params_dict is None:
         config_params_dict = {}
 

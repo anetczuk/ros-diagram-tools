@@ -170,9 +170,76 @@ def generate_compact_graph( nodes_dict, show_services=True, labels_dict=None ) -
 ## =====================================================
 
 
+def read_nodes_data(nodes_dump_dir, include_ros_internals: bool = False):
+    nodes_dict = read_nodes( nodes_dump_dir )
+    if not include_ros_internals:
+        filter_ros_nodes_dict( nodes_dict )
+    labels_dict = fix_names( nodes_dict )
+    # info_dict  = get_node_info_dict( nodes_dict, labels_dict, msgs_dump_dir, srvs_dump_dir )
+    return (nodes_dict, labels_dict)
+
+
+def generate_graph_data( nodes_dict,
+                         node_label_dict,
+                         mainfullgraph: bool = False,
+                         highlight_list_file=None,
+                         paint_function=None,
+                         output_dot_file=None,
+                         output_png_file=None ):
+
+    highlight_list = read_list( highlight_list_file )
+
+    if not output_dot_file and not output_png_file:
+        return
+
+    _LOGGER.info( "generating main graph" )
+    graph: Graph = generate_graph( nodes_dict, labels_dict=node_label_dict, full_graph=mainfullgraph,
+                                   paint_function=lambda graph: painter_wrapper( graph, highlight_list,
+                                                                                 paint_function )
+                                   )
+
+    if output_dot_file:
+        graph.writeRAW( output_dot_file )
+    if output_png_file:
+        graph.writePNG( output_png_file )
+
+
+def generate_node_pages( nodes_output_dir,
+                         nodes_dict,
+                         node_label_dict,
+                         nodes_classify_dict,
+                         topics_dump_dir,
+                         msgs_dump_dir,
+                         services_dump_dir,
+                         srvs_dump_dir,
+                         description_dict,
+                         mainfullgraph: bool = False,
+                         highlight_list_file=None,
+                         paint_function=None):
+
+    highlight_list = None
+    if highlight_list_file:
+        highlight_list = read_list( highlight_list_file )
+
+    _LOGGER.info( "generating HTML graph" )
+    os.makedirs( nodes_output_dir, exist_ok=True )
+
+    generate_pages( nodes_dict, nodes_output_dir,
+                    nodes_labels=node_label_dict,
+                    nodes_description=description_dict,
+                    topics_dump_dir=topics_dump_dir,
+                    msgs_dump_dir=msgs_dump_dir,
+                    services_dump_dir=services_dump_dir,
+                    srvs_dump_dir=srvs_dump_dir,
+                    nodes_classify_dict=nodes_classify_dict,
+                    paint_function=lambda graph: painter_wrapper( graph, highlight_list, paint_function ),
+                    main_full_graph=mainfullgraph
+                    )
+
+
 def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=None,
                     topics_dump_dir=None, msgs_dump_dir=None, services_dump_dir=None, srvs_dump_dir=None,
-                    nodes_classify_file=None,
+                    nodes_classify_dict=None,
                     paint_function=None, main_full_graph=False
                     ):
     if nodes_labels is None:
@@ -198,7 +265,7 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=No
 
     subpages_dict = generate_subpages( sub_output_dir, nodes_dict,
                                        topics_dump_dir, msgs_dump_dir, services_dump_dir, srvs_dump_dir,
-                                       nodes_classify_file,
+                                       nodes_classify_dict,
                                        nodes_labels, nodes_description, main_page_link, paint_function=paint_function )
 
     nodes_desc    = nodes_description.get( "node", None )
@@ -229,7 +296,7 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=No
 ## returns dict: { <item_id>: <item_data_dict> }
 def generate_subpages( sub_output_dir, nodes_dict,
                        topics_dump_dir, msgs_dump_dir, services_dump_dir, srvs_dump_dir,
-                       nodes_classify_file,
+                       nodes_classify_dict,
                        nodes_labels, nodes_description, main_page_link, paint_function=None ):
     topics_dict = read_topics( topics_dump_dir )
     if topics_dict is None:
@@ -266,7 +333,6 @@ def generate_subpages( sub_output_dir, nodes_dict,
     topics_desc   = nodes_description.get( "topic", None )
     services_desc = nodes_description.get( "service", None )
 
-    nodes_classify_dict = read_dict( nodes_classify_file )
     ## transform classification data
     pkgs_classify_dict = {}
     for pkg_id, pkg_data in nodes_classify_dict.items():
@@ -428,49 +494,43 @@ def process_arguments( args, paint_function=None ):
     else:
         logging.getLogger().setLevel( logging.INFO )
 
-    nodes_dict = read_nodes( args.nodesdumppath )
-    if not nodes_dict:
-        _LOGGER.warning( "no data found in %s", args.nodesdumppath )
-        return
+    nodes_output_dir = args.outdir
+    topics_dump_dir = args.topicsdumppath
+    msgs_dump_dir = args.msgsdumppath
+    services_dump_dir = args.servicesdumppath
+    srvs_dump_dir = args.srvsdumppath
+    nodes_classify_file = args.classifynodesfile
+    
+    nodes_dict, labels_dict = read_nodes_data(args.nodesdumppath, args.includerosinternals)
 
-    if not args.includerosinternals:
-        filter_ros_nodes_dict( nodes_dict )
-
-    labels_dict = fix_names( nodes_dict )
-    # info_dict  = get_node_info_dict( nodes_dict, labels_dict, args.msgsdumppath, args.srvsdumppath )
-
-    highlight_list = read_list( args.highlightitems )
-
-    description_dict = read_dict( args.descriptionjson )
-
-    if len( args.outraw ) > 0 or len( args.outpng ) > 0:
-        _LOGGER.info( "generating main graph" )
-        graph: Graph = generate_graph( nodes_dict, labels_dict=labels_dict, full_graph=args.mainfullgraph,
-                                       paint_function=lambda graph: painter_wrapper( graph, highlight_list,
-                                                                                     paint_function )
-                                       )
-        if len( args.outraw ) > 0:
-            graph.writeRAW( args.outraw )
-        if len( args.outpng ) > 0:
-            graph.writePNG( args.outpng )
+    if args.outraw or args.outpng:
+        generate_graph_data( nodes_dict, labels_dict,
+                             mainfullgraph=args.mainfullgraph,
+                             highlight_list_file=args.highlightitems,
+                             paint_function=paint_function,
+                             output_dot_file=args.outraw,
+                             output_png_file=args.outpng
+                              )
 
     ##
     ## generate HTML data
     ##
-    if args.outhtml and len( args.outdir ) > 0:
-        _LOGGER.info( "generating HTML graph" )
-        os.makedirs( args.outdir, exist_ok=True )
-        generate_pages( nodes_dict, args.outdir,
-                        nodes_labels=labels_dict,
-                        nodes_description=description_dict,
-                        topics_dump_dir=args.topicsdumppath,
-                        msgs_dump_dir=args.msgsdumppath,
-                        services_dump_dir=args.servicesdumppath,
-                        srvs_dump_dir=args.srvsdumppath,
-                        nodes_classify_file=args.classifynodesfile,
-                        paint_function=lambda graph: painter_wrapper( graph, highlight_list, paint_function ),
-                        main_full_graph=args.mainfullgraph
-                        )
+    if args.outhtml and nodes_output_dir:
+        nodes_classify_dict = read_dict( nodes_classify_file )
+        description_dict = read_dict( args.descriptionjson )
+
+        generate_node_pages( nodes_output_dir,
+                             nodes_dict,
+                             labels_dict,
+                             nodes_classify_dict=nodes_classify_dict,
+                             topics_dump_dir=topics_dump_dir,
+                             msgs_dump_dir=msgs_dump_dir,
+                             services_dump_dir=services_dump_dir,
+                             srvs_dump_dir=srvs_dump_dir,
+                             description_dict=description_dict,
+                             mainfullgraph=args.mainfullgraph,
+                             highlight_list_file=args.highlightitems,
+                             paint_function=paint_function )
 
 
 def main():

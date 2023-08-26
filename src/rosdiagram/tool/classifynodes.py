@@ -43,6 +43,36 @@ def read_launch( launch_dir ):
     return nodes_dict
 
 
+def classify_nodes( packdumppath, launchdumppath ):
+    pack_list = read_pack( packdumppath )
+    if len(pack_list) < 1:
+        _LOGGER.warning( "no data found in %s", packdumppath )
+        return
+
+    launch_dict = read_launch( launchdumppath )
+    if len(launch_dict) < 1:
+        _LOGGER.warning( "no data found in %s", launchdumppath )
+        return
+
+    pack_nodes_dict = {}
+    for pack in pack_list:
+        pack_name = pack[0]
+        pack_dir  = pack[1]
+
+        nodes_list = []
+        for launch_path, launch_nodes in launch_dict.items():
+            if pack_dir in launch_path:
+                nodes_list.extend( launch_nodes )
+
+        if nodes_list:
+            #print( "found nodes:", pack_name, pack_dir, nodes_list )
+            pack_nodes_dict[ pack_name ] = { "path": pack_dir,
+                                             "nodes": nodes_list,
+                                             }
+
+    return pack_nodes_dict
+
+
 ## ===================================================================
 
 
@@ -64,32 +94,8 @@ def process_arguments( args ):
     else:
         logging.getLogger().setLevel( logging.INFO )
 
-    pack_list = read_pack( args.packdumppath )
-    if len(pack_list) < 1:
-        _LOGGER.warning( "no data found in %s", args.packdumppath )
-        return
-
-    launch_dict = read_launch( args.launchdumppath )
-    if len(launch_dict) < 1:
-        _LOGGER.warning( "no data found in %s", args.launchdumppath )
-        return
-
-    pack_nodes_dict = {}
-    for pack in pack_list:
-        pack_name = pack[0]
-        pack_dir  = pack[1]
-
-        nodes_list = []
-        for launch_path, launch_nodes in launch_dict.items():
-            if pack_dir in launch_path:
-                nodes_list.extend( launch_nodes )
-
-        if nodes_list:
-            #print( "found nodes:", pack_name, pack_dir, nodes_list )
-            pack_nodes_dict[ pack_name ] = { "path": pack_dir,
-                                             "nodes": nodes_list,
-                                             }
-
+    pack_nodes_dict = classify_nodes( args.packdumppath, args.launchdumppath )
+    
     if args.outfile:
         # content = str( pack_nodes_dict )
         content = json.dumps( pack_nodes_dict, indent=4 )

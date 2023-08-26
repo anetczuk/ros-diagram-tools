@@ -29,6 +29,8 @@ DATA_SUBDIR = "data"
 
 
 def generate_pages( params_dict, out_dir ):
+    os.makedirs( out_dir, exist_ok=True )
+
     data_dir = os.path.join( out_dir, DATA_SUBDIR )
     os.makedirs( data_dir, exist_ok=True )
 
@@ -117,7 +119,6 @@ def process_arguments( args ):
     ##
     if len( args.outdir ) > 0:
         _LOGGER.info( "generating HTML graph" )
-        os.makedirs( args.outdir, exist_ok=True )
         generate_pages( params_dict, args.outdir )
 
 

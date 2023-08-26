@@ -20,6 +20,7 @@ from rosdiagram.tool import rosparamlist
 from rosdiagram.tool import rosnodegraph
 from rosdiagram.tool import rostopicgraph
 from rosdiagram.tool import rosindex
+from rosdiagram.tool import rosgeneral
 from rosdiagram.tool import rosbagflow
 from rosdiagram.tool import rosverify
 
@@ -87,6 +88,12 @@ def main():
     subparser = subparsers.add_parser('rosindex', help='index of diagrams')
     subparser.set_defaults( func=rosindex.process_arguments )
     rosindex.configure_parser( subparser )
+
+    ## =================================================
+
+    subparser = subparsers.add_parser('rosgeneral', help='generate diagrams from provided data')
+    subparser.set_defaults( func=rosgeneral.process_arguments )
+    rosgeneral.configure_parser( subparser )
 
     ## =================================================
 

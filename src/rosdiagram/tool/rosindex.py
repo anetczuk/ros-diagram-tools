@@ -23,34 +23,8 @@ DATA_SUBDIR = "data"
 ## ===================================================================
 
 
-def generate_pages( params_dict, out_dir ):
-    items_list = []
-
-    view = params_dict.get( "packagesview" )
-    if view:
-        items_list.append( ( "packages view", view ) )
-
-    view = params_dict.get( "paramsview" )
-    if view:
-        items_list.append( ( "parameters view", view ) )
-
-    view = params_dict.get( "nodesview" )
-    if view:
-        items_list.append( ( "nodes view", view ) )
-
-    view = params_dict.get( "topicsview" )
-    if view:
-        items_list.append( ( "topics view", view ) )
-
-    view = params_dict.get( "customlist" )
-    if view:
-        view_len = len(view)
-        for index in range(1, view_len, 2):
-            title = view[ index - 1 ]
-            link  = view[ index ]
-            items_list.append( (title,link) )
-        if view_len % 2 == 1:
-            items_list.append( (view[-1], "") )
+def generate_pages( items_list, out_dir ):
+    os.makedirs( out_dir, exist_ok=True )
 
     ## convert to relative path
     converted_items_list = []
@@ -87,19 +61,39 @@ def process_arguments( args ):
     else:
         logging.getLogger().setLevel( logging.INFO )
 
-    ##
-    ## generate HTML data
-    ##
-    if len( args.outdir ) > 0:
-        _LOGGER.info( "generating HTML graph" )
         params_dict = { "packagesview": args.packagesview,
                         "paramsview": args.paramsview,
                         "nodesview": args.nodesview,
                         "topicsview": args.topicsview,
                         "customlist": args.customlist
                         }
-        os.makedirs( args.outdir, exist_ok=True )
-        generate_pages( params_dict, args.outdir )
+
+    items_list = []
+    if args.packagesview:
+        items_list.append( ( "packages view", args.packagesview ) )
+    if args.paramsview:
+        items_list.append( ( "parameters view", args.paramsview ) )
+    if args.nodesview:
+        items_list.append( ( "nodes view", args.nodesview ) )
+    if args.topicsview:
+        items_list.append( ( "topics view", args.topicsview ) )
+
+    if args.customlist:
+        customlist = args.customlist
+        view_len = len(customlist)
+        for index in range(1, view_len, 2):
+            title = customlist[ index - 1 ]
+            link  = customlist[ index ]
+            items_list.append( (title,link) )
+        if view_len % 2 == 1:
+            items_list.append( (customlist[-1], "") )
+
+    ##
+    ## generate HTML data
+    ##
+    if len( args.outdir ) > 0:
+        _LOGGER.info( "generating HTML graph" )
+        generate_pages( items_list, args.outdir )
 
 
 def main():

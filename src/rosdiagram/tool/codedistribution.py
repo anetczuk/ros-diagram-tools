@@ -26,6 +26,24 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 ## ===================================================================
 
 
+def read_cloc_data( clocjsonpath=None, clocdumpdir=None, filteritemspath=None ):
+    data_dict = {}
+    if clocjsonpath:
+        data_dict = read_json_data( clocjsonpath )
+    elif clocdumpdir:
+        data_dict = read_dir_data( clocdumpdir )
+
+    filter_list = read_list( filteritemspath )
+    if filter_list:
+        all_packages = list( data_dict.keys() )
+        for item in all_packages:
+            if item in filter_list:
+                continue
+            del data_dict[ item ]
+
+    return data_dict
+
+
 def read_json_data( cloc_path ):
     with open( cloc_path, 'r', encoding='utf-8' ) as content_file:
         content = content_file.read()
@@ -139,21 +157,9 @@ def process_arguments( args ):
     else:
         logging.getLogger().setLevel( logging.INFO )
 
-    filter_list    = read_list( args.filteritems )
     highlight_list = read_list( args.highlight )
 
-    data_dict = {}
-    if args.clocjsonpath:
-        data_dict = read_json_data( args.clocjsonpath )
-    elif args.clocdumpdir:
-        data_dict = read_dir_data( args.clocdumpdir )
-
-    if filter_list:
-        all_packages = list( data_dict.keys() )
-        for item in all_packages:
-            if item in filter_list:
-                continue
-            del data_dict[ item ]
+    data_dict = read_cloc_data( args.clocjsonpath, args.clocdumpdir, args.filteritems )
 
     graph = generate_graph( data_dict )
 

@@ -134,6 +134,8 @@ def set_min_max_rank( dot_graph: Graph ):
 
 
 def paint_nodes( graph: Graph, paint_list ):
+    if not paint_list:
+        return
     style = { "style": "filled",
               "fillcolor": "yellow"
               }
@@ -155,6 +157,8 @@ def generate( catkin_list_file, node_shape="box",
 
 
 def generate_pages( deps_dict, out_dir, config_params_dict=None ):
+    os.makedirs( out_dir, exist_ok=True )
+
     if config_params_dict is None:
         config_params_dict = {}
 
@@ -286,10 +290,6 @@ def process_arguments( args, paint_function=None ):
     else:
         logging.getLogger().setLevel( logging.WARNING )
 
-    node_shape = args.nodeshape
-    if node_shape is None:
-        node_shape = "octagon"
-
     data_dict = {}
     if args.catkinlistfile:
         content   = read_file( args.catkinlistfile )
@@ -304,21 +304,25 @@ def process_arguments( args, paint_function=None ):
 
     description_dict = read_dict( args.descriptionjson )
 
-    _LOGGER.info( "generating packages graph" )
-    graph = generate_pkg_graph( data_dict, node_shape, top_items=top_list,
-                                highlight_items=highlight_list, paint_function=paint_function )
+    if args.outraw or args.outraw:
+        node_shape = args.nodeshape
+        if node_shape is None:
+            node_shape = "octagon"
 
-    if len( args.outraw ) > 0:
-        graph.writeRAW( args.outraw )
-    if len( args.outpng ) > 0:
-        graph.writePNG( args.outpng )
+        _LOGGER.info( "generating packages graph" )
+        graph = generate_pkg_graph( data_dict, node_shape, top_items=top_list,
+                                    highlight_items=highlight_list, paint_function=paint_function )
+
+        if args.outraw:
+            graph.writeRAW( args.outraw )
+        if args.outpng:
+            graph.writePNG( args.outpng )
 
     ##
     ## generate HTML data
     ##
     if args.outhtml and len( args.outdir ) > 0:
         _LOGGER.info( "generating HTML graph" )
-        os.makedirs( args.outdir, exist_ok=True )
         config_params_dict = {  "top_list": top_list,
                                 "highlight_list": highlight_list,
                                 "nodes_classification": nodes_classify_dict,
