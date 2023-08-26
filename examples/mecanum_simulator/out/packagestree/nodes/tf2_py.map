@@ -1,6 +1,0 @@
-<map id="tf2_py" name="tf2_py">
-<area shape="poly" id="node1" href="tf2_py.html" title="node: tf2_py" alt="" coords="292,75,292,55,258,41,211,41,177,55,177,75,211,89,258,89"/>
-<area shape="poly" id="node2" href="tf2.html" title="node: tf2" alt="" coords="428,39,428,19,407,5,377,5,356,19,356,39,377,53,407,53"/>
-<area shape="poly" id="node3" href="rospy.html" title="node: rospy" alt="" coords="445,111,445,91,414,77,370,77,340,91,340,111,370,125,414,125"/>
-<area shape="poly" id="node4" href="tf2_ros.html" title="node: tf2_ros" alt="" coords="129,75,129,55,93,41,42,41,5,55,5,75,42,89,93,89"/>
-</map>

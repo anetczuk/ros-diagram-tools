@@ -129,7 +129,7 @@ def process_arguments( args ):
     if os.path.isdir( nodes_info_dir ):
         _LOGGER.info( "generating rosnodegraph output" )
         nodes_out_dir = os.path.join(args.outdir, "nodeview")
-        nodes_dict, node_label_dict = rosnodegraph.read_nodes_data(nodes_info_dir, include_ros_internals=False)
+        nodes_dict, node_label_dict = rosnodegraph.read_nodes_data(nodes_info_dir, include_ros_internals=True)
         rosnodegraph.generate_node_pages( nodes_out_dir,
                                           nodes_dict,
                                           node_label_dict,

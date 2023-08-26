@@ -61,13 +61,6 @@ def process_arguments( args ):
     else:
         logging.getLogger().setLevel( logging.INFO )
 
-        params_dict = { "packagesview": args.packagesview,
-                        "paramsview": args.paramsview,
-                        "nodesview": args.nodesview,
-                        "topicsview": args.topicsview,
-                        "customlist": args.customlist
-                        }
-
     items_list = []
     if args.packagesview:
         items_list.append( ( "packages view", args.packagesview ) )

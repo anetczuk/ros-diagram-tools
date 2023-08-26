@@ -1,8 +1,0 @@
-<map id="rosbuild" name="rosbuild">
-<area shape="poly" id="node1" href="rosbuild.html" title="node: rosbuild" alt="" coords="367,111,367,91,325,77,267,77,226,91,226,111,267,125,325,125"/>
-<area shape="poly" id="node2" href="catkin.html" title="node: catkin" alt="" coords="624,39,624,19,591,5,544,5,511,19,511,39,544,53,591,53"/>
-<area shape="poly" id="node3" href="message_generation.html" title="node: message_generation" alt="" coords="720,111,720,91,631,77,504,77,415,91,415,111,504,125,631,125"/>
-<area shape="poly" id="node4" href="message_runtime.html" title="node: message_runtime" alt="" coords="702,183,702,163,623,149,512,149,433,163,433,183,512,197,623,197"/>
-<area shape="poly" id="node5" href="rosconsole.html" title="node: rosconsole" alt="" coords="178,75,178,55,127,41,56,41,5,55,5,75,56,89,127,89"/>
-<area shape="poly" id="node6" href="roswtf.html" title="node: roswtf" alt="" coords="150,147,150,127,116,113,68,113,33,127,33,147,68,161,116,161"/>
-</map>

@@ -1,8 +1,0 @@
-<map id="std_srvs" name="std_srvs">
-<area shape="poly" id="node1" href="gazebo_msgs.html" title="node: gazebo_msgs" alt="" coords="323,39,323,19,262,5,176,5,115,19,115,39,176,53,262,53"/>
-<area shape="poly" id="node2" href="std_srvs.html" title="node: std_srvs" alt="" coords="624,147,624,127,582,113,523,113,481,127,481,147,523,161,582,161"/>
-<area shape="poly" id="node6" href="message_runtime.html" title="node: message_runtime" alt="" coords="940,147,940,127,861,113,750,113,672,127,672,147,750,161,861,161"/>
-<area shape="poly" id="node3" href="gazebo_ros.html" title="node: gazebo_ros" alt="" coords="309,111,309,91,256,77,182,77,129,91,129,111,182,125,256,125"/>
-<area shape="poly" id="node4" href="nexus_4wd_mecanum_gazebo.html" title="node: nexus_4wd_mecanum_gazebo" alt="" coords="433,183,433,163,308,149,131,149,5,163,5,183,131,197,308,197"/>
-<area shape="poly" id="node5" href="rosbag.html" title="node: rosbag" alt="" coords="280,255,280,235,244,221,194,221,158,235,158,255,194,269,244,269"/>
-</map>

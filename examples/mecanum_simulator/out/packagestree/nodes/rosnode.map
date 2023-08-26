@@ -1,6 +1,0 @@
-<map id="rosnode" name="rosnode">
-<area shape="poly" id="node1" href="rosnode.html" title="node: rosnode" alt="" coords="308,75,308,55,268,41,210,41,170,55,170,75,210,89,268,89"/>
-<area shape="poly" id="node2" href="rosgraph.html" title="node: rosgraph" alt="" coords="508,39,508,19,464,5,401,5,356,19,356,39,401,53,464,53"/>
-<area shape="poly" id="node3" href="rostopic.html" title="node: rostopic" alt="" coords="502,111,502,91,461,77,404,77,363,91,363,111,404,125,461,125"/>
-<area shape="poly" id="node4" href="roswtf.html" title="node: roswtf" alt="" coords="122,75,122,55,88,41,39,41,5,55,5,75,39,89,88,89"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="rostest" name="rostest">
-<area shape="poly" id="node1" href="actionlib.html" title="node: actionlib" alt="" coords="152,183,152,163,109,149,48,149,5,163,5,183,48,197,109,197"/>
-<area shape="poly" id="node2" href="rostest.html" title="node: rostest" alt="" coords="325,183,325,163,289,149,236,149,200,163,200,183,236,197,289,197"/>
-<area shape="poly" id="node3" href="rosgraph.html" title="node: rosgraph" alt="" coords="533,39,533,19,488,5,425,5,381,19,381,39,425,53,488,53"/>
-<area shape="poly" id="node4" href="roslaunch.html" title="node: roslaunch" alt="" coords="537,111,537,91,490,77,423,77,376,91,376,111,423,125,490,125"/>
-<area shape="poly" id="node5" href="rosmaster.html" title="node: rosmaster" alt="" coords="540,183,540,163,491,149,422,149,373,163,373,183,422,197,491,197"/>
-<area shape="poly" id="node6" href="rospy.html" title="node: rospy" alt="" coords="509,255,509,235,479,221,435,221,404,235,404,255,435,269,479,269"/>
-<area shape="poly" id="node7" href="rosunit.html" title="node: rosunit" alt="" coords="521,327,521,307,483,293,430,293,393,307,393,327,430,341,483,341"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="catkin" name="catkin">
-<area shape="poly" id="node1" href="genmsg.html" title="node: genmsg" alt="" coords="144,39,144,19,104,5,47,5,7,19,7,39,47,53,104,53"/>
-<area shape="poly" id="node2" href="catkin.html" title="node: catkin" alt="" coords="307,147,307,127,274,113,227,113,194,127,194,147,227,161,274,161"/>
-<area shape="poly" id="node3" href="rosbuild.html" title="node: rosbuild" alt="" coords="146,111,146,91,105,77,47,77,5,91,5,111,47,125,105,125"/>
-<area shape="poly" id="node4" href="roslib.html" title="node: roslib" alt="" coords="129,183,129,163,98,149,54,149,22,163,22,183,54,197,98,197"/>
-<area shape="poly" id="node5" href="rosmsg.html" title="node: rosmsg" alt="" coords="140,255,140,235,102,221,49,221,11,235,11,255,49,269,102,269"/>
-</map>
