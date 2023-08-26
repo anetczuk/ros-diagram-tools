@@ -32,8 +32,10 @@ mkdir -p $INFO_DIR
 echo "Dumping data to $INFO_DIR"
 
 
+## dump list of workspace local packages
 catkin list -u > "$INFO_DIR/packages.txt"
 
+## dump packages and it's direct dependencies
 catkin list --deps > "$INFO_DIR/list.txt"
 
 echo -e "\nDone.\n"
