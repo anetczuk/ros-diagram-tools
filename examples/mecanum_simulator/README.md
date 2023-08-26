@@ -4,17 +4,20 @@
 Project is published on GPL-3.0 license.
 
 
-
 ## Generation
 
 Dumping required data is done by script `dump.sh`. Script have to be run from environment with installed *ROS*.
 Script `generate.sh` generates diagrams and views from duped data.
 
 
+## `codedistribution` over `dumpclocdir` dump
 
-## `codedistribution`
+[![code distribution chart](out/codedistribution_src-small.png "code distribution chart")](out/codedistribution_src.png)
 
-[![code distribution chart](out/codedistribution-small.png "code distribution chart")](out/codedistribution.png)
+
+## `codedistribution` over `dumpclocpack` dump
+
+[![code distribution chart](out/general/clockpackview/graph-small.png "code distribution chart")](out/general/clockpackview/graph.png)
 
 
 ## `packagetree` over `dumpcatkindeps` dump
@@ -36,11 +39,11 @@ Generated package graph view:
 
 Generated diagram:
 
-[![runtime packages tree](out/packagestree/full_graph-small.png "runtime packages tree")](out/packagestree/full_graph.png)
+[![runtime packages tree](out/general/packageview/full_graph-small.png "runtime packages tree")](out/general/packageview/full_graph.png)
 
 Generated main graph view:
 
-[![main graph view](out/packagestree/main-page-small.png "main graph view")](out/packagestree/main-page.png)
+[![main graph view](out/general/packageview-main-page-small.png "main graph view")](out/general/packageview-main-page.png)
 
 
 ## `buildtime`
@@ -103,19 +106,19 @@ Generated full diagram:
 
 Generated main graph view:
 
-[![main graph view](out/nodetree/main-page-small.png "main graph view")](out/nodetree/main-page.png)
+[![main graph view](out/general/nodeview-main-page-small.png "main graph view")](out/general/nodeview-main-page.png)
 
 Generated node graph view:
 
-[![node graph view](out/nodetree/node-page-small.png "node graph view")](out/nodetree/node-page.png)
+[![node graph view](out/general/nodeview-node-page-small.png "node graph view")](out/general/nodeview-node-page.png)
 
 Generated topic graph view:
 
-[![topic graph view](out/nodetree/topic-page-small.png "topic graph view")](out/nodetree/topic-page.png)
+[![topic graph view](out/general/nodeview-topic-page-small.png "topic graph view")](out/general/nodeview-topic-page.png)
 
 Generated service graph view:
 
-[![service graph view](out/nodetree/service-page-small.png "service graph view")](out/nodetree/service-page.png)
+[![service graph view](out/general/nodeview-service-page-small.png "service graph view")](out/general/nodeview-service-page.png)
 
 
 ## `rostopicgraph`
