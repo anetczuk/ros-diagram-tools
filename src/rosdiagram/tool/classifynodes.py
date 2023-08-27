@@ -95,7 +95,7 @@ def process_arguments( args ):
         logging.getLogger().setLevel( logging.INFO )
 
     pack_nodes_dict = classify_nodes( args.packdumppath, args.launchdumppath )
-    
+
     if args.outfile:
         # content = str( pack_nodes_dict )
         content = json.dumps( pack_nodes_dict, indent=4 )

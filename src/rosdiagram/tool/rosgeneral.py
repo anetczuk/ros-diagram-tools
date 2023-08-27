@@ -92,7 +92,7 @@ def process_arguments( args ):
         cloc_data_dict = codedistribution.read_cloc_data( clocdumpdir=clocpacks_info_dir, filteritemspath=args.pkgsfilterlist )
         cloc_graph = codedistribution.generate_graph( cloc_data_dict )
         cloc_graph.writePNG( clocpacks_out_file )
-        
+
         index_items_list.append( ("code distribution graph", clocpacks_out_file ) )
 
     if os.path.isfile( params_info_file ):
@@ -103,7 +103,7 @@ def process_arguments( args ):
             params_dict = yaml.safe_load( content_file )
 
         rosparamlist.generate_pages(params_dict, params_out_dir)
-        
+
         params_out_file = os.path.join(params_out_dir, "main_page.html")
         index_items_list.append( ("parameters view", params_out_file ) )
 
@@ -114,7 +114,7 @@ def process_arguments( args ):
         top_packages_list = read_list(args.pkgsfilterlist)
 
         packages_dict = packagetree.read_pack_data( packs_info_dir )
-        
+
         config_params_dict = {  "top_list": top_packages_list,
                                 "highlight_list": top_packages_list,
                                 "nodes_classification": nodes_classify_dict,
@@ -122,7 +122,7 @@ def process_arguments( args ):
                                 "paint_function": None
                                 }
         packagetree.generate_pages( packages_dict, packages_out_dir, config_params_dict )
-        
+
         packages_out_file = os.path.join(packages_out_dir, "full_graph.html")
         index_items_list.append( ("packages view", packages_out_file ) )
 

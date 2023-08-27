@@ -78,7 +78,7 @@ def flatten_dict( d, parent=""):
         if isinstance(v, dict):
             ret_sublist = flatten_dict( v, flat_key )
             ret_list.extend( ret_sublist )
-        else:            
+        else:
             ret_list.append( (flat_key, v) )
     return ret_list
 

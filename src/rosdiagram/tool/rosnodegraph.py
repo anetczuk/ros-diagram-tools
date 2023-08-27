@@ -500,7 +500,7 @@ def process_arguments( args, paint_function=None ):
     services_dump_dir = args.servicesdumppath
     srvs_dump_dir = args.srvsdumppath
     nodes_classify_file = args.classifynodesfile
-    
+
     nodes_dict, labels_dict = read_nodes_data(args.nodesdumppath, args.includerosinternals)
 
     if args.outraw or args.outpng:
