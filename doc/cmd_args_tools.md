@@ -1,7 +1,7 @@
 ## <a name="main_help"></a> rosdiagramtools.py --help
 ```
 usage: rosdiagramtools.py [-h] [-la] [--listtools]
-                          {codedistribution,packagetree,classifynodes,buildtime,rosparamlist,rosnodegraph,rostopicgraph,rosindex,rosgeneral,rosbagflow,rosverify}
+                          {codedistribution,packagetree,classifynodes,buildtime,maketime,rosparamlist,rosnodegraph,rostopicgraph,rosindex,rosgeneral,rosbagflow,rosverify}
                           ...
 
 ROS diagram tools
@@ -14,12 +14,13 @@ optional arguments:
 subcommands:
   use one of tools
 
-  {codedistribution,packagetree,classifynodes,buildtime,rosparamlist,rosnodegraph,rostopicgraph,rosindex,rosgeneral,rosbagflow,rosverify}
+  {codedistribution,packagetree,classifynodes,buildtime,maketime,rosparamlist,rosnodegraph,rostopicgraph,rosindex,rosgeneral,rosbagflow,rosverify}
                         one of tools
     codedistribution    source code distribution over packages
     packagetree         packages graph
     classifynodes       match nodes to packages
     buildtime           catkin build time
+    maketime            objects compilation time based on make output
     rosparamlist        rosparam parameters list
     rosnodegraph        rosnode connection graph
     rostopicgraph       rostopic connection graph
@@ -143,6 +144,23 @@ optional arguments:
                         step.
   --outhtml             Output HTML
   --outdir OUTDIR       Output HTML
+```
+
+
+
+## <a name="maketime_help"></a> rosdiagramtools.py maketime --help
+```
+usage: rosdiagramtools.py maketime [-h] [-la] --compilelogfile COMPILELOGFILE
+                                   [--outfile OUTFILE]
+
+objects compilation time based on make output
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -la, --logall         Log all messages
+  --compilelogfile COMPILELOGFILE
+                        Path to make compile log file
+  --outfile OUTFILE     Path to output file
 ```
 
 

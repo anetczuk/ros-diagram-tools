@@ -16,6 +16,7 @@ from rosdiagram.tool import codedistribution
 from rosdiagram.tool import packagetree
 from rosdiagram.tool import classifynodes
 from rosdiagram.tool import buildtime
+from rosdiagram.tool import maketime
 from rosdiagram.tool import rosparamlist
 from rosdiagram.tool import rosnodegraph
 from rosdiagram.tool import rostopicgraph
@@ -64,6 +65,12 @@ def main():
     subparser = subparsers.add_parser('buildtime', help='catkin build time')
     subparser.set_defaults( func=buildtime.process_arguments )
     buildtime.configure_parser( subparser )
+
+    ## =================================================
+
+    subparser = subparsers.add_parser('maketime', help='objects compilation time based on make output')
+    subparser.set_defaults( func=maketime.process_arguments )
+    maketime.configure_parser( subparser )
 
     ## =================================================
 

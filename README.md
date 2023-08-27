@@ -96,7 +96,7 @@ List of tools:
 
 Tool presents distribution of code in source subdirectories.
 
-Execution: `./src/rosdiagramtools.py codedistribution --help`
+Help: `./src/rosdiagramtools.py codedistribution --help`
 
 Help [output](doc/cmd_args_tools.md#codedistribution_help).
 
@@ -107,7 +107,7 @@ Help [output](doc/cmd_args_tools.md#codedistribution_help).
 
 Show workspace packages in form of dependency tree. Graph presents package build dependencies defined in *package.xml*.
 
-Execution: `./src/rosdiagramtools.py packagetree --help`
+Help: `./src/rosdiagramtools.py packagetree --help`
 
 Help [output](doc/cmd_args_tools.md#packagetree_help).
 
@@ -119,7 +119,7 @@ Help [output](doc/cmd_args_tools.md#packagetree_help).
 Tool tries to match ROS nodes (given by `rosnode` command) to source packages where nodes are implemented. Result is presented in form 
 of text file.
 
-Execution: `./src/rosdiagramtools.py classifynodes --help`
+Help: `./src/rosdiagramtools.py classifynodes --help`
 
 Help [output](doc/cmd_args_tools.md#classifynodes_help).
 
@@ -130,7 +130,7 @@ Output example: [mecanum_simulator](examples/mecanum_simulator#classifynodes)
 
 Presents build time and order of packages in workspace.
 
-Execution: `./src/rosdiagramtools.py buildtime --help`
+Help: `./src/rosdiagramtools.py buildtime --help`
 
 Help [output](doc/cmd_args_tools.md#classifynodes_help).
 
@@ -153,11 +153,26 @@ More real-life example with full view is presented on folowing image:
 [![turtlebot3 build time view](examples/turtlebot3/out/catkinschedule/main-page-small.png "turtlebot3 build time view")](examples/turtlebot3/out/catkinschedule/main-page.png)
 
 
+### `rosdiagramtools.py maketime`
+
+Calculate compilation time of objects under `make`. Calculation is done by analyzing log file. The log have to be obtained 
+running following command:
+```
+make -j1 <optional_targets> | ts '[%H:%M:%.S] > compile_log.txt'
+```
+
+Tool output is presented in form of sorted list cntaining object name and it's compilation time.
+
+Help: `./src/rosdiagramtools.py maketime --help`
+
+Help [output](doc/cmd_args_tools.md#maketime_help).
+
+
 ### `rosdiagramtools.py rosverify`
 
 Script detects packages overlay in given workspace and extended workspaces.
 
-Execution: `./src/rosdiagramtools.py rosverify --help`
+Help: `./src/rosdiagramtools.py rosverify --help`
 
 Help [output](doc/cmd_args_tools.md#rosverify_help).
 
@@ -173,7 +188,7 @@ INFO:rosdiagram.tool.rosverify:workspace overlay packages: []
 
 Presents dependecy of *ROS* nodes, topics and services in form of data flow graph.
 
-Execution: `./src/rosdiagramtools.py rosnodegraph --help`
+Help: `./src/rosdiagramtools.py rosnodegraph --help`
 
 Help [output](doc/cmd_args_tools.md#rosnodegraph_help).
 
@@ -198,7 +213,7 @@ Example of service graph view:
 
 Present dependecy of *ROS* nodes and topics in form of dependency graph.
 
-Execution: `./src/rosdiagramtools.py rostopicgraph --help`
+Help: `./src/rosdiagramtools.py rostopicgraph --help`
 
 Help [output](doc/cmd_args_tools.md#rostopicgraph_help).
 
@@ -211,7 +226,7 @@ Note: tool is considered deprecated, so please use `rosnodegraph` tool.
 
 Generates simple index page containing links to any content.
 
-Execution: `./src/rosdiagramtools.py rosindex --help`
+Help: `./src/rosdiagramtools.py rosindex --help`
 
 Help [output](doc/cmd_args_tools.md#rosindex_help).
 
@@ -228,7 +243,7 @@ Those diagrams are:
 - packages tree (`packagetree`)
 - nodes graph (`rosnodegraph`)
 
-Execution: `./src/rosdiagramtools.py rosgeneral --help`
+Help: `./src/rosdiagramtools.py rosgeneral --help`
 
 Help [output](doc/cmd_args_tools.md#rosgeneral_help).
 
@@ -239,7 +254,7 @@ Help [output](doc/cmd_args_tools.md#rosgeneral_help).
 
 Presents visualisation of *ROS* bag in form of sequence graph.
 
-Execution: `./src/rosdiagramtools.py rosbagflow --help`
+Help: `./src/rosdiagramtools.py rosbagflow --help`
 
 [![ROS bag sequence graph](doc/turtlesim_rosbag-small.png "ROS bag sequence graph")](doc/turtlesim_rosbag.png)
 
