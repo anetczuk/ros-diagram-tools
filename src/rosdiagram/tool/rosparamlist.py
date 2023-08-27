@@ -9,9 +9,9 @@ import os
 import logging
 
 import argparse
+import html
 import json
 import yaml
-import html
 
 from showgraph.io import prepare_filesystem_name, write_file
 
@@ -50,7 +50,7 @@ def generate_pages( params_dict, out_dir ):
         write_file( data_fullpath, str(value) )
 
         value_str = ""
-        if isinstance( value, list ) or isinstance( value, dict ):
+        if isinstance( value, (dict, list) ):
             # try to dump by JSON
             value_str = json.dumps( value, indent=4 )
         else:
@@ -86,7 +86,7 @@ def flatten_dict( d, parent=""):
 def find_nth_index( haystack, needle, n ):
     start = haystack.find(needle)
     while start >= 0 and n > 1:
-        start = haystack.find(needle, start+1)
+        start = haystack.find(needle, start + 1)
         n -= 1
     return start
 

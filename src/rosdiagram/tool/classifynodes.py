@@ -47,12 +47,12 @@ def classify_nodes( packdumppath, launchdumppath ):
     pack_list = read_pack( packdumppath )
     if len(pack_list) < 1:
         _LOGGER.warning( "no data found in %s", packdumppath )
-        return
+        return None
 
     launch_dict = read_launch( launchdumppath )
     if len(launch_dict) < 1:
         _LOGGER.warning( "no data found in %s", launchdumppath )
-        return
+        return None
 
     pack_nodes_dict = {}
     for pack in pack_list:
@@ -95,6 +95,8 @@ def process_arguments( args ):
         logging.getLogger().setLevel( logging.INFO )
 
     pack_nodes_dict = classify_nodes( args.packdumppath, args.launchdumppath )
+    if not pack_nodes_dict:
+        return
 
     if args.outfile:
         # content = str( pack_nodes_dict )

@@ -7,9 +7,9 @@
 
 import unittest
 
-from rosdiagram.tool.rosindex import configure_parser
-
 import argparse
+
+from rosdiagram.tool.rosindex import configure_parser
 
 
 class ROSIndexTest(unittest.TestCase):

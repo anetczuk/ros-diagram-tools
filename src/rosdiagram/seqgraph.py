@@ -27,6 +27,8 @@ class NotesContainer():
 
     @unique
     class NoteType(Enum):
+        """Type of note."""
+
         INFO  = "INFO"
         ERROR = "ERROR"
 

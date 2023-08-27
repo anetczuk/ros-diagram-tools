@@ -21,11 +21,14 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 
 
 def read_services( service_dir ):
-    """ Returns dict with following structure:
-        { "<service_id>": {                   ## service id
-                            "type": str,      ## service type
-                           }
-          }
+    """
+    Read services from dump directory.
+
+    Return dict with following structure:
+    { "<service_id>": {                   ## service id
+                        "type": str,      ## service type
+                       }
+      }
     """
     if not service_dir:
         return None

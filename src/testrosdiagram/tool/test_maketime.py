@@ -31,6 +31,10 @@ class MaketimeTest(unittest.TestCase):
         content = get_after( "fffaaa", "bbb")
         self.assertEqual( None, content )
 
-    def test_get_after_regex(self):
+    def test_get_after_regex001(self):
         content = get_after( "fffaaaccc", "a+")
         self.assertEqual( "ccc", content )
+
+    def test_get_after_regex002(self):
+        content = get_after( "fff aaa ccc", r"fff \S+ c")
+        self.assertEqual( "cc", content )

@@ -62,8 +62,7 @@ def generate_graph( nodes_dict, labels_dict=None, show_services=True, full_graph
 
 
 def generate_full_graph( nodes_dict, labels_dict=None, services_as_labels=True, services_as_nodes=False ) -> Graph:
-    """ Generate graph with services represented as separate graph nodes. """
-
+    """Generate graph with services represented as separate graph nodes."""
     if labels_dict is None:
         labels_dict = {}
     dot_graph = Graph()
@@ -120,8 +119,7 @@ def generate_full_graph( nodes_dict, labels_dict=None, services_as_labels=True, 
 
 
 def generate_compact_graph( nodes_dict, show_services=True, labels_dict=None ) -> Graph:
-    """ Generate graph with services represented as number inside node. """
-
+    """Generate graph with services represented as number inside node."""
     if labels_dict is None:
         labels_dict = {}
     dot_graph = Graph()
@@ -204,7 +202,7 @@ def generate_graph_data( nodes_dict,
         graph.writePNG( output_png_file )
 
 
-def generate_node_pages( nodes_output_dir,
+def generate_node_pages( nodes_output_dir,                                      # pylint: disable=R0913
                          nodes_dict,
                          node_label_dict,
                          nodes_classify_dict,
@@ -237,7 +235,7 @@ def generate_node_pages( nodes_output_dir,
                     )
 
 
-def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=None,
+def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=None,             # pylint: disable=R0913
                     topics_dump_dir=None, msgs_dump_dir=None, services_dump_dir=None, srvs_dump_dir=None,
                     nodes_classify_dict=None,
                     paint_function=None, main_full_graph=False
@@ -294,7 +292,7 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=No
 
 
 ## returns dict: { <item_id>: <item_data_dict> }
-def generate_subpages( sub_output_dir, nodes_dict,
+def generate_subpages( sub_output_dir, nodes_dict,                                        # pylint: disable=R0913,R0914
                        topics_dump_dir, msgs_dump_dir, services_dump_dir, srvs_dump_dir,
                        nodes_classify_dict,
                        nodes_labels, nodes_description, main_page_link, paint_function=None ):
@@ -510,7 +508,7 @@ def process_arguments( args, paint_function=None ):
                              paint_function=paint_function,
                              output_dot_file=args.outraw,
                              output_png_file=args.outpng
-                              )
+                             )
 
     ##
     ## generate HTML data

@@ -67,7 +67,7 @@ def read_compile_log( log_path ):
 
         line_time = get_build_timestamp( line )
 
-        object_name = get_after( line, "Building \S+ object " )
+        object_name = get_after( line, r"Building \S+ object " )
         if object_name:
             build_log.addObjectStart(object_name, line_time)
             continue
@@ -82,7 +82,7 @@ def read_compile_log( log_path ):
             build_log.addTargetFinish(target_name, line_time)
             continue
 
-        _LOGGER.warning(f"unknown entry: {line}")
+        _LOGGER.warning("unknown entry: %s", line)
 
     return build_log.object_queue
 

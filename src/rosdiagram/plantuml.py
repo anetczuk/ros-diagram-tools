@@ -29,8 +29,7 @@ BG_COLORS_LIST = read_list( BG_COLORS_PATH )
 
 
 def generate_diagram( diagram_data: DiagramData, out_path ):
-    """ Generate PlantUML diagram and store to file. """
-
+    """Generate PlantUML diagram and store to file."""
     params   = diagram_data.params
     genrator = SequenceDiagramGenerator( diagram_data, params )
     genrator.generate( out_path )

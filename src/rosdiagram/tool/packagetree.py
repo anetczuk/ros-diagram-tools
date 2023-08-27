@@ -80,7 +80,7 @@ def read_pack_data( pack_dump_dir ):
         deps_list = read_list( pack_data_path )
         pack_dict[ package_name ] = {"path": package_path,
                                      "deps": deps_list              # dependencies of package
-                                    }
+                                     }
     return pack_dict
 
 
@@ -206,7 +206,7 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
 
 
 ## returns dict: { <item_id>: <item_data_dict> }
-def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link,
+def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link,               # pylint: disable=R0913
                        highlight_list=None, nodes_classification=None, nodes_description=None,
                        top_list=None, paint_function=None ):
     if highlight_list is None:

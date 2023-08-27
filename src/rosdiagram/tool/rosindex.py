@@ -50,7 +50,8 @@ def configure_parser( parser ):
     parser.add_argument( '--paramsview', action='store', required=False, default="", help="Path to params view" )
     parser.add_argument( '--nodesview', action='store', required=False, default="", help="Path to nodes view" )
     parser.add_argument( '--topicsview', action='store', required=False, default="", help="Path to topics view" )
-    parser.add_argument( '--customlist', action='store', required=False, default="", nargs='*', help="Space-separated list of titles and links" )
+    parser.add_argument( '--customlist', action='store', required=False, default="", nargs='*',
+                         help="Space-separated list of titles and links" )
     parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 
 
@@ -77,7 +78,7 @@ def process_arguments( args ):
         for index in range(1, view_len, 2):
             title = customlist[ index - 1 ]
             link  = customlist[ index ]
-            items_list.append( (title,link) )
+            items_list.append( (title, link) )
         if view_len % 2 == 1:
             items_list.append( (customlist[-1], "") )
 

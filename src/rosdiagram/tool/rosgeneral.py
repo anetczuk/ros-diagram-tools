@@ -33,13 +33,16 @@ DATA_SUBDIR = "data"
 def configure_parser( parser ):
     parser.description = 'index of diagrams'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
-    parser.add_argument( '--dumprootdir', action='store', required=False, default="", help="Path directory with standard dump directories" )
+    parser.add_argument( '--dumprootdir', action='store', required=False, default="",
+                         help="Path directory with standard dump directories" )
     parser.add_argument( '--launchdumppath', action='store', required=False, default="",
                          help="Path fo directory containing dumped 'roslaunch' output" )
     parser.add_argument( '--classifynodesfile', action='store', required=False, default="",
                          help="Nodes classification input file" )
-    parser.add_argument( '--descriptionjsonfile', action='store', required=False, default="", help="Path to JSON file with items description" )
-    parser.add_argument( '--pkgsfilterlist', action='store', required=False, default="", help="PAth to file with list of packages to filter" )
+    parser.add_argument( '--descriptionjsonfile', action='store', required=False, default="",
+                         help="Path to JSON file with items description" )
+    parser.add_argument( '--pkgsfilterlist', action='store', required=False, default="",
+                         help="PAth to file with list of packages to filter" )
     parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 
 
@@ -89,7 +92,8 @@ def process_arguments( args ):
         os.makedirs( clocpacks_out_dir, exist_ok=True )
         clocpacks_out_file = os.path.join(clocpacks_out_dir, "graph.png")
 
-        cloc_data_dict = codedistribution.read_cloc_data( clocdumpdir=clocpacks_info_dir, filteritemspath=args.pkgsfilterlist )
+        cloc_data_dict = codedistribution.read_cloc_data( clocdumpdir=clocpacks_info_dir,
+                                                          filteritemspath=args.pkgsfilterlist )
         cloc_graph = codedistribution.generate_graph( cloc_data_dict )
         cloc_graph.writePNG( clocpacks_out_file )
 

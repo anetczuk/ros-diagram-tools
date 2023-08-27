@@ -27,13 +27,15 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 
 
 def read_topics( topic_dir ):
-    """ Returns dict with following structure:
-        { "<topic_id>": {                   ## topic id
-                          "type": str,      ## topic type
-                          "pubs": [],       ## list of publishers of topic
-                          "subs": []        ## list of subscribers of topic
-                         }
-          }
+    """Read topics dump directory.
+
+    Returns dict with following structure:
+    { "<topic_id>": {                   ## topic id
+                      "type": str,      ## topic type
+                      "pubs": [],       ## list of publishers of topic
+                      "subs": []        ## list of subscribers of topic
+                     }
+      }
     """
     if not topic_dir:
         return None
@@ -66,9 +68,11 @@ def read_content( deps_file=None ):
 
 
 def parse_content( content ):
-    """ Returns dict: { type: topic_type
-                        pubs: publishers_list
-                        subs: subscribers_list }
+    """Parse topic dump content.
+
+    Returns dict: { type: topic_type
+                    pubs: publishers_list
+                    subs: subscribers_list }
     """
     publishers  = []
     subscribers = []
