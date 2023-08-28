@@ -46,6 +46,10 @@ class BuildLog:
         self._curr_object_name = None
         self._curr_object_time = None
 
+    def addObject(self, name, start_time, end_time):
+        self.addObjectStart( name, start_time )
+        self.addObjectEnd( end_time )
+
     def addLinkingStart(self, start_time):
         self.addObjectEnd(start_time)
 
@@ -62,10 +66,17 @@ def read_compile_log( log_path ):
 
     build_log = BuildLog()
 
+    first_time = None
+    last_time = None
+
     for line in content.splitlines():
         line = line.strip()
 
         line_time = get_build_timestamp( line )
+        if line_time:
+            if not first_time:
+                first_time = line_time
+            last_time = line_time
 
         object_name = get_after( line, r"Building \S+ object " )
         if object_name:
@@ -83,6 +94,8 @@ def read_compile_log( log_path ):
             continue
 
         _LOGGER.warning("unknown entry: %s", line)
+
+    build_log.addObject( "make_time", first_time, last_time )
 
     return build_log.object_queue
 
