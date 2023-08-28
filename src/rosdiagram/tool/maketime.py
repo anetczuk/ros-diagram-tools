@@ -156,9 +156,11 @@ def process_arguments( args ):
     compile_list.sort( key=lambda item: item[1], reverse=True )
     # pprint.pprint( compile_list, width=999 )
 
+    content = json.dumps( compile_list, indent=4 )
     if args.outfile:
-        content = json.dumps( compile_list, indent=4 )
         write_file( args.outfile, content )
+    else:
+        print( content )
 
 
 def main():
