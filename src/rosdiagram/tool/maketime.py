@@ -140,7 +140,7 @@ def configure_parser( parser ):
     parser.description = 'objects compilation time based on make output'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
-    parser.add_argument( '--compilelogfile', action='store', required=True,
+    parser.add_argument( '-clf', '--compilelogfile', action='store', required=True,
                          help="Path to make compile log file" )
     parser.add_argument( '--outfile', action='store', required=False, default="", help="Path to output file" )
 
