@@ -78,7 +78,7 @@ ${DATA_DICT.get('graph_map', '')}$>
 
 #!
 #! nodes_list = DATA_DICT.get('nodes_list', [])
-${ tmpl_utils.ros_link_table( nodes_list, "ROS nodes" ) }$>
+${ ros_nodes_table( nodes_list ) }$>
 #!
 #! topics_list = DATA_DICT.get('topics_list', [])
 ${ tmpl_utils.ros_link_table( topics_list, "ROS topics" ) }$>
@@ -90,4 +90,31 @@ ${ tmpl_utils.ros_link_table( services_list, "ROS services" ) }$>
 ${ footer.print() }
 </body>
 </html>
+#end template
+
+
+#* ======================================================================================
+
+
+#template ros_nodes_table( items_list )
+#{ if items_list:
+    <div class="bottom_content">
+        <table>
+            <tr>
+                <th>ROS nodes (${ len(items_list) }):</th>
+                <th>Package:</th>
+                <th>Description:</th>
+            </tr>
+#{     for item_data in items_list:
+            <tr>
+                <td>${ tmpl_utils.ros_link( item_data[0], item_data[1] ) }</td>
+                <td>${ item_data[2] }</td>
+                <td>${ item_data[3] if len(item_data) > 3 else "" }</td>
+            </tr>
+#}
+        </table>
+        <br />
+    </div>
+
+#}
 #end template

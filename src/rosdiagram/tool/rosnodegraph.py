@@ -274,10 +274,10 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=No
     services_desc = nodes_description.get( "service", None )
 
     ## generate main page
-    all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
+    all_nodes, all_topics, all_services = split_to_groups( nodes_dict )     # get lists of identifiers
 
-    nodes_data_list    = convert_links_list( all_nodes, subpages_dict, OUTPUT_NODES_REL_DIR,
-                                             nodes_labels, nodes_description=nodes_desc )
+    nodes_data_list    = convert_nodes_links_list( all_nodes, subpages_dict, OUTPUT_NODES_REL_DIR,
+                                                   nodes_labels, nodes_description=nodes_desc )
     topics_data_list   = convert_links_list( all_topics, subpages_dict, OUTPUT_NODES_REL_DIR,
                                              nodes_labels, nodes_description=topics_desc )
     services_data_list = convert_links_list( all_services, subpages_dict, OUTPUT_NODES_REL_DIR,
@@ -381,6 +381,27 @@ def generate_subpages( sub_output_dir, nodes_dict,                              
             generate_from_template( sub_output_dir, item_dict, template_name=template )
 
     return subpages_dict
+
+
+def convert_nodes_links_list( items_lists, sub_items_dict, link_subdir, labels_dict=None, nodes_description=None ):
+    if labels_dict is None:
+        labels_dict = {}
+    if nodes_description is None:
+        nodes_description = {}
+    converted_list = []
+    for item_id in items_lists:
+        label = labels_dict.get( item_id, item_id )
+        description = nodes_description.get( label, None )
+        item_data = sub_items_dict.get( item_id, {} )
+        is_subpage = True if item_data else False
+        item_link = prepare_item_link( item_id, label, is_subpage, link_subdir )
+        if item_data:
+            pkg_name = item_data.get("pkg_name", "")
+            item_link = ( *item_link, pkg_name )
+        if description:
+            item_link = ( *item_link, description )
+        converted_list.append( item_link )
+    return converted_list
 
 
 def get_topic_subpages( topics_subpages_dict, nodes_dict, topics_dict, msgs_dump_dir ):
