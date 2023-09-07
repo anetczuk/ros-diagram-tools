@@ -263,21 +263,28 @@ Message: <code>{code_title}</code><br/>
 
 
 def filter_ros_nodes_dict( nodes_dict ):
+    removed_list = set()
     for node_name, lists in nodes_dict.copy().items():
         if is_ros_internal_node( node_name ):
             del nodes_dict[ node_name ]
+            removed_list.add(node_name)
             continue
 
         pubs_list = lists[ "pubs" ]
         subs_list = lists[ "subs" ]
 
         for topic_data in pubs_list.copy():
-            if is_ros_internal_topic( topic_data[0] ):
+            topic_name = topic_data[0]
+            if is_ros_internal_topic( topic_name ):
                 pubs_list.remove( topic_data )
+                removed_list.add(topic_name)
 
         for topic_data in subs_list.copy():
-            if is_ros_internal_topic( topic_data[0] ):
+            topic_name = topic_data[0]
+            if is_ros_internal_topic( topic_name ):
                 subs_list.remove( topic_data )
+                removed_list.add(topic_name)
+    return removed_list
 
 
 def filter_nodes( nodes_dict, names_list ):

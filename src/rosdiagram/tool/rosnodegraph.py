@@ -171,7 +171,8 @@ def generate_compact_graph( nodes_dict, show_services=True, labels_dict=None ) -
 def read_nodes_data(nodes_dump_dir, include_ros_internals: bool = False):
     nodes_dict = read_nodes( nodes_dump_dir )
     if not include_ros_internals:
-        filter_ros_nodes_dict( nodes_dict )
+        removed_items = filter_ros_nodes_dict( nodes_dict )
+        _LOGGER.info("ignored ROS elements: %s", " ".join(removed_items))
     labels_dict = fix_names( nodes_dict )
     # info_dict  = get_node_info_dict( nodes_dict, labels_dict, msgs_dump_dir, srvs_dump_dir )
     return (nodes_dict, labels_dict)
@@ -248,6 +249,7 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=No
     OUTPUT_NODES_REL_DIR = os.path.join( "nodes" )
     main_graph_name = "full_graph"
 
+    _LOGGER.info( "generating main graph" )
     ## generate main page graph
     main_graph: Graph = generate_graph( nodes_dict, labels_dict=nodes_labels,
                                         full_graph=main_full_graph, paint_function=paint_function )
@@ -261,6 +263,7 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=No
     item_filename  = prepare_filesystem_name( main_graph_name )
     main_page_link = os.path.join( os.pardir, item_filename + ".html" )
 
+    _LOGGER.info( "generating subpages" )
     subpages_dict = generate_subpages( sub_output_dir, nodes_dict,
                                        topics_dump_dir, msgs_dump_dir, services_dump_dir, srvs_dump_dir,
                                        nodes_classify_dict,
@@ -280,6 +283,7 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=No
     services_data_list = convert_links_list( all_services, subpages_dict, OUTPUT_NODES_REL_DIR,
                                              nodes_labels, nodes_description=services_desc )
 
+    _LOGGER.info( "generating main page" )
     main_dict = {   "style": {},
                     "graph": main_graph,
                     "graph_label": nodes_labels.get( main_graph_name, main_graph_name ),
@@ -306,6 +310,7 @@ def generate_subpages( sub_output_dir, nodes_dict,                              
     if services_dict is None:
         services_dict = get_services_dict( nodes_dict, nodes_labels )
 
+    _LOGGER.info( "generating item dicts" )
     all_nodes, all_topics, all_services = split_to_groups( nodes_dict )
 
     nodes_subpages_dict    = get_items_dict( nodes_dict, all_nodes, nodes_labels, 1,
@@ -315,6 +320,7 @@ def generate_subpages( sub_output_dir, nodes_dict,                              
     services_subpages_dict = get_items_dict( nodes_dict, all_services, nodes_labels, 0,
                                              paint_function=paint_function )
 
+    _LOGGER.info( "generating item subpages" )
     for _, node_data in nodes_subpages_dict.items():
         node_data[ "template_name" ] = "rosnodegraph/nodegraph_node.html"
 
@@ -333,13 +339,15 @@ def generate_subpages( sub_output_dir, nodes_dict,                              
 
     ## transform classification data
     pkgs_classify_dict = {}
-    for pkg_id, pkg_data in nodes_classify_dict.items():
-        pkg_path = pkg_data.get( "path", "" )
-        pkg_nodes = pkg_data.get( "nodes", [] )
-        for node_id in pkg_nodes:
-            classify_data = pkgs_classify_dict.setdefault( f"n_{node_id}", {} )
-            classify_data[ "package" ] = pkg_id
-            classify_data[ "path" ] = pkg_path
+    if nodes_classify_dict:
+        _LOGGER.info( "classifying nodes to packages" )
+        for pkg_id, pkg_data in nodes_classify_dict.items():
+            pkg_path = pkg_data.get( "path", "" )
+            pkg_nodes = pkg_data.get( "nodes", [] )
+            for node_id in pkg_nodes:
+                classify_data = pkgs_classify_dict.setdefault( f"n_{node_id}", {} )
+                classify_data[ "package" ] = pkg_id
+                classify_data[ "path" ] = pkg_path
 
     for item_id, item_dict in subpages_dict.items():
         item_graph = item_dict.get( "graph" )

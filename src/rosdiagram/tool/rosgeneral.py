@@ -42,7 +42,8 @@ def configure_parser( parser ):
     parser.add_argument( '--descriptionjsonfile', action='store', required=False, default="",
                          help="Path to JSON file with items description" )
     parser.add_argument( '--pkgsfilterlist', action='store', required=False, default="",
-                         help="PAth to file with list of packages to filter" )
+                         help="Path to file with list of packages to filter" )
+    parser.add_argument( '-iri', '--includerosinternals', action='store_true', help="Include ROS internal items like /rosout and /record_*" )
     parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 
 
@@ -133,7 +134,7 @@ def process_arguments( args ):
     if os.path.isdir( nodes_info_dir ):
         _LOGGER.info( "generating rosnodegraph output" )
         nodes_out_dir = os.path.join(args.outdir, "nodeview")
-        nodes_dict, node_label_dict = rosnodegraph.read_nodes_data(nodes_info_dir, include_ros_internals=True)
+        nodes_dict, node_label_dict = rosnodegraph.read_nodes_data(nodes_info_dir, include_ros_internals=args.includerosinternals)
         rosnodegraph.generate_node_pages( nodes_out_dir,
                                           nodes_dict,
                                           node_label_dict,

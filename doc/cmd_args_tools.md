@@ -150,7 +150,7 @@ optional arguments:
 
 ## <a name="maketime_help"></a> rosdiagramtools.py maketime --help
 ```
-usage: rosdiagramtools.py maketime [-h] [-la] --compilelogfile COMPILELOGFILE
+usage: rosdiagramtools.py maketime [-h] [-la] -clf COMPILELOGFILE
                                    [--outfile OUTFILE]
 
 objects compilation time based on make output
@@ -158,7 +158,7 @@ objects compilation time based on make output
 optional arguments:
   -h, --help            show this help message and exit
   -la, --logall         Log all messages
-  --compilelogfile COMPILELOGFILE
+  -clf COMPILELOGFILE, --compilelogfile COMPILELOGFILE
                         Path to make compile log file
   --outfile OUTFILE     Path to output file
 ```
@@ -286,7 +286,7 @@ usage: rosdiagramtools.py rosgeneral [-h] [-la] [--dumprootdir DUMPROOTDIR]
                                      [--launchdumppath LAUNCHDUMPPATH]
                                      [--classifynodesfile CLASSIFYNODESFILE]
                                      [--descriptionjsonfile DESCRIPTIONJSONFILE]
-                                     [--pkgsfilterlist PKGSFILTERLIST]
+                                     [--pkgsfilterlist PKGSFILTERLIST] [-iri]
                                      [--outdir OUTDIR]
 
 index of diagrams
@@ -303,7 +303,9 @@ optional arguments:
   --descriptionjsonfile DESCRIPTIONJSONFILE
                         Path to JSON file with items description
   --pkgsfilterlist PKGSFILTERLIST
-                        PAth to file with list of packages to filter
+                        Path to file with list of packages to filter
+  -iri, --includerosinternals
+                        Include ROS internal items like /rosout and /record_*
   --outdir OUTDIR       Output HTML
 ```
 
