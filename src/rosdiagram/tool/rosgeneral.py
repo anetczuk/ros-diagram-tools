@@ -91,13 +91,15 @@ def process_arguments( args ):
         _LOGGER.info( "generating codedistribution output" )
         clocpacks_out_dir = os.path.join(args.outdir, "clockpackview")
         os.makedirs( clocpacks_out_dir, exist_ok=True )
-        clocpacks_out_file = os.path.join(clocpacks_out_dir, "graph.png")
 
         cloc_data_dict = codedistribution.read_cloc_data( clocdumpdir=clocpacks_info_dir,
                                                           filteritemspath=args.pkgsfilterlist )
-        cloc_graph = codedistribution.generate_graph( cloc_data_dict )
-        cloc_graph.writePNG( clocpacks_out_file )
+        # clocpacks_out_file = os.path.join(clocpacks_out_dir, "graph.png")
+        # cloc_graph = codedistribution.generate_graph( cloc_data_dict )
+        # cloc_graph.writePNG( clocpacks_out_file )
+        codedistribution.generate_pages( cloc_data_dict, None, clocpacks_out_dir )
 
+        clocpacks_out_file = os.path.join(clocpacks_out_dir, "full_graph.html")
         index_items_list.append( ("code distribution graph", clocpacks_out_file ) )
 
     if os.path.isfile( params_info_file ):

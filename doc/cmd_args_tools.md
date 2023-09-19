@@ -41,6 +41,7 @@ usage: rosdiagramtools.py codedistribution [-h] [-la]
                                            [--filteritems FILTERITEMS]
                                            [--highlight HIGHLIGHT]
                                            [--outraw OUTRAW] [--outpng OUTPNG]
+                                           [--outdir OUTDIR]
 
 Source code distribution over packages. Tool can be feed with JSON or with
 path to output of dumpclocpack tool.
@@ -58,6 +59,7 @@ optional arguments:
                         List with items to highlight
   --outraw OUTRAW       Graph RAW output
   --outpng OUTPNG       Graph PNG output
+  --outdir OUTDIR       Output HTML
 ```
 
 

@@ -11,11 +11,13 @@ import logging
 import math
 import json
 import argparse
+import shutil
 
 from showgraph.graphviz import Graph, set_nodes_style
 from showgraph.io import read_list, prepare_filesystem_name
 
 from rosdiagram.clocparser import parse_cloc_file
+from rosdiagram.graphviztohtml import generate_from_template
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -67,7 +69,7 @@ def read_dir_data( dump_path ):
             _LOGGER.warning( "unable to parse: %s", node_item_path )
             continue
         pkg_name = os.path.basename( item )
-        cloc_dict[ pkg_name ] = total_lines
+        cloc_dict[ pkg_name ] = (total_lines, node_item_path)
     return cloc_dict
 
 
@@ -81,15 +83,22 @@ def generate_graph( cloc_dict ):
     base_graph.set_type( 'digraph' )
 #     base_graph.set_rankdir( 'LR' )
 
-    max_val = -1
+    lines_dict = {}
     for key, val in cloc_dict.items():
+        if isinstance( val, tuple ):
+            lines_dict[key] = val[0]
+        else:
+            lines_dict[key] = val
+
+    max_val = -1
+    for key, val in lines_dict.items():
         max_val = max( max_val, val )
     if max_val < 1:
         return dot_graph
 
     MAX_SIZE  = 8
     width_dict = {}
-    for key, val in cloc_dict.items():
+    for key, val in lines_dict.items():
         #### make circles areas proportional
         ## val / max = PI*r^2 / PI*R^2
         ## val / max = r^2 / R^2
@@ -104,7 +113,7 @@ def generate_graph( cloc_dict ):
         width_dict[ key ] = new_val
 
     ## generate main graph
-    for name, lines_num in cloc_dict.items():
+    for name, lines_num in lines_dict.items():
         node  = dot_graph.addNode( name, shape="circle" )
         node.set( "label", f"{name}\n{lines_num}" )
         #node  = dot_graph.addNode( f"{name}\n{lines_num}", shape="circle" )
@@ -114,6 +123,47 @@ def generate_graph( cloc_dict ):
         node.set( "color", "gray" )
 
     return dot_graph
+
+
+def generate_pages( data_dict, cloc_graph, out_dir ):
+    os.makedirs( out_dir, exist_ok=True )
+
+    if cloc_graph is None:
+        cloc_graph = generate_graph( data_dict )
+    if cloc_graph is None:
+        _LOGGER.error( "unable to generate pages -- no graph" )
+        return
+
+    main_graph_name = "full_graph"
+    cloc_graph.setName( main_graph_name )
+
+    out_data_dir = os.path.join( out_dir, "data" )
+    os.makedirs( out_data_dir, exist_ok=True )
+
+    packages_list = []
+    for name, item_data in data_dict.items():
+        if not isinstance( item_data, tuple ):
+            packages_list.append( (name, None, item_data) )
+            continue
+
+        colc_info_path = item_data[1]
+        cloc_info_file = os.path.basename(colc_info_path)
+        out_cloc_path = os.path.join( out_data_dir, cloc_info_file )
+        shutil.copyfile(colc_info_path, out_cloc_path)
+        out_cloc_path = os.path.join( out_data_dir, cloc_info_file )
+        
+        cloc_data_path = os.path.join( "data", cloc_info_file )
+        packages_list.append( (name, cloc_data_path, item_data[0]) )
+
+    packages_list = sorted( packages_list, key=lambda x: x[0] )
+
+    main_dict = {   "style": {},
+                    "graph": cloc_graph,
+                    "graph_label": main_graph_name,
+                    "packages": packages_list
+                    }
+    template = "cloc.html"
+    generate_from_template( out_dir, main_dict, template_name=template )
 
 
 def paint_nodes( graph: Graph, paint_list ):
@@ -146,6 +196,7 @@ def configure_parser( parser ):
                          help="List with items to highlight" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
+    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 #     parser.add_argument( '--filter', action='store', required=False, default="",
 #                          help="Filter packages with items in file" )
 
@@ -170,6 +221,13 @@ def process_arguments( args ):
             graph.writeRAW( args.outraw )
         if len( args.outpng ) > 0:
             graph.writePNG( args.outpng )
+
+    ##
+    ## generate HTML data
+    ##
+    if args.outdir:
+        _LOGGER.info( "generating HTML graph" )
+        generate_pages( data_dict, graph, args.outdir )
 
 
 def main():
