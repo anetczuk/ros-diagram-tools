@@ -25,7 +25,8 @@ OUT_ROOT_DIR="$WORK_DIR/out"
 echo "generating codedistribution"
 OUT_DIR="$OUT_ROOT_DIR"
 mkdir -p $OUT_DIR
-$TOOL_PATH/rosdiagramtools.py codedistribution --clocdumpdir "$DUMP_DIR/clocdir" --outpng "$OUT_DIR/codedistribution_src.png"
+$TOOL_PATH/rosdiagramtools.py codedistribution --clocdumpdir "$DUMP_DIR/clocdir" \
+                                               --outpng "$OUT_DIR/codedistribution/outgraph.png" --outdir "$OUT_DIR/codedistribution"
 
 
 echo "generating classifynodes"
@@ -84,7 +85,7 @@ $TOOL_PATH/rosdiagramtools.py rostopicgraph --topicsdumppath $DUMP_DIR/topicinfo
 echo "running index"
 INDEX_OUT_DIR="$OUT_ROOT_DIR/index"
 mkdir -p $INDEX_OUT_DIR
-$TOOL_PATH/rosdiagramtools.py rosindex --customlist "src code distribution" $OUT_DIR/codedistribution_src.png \
+$TOOL_PATH/rosdiagramtools.py rosindex --customlist "src code distribution" $OUT_DIR/codedistribution/full_graph.html \
                                                     "catkin pkg tree" $CATKIN_PKG_OUT_DIR/full_graph.html \
                                                     "catkin build" $BUILD_OUT_DIR/full_graph.html \
                                                     "nodes classify" $CLASSIFY_NODES_OUT_FILE \

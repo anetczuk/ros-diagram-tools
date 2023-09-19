@@ -12,7 +12,7 @@ Script `generate.sh` generates diagrams and views from duped data.
 
 ## `codedistribution` over `dumpclocdir` dump
 
-[![code distribution chart](out/codedistribution_src-small.png "code distribution chart")](out/codedistribution_src.png)
+[![code distribution chart](out/codedistribution/full_graph-small.png "code distribution chart")](out/codedistribution/full_graph.png)
 
 
 ## `codedistribution` over `dumpclocpack` dump
