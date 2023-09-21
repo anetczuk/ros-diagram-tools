@@ -1,0 +1,19 @@
+{
+    ## description of packages
+    "package": { "gazebo_dev":  "Gazebo package",
+                 "gazebo_msgs": "Gazebo package",
+                 "gazebo_ros":  "Gazebo package"
+               },
+
+    ## description of nodes
+    "node": { "/gazebo": "Gazebo node"
+            },
+
+    ## description of topics
+    "topic": { "/odom": "topic with odometry"
+             },
+
+    ## description of services
+    "service": { "/rosout/get_loggers": "returns ROS loggers"
+               }
+}
