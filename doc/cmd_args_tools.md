@@ -288,8 +288,9 @@ usage: rosdiagramtools.py rosgeneral [-h] [-la] [--dumprootdir DUMPROOTDIR]
                                      [--launchdumppath LAUNCHDUMPPATH]
                                      [--classifynodesfile CLASSIFYNODESFILE]
                                      [--descriptionjsonfile DESCRIPTIONJSONFILE]
-                                     [--pkgsfilterlist PKGSFILTERLIST] [-iri]
-                                     [--outdir OUTDIR]
+                                     [--pkgsfilterlist PKGSFILTERLIST]
+                                     [--highlightnodeslist HIGHLIGHTNODESLIST]
+                                     [-iri] [--outdir OUTDIR]
 
 index of diagrams
 
@@ -305,7 +306,10 @@ optional arguments:
   --descriptionjsonfile DESCRIPTIONJSONFILE
                         Path to JSON file with items description
   --pkgsfilterlist PKGSFILTERLIST
-                        Path to file with list of packages to filter
+                        Path to file with list of packages to filter (other
+                        packages will be excluded)
+  --highlightnodeslist HIGHLIGHTNODESLIST
+                        Path to file with list of nodes to highlight
   -iri, --includerosinternals
                         Include ROS internal items like /rosout and /record_*
   --outdir OUTDIR       Output HTML

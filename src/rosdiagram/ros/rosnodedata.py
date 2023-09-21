@@ -173,13 +173,18 @@ def create_topics_dict( nodes_dict ):
     return topics_dict
 
 
+NODE_PREFIX = "n_"
+TOPIC_PREFIX = "t_"
+SERVICE_PREFIX = "s_"
+
+
 ## it happens that topic and node has the same name, so it has to be prefixed
 def fix_names( nodes_dict ):
     label_dict = {}
     all_nodes = list( nodes_dict.keys() )
 
     for node in all_nodes:
-        item_id = "n_" + node
+        item_id = NODE_PREFIX + node
         nodes_dict[ item_id ] = nodes_dict.pop( node )
         label_dict[ item_id ] = node
 
@@ -190,21 +195,21 @@ def fix_names( nodes_dict ):
 
         for topic_pair in pubs_list.copy():
             topic = topic_pair[0]
-            item_id = "t_" + topic
+            item_id = TOPIC_PREFIX + topic
             pubs_list.append( (item_id, topic_pair[1]) )
             pubs_list.remove( topic_pair )
             label_dict[ item_id ] = topic
 
         for topic_pair in subs_list.copy():
             topic = topic_pair[0]
-            item_id = "t_" + topic
+            item_id = TOPIC_PREFIX + topic
             subs_list.append( (item_id, topic_pair[1]) )
             subs_list.remove( topic_pair )
             label_dict[ item_id ] = topic
 
         for service_pair in servs_list.copy():
             service = service_pair[0]
-            item_id = "s_" + service
+            item_id = SERVICE_PREFIX + service
             servs_list.append( (item_id, service_pair[1]) )
             servs_list.remove( service_pair )
             label_dict[ item_id ] = service

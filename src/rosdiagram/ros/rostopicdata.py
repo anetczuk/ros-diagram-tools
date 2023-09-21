@@ -172,13 +172,17 @@ def filter_ros_topics_dict( topics_dict ):
                 subs_list.remove( node_name )
 
 
+NODE_PREFIX = "n_"
+TOPIC_PREFIX = "t_"
+
+
 ## it happens that topic and node has the same name, so it has to be prefixed
 def fix_names( topics_dict ):
     label_dict = {}
     all_topics = list( topics_dict.keys() )
 
     for topic in all_topics:
-        item_id = "t_" + topic
+        item_id = TOPIC_PREFIX + topic
         topics_dict[ item_id ] = topics_dict.pop( topic )
         label_dict[ item_id ] = topic
 
@@ -187,13 +191,13 @@ def fix_names( topics_dict ):
         subs_list  = lists[ "subs" ]
 
         for node in pubs_list.copy():
-            item_id = "n_" + node
+            item_id = NODE_PREFIX + node
             pubs_list.append( item_id )
             pubs_list.remove( node )
             label_dict[ item_id ] = node
 
         for node in subs_list.copy():
-            item_id = "n_" + node
+            item_id = NODE_PREFIX + node
             subs_list.append( item_id )
             subs_list.remove( node )
             label_dict[ item_id ] = node

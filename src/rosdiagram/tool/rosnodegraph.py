@@ -22,7 +22,7 @@ from rosdiagram.ros.rosnodedata import get_topics, get_services,\
     get_names_from_list, create_topics_dict, fix_names, split_to_groups,\
     get_services_info, filter_nodes, filter_topics,\
     get_services_from_dict, read_nodes, get_topics_info, filter_ros_nodes_dict,\
-    get_topics_dict, get_services_dict
+    get_topics_dict, get_services_dict, NODE_PREFIX, TOPIC_PREFIX, SERVICE_PREFIX
 from rosdiagram.graphviztohtml import generate_from_template, set_node_graph_ranks,\
     DEFAULT_ACTIVE_NODE_STYLE, prepare_item_link, set_node_html_attribs, convert_links_list
 from rosdiagram.ros.rostopicdata import read_topics, filter_ros_topics_dict
@@ -218,7 +218,12 @@ def generate_node_pages( nodes_output_dir,                                      
 
     highlight_list = None
     if highlight_list_file:
-        highlight_list = read_list( highlight_list_file )
+        raw_list = read_list( highlight_list_file )
+        highlight_list = []
+        for item in raw_list:
+            highlight_list.append( NODE_PREFIX + item )
+            highlight_list.append( TOPIC_PREFIX + item )
+            highlight_list.append( SERVICE_PREFIX + item )
 
     _LOGGER.info( "generating HTML graph" )
     os.makedirs( nodes_output_dir, exist_ok=True )
@@ -295,6 +300,9 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=No
     generate_from_template( out_dir, main_dict, template_name=template )
 
 
+NODE_PREFIX = "n_"
+
+
 ## returns dict: { <item_id>: <item_data_dict> }
 def generate_subpages( sub_output_dir, nodes_dict,                                        # pylint: disable=R0913,R0914
                        topics_dump_dir, msgs_dump_dir, services_dump_dir, srvs_dump_dir,
@@ -345,7 +353,7 @@ def generate_subpages( sub_output_dir, nodes_dict,                              
             pkg_path = pkg_data.get( "path", "" )
             pkg_nodes = pkg_data.get( "nodes", [] )
             for node_id in pkg_nodes:
-                classify_data = pkgs_classify_dict.setdefault( f"n_{node_id}", {} )
+                classify_data = pkgs_classify_dict.setdefault( f"{NODE_PREFIX}{node_id}", {} )
                 classify_data[ "package" ] = pkg_id
                 classify_data[ "path" ] = pkg_path
 

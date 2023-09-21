@@ -103,6 +103,7 @@ $TOOL_PATH/rosdiagramtools.py rosgeneral --dumprootdir $DUMP_DIR \
                                          --classifynodesfile $CLASSIFY_NODES_OUT_FILE \
                                          --pkgsfilterlist $DUMP_DIR/catkindeps/packages.txt \
                                          --includerosinternals \
+                                         --highlightnodeslist $SCRIPT_DIR/highlightnodes.txt \
                                          --outdir $GENERAL_OUT_DIR
 
 cutycapt --url=file://$GENERAL_OUT_DIR/main_page.html --out=$GENERAL_OUT_DIR/main-page.png

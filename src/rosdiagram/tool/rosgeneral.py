@@ -42,7 +42,9 @@ def configure_parser( parser ):
     parser.add_argument( '--descriptionjsonfile', action='store', required=False, default="",
                          help="Path to JSON file with items description" )
     parser.add_argument( '--pkgsfilterlist', action='store', required=False, default="",
-                         help="Path to file with list of packages to filter" )
+                         help="Path to file with list of packages to filter (other packages will be excluded)" )
+    parser.add_argument( '--highlightnodeslist', action='store', required=False, default="",
+                         help="Path to file with list of nodes to highlight" )
     parser.add_argument( '-iri', '--includerosinternals', action='store_true', help="Include ROS internal items like /rosout and /record_*" )
     parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 
@@ -145,10 +147,10 @@ def process_arguments( args ):
                                           msgs_dump_dir=msgs_info_dir,
                                           services_dump_dir=services_info_dir,
                                           srvs_dump_dir=srv_info_dir,
-                                          description_dict=description_dict
+                                          description_dict=description_dict,
                                           #,
                                           # mainfullgraph=args.mainfullgraph,
-                                          # highlight_list_file=args.highlightitems,
+                                          highlight_list_file=args.highlightnodeslist
                                           # paint_function=None
                                           )
 

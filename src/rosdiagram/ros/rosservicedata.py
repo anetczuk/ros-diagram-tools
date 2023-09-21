@@ -80,13 +80,16 @@ def match_type( line ):
 ## ===================================================================
 
 
+SERVICE_PREFIX = "s_"
+
+
 ## it happens that topic and node has the same name, so it has to be prefixed
 def fix_names( services_dict ):
     label_dict = {}
     all_items = list( services_dict.keys() )
 
     for item in all_items:
-        item_id = "s_" + item
+        item_id = f"{SERVICE_PREFIX}{item}"
         services_dict[ item_id ] = services_dict.pop( item )
         label_dict[ item_id ] = item
 

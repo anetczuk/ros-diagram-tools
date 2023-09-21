@@ -19,23 +19,27 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 ## ===================================================================
 
 
+NODE_PREFIX = "n_"
+TOPIC_PREFIX = "t_"
+
+
 def remove_ros_items( graph: Graph ):
     unquoted_names = graph.getNodeNamesAll()
     for name in unquoted_names:
-        if name in ( "/rosout", "n_/rosout", "t_/rosout" ):
+        if name in ( "/rosout", f"{NODE_PREFIX}/rosout", f"{TOPIC_PREFIX}/rosout" ):
             graph.removeNode( name )
-        if name.startswith( "/rostopic_" ) or name.startswith( "n_/rostopic_" ):
+        if name.startswith( "/rostopic_" ) or name.startswith( f"{NODE_PREFIX}/rostopic_" ):
             graph.removeNode( name )
-        if name.startswith( "/record_" ) or name.startswith( "n_/record_" ):
+        if name.startswith( "/record_" ) or name.startswith( f"{NODE_PREFIX}/record_" ):
             graph.removeNode( name )
 
 
 def remove_ros_rec_items( graph: Graph ):
     unquoted_names = graph.getNodeNamesAll()
     for name in unquoted_names:
-        if name.startswith( "/rostopic_" ) or name.startswith( "n_/rostopic_" ):
+        if name.startswith( "/rostopic_" ) or name.startswith( f"{NODE_PREFIX}/rostopic_" ):
             graph.removeNode( name )
-        if name.startswith( "/record_" ) or name.startswith( "n_/record_" ):
+        if name.startswith( "/record_" ) or name.startswith( f"{NODE_PREFIX}/record_" ):
             graph.removeNode( name )
 
 
