@@ -105,6 +105,7 @@ $TOOL_PATH/rosdiagramtools.py rosgeneral --dumprootdir $DUMP_DIR \
                                          --includerosinternals \
                                          --descriptionjsonfile $SCRIPT_DIR/description.json \
                                          --highlightnodeslist $SCRIPT_DIR/highlightnodes.txt \
+                                         --highlightpackageslist $SCRIPT_DIR/highlightpackages.txt \
                                          --outdir $GENERAL_OUT_DIR
 
 cutycapt --url=file://$GENERAL_OUT_DIR/main_page.html --out=$GENERAL_OUT_DIR/main-page.png

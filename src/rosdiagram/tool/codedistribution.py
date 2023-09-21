@@ -125,11 +125,14 @@ def generate_graph( cloc_dict ):
     return dot_graph
 
 
-def generate_pages( data_dict, cloc_graph, out_dir ):
+def generate_pages( data_dict, cloc_graph, out_dir, highlight_list=None ):
     os.makedirs( out_dir, exist_ok=True )
 
     if cloc_graph is None:
         cloc_graph = generate_graph( data_dict )
+        if highlight_list:
+            paint_nodes( cloc_graph, highlight_list )
+
     if cloc_graph is None:
         _LOGGER.error( "unable to generate pages -- no graph" )
         return

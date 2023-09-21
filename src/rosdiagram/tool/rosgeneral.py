@@ -45,6 +45,8 @@ def configure_parser( parser ):
                          help="Path to file with list of packages to filter (other packages will be excluded)" )
     parser.add_argument( '--highlightnodeslist', action='store', required=False, default="",
                          help="Path to file with list of nodes to highlight" )
+    parser.add_argument( '--highlightpackageslist', action='store', required=False, default="",
+                         help="Path to file with list of packages to highlight" )
     parser.add_argument( '-iri', '--includerosinternals', action='store_true', help="Include ROS internal items like /rosout and /record_*" )
     parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 
@@ -96,10 +98,11 @@ def process_arguments( args ):
 
         cloc_data_dict = codedistribution.read_cloc_data( clocdumpdir=clocpacks_info_dir,
                                                           filteritemspath=args.pkgsfilterlist )
+        highlight_list = read_list( args.highlightpackageslist )
         # clocpacks_out_file = os.path.join(clocpacks_out_dir, "graph.png")
         # cloc_graph = codedistribution.generate_graph( cloc_data_dict )
         # cloc_graph.writePNG( clocpacks_out_file )
-        codedistribution.generate_pages( cloc_data_dict, None, clocpacks_out_dir )
+        codedistribution.generate_pages( cloc_data_dict, None, clocpacks_out_dir, highlight_list=highlight_list )
 
         clocpacks_out_file = os.path.join(clocpacks_out_dir, "full_graph.html")
         index_items_list.append( ("code distribution graph", clocpacks_out_file ) )
