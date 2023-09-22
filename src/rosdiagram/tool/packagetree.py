@@ -25,7 +25,10 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 ## ===================================================================
 
 
-def parse_catkin_content( content, build_deps=True ):
+# if 'build_deps' is set to True then use build dependency, otherwise use run dependency
+def parse_catkin_content( catkin_deps_path, build_deps=True ):
+    content = read_file( catkin_deps_path )
+
     deps_dict = {}
 
     package = None
@@ -148,8 +151,7 @@ def paint_nodes( graph: Graph, paint_list ):
 ## generate packages graph
 def generate( catkin_list_file, node_shape="box",
               top_items=None, highlight_items=None, preserve_neighbour_items=None, paint_function=None ):
-    content   = read_file( catkin_list_file )
-    data_dict = parse_catkin_content( content, build_deps=False )
+    data_dict = parse_catkin_content( catkin_list_file, build_deps=False )
     graph     = generate_pkg_graph( data_dict, node_shape,
                                     top_items=top_items, highlight_items=highlight_items,
                                     preserve_neighbour_items=preserve_neighbour_items, paint_function=paint_function )
@@ -167,6 +169,7 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
     nodes_classification = config_params_dict.get( "nodes_classification", {} )
     nodes_description = config_params_dict.get( "nodes_description", {} )
     paint_function    = config_params_dict.get( "paint_function", None )
+    main_title        = config_params_dict.get( "main_title", None )
 
     OUTPUT_NODES_REL_DIR = os.path.join( "nodes" )
     main_graph_name = "full_graph"
@@ -201,6 +204,8 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
                     "graph_label": main_graph_name,
                     "graph_packages": packages_data_list
                     }
+    if main_title is not None:
+        main_dict[ "main_title" ] = main_title
     template = "packagetree.html"
     generate_from_template( out_dir, main_dict, template_name=template )
 
@@ -292,8 +297,7 @@ def process_arguments( args, paint_function=None ):
 
     data_dict = {}
     if args.catkinlistfile:
-        content   = read_file( args.catkinlistfile )
-        data_dict = parse_catkin_content( content, build_deps=False )
+        data_dict = parse_catkin_content( args.catkinlistfile, build_deps=False )
     else:
         data_dict = read_pack_data( args.packdumppath )
 

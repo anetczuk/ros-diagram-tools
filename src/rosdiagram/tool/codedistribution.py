@@ -154,7 +154,7 @@ def generate_pages( data_dict, cloc_graph, out_dir, highlight_list=None ):
         out_cloc_path = os.path.join( out_data_dir, cloc_info_file )
         shutil.copyfile(colc_info_path, out_cloc_path)
         out_cloc_path = os.path.join( out_data_dir, cloc_info_file )
-        
+
         cloc_data_path = os.path.join( "data", cloc_info_file )
         packages_list.append( (name, cloc_data_path, item_data[0]) )
 

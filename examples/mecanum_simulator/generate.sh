@@ -38,7 +38,7 @@ $TOOL_PATH/rosdiagramtools.py classifynodes --packdumppath $DUMP_DIR/packinfo/li
                                             --outfile $CLASSIFY_NODES_OUT_FILE
 
 
-echo "generating packagetree"
+echo "generating catkin deps tree"
 CATKIN_PKG_OUT_DIR="$OUT_ROOT_DIR/catkintree"
 mkdir -p $CATKIN_PKG_OUT_DIR
 $TOOL_PATH/rosdiagramtools.py packagetree --catkinlistfile $DUMP_DIR/catkindeps/list.txt \

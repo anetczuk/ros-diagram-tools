@@ -47,10 +47,12 @@ def configure_parser( parser ):
                          help="Path to file with list of nodes to highlight" )
     parser.add_argument( '--highlightpackageslist', action='store', required=False, default="",
                          help="Path to file with list of packages to highlight" )
-    parser.add_argument( '-iri', '--includerosinternals', action='store_true', help="Include ROS internal items like /rosout and /record_*" )
+    parser.add_argument( '-iri', '--includerosinternals', action='store_true',
+                         help="Include ROS internal items like /rosout and /record_*" )
     parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 
 
+# pylint: disable=R0915
 def process_arguments( args ):
     logging.basicConfig()
     if args.logall is True:
@@ -70,6 +72,7 @@ def process_arguments( args ):
     _LOGGER.info( "generating HTML output" )
 
     clocpacks_info_dir = os.path.join(args.dumprootdir, "clocpackinfo")
+    catkindeps_file = os.path.join(args.dumprootdir, "catkindeps", "list.txt")
     params_info_file = os.path.join(args.dumprootdir, "paraminfo", "params.yml")
     packs_info_dir = os.path.join(args.dumprootdir, "packinfo")
 
@@ -92,7 +95,7 @@ def process_arguments( args ):
     index_items_list = []
 
     if os.path.isdir( clocpacks_info_dir ):
-        _LOGGER.info( "generating codedistribution output" )
+        _LOGGER.info( "\n\ngenerating codedistribution output" )
         clocpacks_out_dir = os.path.join(args.outdir, "clockpackview")
         os.makedirs( clocpacks_out_dir, exist_ok=True )
 
@@ -107,8 +110,49 @@ def process_arguments( args ):
         clocpacks_out_file = os.path.join(clocpacks_out_dir, "full_graph.html")
         index_items_list.append( ("code distribution graph", clocpacks_out_file ) )
 
+    if os.path.isfile( catkindeps_file ):
+        _LOGGER.info( "\n\ngenerating catkin deps tree output" )
+
+        # catkin build tree
+        packages_out_dir = os.path.join(args.outdir, "catkinbuildview")
+
+        top_packages_list = read_list(args.pkgsfilterlist)
+
+        packages_dict = packagetree.parse_catkin_content( catkindeps_file, build_deps=True )
+
+        config_params_dict = {  "main_title": "catkin build dependencies",
+                                "top_list": top_packages_list,
+                                "highlight_list": top_packages_list,
+                                "nodes_classification": nodes_classify_dict,
+                                "nodes_description": description_dict,
+                                "paint_function": None
+                                }
+        packagetree.generate_pages( packages_dict, packages_out_dir, config_params_dict )
+
+        packages_out_file = os.path.join(packages_out_dir, "full_graph.html")
+        index_items_list.append( ("catkin build deps view", packages_out_file ) )
+
+        # catkin run tree
+        packages_out_dir = os.path.join(args.outdir, "catkinrunview")
+
+        top_packages_list = read_list(args.pkgsfilterlist)
+
+        packages_dict = packagetree.parse_catkin_content( catkindeps_file, build_deps=False )
+
+        config_params_dict = {  "main_title": "catkin run dependencies",
+                                "top_list": top_packages_list,
+                                "highlight_list": top_packages_list,
+                                "nodes_classification": nodes_classify_dict,
+                                "nodes_description": description_dict,
+                                "paint_function": None
+                                }
+        packagetree.generate_pages( packages_dict, packages_out_dir, config_params_dict )
+
+        packages_out_file = os.path.join(packages_out_dir, "full_graph.html")
+        index_items_list.append( ("catkin run deps view", packages_out_file ) )
+
     if os.path.isfile( params_info_file ):
-        _LOGGER.info( "generating rosparamlist output" )
+        _LOGGER.info( "\n\ngenerating rosparamlist output" )
         params_out_dir = os.path.join(args.outdir, "paramview")
 
         with open( params_info_file, 'r', encoding='utf-8' ) as content_file:
@@ -120,7 +164,7 @@ def process_arguments( args ):
         index_items_list.append( ("parameters view", params_out_file ) )
 
     if os.path.isdir( packs_info_dir ):
-        _LOGGER.info( "generating packagetree output" )
+        _LOGGER.info( "\n\ngenerating packages tree output" )
         packages_out_dir = os.path.join(args.outdir, "packageview")
 
         top_packages_list = read_list(args.pkgsfilterlist)
@@ -139,9 +183,10 @@ def process_arguments( args ):
         index_items_list.append( ("packages view", packages_out_file ) )
 
     if os.path.isdir( nodes_info_dir ):
-        _LOGGER.info( "generating rosnodegraph output" )
+        _LOGGER.info( "\n\ngenerating rosnodegraph output" )
         nodes_out_dir = os.path.join(args.outdir, "nodeview")
-        nodes_dict, node_label_dict = rosnodegraph.read_nodes_data(nodes_info_dir, include_ros_internals=args.includerosinternals)
+        nodes_dict, node_label_dict = rosnodegraph.read_nodes_data(nodes_info_dir,
+                                                                   include_ros_internals=args.includerosinternals)
         rosnodegraph.generate_node_pages( nodes_out_dir,
                                           nodes_dict,
                                           node_label_dict,

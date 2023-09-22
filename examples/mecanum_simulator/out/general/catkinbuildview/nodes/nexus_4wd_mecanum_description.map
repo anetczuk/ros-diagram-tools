@@ -1,0 +1,5 @@
+<map id="nexus_4wd_mecanum_description" name="nexus_4wd_mecanum_description">
+<area shape="poly" id="node1" href="nexus_4wd_mecanum_description.html" title="node: nexus_4wd_mecanum_description" alt="" coords="489,75,489,55,348,41,147,41,5,55,5,75,147,89,348,89"/>
+<area shape="poly" id="node2" href="robot_state_publisher.html" title="node: robot_state_publisher" alt="" coords="860,39,860,19,765,5,632,5,537,19,537,39,632,53,765,53"/>
+<area shape="poly" id="node3" href="urdf.html" title="node: urdf" alt="" coords="743,111,743,91,717,77,680,77,655,91,655,111,680,125,717,125"/>
+</map>

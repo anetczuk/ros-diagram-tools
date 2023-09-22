@@ -300,9 +300,6 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=No
     generate_from_template( out_dir, main_dict, template_name=template )
 
 
-NODE_PREFIX = "n_"
-
-
 ## returns dict: { <item_id>: <item_data_dict> }
 def generate_subpages( sub_output_dir, nodes_dict,                                        # pylint: disable=R0913,R0914
                        topics_dump_dir, msgs_dump_dir, services_dump_dir, srvs_dump_dir,
@@ -401,7 +398,7 @@ def convert_nodes_links_list( items_lists, sub_items_dict, link_subdir, labels_d
         label = labels_dict.get( item_id, item_id )
         description = nodes_description.get( label, None )
         item_data = sub_items_dict.get( item_id, {} )
-        is_subpage = True if item_data else False
+        is_subpage = bool(item_data)
         item_link = prepare_item_link( item_id, label, is_subpage, link_subdir )
         if item_data:
             pkg_name = item_data.get("pkg_name", "")
