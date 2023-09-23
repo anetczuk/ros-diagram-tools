@@ -28,7 +28,7 @@ ignore_errors=E115,E126,E201,E202,E221,E241,E262,E265,E266,E402,E501,W391,D
 
 
 echo "running pycodestyle"
-pycodestyle --show-source --statistics --count --ignore=$ignore_errors $src_dir
+pycodestyle --show-source --statistics --count --ignore=$ignore_errors $src_dir $SCRIPT_DIR
 exit_code=$?
 
 if [ $exit_code -ne 0 ]; then
@@ -43,7 +43,7 @@ ignore_errors=$ignore_errors,F401
 
 
 echo "running flake8"
-python3 -m flake8 --show-source --statistics --count --ignore=$ignore_errors $src_dir
+python3 -m flake8 --show-source --statistics --count --ignore=$ignore_errors $src_dir $SCRIPT_DIR
 exit_code=$?
 
 if [ $exit_code -ne 0 ]; then
@@ -64,7 +64,7 @@ done
 echo "running pylint3"
 echo "to ignore warning for module put following line on top of file: # pylint: disable=<check_id>"
 echo "to ignore warning for one line put following comment in end of line: # pylint: disable=<check_id>"
-pylint --rcfile=$SCRIPT_DIR/pylint3.config ${modules_paths[@]} $src_dir/*.py
+pylint --rcfile=$SCRIPT_DIR/pylint3.config ${modules_paths[@]} $src_dir/*.py $SCRIPT_DIR/*.py
 exit_code=$?
 if [ $exit_code -ne 0 ]; then
     exit $exit_code

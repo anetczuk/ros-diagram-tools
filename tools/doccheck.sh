@@ -19,7 +19,7 @@ ignore_errors=D100,D101,D102,D103,D104,D105,D107
 
 
 echo "running pydocstyle"
-python3 -m pydocstyle --count --convention=numpy --add-ignore=$ignore_errors $src_dir
+python3 -m pydocstyle --count --convention=numpy --add-ignore=$ignore_errors $src_dir $SCRIPT_DIR
 # pydocstyle --count --ignore=$ignore_errors $src_dir
 exit_code=$?
 

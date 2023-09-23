@@ -9,3 +9,5 @@ src_dir=$SCRIPT_DIR/../src
 
 
 find $src_dir -name "*.py" | xargs sed -i 's/[ \t]*$//'
+
+find $SCRIPT_DIR -name "*.py" | xargs sed -i 's/[ \t]*$//'
