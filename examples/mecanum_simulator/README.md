@@ -17,7 +17,7 @@ Script `generate.sh` generates diagrams and views from duped data.
 
 ## `codedistribution` over `dumpclocpack` dump
 
-[![code distribution chart](out/general/clockpackview/graph-small.png "code distribution chart")](out/general/clockpackview/graph.png)
+[![code distribution chart](out/general/clockpackview/full_graph-small.png "code distribution chart")](out/general/clockpackview/full_graph.png)
 
 
 ## `packagetree` over `dumpcatkindeps` dump
