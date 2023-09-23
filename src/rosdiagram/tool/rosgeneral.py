@@ -49,6 +49,8 @@ def configure_parser( parser ):
                          help="Path to file with list of packages to highlight" )
     parser.add_argument( '-iri', '--includerosinternals', action='store_true',
                          help="Include ROS internal items like /rosout and /record_*" )
+    parser.add_argument( '--customlist', action='store', required=False, default="", nargs='*',
+                         help="Space-separated list of titles and links" )
     parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 
 
@@ -204,6 +206,16 @@ def process_arguments( args ):
 
         nodes_out_file = os.path.join(nodes_out_dir, "full_graph.html")
         index_items_list.append( ("nodes view", nodes_out_file ) )
+
+    if args.customlist:
+        customlist = args.customlist
+        view_len = len(customlist)
+        for index in range(1, view_len, 2):
+            title = customlist[ index - 1 ]
+            link  = customlist[ index ]
+            index_items_list.append( (title, link) )
+        if view_len % 2 == 1:
+            index_items_list.append( (customlist[-1], "") )
 
     if index_items_list:
         rosindex.generate_pages( index_items_list, args.outdir )

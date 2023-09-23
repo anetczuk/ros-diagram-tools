@@ -291,7 +291,9 @@ usage: rosdiagramtools.py rosgeneral [-h] [-la] [--dumprootdir DUMPROOTDIR]
                                      [--pkgsfilterlist PKGSFILTERLIST]
                                      [--highlightnodeslist HIGHLIGHTNODESLIST]
                                      [--highlightpackageslist HIGHLIGHTPACKAGESLIST]
-                                     [-iri] [--outdir OUTDIR]
+                                     [-iri]
+                                     [--customlist [CUSTOMLIST [CUSTOMLIST ...]]]
+                                     [--outdir OUTDIR]
 
 index of diagrams
 
@@ -315,6 +317,8 @@ optional arguments:
                         Path to file with list of packages to highlight
   -iri, --includerosinternals
                         Include ROS internal items like /rosout and /record_*
+  --customlist [CUSTOMLIST [CUSTOMLIST ...]]
+                        Space-separated list of titles and links
   --outdir OUTDIR       Output HTML
 ```
 
