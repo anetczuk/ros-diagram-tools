@@ -11,6 +11,9 @@
 # Script checks for invalid links (a href) or invalid paths (img src) in Markdown files.
 # Script converts md to html and then iterates through links and paths.
 #
+# Dependencies:
+#    pip3 install --user markdown validators
+#
 
 import os
 import sys
