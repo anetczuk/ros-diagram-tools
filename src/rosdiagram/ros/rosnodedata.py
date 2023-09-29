@@ -47,8 +47,8 @@ def read_nodes( nodes_dir ):
     nodes_dict = {}
     nodes_path = os.path.join( nodes_dir, "list.txt" )
     _LOGGER.debug( "reading nodes list file: %s", nodes_path )
-    topics_list = read_list( nodes_path )
-    for item in topics_list:
+    nodes_list = read_list( nodes_path )
+    for item in nodes_list:
         node_filename = prepare_filesystem_name( item )
         node_item_path = os.path.join( nodes_dir, node_filename + ".txt" )
         content   = get_node_info( node_item_path )

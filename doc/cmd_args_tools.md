@@ -1,7 +1,7 @@
 ## <a name="main_help"></a> rosdiagramtools.py --help
 ```
 usage: rosdiagramtools.py [-h] [-la] [--listtools]
-                          {codedistribution,packagetree,classifynodes,buildtime,maketime,rosparamlist,rosnodegraph,rostopicgraph,rosindex,rosgeneral,rosbagflow,rosverify}
+                          {codedistribution,packagetree,classifynodes,buildtime,maketime,rosparamlist,rosmsglist,rosnodegraph,rostopicgraph,rosindex,rosgeneral,rosbagflow,rosverify}
                           ...
 
 ROS diagram tools
@@ -14,7 +14,7 @@ optional arguments:
 subcommands:
   use one of tools
 
-  {codedistribution,packagetree,classifynodes,buildtime,maketime,rosparamlist,rosnodegraph,rostopicgraph,rosindex,rosgeneral,rosbagflow,rosverify}
+  {codedistribution,packagetree,classifynodes,buildtime,maketime,rosparamlist,rosmsglist,rosnodegraph,rostopicgraph,rosindex,rosgeneral,rosbagflow,rosverify}
                         one of tools
     codedistribution    source code distribution over packages
     packagetree         packages graph
@@ -22,6 +22,7 @@ subcommands:
     buildtime           catkin build time
     maketime            objects compilation time based on make output
     rosparamlist        rosparam parameters list
+    rosmsglist          rosmsg and rossrv messages list
     rosnodegraph        rosnode connection graph
     rostopicgraph       rostopic connection graph
     rosindex            index of diagrams
@@ -184,13 +185,33 @@ optional arguments:
 
 
 
+## <a name="rosmsglist_help"></a> rosdiagramtools.py rosmsglist --help
+```
+usage: rosdiagramtools.py rosmsglist [-h] [-la] [--msgsdumppath MSGSDUMPPATH]
+                                     [--srvsdumppath SRVSDUMPPATH]
+                                     [--outdir OUTDIR]
+
+rosmsg and rossrv messages list
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -la, --logall         Log all messages
+  --msgsdumppath MSGSDUMPPATH
+                        Path to directory containing dumped 'rosmsg' output
+  --srvsdumppath SRVSDUMPPATH
+                        Path to directory containing dumped 'rossrv' output
+  --outdir OUTDIR       Output HTML
+```
+
+
+
 ## <a name="rosnodegraph_help"></a> rosdiagramtools.py rosnodegraph --help
 ```
 usage: rosdiagramtools.py rosnodegraph [-h] [-la]
                                        [--nodesdumppath NODESDUMPPATH]
                                        [--topicsdumppath TOPICSDUMPPATH]
-                                       [--msgsdumppath MSGSDUMPPATH]
                                        [--servicesdumppath SERVICESDUMPPATH]
+                                       [--msgsdumppath MSGSDUMPPATH]
                                        [--srvsdumppath SRVSDUMPPATH]
                                        [--classifynodesfile CLASSIFYNODESFILE]
                                        [--highlightitems HIGHLIGHTITEMS]
@@ -208,11 +229,11 @@ optional arguments:
                         Path to directory containing dumped 'rosnode' output
   --topicsdumppath TOPICSDUMPPATH
                         Path to directory containing dumped 'rostopic' output
-  --msgsdumppath MSGSDUMPPATH
-                        Path to directory containing dumped 'rosmsg' output
   --servicesdumppath SERVICESDUMPPATH
                         Path to directory containing dumped 'rosservice'
                         output
+  --msgsdumppath MSGSDUMPPATH
+                        Path to directory containing dumped 'rosmsg' output
   --srvsdumppath SRVSDUMPPATH
                         Path to directory containing dumped 'rossrv' output
   --classifynodesfile CLASSIFYNODESFILE

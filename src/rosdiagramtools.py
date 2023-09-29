@@ -18,6 +18,7 @@ from rosdiagram.tool import classifynodes
 from rosdiagram.tool import buildtime
 from rosdiagram.tool import maketime
 from rosdiagram.tool import rosparamlist
+from rosdiagram.tool import rosmsglist
 from rosdiagram.tool import rosnodegraph
 from rosdiagram.tool import rostopicgraph
 from rosdiagram.tool import rosindex
@@ -77,6 +78,12 @@ def main():
     subparser = subparsers.add_parser('rosparamlist', help='rosparam parameters list')
     subparser.set_defaults( func=rosparamlist.process_arguments )
     rosparamlist.configure_parser( subparser )
+
+    ## =================================================
+
+    subparser = subparsers.add_parser('rosmsglist', help='rosmsg and rossrv messages list')
+    subparser.set_defaults( func=rosmsglist.process_arguments )
+    rosmsglist.configure_parser( subparser )
 
     ## =================================================
 

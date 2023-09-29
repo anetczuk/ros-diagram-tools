@@ -501,10 +501,10 @@ def configure_parser( parser ):
                          help="Path to directory containing dumped 'rosnode' output" )
     parser.add_argument( '--topicsdumppath', action='store', required=False, default="",
                          help="Path to directory containing dumped 'rostopic' output" )
-    parser.add_argument( '--msgsdumppath', action='store', required=False, default="",
-                         help="Path to directory containing dumped 'rosmsg' output" )
     parser.add_argument( '--servicesdumppath', action='store', required=False, default="",
                          help="Path to directory containing dumped 'rosservice' output" )
+    parser.add_argument( '--msgsdumppath', action='store', required=False, default="",
+                         help="Path to directory containing dumped 'rosmsg' output" )
     parser.add_argument( '--srvsdumppath', action='store', required=False, default="",
                          help="Path to directory containing dumped 'rossrv' output" )
     parser.add_argument( '--classifynodesfile', action='store', required=False, default="",
@@ -528,8 +528,8 @@ def process_arguments( args, paint_function=None ):
 
     nodes_output_dir = args.outdir
     topics_dump_dir = args.topicsdumppath
-    msgs_dump_dir = args.msgsdumppath
     services_dump_dir = args.servicesdumppath
+    msgs_dump_dir = args.msgsdumppath
     srvs_dump_dir = args.srvsdumppath
     nodes_classify_file = args.classifynodesfile
 

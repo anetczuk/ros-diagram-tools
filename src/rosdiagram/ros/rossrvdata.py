@@ -8,7 +8,7 @@
 import os
 import logging
 
-from showgraph.io import prepare_filesystem_name, read_file
+from showgraph.io import prepare_filesystem_name, read_file, read_list
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -28,3 +28,16 @@ def read_srv( srvs_dump_dir, srv_type ):
         return None
     item_content = read_file( item_path )
     return item_content
+
+
+def read_srv_dir( srvs_dump_dir ):
+    if not srvs_dump_dir:
+        return None
+    srvs_dict = {}
+    srvs_list_path = os.path.join( srvs_dump_dir, "list.txt" )
+    _LOGGER.debug( "reading services list file: %s", srvs_list_path )
+    srvs_list = read_list( srvs_list_path )
+    for item in srvs_list:
+        content = read_srv( srvs_dump_dir, item )
+        srvs_dict[ item ] = content
+    return srvs_dict

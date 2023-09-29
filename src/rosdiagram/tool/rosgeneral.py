@@ -16,6 +16,7 @@ from rosdiagram.tool import classifynodes
 from rosdiagram.tool import codedistribution
 from rosdiagram.tool import rosparamlist
 from rosdiagram.tool import packagetree
+from rosdiagram.tool import rosmsglist
 from rosdiagram.tool import rosnodegraph
 from rosdiagram.tool import rosindex
 
@@ -54,7 +55,7 @@ def configure_parser( parser ):
     parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
 
 
-# pylint: disable=R0915
+# pylint: disable=R0914,R0915
 def process_arguments( args ):
     logging.basicConfig()
     if args.logall is True:
@@ -153,18 +154,6 @@ def process_arguments( args ):
         packages_out_file = os.path.join(packages_out_dir, "full_graph.html")
         index_items_list.append( ("catkin run deps view", packages_out_file ) )
 
-    if os.path.isfile( params_info_file ):
-        _LOGGER.info( "\n\ngenerating rosparamlist output" )
-        params_out_dir = os.path.join(args.outdir, "paramview")
-
-        with open( params_info_file, 'r', encoding='utf-8' ) as content_file:
-            params_dict = yaml.safe_load( content_file )
-
-        rosparamlist.generate_pages(params_dict, params_out_dir)
-
-        params_out_file = os.path.join(params_out_dir, "main_page.html")
-        index_items_list.append( ("parameters view", params_out_file ) )
-
     if os.path.isdir( packs_info_dir ):
         _LOGGER.info( "\n\ngenerating packages tree output" )
         packages_out_dir = os.path.join(args.outdir, "packageview")
@@ -183,6 +172,25 @@ def process_arguments( args ):
 
         packages_out_file = os.path.join(packages_out_dir, "full_graph.html")
         index_items_list.append( ("packages view", packages_out_file ) )
+
+    if os.path.isfile( params_info_file ):
+        _LOGGER.info( "\n\ngenerating rosparamlist output" )
+        params_out_dir = os.path.join(args.outdir, "paramview")
+
+        with open( params_info_file, 'r', encoding='utf-8' ) as content_file:
+            params_dict = yaml.safe_load( content_file )
+
+        rosparamlist.generate_pages(params_dict, params_out_dir)
+
+        params_out_file = os.path.join(params_out_dir, "main_page.html")
+        index_items_list.append( ("parameters view", params_out_file ) )
+
+    if os.path.isdir( msgs_info_dir ) or os.path.isdir( srv_info_dir ):
+        _LOGGER.info( "\n\ngenerating rosmsgview output" )
+        msg_out_dir = os.path.join(args.outdir, "msgview")
+        rosmsglist.generate( msgs_info_dir, srv_info_dir, msg_out_dir )
+        msg_out_file = os.path.join(msg_out_dir, "main_page.html")
+        index_items_list.append( ("messages view", msg_out_file ) )
 
     if os.path.isdir( nodes_info_dir ):
         _LOGGER.info( "\n\ngenerating rosnodegraph output" )
