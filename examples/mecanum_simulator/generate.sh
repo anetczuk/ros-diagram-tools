@@ -111,6 +111,7 @@ $TOOL_PATH/rosdiagramtools.py rosgeneral --dumprootdir $DUMP_DIR \
 
 cutycapt --url=file://$GENERAL_OUT_DIR/main_page.html --out=$GENERAL_OUT_DIR/main-page.png
 cutycapt --url=file://$GENERAL_OUT_DIR/paramview/main_page.html --out=$GENERAL_OUT_DIR/paramview-page.png
+cutycapt --url=file://$GENERAL_OUT_DIR/msgview/main_page.html --out=$GENERAL_OUT_DIR/msgview-page.png
 cutycapt --url=file://$GENERAL_OUT_DIR/nodeview/full_graph.html --out=$GENERAL_OUT_DIR/nodeview-main-page.png
 cutycapt --url=file://$GENERAL_OUT_DIR/nodeview/nodes/n__gazebo.html --out=$GENERAL_OUT_DIR/nodeview-node-page.png
 cutycapt --url=file://$GENERAL_OUT_DIR/nodeview/nodes/t__clock.html --out=$GENERAL_OUT_DIR/nodeview-topic-page.png
