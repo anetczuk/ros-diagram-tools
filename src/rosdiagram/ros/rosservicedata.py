@@ -26,7 +26,7 @@ def read_services( service_dir ):
 
     Return dict with following structure:
     { "<service_id>": {                   ## service id
-                        "type": str,      ## service type
+                        "type": str,      ## service type - type of message
                        }
       }
     """

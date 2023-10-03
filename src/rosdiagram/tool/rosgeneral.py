@@ -188,7 +188,7 @@ def process_arguments( args ):
     if os.path.isdir( msgs_info_dir ) or os.path.isdir( srv_info_dir ):
         _LOGGER.info( "\n\ngenerating rosmsgview output" )
         msg_out_dir = os.path.join(args.outdir, "msgview")
-        rosmsglist.generate( msgs_info_dir, srv_info_dir, msg_out_dir )
+        rosmsglist.generate( msgs_info_dir, srv_info_dir, msg_out_dir, topics_info_dir, services_info_dir )
         msg_out_file = os.path.join(msg_out_dir, "main_page.html")
         index_items_list.append( ("messages view", msg_out_file ) )
 

@@ -189,6 +189,8 @@ optional arguments:
 ```
 usage: rosdiagramtools.py rosmsglist [-h] [-la] [--msgsdumppath MSGSDUMPPATH]
                                      [--srvsdumppath SRVSDUMPPATH]
+                                     [--topicsdumppath TOPICSDUMPPATH]
+                                     [--servicesdumppath SERVICESDUMPPATH]
                                      [--outdir OUTDIR]
 
 rosmsg and rossrv messages list
@@ -200,6 +202,10 @@ optional arguments:
                         Path to directory containing dumped 'rosmsg' output
   --srvsdumppath SRVSDUMPPATH
                         Path to directory containing dumped 'rossrv' output
+  --topicsdumppath TOPICSDUMPPATH
+                        Path to directory containing dumped 'rostopic' output
+  --servicesdumppath SERVICESDUMPPATH
+                        Path to directory containing dumped 'rostopic' output
   --outdir OUTDIR       Output HTML
 ```
 

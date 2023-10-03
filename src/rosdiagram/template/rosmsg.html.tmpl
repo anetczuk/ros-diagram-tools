@@ -79,9 +79,9 @@ ${DATA_DICT.get('head_css_style', '')}
 #! msg_items = DATA_DICT.get('msg_items', [])
 #{ if msg_items:
 #!     msgs_title = msg_items[0] 
-#!     msgs_list = msg_items[1] 
+#!     msgs_list = msg_items[1]
 #{     if msgs_list: 
-           ${ tmpl_utils.ros_link_list( msgs_list, msgs_title ) }
+           ${ msgs_table( msgs_list, msgs_title ) }
 #}
 #}
 
@@ -91,24 +91,31 @@ ${DATA_DICT.get('head_css_style', '')}
 #!     srvs_title = srv_items[0] 
 #!     srvs_list = srv_items[1]
 #{     if srvs_list: 
-           ${ tmpl_utils.ros_link_list( srvs_list, srvs_title ) }
+           ${ msgs_table( srvs_list, srvs_title ) }
 #}
 #}
 
 
-#! item_type = DATA_DICT.get('item_type')
-#! item_content = DATA_DICT.get('item_content')
     <div class="info_content">
         <table>
+#! item_type = DATA_DICT.get('item_type')
 #{ if item_type:
             <tr>
                 <td>Data type:</td>
                 <td><code>${item_type}</code></td>
             </tr>
 #}
+#! item_users = DATA_DICT.get('item_users')
+#{ if item_users:
+            <tr>
+                <td>Usage:</td>
+                <td><code>${" ".join(item_users)}</code></td>
+            </tr>
+#}
         </table>
     </div>
 
+#! item_content = DATA_DICT.get('item_content')
 #{ if item_content:
     <div class="info_content">
         <div style="margin-bottom: 12px">Content:</div>
@@ -120,4 +127,31 @@ ${DATA_DICT.get('head_css_style', '')}
 ${ footer.print() }
 </body>
 </html>
+#end template
+
+
+#* =======================================================
+
+
+#template msgs_table( items_list, list_title )
+#{ if items_list:
+    <div class="bottom_content">
+        <table>
+            <tr>
+                <th><b>$list_title (${ len(items_list) }):</b></th>
+                <th><b>In use:</b></th>
+            </tr>
+#{     for item_data in items_list:
+            <tr>
+                <td>${ tmpl_utils.ros_link( item_data[0], item_data[1] ) }</td>
+#{ if item_data[2] > 0:
+                <td><code>${ item_data[2] }</code></td>
+#}
+            </tr>
+#}
+        </table>
+        <br />
+    </div>
+
+#}
 #end template

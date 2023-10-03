@@ -31,7 +31,7 @@ def read_topics( topic_dir ):
 
     Returns dict with following structure:
     { "<topic_id>": {                   ## topic id
-                      "type": str,      ## topic type
+                      "type": str,      ## topic type - type of message
                       "pubs": [],       ## list of publishers of topic
                       "subs": []        ## list of subscribers of topic
                      }
