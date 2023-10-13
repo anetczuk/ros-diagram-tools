@@ -11,6 +11,7 @@ import pprint
 import copy
 import re
 import collections
+import struct
 
 from typing import List, Dict, Any, Set
 
@@ -22,6 +23,7 @@ from pympler import asizeof
 from rosbags.rosbag1 import Reader
 from rosbags.serde import deserialize_ros1
 from rosbags.typesys import get_types_from_msg, register_types
+from rosbags.typesys.base import TypesysError
 
 from showgraph.io import read_list, prepare_filesystem_name
 
@@ -611,12 +613,21 @@ def get_excluded_nodes( topic_subs, exclude_filter ):
 
 
 def deserialize_msg( rawdata, connection ):
+    if connection.msgtype == "std_msgs/msg/Empty":
+        # there is problem with deserialising "Empty" message - detect it and return empty object
+        return (True, {})
+
     ret_data = deserialize_raw( rawdata, connection.msgtype )
     if ret_data[0] is True:
         return ret_data
 
     msg_type = get_types_from_msg( connection.msgdef, connection.msgtype )
-    register_types( msg_type )
+
+    try:
+        register_types( msg_type )
+    except TypesysError:
+        _LOGGER.exception("unable to register type: %s", msg_type)
+
     return deserialize_raw( rawdata, connection.msgtype )
 
 
@@ -625,6 +636,9 @@ def deserialize_raw( rawdata, msgtype ):
         msg = deserialize_ros1( rawdata, msgtype )
         return (True, msg)
     except KeyError:
+        return (False, None)
+    except struct.error:
+        _LOGGER.exception("unable to deserialize data")
         return (False, None)
 
 
