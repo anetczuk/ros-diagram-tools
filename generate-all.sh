@@ -14,6 +14,6 @@ $SCRIPT_DIR/examples/generate-all.sh
 $SCRIPT_DIR/doc/generate-doc.sh
 
 echo "checking links in MD files"
-./tools/md_check_links.py -d .
+./tools/md_check_links.py -d $SCRIPT_DIR
 
 echo "generation completed"

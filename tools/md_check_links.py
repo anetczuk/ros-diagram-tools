@@ -19,6 +19,7 @@ import os
 import sys
 import logging
 import argparse
+import re
 
 from glob import glob
 import markdown
@@ -180,10 +181,26 @@ def find_md_files( search_dir ):
     return ret_list
 
 
+def filter_items(items_list, ignore_patterns_list):
+    _LOGGER.info( "ignore patterns: %s", ignore_patterns_list )
+    ignored_list = []
+    for item in items_list:
+        for ignore_pattern in ignore_patterns_list:
+            pattern = re.compile( ignore_pattern )
+            item_match = pattern.match(item)
+            if item_match:
+                # matched
+                ignored_list.append( item )
+                break
+    return ignored_list
+
+
 def main():
     parser = argparse.ArgumentParser(description='dump tools')
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     parser.add_argument( '-d', '--dir', action='store', help='Path to directory to search .md files and check' )
+    parser.add_argument( '-i', '--ignore', action='store',
+                         help='Semicolon separated list of regex expressions to ignore items' )
     parser.add_argument( '-f', '--file', action='store', help='Path to file to check' )
 
     args = parser.parse_args()
@@ -201,6 +218,12 @@ def main():
     md_files = find_md_files(args.dir)
     if args.file:
         md_files.append(args.file)
+
+    if args.ignore:
+        ignore_patterns = args.ignore.split(";")
+        ignored_list = filter_items(md_files, ignore_patterns)
+        _LOGGER.info("ignored files:\n%s", '\n'.join(ignored_list))
+        md_files = list( set(md_files) - set(ignored_list) )
 
     _LOGGER.info("files to check:\n%s", '\n'.join(md_files))
 
