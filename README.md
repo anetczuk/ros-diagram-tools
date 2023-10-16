@@ -293,6 +293,8 @@ Presents visualisation of *ROS* bag in form of sequence graph.
 
 Help: `./src/rosdiagramtools.py rosbagflow --help`
 
+Help [output](doc/cmd_args_tools.md#rosbagflow_help).
+
 [![ROS bag sequence graph](doc/turtlesim_rosbag-small.png "ROS bag sequence graph")](doc/turtlesim_rosbag.png)
 
 Tool generates sequence diagram and interactive web page with following functionalities:
