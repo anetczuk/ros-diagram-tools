@@ -398,8 +398,8 @@ def get_topics_info( nodes_dict, topics_dict, msgs_dump_dir=None ):
     return ret_data
 
 
-def get_services( node_lists ) -> List[ str ]:
-    servs_list = node_lists.get( "servs", [] )
+def get_services( node_dict ) -> List[ str ]:
+    servs_list = node_dict.get( "servs", [] )
     return get_names_from_list( servs_list )
 
 

@@ -1,0 +1,57 @@
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
+
+
+|import showgraph.datadict as data_dict
+
+|load "../footer.md.tmpl" as footer
+|load "../utils_md.tmpl" as tmpl_utils
+
+
+|template main( INPUT_DICT )
+|!
+|! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+|!
+<!--
+File was automatically generated using 'ros-diagram-tools' project.
+Project is distributed under the BSD 3-Clause license.
+-->
+
+## Node
+
+|! graph_image_path = DATA_DICT.get('graph_image_path')
+|{ if graph_image_path:
+|! img_alt_text = DATA_DICT.get('graph_image_alt_text', '')
+    $<[![${img_alt_text}]($graph_image_path "${img_alt_text}")]($graph_image_path)
+|}
+
+|!
+|! pkg_path = DATA_DICT.get('pkg_path', "")
+|! pkg_name = DATA_DICT.get('pkg_name', "")
+|{ if pkg_path or pkg_name:
+    $>|  |  |
+    $>| --- | --- |
+    $>| Package name: | `${pkg_name}` |
+    $>| Package path: | `${pkg_path}` |
+
+|}
+|!
+|!
+|! nodes_list = DATA_DICT.get('nodes_list', [])
+${ tmpl_utils.ros_link_table( nodes_list, "ROS nodes" ) }$>
+|!
+|! topics_list = DATA_DICT.get('topics_list', [])
+${ tmpl_utils.ros_link_table( topics_list, "ROS topics" ) }$>
+|!
+|! services_list = DATA_DICT.get('services_list', [])
+${ tmpl_utils.ros_link_table( services_list, "ROS services" ) }$>
+|!
+
+${ footer.print() }
+|end template

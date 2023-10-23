@@ -1,0 +1,47 @@
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
+
+
+|template ros_link_list( items_list, list_title )
+|{ if items_list:
+    $list_title (${ len(items_list) }):
+|{ for items_pair in items_list:
+        - ${ ros_item_link( items_pair ) }
+|}
+|}
+|end template
+
+
+|template ros_link_table( items_list, list_title )
+|{ if items_list:
+    $<| $list_title (${ len(items_list) }): | Description: |
+    $<| ----------------------------------- | ------------ |
+|{     for item_data in items_list:
+    $<| ${ ros_link( item_data[0], item_data[1] ) } | ${ item_data[2] if len(item_data) > 2 else "" } |
+|}
+
+|}
+|end template
+
+
+|template ros_item_link( item_pair )
+|! item_name = item_pair[0]
+|! item_url  = item_pair[1]
+${ ros_link( item_name, item_url ) }$>
+|end template
+
+
+|template ros_link( item_name, item_url )
+|{ if item_url:
+[`${item_name}`](${item_url})$>
+|}
+|{ else:
+`${item_name}`
+|}
+|end template

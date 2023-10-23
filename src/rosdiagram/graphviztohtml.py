@@ -70,9 +70,15 @@ def generate( output_dir, params_dict, template_id="" ):
     page_params.setdefault( "head_css_style", "" )
 
     template_path    = os.path.join( SCRIPT_DIR, "template", template_id )
-    output_html_file = os.path.join( output_dir, page_filename + ".html" )
 
-    texttemplate.generate( template_path, output_html_file, INPUT_DICT=page_params )
+    out_extension = ".html"
+    template_extensions = template_id.split(".")
+    if len(template_extensions) > 1:
+        if template_extensions[-1] == "tmpl":
+            out_extension = f".{template_extensions[-2]}"
+
+    output_file = os.path.join( output_dir, page_filename + out_extension )
+    texttemplate.generate( template_path, output_file, INPUT_DICT=page_params )
 
 
 def store_graph_to_html( graph: Graph, output_dir ):

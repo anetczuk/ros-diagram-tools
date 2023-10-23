@@ -299,6 +299,9 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=No
     template = "rosnodegraph/nodegraph_main.html"
     generate_from_template( out_dir, main_dict, template_name=template )
 
+    template = "rosnodegraph/nodegraph_main.md"
+    generate_from_template( out_dir, main_dict, template_name=template )
+
 
 ## returns dict: { <item_id>: <item_data_dict> }
 def generate_subpages( sub_output_dir, nodes_dict,                                        # pylint: disable=R0913,R0914
@@ -327,7 +330,7 @@ def generate_subpages( sub_output_dir, nodes_dict,                              
 
     _LOGGER.info( "generating item subpages" )
     for _, node_data in nodes_subpages_dict.items():
-        node_data[ "template_name" ] = "rosnodegraph/nodegraph_node.html"
+        node_data[ "template_name" ] = ["rosnodegraph/nodegraph_node.html", "rosnodegraph/nodegraph_node.md"]
 
     topics_subpages_dict   = get_topic_subpages( topics_subpages_dict, nodes_dict, topics_dict, msgs_dump_dir )
     services_subpages_dict = get_service_subpages( services_subpages_dict, nodes_dict,
@@ -381,9 +384,13 @@ def generate_subpages( sub_output_dir, nodes_dict,                              
         item_dict[ "pkg_path" ] = pkg_classify_data.get( "path", "" )
 
         _LOGGER.info( "preparing page for item %s", item_id )
-        template = item_dict.get( "template_name", None )
-        if template:
-            generate_from_template( sub_output_dir, item_dict, template_name=template )
+        template_item = item_dict.get( "template_name", None )
+        if template_item:
+            if isinstance(template_item, list):
+                for template in template_item:
+                    generate_from_template( sub_output_dir, item_dict, template_name=template )
+            else:
+                generate_from_template( sub_output_dir, item_dict, template_name=template_item )
 
     return subpages_dict
 
@@ -425,7 +432,7 @@ def get_topic_subpages( topics_subpages_dict, nodes_dict, topics_dict, msgs_dump
             subs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in subs_list ]
 
         sub_dict = topics_subpages_dict[ topic_id ]
-        sub_dict[ "template_name" ] = "rosnodegraph/nodegraph_topic.html"
+        sub_dict[ "template_name" ] = [ "rosnodegraph/nodegraph_topic.html", "rosnodegraph/nodegraph_topic.md" ]
         sub_dict[ "topic_name" ]    = get_label( topic_labels, topic_id, "<unknown>" )
         sub_dict[ "topic_pubs" ]    = pubs_names
         sub_dict[ "topic_subs" ]    = subs_names
@@ -440,7 +447,7 @@ def get_service_subpages( services_subpages_dict, nodes_dict, nodes_labels, serv
 
     for service_id, service_data in services_info.items():
         sub_dict = services_subpages_dict[ service_id ]
-        sub_dict[ "template_name" ] = "rosnodegraph/nodegraph_service.html"
+        sub_dict[ "template_name" ] = [ "rosnodegraph/nodegraph_service.html", "rosnodegraph/nodegraph_service.md" ]
         sub_dict[ "srv_name" ]      = get_label( services_labels, service_id, "<unknown>" )
         sub_dict[ "msg_type" ]      = service_data.get( "type", "" )
         sub_dict[ "msg_content" ]   = service_data.get( "content", "" )

@@ -1,0 +1,69 @@
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
+
+
+|import showgraph.datadict as data_dict
+
+|load "../footer.md.tmpl" as footer
+|load "../utils_md.tmpl" as tmpl_utils
+
+
+|template main( INPUT_DICT )
+|!
+|! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+|!
+<!--
+File was automatically generated using 'ros-diagram-tools' project.
+Project is distributed under the BSD 3-Clause license.
+-->
+
+## Service
+
+|! graph_image_path = DATA_DICT.get('graph_image_path')
+|{ if graph_image_path:
+|! img_alt_text = DATA_DICT.get('graph_image_alt_text', '')
+    $<[![${img_alt_text}]($graph_image_path "${img_alt_text}")]($graph_image_path)
+|}
+
+|!
+${ ros_service_info( DATA_DICT ) }
+|!
+
+${ footer.print() }
+|end template
+
+
+|*******************************************************
+
+
+|template ros_service_info( DATA_DICT )
+|!
+|! srv_name     = DATA_DICT.get('srv_name')
+|! srv_listener = DATA_DICT.get('srv_listener')
+|! msg_type     = DATA_DICT.get('msg_type')
+|{ if srv_name and srv_listener:
+    $<|  |  |
+    $<| --------------------------------- | -------- | ------------ |
+    $<| Name: | `${srv_name}` |
+|{ if msg_type:
+    $<| Data type | `${msg_type}` |
+|}
+    $<| Listener: | ${ tmpl_utils.ros_item_link( srv_listener ) } |
+
+|!
+|!     msg_content = DATA_DICT.get('msg_content')
+|{     if msg_content:
+Message:
+```
+${msg_content}
+```
+
+|}
+|}
+|end template
