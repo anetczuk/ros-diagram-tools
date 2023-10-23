@@ -19,10 +19,7 @@
 |!
 <html>
 <head>
-<!--
-File was automatically generated using 'ros-diagram-tools' project.
-Project is distributed under the BSD 3-Clause license.
--->
+${ tmpl_footer.print_header() }
     <title>rosbag diagram: message type</title>
     <style>
         body {  padding: 24;
@@ -86,7 +83,7 @@ Project is distributed under the BSD 3-Clause license.
         <pre><code>${DATA_DICT.get('msgdef', '')}</code></pre>
     </div>
 
-${ tmpl_footer.print() }
+${ tmpl_footer.print_footer() }
 </body>
 </html>
 |end template

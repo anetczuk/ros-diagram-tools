@@ -20,10 +20,7 @@
 |!
 <html>
 <head>
-<!--
-File was automatically generated using 'ros-diagram-tools' project.
-Project is distributed under the BSD 3-Clause license.
--->
+${ tmpl_footer.print_header() }
     <title>node graph</title>
     <style>
         body {  padding: 24;
@@ -87,7 +84,7 @@ ${ tmpl_utils.ros_link_table( topics_list, "ROS topics" ) }$>
 ${ tmpl_utils.ros_link_table( services_list, "ROS services" ) }$>
 |!
 
-${ tmpl_footer.print() }
+${ tmpl_footer.print_footer() }
 </body>
 </html>
 |end template
