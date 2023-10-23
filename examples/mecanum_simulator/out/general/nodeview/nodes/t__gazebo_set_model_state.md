@@ -51,7 +51,6 @@ string reference_frame
 | [`/gazebo/set_model_state`](t__gazebo_set_model_state.html) |  |
 
 
-<font size="1">
-    File was automatically generated using [*ros-diagram-tools*]("https://github.com/anetczuk/ros-diagram-tools") project.
-    Project is distributed under the BSD 3-Clause license.
-</font>
+</br>
+File was automatically generated using [*ros-diagram-tools*](https://github.com/anetczuk/ros-diagram-tools) project.
+Project is distributed under the BSD 3-Clause license.
