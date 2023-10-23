@@ -1,23 +1,23 @@
-#*
-#* Python is accessible by following methods:
-#* - $variable -- printing value of variable to document
-#* - ${ <expression> } -- single expression to evaluate and print to document
-#* - #! -- general purpose line of any Python code
-#* 
-#* Any non-python content and non-template content is treated as text. 
-#* 
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
 
 
-#import showgraph.datadict as data_dict
-#import rosdiagram.textutils as textutils
+|import showgraph.datadict as data_dict
+|import rosdiagram.textutils as textutils
 
-#load "footer.html.tmpl" as footer
+|load "footer.html.tmpl" as footer
 
 
-#template main( INPUT_DICT )
-#!
-#! DATA_DICT = data_dict.DataDict( INPUT_DICT )
-#!
+|template main( INPUT_DICT )
+|!
+|! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+|!
 <html>
 <head>
 <!--
@@ -63,14 +63,14 @@ ${DATA_DICT.get('head_css_style', '')}
 
 <body>
     <div class="top_content">
-#!
-#! main_page_link = DATA_DICT.get('main_page_link')
-#{ if main_page_link:
+|!
+|! main_page_link = DATA_DICT.get('main_page_link')
+|{ if main_page_link:
         <a href="${main_page_link}">back to Main graph</a>
-#}
-#{     else:
+|}
+|{     else:
         Main graph
-#}
+|}
         <br />
     </div>
 
@@ -100,10 +100,10 @@ ${DATA_DICT.get('head_css_style', '')}
     </div>
 
 
-#!
-#! pipeline_times = DATA_DICT.get('pipeline_times')
-#!
-#{ if pipeline_times:
+|!
+|! pipeline_times = DATA_DICT.get('pipeline_times')
+|!
+|{ if pipeline_times:
     <div class="info_content">
         <span style="font-weight: bold;">Pipeline:</span>
         <table>
@@ -112,21 +112,21 @@ ${DATA_DICT.get('head_css_style', '')}
                 <th>Busy time:</th>
                 <th>Efficiency:</th>
             </tr>
-#{ for item in pipeline_times:
+|{ for item in pipeline_times:
             <tr>
                 <td>${ item[0] }</td>
                 <td>${ textutils.time_to_string( item[1] ) }</td>
                 <td>${ round( item[2] * 100, 2 ) } %</td>
             </tr>
-#}
+|}
         </table>
     </div>
-#}
+|}
 
-#!
-#! critical_path = DATA_DICT.get('critical_path')
-#!
-#{ if critical_path:
+|!
+|! critical_path = DATA_DICT.get('critical_path')
+|!
+|{ if critical_path:
     <div class="info_content">
         <span style="font-weight: bold;">Critical path:</span>
         <table>
@@ -137,7 +137,7 @@ ${DATA_DICT.get('head_css_style', '')}
                 <th>Start time:</th>
                 <th>End time:</th>
             </tr>
-#{ for item in critical_path:
+|{ for item in critical_path:
             <tr>
                 <td>${ item[0] }</td>
                 <td>${ item[1] }</td>
@@ -145,15 +145,15 @@ ${DATA_DICT.get('head_css_style', '')}
                 <td>${ item[3] }</td>
                 <td>${ item[4] }</td>
             </tr>
-#}
+|}
         </table>
     </div>
-#}
+|}
     
-#!
-#! dur_list = DATA_DICT.get('duration_list')
-#!
-#{ if dur_list:
+|!
+|! dur_list = DATA_DICT.get('duration_list')
+|!
+|{ if dur_list:
     <div class="info_content">
         <span style="font-weight: bold;">Packages (duration order):</span>
         <table>
@@ -163,22 +163,22 @@ ${DATA_DICT.get('head_css_style', '')}
                 <th>Start time:</th>
                 <th>End time:</th>
             </tr>
-#{ for item in dur_list:
+|{ for item in dur_list:
             <tr>
                 <td>${ item[0] }</td>
                 <td>${ item[1] }</td>
                 <td>${ item[2] }</td>
                 <td>${ item[3] }</td>
             </tr>
-#}
+|}
         </table>
     </div>
-#}
+|}
     
-#!
-#! package_list = DATA_DICT.get('packages_list')
-#!
-#{ if package_list:
+|!
+|! package_list = DATA_DICT.get('packages_list')
+|!
+|{ if package_list:
     <div class="info_content">
         <span style="font-weight: bold;">Packages (name order):</span>
         <table>
@@ -188,19 +188,19 @@ ${DATA_DICT.get('head_css_style', '')}
                 <th>Start time:</th>
                 <th>End time:</th>
             </tr>
-#{ for item in package_list:
+|{ for item in package_list:
             <tr>
                 <td>${ item[0] }</td>
                 <td>${ item[1] }</td>
                 <td>${ item[2] }</td>
                 <td>${ item[3] }</td>
             </tr>
-#}
+|}
         </table>
     </div>
-#}
+|}
 
 ${ footer.print() }
 </body>
 </html>
-#end template
+|end template

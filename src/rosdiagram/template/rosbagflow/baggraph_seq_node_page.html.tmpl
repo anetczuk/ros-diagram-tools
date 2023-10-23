@@ -1,22 +1,22 @@
-#*
-#* Python is accessible by following methods:
-#* - $variable -- printing value of variable to document
-#* - ${ <expression> } -- single expression to evaluate and print to document
-#* - #! -- general purpose line of any Python code
-#* 
-#* Any non-python content and non-template content is treated as text. 
-#* 
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
 
 
-#import showgraph.datadict as data_dict
+|import showgraph.datadict as data_dict
 
-#load "../footer.html.tmpl" as footer
+|load "../footer.html.tmpl" as footer
 
 
-#template main( INPUT_DICT )
-#!
-#! DATA_DICT = data_dict.DataDict( INPUT_DICT )
-#!
+|template main( INPUT_DICT )
+|!
+|! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+|!
 <html>
 <head>
 <!--
@@ -51,23 +51,23 @@ Project is distributed under the BSD 3-Clause license.
         <a href="../full_graph.html">back to Main graph</a>
         <br />
     </div>
-#!
-#! node_info  = DATA_DICT.get('node_info', None)
-#{ if node_info:
+|!
+|! node_info  = DATA_DICT.get('node_info', None)
+|{ if node_info:
     <div class="info_content">
         Node: <code>${node_info.name}</code>
     </div>
-#}
-#! root_url = DATA_DICT.get('root_url', '')
-#!
-#! msgtype_dict = DATA_DICT.get('msgtypes_dict', {})
-#! topic_info   = DATA_DICT.get('topic_info', None)
-#{ if topic_info:
-#!     msg_type_label = f"{topic_info.msgtype}" if topic_info.msgtype else "unknown"
-#!     msg_type_info  = msgtype_dict.get( topic_info.msgtype, {} )
-#!     msg_type_url   = msg_type_info.get( 'suburl', None )
-#!     pubs_urls   = DATA_DICT.get( 'pub_urls', [] )
-#!     subs_urls   = DATA_DICT.get( 'sub_urls', [] )
+|}
+|! root_url = DATA_DICT.get('root_url', '')
+|!
+|! msgtype_dict = DATA_DICT.get('msgtypes_dict', {})
+|! topic_info   = DATA_DICT.get('topic_info', None)
+|{ if topic_info:
+|!     msg_type_label = f"{topic_info.msgtype}" if topic_info.msgtype else "unknown"
+|!     msg_type_info  = msgtype_dict.get( topic_info.msgtype, {} )
+|!     msg_type_url   = msg_type_info.get( 'suburl', None )
+|!     pubs_urls   = DATA_DICT.get( 'pub_urls', [] )
+|!     subs_urls   = DATA_DICT.get( 'sub_urls', [] )
     <div class="info_content">
         <table>
             <tr>
@@ -81,80 +81,80 @@ Project is distributed under the BSD 3-Clause license.
             <tr>
                 <td>Publishers:</td>
                 <td><code>
-#{     for topic_url in pubs_urls:
+|{     for topic_url in pubs_urls:
            ${ generate_link( topic_url[0], topic_url[1] ) }
-#}
+|}
                 </code></td>
             </tr>
             <tr>
                 <td>Subscribers:</td>
                 <td><code>
-#{     for topic_url in subs_urls:
+|{     for topic_url in subs_urls:
            ${ generate_link( topic_url[0], topic_url[1] ) }
-#}
+|}
                 </code></td>
             </tr>
         </table>
     </div>
-#}
+|}
     <div class="center_content">
         <object type="image/svg+xml" data="${DATA_DICT.get('svg_name')}">missing image</object>
     </div>
     <div class="bottom_content">
-#!
-#! nodes_data = DATA_DICT.get('nodes_data', [])
-#!
+|!
+|! nodes_data = DATA_DICT.get('nodes_data', [])
+|!
         Nodes (${len(nodes_data)}):<br/>
         <ul>
-#!
-#{ for item in nodes_data:
-#!     excl = "(excluded)" if item.excluded is True else ""
+|!
+|{ for item in nodes_data:
+|!     excl = "(excluded)" if item.excluded is True else ""
             <li>${ generate_code_link( item.name, item.suburl, root_url ) } ${excl}</li>
-#}
+|}
         </ul>
         <br />
-#!
-#! topics_data  = DATA_DICT.get('topics_data', [])
-#!
+|!
+|! topics_data  = DATA_DICT.get('topics_data', [])
+|!
         Topics (${len(topics_data)}):<br/>
         <ul>
-#!
-#{ for item in topics_data:
-#!     excl           = "(excluded)" if item.excluded is True else ""
-#!     msg_type_label = f"{item.msgtype}" if item.msgtype else "unknown"
-#!     msg_type_info  = msgtype_dict.get( item.msgtype, {} )
-#!     msg_type_url   = msg_type_info.get( 'suburl', None )
+|!
+|{ for item in topics_data:
+|!     excl           = "(excluded)" if item.excluded is True else ""
+|!     msg_type_label = f"{item.msgtype}" if item.msgtype else "unknown"
+|!     msg_type_info  = msgtype_dict.get( item.msgtype, {} )
+|!     msg_type_url   = msg_type_info.get( 'suburl', None )
         <li>${generate_code_link( item.name, item.suburl, root_url )} [${generate_code_link( msg_type_label, msg_type_url, root_url )}]: ${item.msgcount} ${excl}</li>
-#}
+|}
         </ul>
     </div>
     
 ${ footer.print() }
 </body>
 </html>
-#end template
+|end template
 
 
-#template generate_code_link( item_name, item_url, base_url )
+|template generate_code_link( item_name, item_url, base_url )
 <code>${ generate_link_base(item_name, item_url, base_url) }</code>$>
-#end template
+|end template
 
 
-#template generate_link_base( item_name, item_url, base_url )
-#{ if item_url:
+|template generate_link_base( item_name, item_url, base_url )
+|{ if item_url:
 <a href="${base_url}${item_url}">${item_name}</a>$>
-#}
-#{ else:
+|}
+|{ else:
 ${item_name}$>
-#}
-#end template
+|}
+|end template
 
 
-#template generate_link( item_name, item_url )
-#{ if item_url:
+|template generate_link( item_name, item_url )
+|{ if item_url:
 <a href="${item_url}">${item_name}</a>$>
-#}
-#{ else:
+|}
+|{ else:
 ${item_name}$>
-#}
-#end template
+|}
+|end template

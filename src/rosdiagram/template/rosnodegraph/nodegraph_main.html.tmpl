@@ -1,23 +1,23 @@
-#*
-#* Python is accessible by following methods:
-#* - $variable -- printing value of variable to document
-#* - ${ <expression> } -- single expression to evaluate and print to document
-#* - #! -- general purpose line of any Python code
-#* 
-#* Any non-python content and non-template content is treated as text. 
-#* 
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
 
 
-#import showgraph.datadict as data_dict
+|import showgraph.datadict as data_dict
 
-#load "../footer.html.tmpl" as footer
-#load "../utils.tmpl" as tmpl_utils
+|load "../footer.html.tmpl" as footer
+|load "../utils.tmpl" as tmpl_utils
 
 
-#template main( INPUT_DICT )
-#!
-#! DATA_DICT = data_dict.DataDict( INPUT_DICT )
-#!
+|template main( INPUT_DICT )
+|!
+|! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+|!
 <html>
 <head>
 <!--
@@ -68,36 +68,36 @@ ${DATA_DICT.get('head_css_style', '')}
         <br />
     </div>
     <div class="center_content">
-#!
-#! graph_image_path = DATA_DICT.get('graph_image_path')
-#{ if graph_image_path:
+|!
+|! graph_image_path = DATA_DICT.get('graph_image_path')
+|{ if graph_image_path:
         <img src="$graph_image_path" alt="${DATA_DICT.get('graph_image_alt_text', '')}" usemap="#${DATA_DICT.get('graph_name', '')}">
 ${DATA_DICT.get('graph_map', '')}$>
-#}
+|}
     </div>
 
-#!
-#! nodes_list = DATA_DICT.get('nodes_list', [])
+|!
+|! nodes_list = DATA_DICT.get('nodes_list', [])
 ${ ros_nodes_table( nodes_list ) }$>
-#!
-#! topics_list = DATA_DICT.get('topics_list', [])
+|!
+|! topics_list = DATA_DICT.get('topics_list', [])
 ${ tmpl_utils.ros_link_table( topics_list, "ROS topics" ) }$>
-#!
-#! services_list = DATA_DICT.get('services_list', [])
+|!
+|! services_list = DATA_DICT.get('services_list', [])
 ${ tmpl_utils.ros_link_table( services_list, "ROS services" ) }$>
-#!
+|!
 
 ${ footer.print() }
 </body>
 </html>
-#end template
+|end template
 
 
-#* ======================================================================================
+|* ======================================================================================
 
 
-#template ros_nodes_table( items_list )
-#{ if items_list:
+|template ros_nodes_table( items_list )
+|{ if items_list:
     <div class="bottom_content">
         <table>
             <tr>
@@ -105,16 +105,16 @@ ${ footer.print() }
                 <th>Package:</th>
                 <th>Description:</th>
             </tr>
-#{     for item_data in items_list:
+|{     for item_data in items_list:
             <tr>
                 <td>${ tmpl_utils.ros_link( item_data[0], item_data[1] ) }</td>
                 <td>${ item_data[2] }</td>
                 <td>${ item_data[3] if len(item_data) > 3 else "" }</td>
             </tr>
-#}
+|}
         </table>
         <br />
     </div>
 
-#}
-#end template
+|}
+|end template

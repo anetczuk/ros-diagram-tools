@@ -1,22 +1,22 @@
-#*
-#* Python is accessible by following methods:
-#* - $variable -- printing value of variable to document
-#* - ${ <expression> } -- single expression to evaluate and print to document
-#* - #! -- general purpose line of any Python code
-#* 
-#* Any non-python content and non-template content is treated as text. 
-#* 
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
 
 
-#import showgraph.datadict as data_dict
+|import showgraph.datadict as data_dict
 
-#load "../footer.html.tmpl" as footer
+|load "../footer.html.tmpl" as footer
 
 
-#template main( INPUT_DICT )
-#!
-#! DATA_DICT = data_dict.DataDict( INPUT_DICT )
-#!
+|template main( INPUT_DICT )
+|!
+|! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+|!
 <html>
 <head>
 <!--
@@ -67,7 +67,7 @@ Project is distributed under the BSD 3-Clause license.
         <a href="../full_graph.html">back to Main graph</a>
     </div>
     <div class="info_content">
-#! topic_urls = DATA_DICT.get( 'topic_urls', [] )
+|! topic_urls = DATA_DICT.get( 'topic_urls', [] )
         <table>
             <tr>
                 <td>Message:</td>
@@ -76,9 +76,9 @@ Project is distributed under the BSD 3-Clause license.
             <tr>
                 <td>Topic:</td>
                 <td>
-#{     for topic_url in topic_urls:
+|{     for topic_url in topic_urls:
            ${ generate_link( topic_url[0], topic_url[1] ) }
-#}
+|}
                 </td>
             </tr>
         </table>
@@ -89,14 +89,14 @@ Project is distributed under the BSD 3-Clause license.
 ${ footer.print() }
 </body>
 </html>
-#end template
+|end template
 
 
-#template generate_link( item_name, item_url )
-#{ if item_url:
+|template generate_link( item_name, item_url )
+|{ if item_url:
 <a href="${item_url}">${item_name}</a>$>
-#}
-#{ else:
+|}
+|{ else:
 ${item_name}$>
-#}
-#end template
+|}
+|end template

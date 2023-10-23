@@ -1,23 +1,23 @@
-#*
-#* Python is accessible by following methods:
-#* - $variable -- printing value of variable to document
-#* - ${ <expression> } -- single expression to evaluate and print to document
-#* - #! -- general purpose line of any Python code
-#* 
-#* Any non-python content and non-template content is treated as text. 
-#* 
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
 
 
-#import showgraph.datadict as data_dict
+|import showgraph.datadict as data_dict
 
-#load "footer.html.tmpl" as footer
-#load "utils.tmpl" as tmpl_utils
+|load "footer.html.tmpl" as footer
+|load "utils.tmpl" as tmpl_utils
 
 
-#template main( INPUT_DICT )
-#!
-#! DATA_DICT = data_dict.DataDict( INPUT_DICT )
-#!
+|template main( INPUT_DICT )
+|!
+|! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+|!
 <html>
 <head>
 <!--
@@ -75,9 +75,9 @@ ${DATA_DICT.get('head_css_style', '')}
     </div>
     <div class="center_content">
     </div>
-#!
-#! params_list = DATA_DICT.get('params_list', [])
-#{ if params_list:
+|!
+|! params_list = DATA_DICT.get('params_list', [])
+|{ if params_list:
 
     <div class="bottom_content data">
         <table>
@@ -86,20 +86,20 @@ ${DATA_DICT.get('head_css_style', '')}
                 <th>Type:</th>
                 <th>Value:</th>
             </tr>
-#{     for item_data in params_list:
+|{     for item_data in params_list:
             <tr>
                 <td><a href="${ item_data[1] }">${ item_data[0] }</a></td>
                 <td><code>${ item_data[2] }</code></td>
                 <td><code>${ item_data[3] }</code></td>
             </tr>
-#}
+|}
         </table>
         <br />
     </div>
-#}
+|}
 
 
 ${ footer.print() }
 </body>
 </html>
-#end template
+|end template

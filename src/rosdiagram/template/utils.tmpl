@@ -1,63 +1,63 @@
-#*
-#* Python is accessible by following methods:
-#* - $variable -- printing value of variable to document
-#* - ${ <expression> } -- single expression to evaluate and print to document
-#* - #! -- general purpose line of any Python code
-#* 
-#* Any non-python content and non-template content is treated as text. 
-#* 
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
 
 
-#template ros_link_list( items_list, list_title )
-#{ if items_list:
+|template ros_link_list( items_list, list_title )
+|{ if items_list:
     <div class="bottom_content">
         $list_title (${ len(items_list) }):
         <ul>
-#{     for items_pair in items_list:
+|{     for items_pair in items_list:
             <li>${ ros_item_link( items_pair ) }</li>
-#}
+|}
         </ul>
         <br />
     </div>
 
-#}
-#end template
+|}
+|end template
 
 
-#template ros_link_table( items_list, list_title )
-#{ if items_list:
+|template ros_link_table( items_list, list_title )
+|{ if items_list:
     <div class="bottom_content">
         <table>
             <tr>
                 <th>$list_title (${ len(items_list) }):</th>
                 <th>Description:</th>
             </tr>
-#{     for item_data in items_list:
+|{     for item_data in items_list:
             <tr>
                 <td>${ ros_link( item_data[0], item_data[1] ) }</td>
                 <td>${ item_data[2] if len(item_data) > 2 else "" }</td>
             </tr>
-#}
+|}
         </table>
         <br />
     </div>
 
-#}
-#end template
+|}
+|end template
 
 
-#template ros_item_link( item_pair )
-#! item_name = item_pair[0]
-#! item_url  = item_pair[1]
+|template ros_item_link( item_pair )
+|! item_name = item_pair[0]
+|! item_url  = item_pair[1]
 ${ ros_link( item_name, item_url ) }$>
-#end template
+|end template
 
 
-#template ros_link( item_name, item_url )
-#{ if item_url:
+|template ros_link( item_name, item_url )
+|{ if item_url:
 <a href="${item_url}"><code>${item_name}</code></a>$>
-#}
-#{ else:
+|}
+|{ else:
 <code>${item_name}</code>$>
-#}
-#end template
+|}
+|end template

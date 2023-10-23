@@ -1,23 +1,23 @@
-#*
-#* Python is accessible by following methods:
-#* - $variable -- printing value of variable to document
-#* - ${ <expression> } -- single expression to evaluate and print to document
-#* - #! -- general purpose line of any Python code
-#* 
-#* Any non-python content and non-template content is treated as text. 
-#* 
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
 
 
-#import showgraph.datadict as data_dict
+|import showgraph.datadict as data_dict
 
-#load "footer.html.tmpl" as footer
-#load "utils.tmpl" as tmpl_utils
+|load "footer.html.tmpl" as footer
+|load "utils.tmpl" as tmpl_utils
 
 
-#template main( INPUT_DICT )
-#!
-#! DATA_DICT = data_dict.DataDict( INPUT_DICT )
-#!
+|template main( INPUT_DICT )
+|!
+|! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+|!
 <html>
 <head>
 <!--
@@ -75,83 +75,83 @@ ${DATA_DICT.get('head_css_style', '')}
     </div>
     <div class="center_content">
     </div>
-#!
-#! msg_items = DATA_DICT.get('msg_items', [])
-#{ if msg_items:
-#!     msgs_title = msg_items[0] 
-#!     msgs_list = msg_items[1]
-#{     if msgs_list: 
+|!
+|! msg_items = DATA_DICT.get('msg_items', [])
+|{ if msg_items:
+|!     msgs_title = msg_items[0] 
+|!     msgs_list = msg_items[1]
+|{     if msgs_list: 
            ${ msgs_table( msgs_list, msgs_title ) }
-#}
-#}
+|}
+|}
 
-#!
-#! srv_items = DATA_DICT.get('srv_items', [])
-#{ if srv_items:
-#!     srvs_title = srv_items[0] 
-#!     srvs_list = srv_items[1]
-#{     if srvs_list: 
+|!
+|! srv_items = DATA_DICT.get('srv_items', [])
+|{ if srv_items:
+|!     srvs_title = srv_items[0] 
+|!     srvs_list = srv_items[1]
+|{     if srvs_list: 
            ${ msgs_table( srvs_list, srvs_title ) }
-#}
-#}
+|}
+|}
 
 
     <div class="info_content">
         <table>
-#! item_type = DATA_DICT.get('item_type')
-#{ if item_type:
+|! item_type = DATA_DICT.get('item_type')
+|{ if item_type:
             <tr>
                 <td>Data type:</td>
                 <td><code>${item_type}</code></td>
             </tr>
-#}
-#! item_users = DATA_DICT.get('item_users')
-#{ if item_users:
+|}
+|! item_users = DATA_DICT.get('item_users')
+|{ if item_users:
             <tr>
                 <td>Usage:</td>
                 <td><code>${" ".join(item_users)}</code></td>
             </tr>
-#}
+|}
         </table>
     </div>
 
-#! item_content = DATA_DICT.get('item_content')
-#{ if item_content:
+|! item_content = DATA_DICT.get('item_content')
+|{ if item_content:
     <div class="info_content">
         <div style="margin-bottom: 12px">Content:</div>
         <pre><code>${item_content}</code></pre>
     </div>
-#}
+|}
 
 
 ${ footer.print() }
 </body>
 </html>
-#end template
+|end template
 
 
-#* =======================================================
+|* =======================================================
 
 
-#template msgs_table( items_list, list_title )
-#{ if items_list:
+|template msgs_table( items_list, list_title )
+|{ if items_list:
     <div class="bottom_content">
         <table>
             <tr>
                 <th><b>$list_title (${ len(items_list) }):</b></th>
                 <th><b>In use:</b></th>
             </tr>
-#{     for item_data in items_list:
+|{     for item_data in items_list:
             <tr>
                 <td>${ tmpl_utils.ros_link( item_data[0], item_data[1] ) }</td>
-#{ if item_data[2] > 0:
+|{ if item_data[2] > 0:
                 <td><code>${ item_data[2] }</code></td>
-#}
+|}
             </tr>
-#}
+|}
         </table>
         <br />
     </div>
 
-#}
-#end template
+|}
+|end template

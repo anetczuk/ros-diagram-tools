@@ -1,22 +1,22 @@
-#*
-#* Python is accessible by following methods:
-#* - $variable -- printing value of variable to document
-#* - ${ <expression> } -- single expression to evaluate and print to document
-#* - #! -- general purpose line of any Python code
-#* 
-#* Any non-python content and non-template content is treated as text. 
-#* 
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
 
 
-#import showgraph.datadict as data_dict
+|import showgraph.datadict as data_dict
 
-#load "../footer.html.tmpl" as footer
+|load "../footer.html.tmpl" as footer
 
 
-#template main( INPUT_DICT )
-#!
-#! DATA_DICT = data_dict.DataDict( INPUT_DICT )
-#!
+|template main( INPUT_DICT )
+|!
+|! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+|!
 <html>
 <head>
 <!--
@@ -75,19 +75,19 @@ Project is distributed under the BSD 3-Clause license.
         <a href="../full_graph.html">back to Main graph</a>
     </div>
     <div class="info_content">
-#!
-#! root_url = DATA_DICT.get( 'root_url', '' )
-#!
-#! item          = DATA_DICT.get( 'item' )
-#! item_pub_url  = DATA_DICT.get( 'pub_url', [] )
-#! item_sub_urls = DATA_DICT.get( 'sub_urls', [] )
-#! item_topics   = DATA_DICT.get( 'topic_urls', [] )
-#!
-#! msgtype_dict   = DATA_DICT.get( 'msgtypes_dict', {} )
-#! msg_type_info  = msgtype_dict.get( item.msgtype, {} )
-#! msg_type_url   = msg_type_info.get( 'suburl', None )
-#! msg_type_label = item.msgtype if item.msgtype else "unknown"
-#!
+|!
+|! root_url = DATA_DICT.get( 'root_url', '' )
+|!
+|! item          = DATA_DICT.get( 'item' )
+|! item_pub_url  = DATA_DICT.get( 'pub_url', [] )
+|! item_sub_urls = DATA_DICT.get( 'sub_urls', [] )
+|! item_topics   = DATA_DICT.get( 'topic_urls', [] )
+|!
+|! msgtype_dict   = DATA_DICT.get( 'msgtypes_dict', {} )
+|! msg_type_info  = msgtype_dict.get( item.msgtype, {} )
+|! msg_type_url   = msg_type_info.get( 'suburl', None )
+|! msg_type_label = item.msgtype if item.msgtype else "unknown"
+|!
         <table>
             <tr>
                 <td>Timestamp:</td>
@@ -104,9 +104,9 @@ Project is distributed under the BSD 3-Clause license.
             <tr>
                 <td>Topic:</td>
                 <td>
-#{     for topic_url in item_topics:
+|{     for topic_url in item_topics:
            ${ generate_link( topic_url[0], topic_url[1] ) }
-#}
+|}
                 </td>
             </tr>
             <tr>
@@ -116,29 +116,29 @@ Project is distributed under the BSD 3-Clause license.
             <tr>
                 <td>Subscribers:</td>
                 <td>
-#{     for sub_url in item_sub_urls:
+|{     for sub_url in item_sub_urls:
            ${ generate_link( sub_url[0], sub_url[1] ) }
-#}
+|}
                 </td>
             </tr>
         </table>
     </div>
-#!
-#! notes = DATA_DICT.get('notes_content')
-#{ if notes is not None:
-#!     notes_bg_color = notes.bg_color
+|!
+|! notes = DATA_DICT.get('notes_content')
+|{ if notes is not None:
+|!     notes_bg_color = notes.bg_color
     <div class="info_content">
         Notes:<br /><br />
         <div class="notes" style="background-color: ${ notes_bg_color }">
-#{     for notes_line in notes:
-#{         for note in notes_line:
+|{     for notes_line in notes:
+|{         for note in notes_line:
                ${ print_note( note ) }
-#}
+|}
            <br />
-#}
+|}
         </div> 
     </div>
-#}
+|}
     <div class="info_content">
         Data:
         <pre><code>${DATA_DICT.get('msg_data')}</code></pre>
@@ -151,40 +151,40 @@ Project is distributed under the BSD 3-Clause license.
 ${ footer.print() }
 </body>
 </html>
-#end template
+|end template
 
 
-#template generate_code_link( item_name, item_url, base_url )
+|template generate_code_link( item_name, item_url, base_url )
 <code>${ generate_link_base(item_name, item_url, base_url) }</code>$>
-#end template
+|end template
 
 
-#template generate_link_base( item_name, item_url, base_url )
-#{ if item_url:
+|template generate_link_base( item_name, item_url, base_url )
+|{ if item_url:
 <a href="${base_url}${item_url}">${item_name}</a>$>
-#}
-#{ else:
+|}
+|{ else:
 ${item_name}$>
-#}
-#end template
+|}
+|end template
 
 
-#template generate_link( item_name, item_url )
-#{ if item_url:
+|template generate_link( item_name, item_url )
+|{ if item_url:
 <a href="${item_url}">${item_name}</a>$>
-#}
-#{ else:
+|}
+|{ else:
 ${item_name}$>
-#}
-#end template
+|}
+|end template
 
 
-#template print_note( note )
-#! note_type = note.get('type')
-#{ if note_type == "INFO":
+|template print_note( note )
+|! note_type = note.get('type')
+|{ if note_type == "INFO":
     <span class="note_info">${ note.get('msg') }</span>$>
-#}
-#{ if note_type == "ERROR":
+|}
+|{ if note_type == "ERROR":
     <span class="note_error">${ note.get('msg') }</span>$>
-#}
-#end template
+|}
+|end template
