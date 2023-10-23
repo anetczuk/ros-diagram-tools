@@ -69,6 +69,8 @@ def generate_pages( params_dict, out_dir ):
                     }
     template = "rosparam.html"
     generate_from_template( out_dir, main_dict, template_name=template )
+    template = "rosparam.md"
+    generate_from_template( out_dir, main_dict, template_name=template )
 
 
 def flatten_dict( d, parent=""):
