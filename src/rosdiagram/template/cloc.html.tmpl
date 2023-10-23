@@ -10,8 +10,8 @@
 
 |import showgraph.datadict as data_dict
 
-|load "footer.html.tmpl" as footer
-|load "utils_html.tmpl" as tmpl_utils
+|load "footer.html.tmpl" as tmpl_footer
+|load "utils.html.tmpl" as tmpl_utils
 
 
 |template main( INPUT_DICT )
@@ -102,7 +102,7 @@ ${DATA_DICT.get('graph_map', '')}$>
     </div>
 
 |}
-${ footer.print() }
+${ tmpl_footer.print() }
 </body>
 </html>
 |end template

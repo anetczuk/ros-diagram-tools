@@ -10,8 +10,8 @@
 
 |import showgraph.datadict as data_dict
 
-|load "footer.html.tmpl" as footer
-|load "utils_html.tmpl" as tmpl_utils
+|load "footer.html.tmpl" as tmpl_footer
+|load "utils.html.tmpl" as tmpl_utils
 
 
 |template main( INPUT_DICT )
@@ -76,7 +76,7 @@ ${DATA_DICT.get('head_css_style', '')}
 ${ tmpl_utils.ros_link_list( items_list, "Content" ) }
 |}
 
-${ footer.print() }
+${ tmpl_footer.print() }
 </body>
 </html>
 |end template

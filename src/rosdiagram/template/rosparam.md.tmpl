@@ -10,8 +10,8 @@
 
 |import showgraph.datadict as data_dict
 
-|load "footer.md.tmpl" as footer
-|load "utils_md.tmpl" as tmpl_utils
+|load "footer.md.tmpl" as tmpl_footer
+|load "utils.md.tmpl" as tmpl_utils
 
 
 |template main( INPUT_DICT )
@@ -37,5 +37,5 @@ Project is distributed under the BSD 3-Clause license.
 |}
 
 
-${ footer.print() }
+${ tmpl_footer.print() }
 |end template

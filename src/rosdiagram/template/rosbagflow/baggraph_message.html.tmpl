@@ -10,7 +10,7 @@
 
 |import showgraph.datadict as data_dict
 
-|load "../footer.html.tmpl" as footer
+|load "../footer.html.tmpl" as tmpl_footer
 
 
 |template main( INPUT_DICT )
@@ -148,7 +148,7 @@ Project is distributed under the BSD 3-Clause license.
         <pre><code>${item.msgdef}</code></pre>
     </div>
 
-${ footer.print() }
+${ tmpl_footer.print() }
 </body>
 </html>
 |end template

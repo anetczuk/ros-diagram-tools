@@ -11,7 +11,7 @@
 |import showgraph.datadict as data_dict
 |import rosdiagram.textutils as textutils
 
-|load "footer.html.tmpl" as footer
+|load "footer.html.tmpl" as tmpl_footer
 
 
 |template main( INPUT_DICT )
@@ -200,7 +200,7 @@ ${DATA_DICT.get('head_css_style', '')}
     </div>
 |}
 
-${ footer.print() }
+${ tmpl_footer.print() }
 </body>
 </html>
 |end template
