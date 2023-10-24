@@ -165,7 +165,11 @@ def generate_pages( data_dict, cloc_graph, out_dir, highlight_list=None ):
                     "graph_label": main_graph_name,
                     "packages": packages_list
                     }
+
     template = "cloc.html"
+    generate_from_template( out_dir, main_dict, template_name=template )
+
+    template = "cloc.md"
     generate_from_template( out_dir, main_dict, template_name=template )
 
 

@@ -1,0 +1,43 @@
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
+
+
+|import showgraph.datadict as data_dict
+
+|load "footer.md.tmpl" as tmpl_footer
+|load "utils.md.tmpl" as tmpl_utils
+
+
+|template main( INPUT_DICT )
+|!
+|! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+|!
+${ tmpl_footer.print_header() }
+
+## cloc graph
+
+|!
+|! graph_image_path = DATA_DICT.get('graph_image_path')
+|{ if graph_image_path:
+|! img_alt_text = DATA_DICT.get('graph_image_alt_text', '')
+    $<[![${img_alt_text}]($graph_image_path "${img_alt_text}")]($graph_image_path)
+|}
+
+|!
+|! pkg_list = DATA_DICT.get('packages', [])
+|{ if pkg_list:
+    $<| Packages (${ len(pkg_list) }): | Lines number: |
+    $<| --- | --- |
+|{     for item_data in pkg_list:
+    $<| [${ item_data[0] }](${ item_data[1] }) | `${ item_data[2] }` |
+|}
+|}
+
+${ tmpl_footer.print_footer() }
+|end template
