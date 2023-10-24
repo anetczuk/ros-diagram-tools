@@ -1,0 +1,23 @@
+<!--
+File was automatically generated using 'ros-diagram-tools' project.
+Project is distributed under the BSD 3-Clause license.
+-->
+
+## packages graph
+
+[![gennodejs](gennodejs.png "gennodejs")](gennodejs.png)
+
+|     |     |
+| --- | --- |
+| Package path: | `/opt/ros/noetic/share/gennodejs` |
+| Nodes: | `` |
+| Graph packages (3): | Description: |
+| ----------------------------------- | ------------ |
+| [`genmsg`](genmsg.html) |  |
+| [`gennodejs`](gennodejs.html) |  |
+| [`message_generation`](message_generation.html) |  |
+
+
+</br>
+File was automatically generated using [*ros-diagram-tools*](https://github.com/anetczuk/ros-diagram-tools) project.
+Project is distributed under the BSD 3-Clause license.
