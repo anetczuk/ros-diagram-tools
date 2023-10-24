@@ -1,0 +1,23 @@
+<!--
+File was automatically generated using 'ros-diagram-tools' project.
+Project is distributed under the BSD 3-Clause license.
+-->
+
+## Main page
+
+|     |     |
+| --- | --- |
+| Data type: | `turtlebot3_msgs/VersionInfo` |
+
+```
+string hardware
+string firmware
+string software
+
+
+```
+
+
+</br>
+File was automatically generated using [*ros-diagram-tools*](https://github.com/anetczuk/ros-diagram-tools) project.
+Project is distributed under the BSD 3-Clause license.

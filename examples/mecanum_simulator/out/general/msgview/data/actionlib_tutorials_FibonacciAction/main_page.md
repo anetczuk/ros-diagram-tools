@@ -1,0 +1,76 @@
+<!--
+File was automatically generated using 'ros-diagram-tools' project.
+Project is distributed under the BSD 3-Clause license.
+-->
+
+## Main page
+
+|     |     |
+| --- | --- |
+| Data type: | `actionlib_tutorials/FibonacciAction` |
+
+```
+actionlib_tutorials/FibonacciActionGoal action_goal
+  std_msgs/Header header
+    uint32 seq
+    time stamp
+    string frame_id
+  actionlib_msgs/GoalID goal_id
+    time stamp
+    string id
+  actionlib_tutorials/FibonacciGoal goal
+    int32 order
+actionlib_tutorials/FibonacciActionResult action_result
+  std_msgs/Header header
+    uint32 seq
+    time stamp
+    string frame_id
+  actionlib_msgs/GoalStatus status
+    uint8 PENDING=0
+    uint8 ACTIVE=1
+    uint8 PREEMPTED=2
+    uint8 SUCCEEDED=3
+    uint8 ABORTED=4
+    uint8 REJECTED=5
+    uint8 PREEMPTING=6
+    uint8 RECALLING=7
+    uint8 RECALLED=8
+    uint8 LOST=9
+    actionlib_msgs/GoalID goal_id
+      time stamp
+      string id
+    uint8 status
+    string text
+  actionlib_tutorials/FibonacciResult result
+    int32[] sequence
+actionlib_tutorials/FibonacciActionFeedback action_feedback
+  std_msgs/Header header
+    uint32 seq
+    time stamp
+    string frame_id
+  actionlib_msgs/GoalStatus status
+    uint8 PENDING=0
+    uint8 ACTIVE=1
+    uint8 PREEMPTED=2
+    uint8 SUCCEEDED=3
+    uint8 ABORTED=4
+    uint8 REJECTED=5
+    uint8 PREEMPTING=6
+    uint8 RECALLING=7
+    uint8 RECALLED=8
+    uint8 LOST=9
+    actionlib_msgs/GoalID goal_id
+      time stamp
+      string id
+    uint8 status
+    string text
+  actionlib_tutorials/FibonacciFeedback feedback
+    int32[] sequence
+
+
+```
+
+
+</br>
+File was automatically generated using [*ros-diagram-tools*](https://github.com/anetczuk/ros-diagram-tools) project.
+Project is distributed under the BSD 3-Clause license.

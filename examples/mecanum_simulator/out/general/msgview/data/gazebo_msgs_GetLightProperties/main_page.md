@@ -1,0 +1,33 @@
+<!--
+File was automatically generated using 'ros-diagram-tools' project.
+Project is distributed under the BSD 3-Clause license.
+-->
+
+## Main page
+
+|     |     |
+| --- | --- |
+| Data type: | `gazebo_msgs/GetLightProperties` |
+| Usage: | `/gazebo/get_light_properties` |
+
+```
+string light_name
+---
+std_msgs/ColorRGBA diffuse
+  float32 r
+  float32 g
+  float32 b
+  float32 a
+float64 attenuation_constant
+float64 attenuation_linear
+float64 attenuation_quadratic
+bool success
+string status_message
+
+
+```
+
+
+</br>
+File was automatically generated using [*ros-diagram-tools*](https://github.com/anetczuk/ros-diagram-tools) project.
+Project is distributed under the BSD 3-Clause license.

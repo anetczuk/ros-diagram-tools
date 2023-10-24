@@ -1,0 +1,31 @@
+<!--
+File was automatically generated using 'ros-diagram-tools' project.
+Project is distributed under the BSD 3-Clause license.
+-->
+
+## Main page
+
+|     |     |
+| --- | --- |
+| Data type: | `sensor_msgs/PointCloud` |
+
+```
+std_msgs/Header header
+  uint32 seq
+  time stamp
+  string frame_id
+geometry_msgs/Point32[] points
+  float32 x
+  float32 y
+  float32 z
+sensor_msgs/ChannelFloat32[] channels
+  string name
+  float32[] values
+
+
+```
+
+
+</br>
+File was automatically generated using [*ros-diagram-tools*](https://github.com/anetczuk/ros-diagram-tools) project.
+Project is distributed under the BSD 3-Clause license.
