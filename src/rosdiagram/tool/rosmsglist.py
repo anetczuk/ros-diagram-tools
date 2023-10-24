@@ -50,7 +50,6 @@ def generate( messages_dir, services_dir, out_dir, topicsdumppath=None, services
 
 
 def generate_pages( msg_dict, srv_dict, out_dir, topics_dict, services_dict ):
-    template = "rosmsg.html"
     os.makedirs( out_dir, exist_ok=True )
 
     data_dir = os.path.join( out_dir, DATA_SUBDIR )
@@ -71,11 +70,15 @@ def generate_pages( msg_dict, srv_dict, out_dir, topics_dict, services_dict ):
                     "msg_items": ("Messages", messages_list),
                     "srv_items": ("Services", services_list)
                     }
+
+    template = "rosmsg.html"
+    generate_from_template( out_dir, main_dict, template_name=template )
+
+    template = "rosmsg.md"
     generate_from_template( out_dir, main_dict, template_name=template )
 
 
 def generate_subpages( data_dict, out_dir, use_dict ):
-    template = "rosmsg.html"
     messages_list = []
     for item, content in data_dict.items():
         ## extract users of items
@@ -98,7 +101,13 @@ def generate_subpages( data_dict, out_dir, use_dict ):
                         "item_content": content,
                         "item_users": users_list
                         }
+
+        template = "rosmsg.html"
         generate_from_template( data_fullpath, data_dict, template_name=template )
+
+        template = "rosmsg.md"
+        generate_from_template( data_fullpath, data_dict, template_name=template )
+
     return messages_list
 
 
