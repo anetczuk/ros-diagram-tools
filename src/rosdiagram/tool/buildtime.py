@@ -205,9 +205,12 @@ def generate_graph_page( schedule: Schedule, item_config_dict, output_dir ):
 
     template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "build_time_page.html.tmpl" )
     main_out_path = os.path.join( output_dir, "full_graph.html" )
-
     texttemplate.generate( template_path, main_out_path, INPUT_DICT=page_params )
+    _LOGGER.info( "writing main page: file://%s", main_out_path )
 
+    template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "build_time_page.md.tmpl" )
+    main_out_path = os.path.join( output_dir, "full_graph.md" )
+    texttemplate.generate( template_path, main_out_path, INPUT_DICT=page_params )
     _LOGGER.info( "writing main page: file://%s", main_out_path )
 
 

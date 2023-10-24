@@ -1,0 +1,94 @@
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
+
+
+|import showgraph.datadict as data_dict
+|import rosdiagram.textutils as textutils
+
+|load "footer.md.tmpl" as tmpl_footer
+
+
+|template main( INPUT_DICT )
+|!
+|! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+|!
+${ tmpl_footer.print_header() }
+
+## build schedule graph
+
+
+$<[![missing image](${DATA_DICT.get('svg_name')} "missing image")](${DATA_DICT.get('svg_name')})
+
+
+Stats:
+$<|  |  |
+$<| --- | --- |
+$<| **Build time:** | ${ DATA_DICT.get('total_time') } |
+$<| **Packages time sum:** | ${ DATA_DICT.get('packages_total_time') } |
+$<| **High load duration:** | ${ DATA_DICT.get('high_load_duration') } |
+$<| **Start gap duration:** | ${ DATA_DICT.get('start_gap_duration') } |
+$<| **Critical path gap duration:** | ${ DATA_DICT.get('critical_gap_duration') } |
+
+
+|!
+|! pipeline_times = DATA_DICT.get('pipeline_times')
+|!
+|{ if pipeline_times:
+    $<| Name: | Busy time: | Efficiency: |
+    $<| --- | --- |
+|{ for item in pipeline_times:
+    $<| ${ item[0] } | ${ textutils.time_to_string( item[1] ) } | ${ round( item[2] * 100, 2 ) } %< |
+|}
+|}
+
+
+|!
+|! critical_path = DATA_DICT.get('critical_path')
+|!
+|{ if critical_path:
+    $<**Critical path:**
+
+    $<| Name: | Duration: | Gap: | Start time: | End time: |
+    $<| --- | --- |
+|{ for item in critical_path:
+    $<| ${ item[0] } | ${ item[1] } | ${ item[2] } | ${ item[3] } | ${ item[4] } |
+|}
+|}
+
+
+|!
+|! dur_list = DATA_DICT.get('duration_list')
+|!
+|{ if dur_list:
+    $<**Packages (duration order):**
+
+    $<| Name: | Duration: | Start time: | End time: |
+    $<| --- | --- |
+|{ for item in dur_list:
+    $<| ${ item[0] } | ${ item[1] } | ${ item[2] } | ${ item[3] } |
+|}
+|}
+
+
+|!
+|! package_list = DATA_DICT.get('packages_list')
+|!
+|{ if package_list:
+    $<**Packages (name order):**
+
+    $<| Name: | Duration: | Start time: | End time: |
+    $<| --- | --- |
+|{ for item in package_list:
+    $<| ${ item[0] } | ${ item[1] } | ${ item[2] } | ${ item[3] } |
+|}
+|}
+
+
+${ tmpl_footer.print_footer() }
+|end template
