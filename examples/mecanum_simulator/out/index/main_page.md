@@ -1,0 +1,20 @@
+<!--
+File was automatically generated using 'ros-diagram-tools' project.
+Project is distributed under the BSD 3-Clause license.
+-->
+
+## Diagrams index
+
+
+Content (6):
+ - [`src code distribution`](../codedistribution/full_graph.html)
+ - [`catkin pkg tree`](../catkintree/full_graph.html)
+ - [`catkin build`](../catkinschedule/full_graph.html)
+ - [`nodes classify`](../nodes_classification.txt)
+ - [`nodes graph`](../nodetree/whole_graph.png)
+ - [`topics graph`](../topictree/graph.png)
+
+
+</br>
+File was automatically generated using [*ros-diagram-tools*](https://github.com/anetczuk/ros-diagram-tools) project.
+Project is distributed under the BSD 3-Clause license.
