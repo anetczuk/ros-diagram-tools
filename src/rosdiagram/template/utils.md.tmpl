@@ -18,6 +18,15 @@
 |end template
 
 
+|template add_graph_default_image( DATA_DICT )
+|! graph_image_path = DATA_DICT.get('graph_image_path')
+|{ if graph_image_path:
+|! img_alt_text = DATA_DICT.get('graph_image_alt_text', '')
+    $<[![${img_alt_text}]($graph_image_path "${img_alt_text}")]($graph_image_path)
+|}
+|end template
+
+
 |template ros_link_table( items_list, list_title )
 |{ if items_list:
     $<| $list_title (${ len(items_list) }): | Description: |

@@ -22,12 +22,7 @@ ${ tmpl_footer.print_header() }
 
 ## cloc graph
 
-|!
-|! graph_image_path = DATA_DICT.get('graph_image_path')
-|{ if graph_image_path:
-|! img_alt_text = DATA_DICT.get('graph_image_alt_text', '')
-    $<[![${img_alt_text}]($graph_image_path "${img_alt_text}")]($graph_image_path)
-|}
+${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
 
 |!
 |! pkg_list = DATA_DICT.get('packages', [])

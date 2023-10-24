@@ -72,12 +72,7 @@ ${DATA_DICT.get('head_css_style', '')}
         <br />
     </div>
     <div class="center_content">
-|!
-|! graph_image_path = DATA_DICT.get('graph_image_path')
-|{ if graph_image_path:
-        <img src="$graph_image_path" alt="${DATA_DICT.get('graph_image_alt_text', '')}" usemap="#${DATA_DICT.get('graph_name', '')}">
-${DATA_DICT.get('graph_map', '')}$>
-|}
+${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
     </div>
 
 |!
