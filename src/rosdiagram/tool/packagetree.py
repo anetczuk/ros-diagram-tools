@@ -206,7 +206,11 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
                     }
     if main_title is not None:
         main_dict[ "main_title" ] = main_title
+
     template = "packagetree.html"
+    generate_from_template( out_dir, main_dict, template_name=template )
+
+    template = "packagetree.md"
     generate_from_template( out_dir, main_dict, template_name=template )
 
 
@@ -223,7 +227,6 @@ def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link
 
     packages_desc = nodes_description.get( "package", None )
 
-    template = "packagetree.html"
     subpages_dict = {}
     for item_id in sub_items_list:
         _LOGGER.info( "preparing subpage data for %s", item_id )
@@ -259,6 +262,11 @@ def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link
         item_dict[ "graph_packages" ] = converted_list
 
         _LOGGER.info( "preparing page for item %s", item_id )
+
+        template = "packagetree.html"
+        generate_from_template( sub_output_dir, item_dict, template_name=template )
+
+        template = "packagetree.md"
         generate_from_template( sub_output_dir, item_dict, template_name=template )
 
     return subpages_dict

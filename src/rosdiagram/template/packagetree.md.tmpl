@@ -1,0 +1,46 @@
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
+
+
+|import showgraph.datadict as data_dict
+
+|load "footer.md.tmpl" as tmpl_footer
+|load "utils.md.tmpl" as tmpl_utils
+
+
+|template main( INPUT_DICT )
+|!
+|! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+|!
+${ tmpl_footer.print_header() }
+
+## ${DATA_DICT.get('main_title', 'packages graph')}
+
+|! graph_image_path = DATA_DICT.get('graph_image_path')
+|{ if graph_image_path:
+|! img_alt_text = DATA_DICT.get('graph_image_alt_text', '')
+    $<[![${img_alt_text}]($graph_image_path "${img_alt_text}")]($graph_image_path)
+|}
+
+|!
+|! pkg_path = DATA_DICT.get('pkg_path', "")
+|! pkg_nodes = DATA_DICT.get('pkg_nodes', [])
+|{ if pkg_path or pkg_nodes:
+    $<|     |     |
+    $<| --- | --- |
+    $<| Package path: | `${pkg_path}` |
+    $<| Nodes: | `${ " ".join(pkg_nodes) }` |
+|}
+|!
+|! packages_list = DATA_DICT.get('graph_packages', [])
+${ tmpl_utils.ros_link_table( packages_list, "Graph packages" ) }$>
+|!
+
+${ tmpl_footer.print_footer() }
+|end template
