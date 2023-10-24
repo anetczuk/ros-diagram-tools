@@ -36,7 +36,11 @@ def generate_pages( items_list, out_dir ):
     main_dict = {   "style": {},
                     "items_list": converted_items_list
                     }
+
     template = "rosindex.html"
+    generate_from_template( out_dir, main_dict, template_name=template )
+
+    template = "rosindex.md"
     generate_from_template( out_dir, main_dict, template_name=template )
 
 

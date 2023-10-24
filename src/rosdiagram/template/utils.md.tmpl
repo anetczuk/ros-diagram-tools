@@ -10,9 +10,9 @@
 
 |template ros_link_list( items_list, list_title )
 |{ if items_list:
-    $list_title (${ len(items_list) }):
+    $<$list_title (${ len(items_list) }):
 |{ for items_pair in items_list:
-        - ${ ros_item_link( items_pair ) }
+        $< - ${ ros_item_link( items_pair ) }
 |}
 |}
 |end template
