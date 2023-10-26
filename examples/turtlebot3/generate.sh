@@ -19,7 +19,9 @@ DUMP_DIR="$WORK_DIR/dump"
 OUT_ROOT_DIR="$WORK_DIR/out"
 
 
-# rm -rf "$OUT_ROOT_DIR"
+rm -rf "$OUT_ROOT_DIR"
+
+mkdir -p "$OUT_ROOT_DIR"
 
 
 echo "generating codedistribution"

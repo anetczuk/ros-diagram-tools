@@ -9,7 +9,7 @@ SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 TOOL_PATH="$SCRIPT_DIR/../../src/"
 
 CATKIN_DIR="$(pwd)/catkin_ws"
-OUT_DIR="$(pwd)/out"
+OUT_DIR="$(pwd)/dump"
 
 
 mkdir -p $OUT_DIR

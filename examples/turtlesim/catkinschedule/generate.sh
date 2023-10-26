@@ -12,6 +12,8 @@ TOOL_DIR="$SCRIPT_DIR/../../../src"
 OUT_DIR="$SCRIPT_DIR/out"
 
 
+rm -rf "$OUT_DIR"
+
 mkdir -p $OUT_DIR
 
 
@@ -20,14 +22,13 @@ $TOOL_DIR/rosdiagramtools.py buildtime -la \
                                        -st 1 -sp 150 \
                                        --outhtml --outdir $OUT_DIR $@
 
-cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
-
-
 files_list=$(find $OUT_DIR -type f -name "*.puml")
 
 echo "Generating diagrams for files:"
 echo "$files_list"
 
 plantuml $files_list -tsvg -nometadata -v
+
+cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
 
 convert "$OUT_DIR/schedule.svg" -strip -density 600 "$OUT_DIR/build-schedule.png"

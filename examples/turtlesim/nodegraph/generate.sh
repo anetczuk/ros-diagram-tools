@@ -12,6 +12,8 @@ TOOL_DIR="$SCRIPT_DIR/../../../src"
 OUT_DIR="$SCRIPT_DIR/out"
 
 
+rm -rf "$OUT_DIR"
+
 mkdir -p $OUT_DIR
 
 

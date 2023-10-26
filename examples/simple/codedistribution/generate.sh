@@ -14,6 +14,8 @@ DUMP_DIR="$SCRIPT_DIR/dump"
 OUT_DIR="$SCRIPT_DIR/out"
 
 
+rm -rf "$OUT_DIR"
+
 mkdir -p $DUMP_DIR
 mkdir -p $OUT_DIR
 
