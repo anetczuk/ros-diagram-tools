@@ -7,10 +7,10 @@ Project is distributed under the BSD 3-Clause license.
 
 [![/odom](t__odom.png "/odom")](t__odom.png)
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Topic name: | `/odom` |
-| Data type | `nav_msgs/Odometry` |
+| Data type: | `nav_msgs/Odometry` |
 | Publishers: | `/gazebo` |
 | Subscribers: | `` |
 
@@ -50,11 +50,11 @@ geometry_msgs/TwistWithCovariance twist
 
 
 | ROS nodes (1): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/gazebo`](n__gazebo.html) | Gazebo node |
 
 | ROS topics (1): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/odom`](t__odom.html) | topic with odometry |
 
 

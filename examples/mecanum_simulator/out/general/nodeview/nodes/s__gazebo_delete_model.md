@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/gazebo/delete_model` |
-| Data type | `gazebo_msgs/DeleteModel` |
+| Data type: | `gazebo_msgs/DeleteModel` |
 | Listener: | [`/gazebo`](n__gazebo.html) |
 
 Message:

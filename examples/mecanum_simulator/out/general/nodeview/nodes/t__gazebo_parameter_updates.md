@@ -7,10 +7,10 @@ Project is distributed under the BSD 3-Clause license.
 
 [![/gazebo/parameter_updates](t__gazebo_parameter_updates.png "/gazebo/parameter_updates")](t__gazebo_parameter_updates.png)
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Topic name: | `/gazebo/parameter_updates` |
-| Data type | `dynamic_reconfigure/Config` |
+| Data type: | `dynamic_reconfigure/Config` |
 | Publishers: | `/gazebo` |
 | Subscribers: | `` |
 
@@ -39,11 +39,11 @@ dynamic_reconfigure/GroupState[] groups
 
 
 | ROS nodes (1): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/gazebo`](n__gazebo.html) | Gazebo node |
 
 | ROS topics (1): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/gazebo/parameter_updates`](t__gazebo_parameter_updates.html) |  |
 
 

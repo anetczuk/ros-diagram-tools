@@ -11,8 +11,10 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Package path: | `/opt/ros/noetic/share/rosgraph_msgs` |
 | Nodes: | `` |
+
+
 | Graph packages (8): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`gazebo_ros`](gazebo_ros.html) | Gazebo package |
 | [`message_runtime`](message_runtime.html) |  |
 | [`roscpp`](roscpp.html) |  |

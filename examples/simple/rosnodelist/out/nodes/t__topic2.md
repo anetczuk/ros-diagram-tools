@@ -7,20 +7,20 @@ Project is distributed under the BSD 3-Clause license.
 
 [![/topic2](t__topic2.png "/topic2")](t__topic2.png)
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Topic name: | `/topic2` |
-| Data type | `xxx2` |
+| Data type: | `xxx2` |
 | Publishers: | `/node1` |
 | Subscribers: | `` |
 
 
 | ROS nodes (1): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/node1`](n__node1.html) |  |
 
 | ROS topics (1): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/topic2`](t__topic2.html) |  |
 
 

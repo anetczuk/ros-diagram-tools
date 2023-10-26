@@ -7,10 +7,10 @@ Project is distributed under the BSD 3-Clause license.
 
 [![/joint_states](t__joint_states.png "/joint_states")](t__joint_states.png)
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Topic name: | `/joint_states` |
-| Data type | `sensor_msgs/JointState` |
+| Data type: | `sensor_msgs/JointState` |
 | Publishers: | `` |
 | Subscribers: | `/robot_state_publisher` |
 
@@ -30,11 +30,11 @@ float64[] effort
 
 
 | ROS nodes (1): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/robot_state_publisher`](n__robot_state_publisher.html) |  |
 
 | ROS topics (1): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/joint_states`](t__joint_states.html) |  |
 
 

@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![full_graph](full_graph.png "full_graph")](full_graph.png)
 
+
 | Graph packages (12): | Description: |
-| ----------------------------------- | ------------ |
+| -------------------- | ------------ |
 | [`gazebo-dev`](nodes/gazebo_dev.html) |  |
 | [`geometry_msgs`](nodes/geometry_msgs.html) |  |
 | [`message_generation`](nodes/message_generation.html) |  |

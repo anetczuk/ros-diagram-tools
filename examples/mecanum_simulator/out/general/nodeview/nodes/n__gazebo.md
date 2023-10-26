@@ -7,16 +7,20 @@ Project is distributed under the BSD 3-Clause license.
 
 [![/gazebo](n__gazebo.png "/gazebo")](n__gazebo.png)
 
-                
+|     |     |
+| --- | --- |
+| Package name: | `gazebo_ros` |
+| Package path: | `/opt/ros/noetic/share/gazebo_ros` |
+
 | ROS nodes (4): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/gazebo`](n__gazebo.html) | Gazebo node |
 | [`/gazebo_gui`](n__gazebo_gui.html) |  |
 | [`/robot_state_publisher`](n__robot_state_publisher.html) |  |
 | [`/rosout`](n__rosout.html) |  |
 
 | ROS topics (11): | Description: |
-| ----------------------------------- | ------------ |
+| ---------------- | ------------ |
 | [`/clock`](t__clock.html) |  |
 | [`/cmd_vel`](t__cmd_vel.html) |  |
 | [`/gazebo/link_states`](t__gazebo_link_states.html) |  |
@@ -30,7 +34,7 @@ Project is distributed under the BSD 3-Clause license.
 | [`/rosout`](t__rosout.html) |  |
 
 | ROS services (30): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------ | ------------ |
 | [`/gazebo/apply_body_wrench`](s__gazebo_apply_body_wrench.html) |  |
 | [`/gazebo/apply_joint_effort`](s__gazebo_apply_joint_effort.html) |  |
 | [`/gazebo/clear_body_wrenches`](s__gazebo_clear_body_wrenches.html) |  |

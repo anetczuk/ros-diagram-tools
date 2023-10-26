@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![std_srvs](std_srvs.png "std_srvs")](std_srvs.png)
 
+
 | Graph packages (2): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`nexus_4wd_mecanum_gazebo`](nexus_4wd_mecanum_gazebo.html) |  |
 | [`std_srvs`](std_srvs.html) |  |
 

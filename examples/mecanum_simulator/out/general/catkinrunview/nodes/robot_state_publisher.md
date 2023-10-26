@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![robot_state_publisher](robot_state_publisher.png "robot_state_publisher")](robot_state_publisher.png)
 
+
 | Graph packages (2): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`nexus_4wd_mecanum_description`](nexus_4wd_mecanum_description.html) |  |
 | [`robot_state_publisher`](robot_state_publisher.html) |  |
 

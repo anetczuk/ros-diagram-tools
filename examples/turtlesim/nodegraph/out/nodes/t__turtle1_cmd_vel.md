@@ -7,10 +7,10 @@ Project is distributed under the BSD 3-Clause license.
 
 [![/turtle1/cmd_vel](t__turtle1_cmd_vel.png "/turtle1/cmd_vel")](t__turtle1_cmd_vel.png)
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Topic name: | `/turtle1/cmd_vel` |
-| Data type | `geometry_msgs/Twist` |
+| Data type: | `geometry_msgs/Twist` |
 | Publishers: | `` |
 | Subscribers: | `/turtlesim` |
 
@@ -30,11 +30,11 @@ geometry_msgs/Vector3 angular
 
 
 | ROS nodes (1): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/turtlesim`](n__turtlesim.html) |  |
 
 | ROS topics (1): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/turtle1/cmd_vel`](t__turtle1_cmd_vel.html) |  |
 
 

@@ -11,8 +11,10 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Package path: | `/opt/ros/noetic/share/dynamic_reconfigure` |
 | Nodes: | `` |
+
+
 | Graph packages (8): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`dynamic_reconfigure`](dynamic_reconfigure.html) |  |
 | [`gazebo_ros`](gazebo_ros.html) | Gazebo package |
 | [`message_runtime`](message_runtime.html) |  |

@@ -11,8 +11,10 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Package path: | `/opt/ros/noetic/share/rosbag_storage` |
 | Nodes: | `` |
+
+
 | Graph packages (8): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`cpp_common`](cpp_common.html) |  |
 | [`pluginlib`](pluginlib.html) |  |
 | [`rosbag`](rosbag.html) |  |

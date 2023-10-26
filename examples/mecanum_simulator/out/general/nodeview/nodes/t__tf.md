@@ -7,10 +7,10 @@ Project is distributed under the BSD 3-Clause license.
 
 [![/tf](t__tf.png "/tf")](t__tf.png)
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Topic name: | `/tf` |
-| Data type | `tf2_msgs/TFMessage` |
+| Data type: | `tf2_msgs/TFMessage` |
 | Publishers: | `/robot_state_publisher` |
 | Subscribers: | `` |
 
@@ -38,11 +38,11 @@ geometry_msgs/TransformStamped[] transforms
 
 
 | ROS nodes (1): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/robot_state_publisher`](n__robot_state_publisher.html) |  |
 
 | ROS topics (1): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/tf`](t__tf.html) |  |
 
 

@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/spawn` |
-| Data type | `turtlesim/Spawn` |
+| Data type: | `turtlesim/Spawn` |
 | Listener: | [`/turtlesim`](n__turtlesim.html) |
 
 Message:

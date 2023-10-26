@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![kdl_parser](kdl_parser.png "kdl_parser")](kdl_parser.png)
 
+
 | Graph packages (2): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`kdl_parser`](kdl_parser.html) |  |
 | [`nexus_4wd_mecanum_description`](nexus_4wd_mecanum_description.html) |  |
 

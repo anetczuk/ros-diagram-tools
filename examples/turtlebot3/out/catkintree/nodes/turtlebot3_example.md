@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![turtlebot3_example](turtlebot3_example.png "turtlebot3_example")](turtlebot3_example.png)
 
+
 | Graph packages (14): | Description: |
-| ----------------------------------- | ------------ |
+| -------------------- | ------------ |
 | [`actionlib`](actionlib.html) |  |
 | [`actionlib_msgs`](actionlib_msgs.html) |  |
 | [`geometry_msgs`](geometry_msgs.html) |  |

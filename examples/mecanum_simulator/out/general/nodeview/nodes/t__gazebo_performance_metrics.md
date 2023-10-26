@@ -7,10 +7,10 @@ Project is distributed under the BSD 3-Clause license.
 
 [![/gazebo/performance_metrics](t__gazebo_performance_metrics.png "/gazebo/performance_metrics")](t__gazebo_performance_metrics.png)
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Topic name: | `/gazebo/performance_metrics` |
-| Data type | `gazebo_msgs/PerformanceMetrics` |
+| Data type: | `gazebo_msgs/PerformanceMetrics` |
 | Publishers: | `/gazebo` |
 | Subscribers: | `` |
 
@@ -32,11 +32,11 @@ gazebo_msgs/SensorPerformanceMetric[] sensors
 
 
 | ROS nodes (1): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/gazebo`](n__gazebo.html) | Gazebo node |
 
 | ROS topics (1): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/gazebo/performance_metrics`](t__gazebo_performance_metrics.html) |  |
 
 

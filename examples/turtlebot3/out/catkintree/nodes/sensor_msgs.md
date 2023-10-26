@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![sensor_msgs](sensor_msgs.png "sensor_msgs")](sensor_msgs.png)
 
+
 | Graph packages (4): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`sensor_msgs`](sensor_msgs.html) |  |
 | [`turtlebot3_bringup`](turtlebot3_bringup.html) |  |
 | [`turtlebot3_example`](turtlebot3_example.html) |  |

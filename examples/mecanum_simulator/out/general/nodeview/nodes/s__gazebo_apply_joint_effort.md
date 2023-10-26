@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/gazebo/apply_joint_effort` |
-| Data type | `gazebo_msgs/ApplyJointEffort` |
+| Data type: | `gazebo_msgs/ApplyJointEffort` |
 | Listener: | [`/gazebo`](n__gazebo.html) |
 
 Message:

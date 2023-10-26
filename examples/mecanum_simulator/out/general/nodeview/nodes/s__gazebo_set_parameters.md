@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/gazebo/set_parameters` |
-| Data type | `dynamic_reconfigure/Reconfigure` |
+| Data type: | `dynamic_reconfigure/Reconfigure` |
 | Listener: | [`/gazebo`](n__gazebo.html) |
 
 Message:

@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![rosserial_python](rosserial_python.png "rosserial_python")](rosserial_python.png)
 
+
 | Graph packages (2): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`rosserial_python`](rosserial_python.html) |  |
 | [`turtlebot3_bringup`](turtlebot3_bringup.html) |  |
 

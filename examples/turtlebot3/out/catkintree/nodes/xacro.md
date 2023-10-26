@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![xacro](xacro.png "xacro")](xacro.png)
 
+
 | Graph packages (2): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`turtlebot3_description`](turtlebot3_description.html) |  |
 | [`xacro`](xacro.html) |  |
 

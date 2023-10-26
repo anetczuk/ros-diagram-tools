@@ -7,10 +7,10 @@ Project is distributed under the BSD 3-Clause license.
 
 [![/rosout](t__rosout.png "/rosout")](t__rosout.png)
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Topic name: | `<unknown>` |
-| Data type | `rosgraph_msgs/Log` |
+| Data type: | `rosgraph_msgs/Log` |
 | Publishers: | `` |
 | Subscribers: | `` |
 
@@ -38,14 +38,14 @@ string[] topics
 
 
 | ROS nodes (4): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/gazebo`](n__gazebo.html) | Gazebo node |
 | [`/gazebo_gui`](n__gazebo_gui.html) |  |
 | [`/robot_state_publisher`](n__robot_state_publisher.html) |  |
 | [`/rosout`](n__rosout.html) |  |
 
 | ROS topics (1): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/rosout`](t__rosout.html) |  |
 
 

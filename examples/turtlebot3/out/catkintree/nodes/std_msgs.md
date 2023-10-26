@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![std_msgs](std_msgs.png "std_msgs")](std_msgs.png)
 
+
 | Graph packages (3): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`std_msgs`](std_msgs.html) |  |
 | [`turtlebot3_bringup`](turtlebot3_bringup.html) |  |
 | [`turtlebot3_example`](turtlebot3_example.html) |  |

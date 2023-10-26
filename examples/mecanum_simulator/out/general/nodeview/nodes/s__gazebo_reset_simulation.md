@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/gazebo/reset_simulation` |
-| Data type | `std_srvs/Empty` |
+| Data type: | `std_srvs/Empty` |
 | Listener: | [`/gazebo`](n__gazebo.html) |
 
 Message:

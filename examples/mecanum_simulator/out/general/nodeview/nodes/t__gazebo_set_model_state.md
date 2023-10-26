@@ -7,10 +7,10 @@ Project is distributed under the BSD 3-Clause license.
 
 [![/gazebo/set_model_state](t__gazebo_set_model_state.png "/gazebo/set_model_state")](t__gazebo_set_model_state.png)
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Topic name: | `/gazebo/set_model_state` |
-| Data type | `gazebo_msgs/ModelState` |
+| Data type: | `gazebo_msgs/ModelState` |
 | Publishers: | `` |
 | Subscribers: | `/gazebo` |
 
@@ -43,11 +43,11 @@ string reference_frame
 
 
 | ROS nodes (1): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/gazebo`](n__gazebo.html) | Gazebo node |
 
 | ROS topics (1): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/gazebo/set_model_state`](t__gazebo_set_model_state.html) |  |
 
 

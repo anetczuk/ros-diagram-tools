@@ -11,8 +11,10 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Package path: | `/opt/ros/noetic/share/rosparam` |
 | Nodes: | `` |
+
+
 | Graph packages (3): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`rosgraph`](rosgraph.html) |  |
 | [`roslaunch`](roslaunch.html) |  |
 | [`rosparam`](rosparam.html) |  |

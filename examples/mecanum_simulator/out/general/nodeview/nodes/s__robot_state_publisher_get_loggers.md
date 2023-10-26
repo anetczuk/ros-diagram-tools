@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/robot_state_publisher/get_loggers` |
-| Data type | `roscpp/GetLoggers` |
+| Data type: | `roscpp/GetLoggers` |
 | Listener: | [`/robot_state_publisher`](n__robot_state_publisher.html) |
 
 Message:

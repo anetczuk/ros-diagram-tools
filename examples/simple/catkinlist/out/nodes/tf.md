@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![tf](tf.png "tf")](tf.png)
 
+
 | Graph packages (2): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`package_a`](package_a.html) |  |
 | [`tf`](tf.html) |  |
 

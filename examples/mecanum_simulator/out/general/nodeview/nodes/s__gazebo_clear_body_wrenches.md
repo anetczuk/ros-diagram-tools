@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/gazebo/clear_body_wrenches` |
-| Data type | `gazebo_msgs/BodyRequest` |
+| Data type: | `gazebo_msgs/BodyRequest` |
 | Listener: | [`/gazebo`](n__gazebo.html) |
 
 Message:

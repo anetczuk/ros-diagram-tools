@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/rosout/get_loggers` |
-| Data type | `roscpp/GetLoggers` |
+| Data type: | `roscpp/GetLoggers` |
 | Listener: | [`/rosout`](n__rosout.html) |
 
 Message:

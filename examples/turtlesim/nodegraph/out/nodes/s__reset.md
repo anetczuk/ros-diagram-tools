@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/reset` |
-| Data type | `std_srvs/Empty` |
+| Data type: | `std_srvs/Empty` |
 | Listener: | [`/turtlesim`](n__turtlesim.html) |
 
 Message:

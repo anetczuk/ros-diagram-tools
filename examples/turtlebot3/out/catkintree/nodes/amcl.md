@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![amcl](amcl.png "amcl")](amcl.png)
 
+
 | Graph packages (2): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`amcl`](amcl.html) |  |
 | [`turtlebot3_navigation`](turtlebot3_navigation.html) |  |
 

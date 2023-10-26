@@ -11,8 +11,10 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Package path: | `/opt/ros/noetic/share/rospack` |
 | Nodes: | `` |
+
+
 | Graph packages (3): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`ros_environment`](ros_environment.html) |  |
 | [`roslib`](roslib.html) |  |
 | [`rospack`](rospack.html) |  |

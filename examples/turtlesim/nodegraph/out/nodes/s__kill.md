@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/kill` |
-| Data type | `turtlesim/Kill` |
+| Data type: | `turtlesim/Kill` |
 | Listener: | [`/turtlesim`](n__turtlesim.html) |
 
 Message:

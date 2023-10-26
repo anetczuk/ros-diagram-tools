@@ -11,8 +11,10 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Package path: | `/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_gazebo` |
 | Nodes: | `/urdf_spawner` |
+
+
 | Graph packages (9): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`gazebo-dev`](gazebo_dev.html) |  |
 | [`geometry_msgs`](geometry_msgs.html) |  |
 | [`message_generation`](message_generation.html) |  |

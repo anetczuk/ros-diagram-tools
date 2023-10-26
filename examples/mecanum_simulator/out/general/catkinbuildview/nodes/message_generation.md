@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![message_generation](message_generation.png "message_generation")](message_generation.png)
 
+
 | Graph packages (2): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`message_generation`](message_generation.html) |  |
 | [`nexus_4wd_mecanum_gazebo`](nexus_4wd_mecanum_gazebo.html) |  |
 

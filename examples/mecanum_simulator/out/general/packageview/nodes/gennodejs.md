@@ -11,8 +11,10 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Package path: | `/opt/ros/noetic/share/gennodejs` |
 | Nodes: | `` |
+
+
 | Graph packages (3): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`genmsg`](genmsg.html) |  |
 | [`gennodejs`](gennodejs.html) |  |
 | [`message_generation`](message_generation.html) |  |

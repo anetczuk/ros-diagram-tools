@@ -6,8 +6,8 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/service1` |
 | Listener: | [`/node1`](n__node1.html) |
 

@@ -11,8 +11,10 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Package path: | `/opt/ros/noetic/share/rosconsole_bridge` |
 | Nodes: | `` |
+
+
 | Graph packages (4): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`cpp_common`](cpp_common.html) |  |
 | [`rosconsole`](rosconsole.html) |  |
 | [`rosconsole_bridge`](rosconsole_bridge.html) |  |

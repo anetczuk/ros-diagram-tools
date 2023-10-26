@@ -9,8 +9,9 @@ Project is distributed under the BSD 3-Clause license.
 [![missing image](schedule.svg "missing image")](schedule.svg)
 
 
-Stats:
-|  |  |
+**Stats:**
+
+|     |     |
 | --- | --- |
 | **Build time:** | 000 m 29.7 s |
 | **Packages time sum:** | 000 m 39.6 s |
@@ -19,18 +20,20 @@ Stats:
 | **Critical path gap duration:** | 000 m 00.0 s |
 
 
+**Pipeline:**
+
 | Name: | Busy time: | Efficiency: |
-| --- | --- |
-| thread 0 | 000 m 29.1 s | 97.98 %< |
-| thread 1 | 000 m 05.2 s | 17.51 %< |
-| thread 2 | 000 m 05.3 s | 17.85 %< |
-| OVERALL | 000 m 39.6 s | 44.44 %< |
+| ----- | ---------- | ----------- |
+| thread 0 | 000 m 29.1 s | 97.98 % |
+| thread 1 | 000 m 05.2 s | 17.51 % |
+| thread 2 | 000 m 05.3 s | 17.85 % |
+| OVERALL | 000 m 39.6 s | 44.44 % |
 
 
 **Critical path:**
 
 | Name: | Duration: | Gap: | Start time: | End time: |
-| --- | --- |
+| ----- | --------- | ---- | ----------- | --------- |
 | catkin_tools_prebuild | 000 m 05.3 s | 000 m 05.3 s | 000 m 00.0 s | 000 m 05.3 s |
 | turtlebot3_teleop | 000 m 03.2 s | 000 m 00.6 s | 000 m 05.3 s | 000 m 08.5 s |
 | turtlebot3_bringup | 000 m 11.6 s | 000 m 11.6 s | 000 m 08.5 s | 000 m 20.1 s |
@@ -41,7 +44,7 @@ Stats:
 **Packages (duration order):**
 
 | Name: | Duration: | Start time: | End time: |
-| --- | --- |
+| ----- | --------- | ----------- | --------- |
 | turtlebot3_bringup | 000 m 11.6 s | 000 m 08.5 s | 000 m 20.1 s |
 | turtlebot3_example | 000 m 07.9 s | 000 m 20.1 s | 000 m 28.0 s |
 | catkin_tools_prebuild | 000 m 05.3 s | 000 m 00.0 s | 000 m 05.3 s |
@@ -55,7 +58,7 @@ Stats:
 **Packages (name order):**
 
 | Name: | Duration: | Start time: | End time: |
-| --- | --- |
+| ----- | --------- | ----------- | --------- |
 | catkin_tools_prebuild | 000 m 05.3 s | 000 m 00.0 s | 000 m 05.3 s |
 | turtlebot3 | 000 m 01.7 s | 000 m 28.0 s | 000 m 29.7 s |
 | turtlebot3_bringup | 000 m 11.6 s | 000 m 08.5 s | 000 m 20.1 s |

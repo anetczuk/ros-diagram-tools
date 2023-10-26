@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![nav_msgs](nav_msgs.png "nav_msgs")](nav_msgs.png)
 
+
 | Graph packages (2): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`nav_msgs`](nav_msgs.html) |  |
 | [`nexus_4wd_mecanum_gazebo`](nexus_4wd_mecanum_gazebo.html) |  |
 

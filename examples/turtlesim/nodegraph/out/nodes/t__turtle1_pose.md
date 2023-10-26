@@ -7,10 +7,10 @@ Project is distributed under the BSD 3-Clause license.
 
 [![/turtle1/pose](t__turtle1_pose.png "/turtle1/pose")](t__turtle1_pose.png)
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Topic name: | `/turtle1/pose` |
-| Data type | `turtlesim/Pose` |
+| Data type: | `turtlesim/Pose` |
 | Publishers: | `/turtlesim` |
 | Subscribers: | `` |
 
@@ -27,11 +27,11 @@ float32 angular_velocity
 
 
 | ROS nodes (1): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/turtlesim`](n__turtlesim.html) |  |
 
 | ROS topics (1): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/turtle1/pose`](t__turtle1_pose.html) |  |
 
 

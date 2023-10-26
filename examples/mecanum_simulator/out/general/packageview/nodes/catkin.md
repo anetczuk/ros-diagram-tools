@@ -11,8 +11,10 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Package path: | `/opt/ros/noetic/share/catkin` |
 | Nodes: | `` |
+
+
 | Graph packages (5): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`catkin`](catkin.html) |  |
 | [`genmsg`](genmsg.html) |  |
 | [`rosbuild`](rosbuild.html) |  |

@@ -7,10 +7,10 @@ Project is distributed under the BSD 3-Clause license.
 
 [![/gazebo/parameter_descriptions](t__gazebo_parameter_descriptions.png "/gazebo/parameter_descriptions")](t__gazebo_parameter_descriptions.png)
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Topic name: | `/gazebo/parameter_descriptions` |
-| Data type | `dynamic_reconfigure/ConfigDescription` |
+| Data type: | `dynamic_reconfigure/ConfigDescription` |
 | Publishers: | `/gazebo` |
 | Subscribers: | `` |
 
@@ -87,11 +87,11 @@ dynamic_reconfigure/Config dflt
 
 
 | ROS nodes (1): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/gazebo`](n__gazebo.html) | Gazebo node |
 
 | ROS topics (1): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/gazebo/parameter_descriptions`](t__gazebo_parameter_descriptions.html) |  |
 
 

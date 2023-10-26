@@ -7,10 +7,10 @@ Project is distributed under the BSD 3-Clause license.
 
 [![/cmd_vel](t__cmd_vel.png "/cmd_vel")](t__cmd_vel.png)
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Topic name: | `/cmd_vel` |
-| Data type | `geometry_msgs/Twist` |
+| Data type: | `geometry_msgs/Twist` |
 | Publishers: | `` |
 | Subscribers: | `/gazebo` |
 
@@ -30,11 +30,11 @@ geometry_msgs/Vector3 angular
 
 
 | ROS nodes (1): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/gazebo`](n__gazebo.html) | Gazebo node |
 
 | ROS topics (1): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/cmd_vel`](t__cmd_vel.html) |  |
 
 

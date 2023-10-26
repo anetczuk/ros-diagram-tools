@@ -11,8 +11,10 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Package path: | `/opt/ros/noetic/share/geometry_msgs` |
 | Nodes: | `` |
+
+
 | Graph packages (13): | Description: |
-| ----------------------------------- | ------------ |
+| -------------------- | ------------ |
 | [`gazebo_msgs`](gazebo_msgs.html) | Gazebo package |
 | [`gazebo_ros`](gazebo_ros.html) | Gazebo package |
 | [`geometry_msgs`](geometry_msgs.html) |  |

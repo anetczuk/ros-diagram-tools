@@ -11,8 +11,10 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Package path: | `/opt/ros/noetic/share/rosout` |
 | Nodes: | `` |
+
+
 | Graph packages (4): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`roscpp`](roscpp.html) |  |
 | [`rosgraph_msgs`](rosgraph_msgs.html) |  |
 | [`roslaunch`](roslaunch.html) |  |

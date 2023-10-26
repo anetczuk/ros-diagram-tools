@@ -7,10 +7,10 @@ Project is distributed under the BSD 3-Clause license.
 
 [![/turtle1/color_sensor](t__turtle1_color_sensor.png "/turtle1/color_sensor")](t__turtle1_color_sensor.png)
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Topic name: | `/turtle1/color_sensor` |
-| Data type | `turtlesim/Color` |
+| Data type: | `turtlesim/Color` |
 | Publishers: | `/turtlesim` |
 | Subscribers: | `` |
 
@@ -25,11 +25,11 @@ uint8 b
 
 
 | ROS nodes (1): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/turtlesim`](n__turtlesim.html) |  |
 
 | ROS topics (1): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/turtle1/color_sensor`](t__turtle1_color_sensor.html) |  |
 
 

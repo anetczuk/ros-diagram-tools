@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/gazebo/set_light_properties` |
-| Data type | `gazebo_msgs/SetLightProperties` |
+| Data type: | `gazebo_msgs/SetLightProperties` |
 | Listener: | [`/gazebo`](n__gazebo.html) |
 
 Message:

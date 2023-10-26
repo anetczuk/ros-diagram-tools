@@ -7,10 +7,10 @@ Project is distributed under the BSD 3-Clause license.
 
 [![/gazebo/set_link_state](t__gazebo_set_link_state.png "/gazebo/set_link_state")](t__gazebo_set_link_state.png)
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Topic name: | `/gazebo/set_link_state` |
-| Data type | `gazebo_msgs/LinkState` |
+| Data type: | `gazebo_msgs/LinkState` |
 | Publishers: | `` |
 | Subscribers: | `/gazebo` |
 
@@ -43,11 +43,11 @@ string reference_frame
 
 
 | ROS nodes (1): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/gazebo`](n__gazebo.html) | Gazebo node |
 
 | ROS topics (1): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/gazebo/set_link_state`](t__gazebo_set_link_state.html) |  |
 
 

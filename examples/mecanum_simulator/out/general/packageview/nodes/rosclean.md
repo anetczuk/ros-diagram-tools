@@ -11,8 +11,10 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Package path: | `/opt/ros/noetic/share/rosclean` |
 | Nodes: | `` |
+
+
 | Graph packages (2): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`rosclean`](rosclean.html) |  |
 | [`roslaunch`](roslaunch.html) |  |
 

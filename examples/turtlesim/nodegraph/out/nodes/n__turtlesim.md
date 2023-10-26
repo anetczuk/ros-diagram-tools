@@ -8,17 +8,17 @@ Project is distributed under the BSD 3-Clause license.
 [![/turtlesim](n__turtlesim.png "/turtlesim")](n__turtlesim.png)
 
 | ROS nodes (1): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/turtlesim`](n__turtlesim.html) |  |
 
 | ROS topics (3): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/turtle1/cmd_vel`](t__turtle1_cmd_vel.html) |  |
 | [`/turtle1/color_sensor`](t__turtle1_color_sensor.html) |  |
 | [`/turtle1/pose`](t__turtle1_pose.html) |  |
 
 | ROS services (9): | Description: |
-| ----------------------------------- | ------------ |
+| ----------------- | ------------ |
 | [`/clear`](s__clear.html) |  |
 | [`/kill`](s__kill.html) |  |
 | [`/reset`](s__reset.html) |  |

@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![std_msgs](std_msgs.png "std_msgs")](std_msgs.png)
 
+
 | Graph packages (2): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`package_b`](package_b.html) |  |
 | [`std_msgs`](std_msgs.html) |  |
 

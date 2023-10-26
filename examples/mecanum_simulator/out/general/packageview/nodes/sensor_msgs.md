@@ -11,8 +11,10 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Package path: | `/opt/ros/noetic/share/sensor_msgs` |
 | Nodes: | `` |
+
+
 | Graph packages (7): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`gazebo_msgs`](gazebo_msgs.html) | Gazebo package |
 | [`geometry_msgs`](geometry_msgs.html) |  |
 | [`message_runtime`](message_runtime.html) |  |

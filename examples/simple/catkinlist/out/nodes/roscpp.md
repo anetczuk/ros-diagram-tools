@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![roscpp](roscpp.png "roscpp")](roscpp.png)
 
+
 | Graph packages (3): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`package_a`](package_a.html) |  |
 | [`package_c`](package_c.html) | important package |
 | [`roscpp`](roscpp.html) | other important package |

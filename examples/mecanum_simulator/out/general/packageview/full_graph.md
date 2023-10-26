@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![full_graph](full_graph.png "full_graph")](full_graph.png)
 
+
 | Graph packages (66): | Description: |
-| ----------------------------------- | ------------ |
+| -------------------- | ------------ |
 | [`actionlib`](nodes/actionlib.html) |  |
 | [`actionlib_msgs`](nodes/actionlib_msgs.html) |  |
 | [`catkin`](nodes/catkin.html) |  |

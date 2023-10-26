@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![full_graph](full_graph.png "full_graph")](full_graph.png)
 
+
 | Graph packages (10): | Description: |
-| ----------------------------------- | ------------ |
+| -------------------- | ------------ |
 | [`package_a`](nodes/package_a.html) |  |
 | [`package_b`](nodes/package_b.html) |  |
 | [`package_c`](nodes/package_c.html) | important package |

@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/turtlesim/set_logger_level` |
-| Data type | `roscpp/SetLoggerLevel` |
+| Data type: | `roscpp/SetLoggerLevel` |
 | Listener: | [`/turtlesim`](n__turtlesim.html) |
 
 Message:

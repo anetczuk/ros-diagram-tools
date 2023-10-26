@@ -8,18 +8,18 @@ Project is distributed under the BSD 3-Clause license.
 [![/node1](n__node1.png "/node1")](n__node1.png)
 
 | ROS nodes (2): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/node1`](n__node1.html) |  |
 | [`/node2`](n__node2.html) | description example |
 
 | ROS topics (3): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/topic1`](t__topic1.html) |  |
 | [`/topic2`](t__topic2.html) |  |
 | [`/topic3`](t__topic3.html) | important topic |
 
 | ROS services (1): | Description: |
-| ----------------------------------- | ------------ |
+| ----------------- | ------------ |
 | [`/service1`](s__service1.html) |  |
 
 

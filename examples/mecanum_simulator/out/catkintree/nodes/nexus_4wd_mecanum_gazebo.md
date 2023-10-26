@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![nexus_4wd_mecanum_gazebo](nexus_4wd_mecanum_gazebo.png "nexus_4wd_mecanum_gazebo")](nexus_4wd_mecanum_gazebo.png)
 
+
 | Graph packages (10): | Description: |
-| ----------------------------------- | ------------ |
+| -------------------- | ------------ |
 | [`gazebo`](gazebo.html) |  |
 | [`gazebo_ros`](gazebo_ros.html) |  |
 | [`geometry_msgs`](geometry_msgs.html) |  |

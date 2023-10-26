@@ -8,14 +8,14 @@ Project is distributed under the BSD 3-Clause license.
 [![full_graph](full_graph.png "full_graph")](full_graph.png)
 
 | ROS nodes (4): | Package: | Description: |
-| --------------------------------- | -------- | ------------ |
+| -------------- | -------- | ------------ |
 | [`/gazebo`](nodes/n__gazebo.html) | gazebo_ros | Gazebo node |
 | [`/gazebo_gui`](nodes/n__gazebo_gui.html) | gazebo_ros |  |
 | [`/robot_state_publisher`](nodes/n__robot_state_publisher.html) | nexus_4wd_mecanum_description |  |
 | [`/rosout`](nodes/n__rosout.html) |  |  |
 
 | ROS topics (15): | Description: |
-| ----------------------------------- | ------------ |
+| ---------------- | ------------ |
 | [`/clock`](nodes/t__clock.html) |  |
 | [`/cmd_vel`](nodes/t__cmd_vel.html) |  |
 | [`/gazebo/link_states`](nodes/t__gazebo_link_states.html) |  |
@@ -33,7 +33,7 @@ Project is distributed under the BSD 3-Clause license.
 | [`/tf_static`](nodes/t__tf_static.html) |  |
 
 | ROS services (36): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------ | ------------ |
 | [`/gazebo/apply_body_wrench`](nodes/s__gazebo_apply_body_wrench.html) |  |
 | [`/gazebo/apply_joint_effort`](nodes/s__gazebo_apply_joint_effort.html) |  |
 | [`/gazebo/clear_body_wrenches`](nodes/s__gazebo_clear_body_wrenches.html) |  |

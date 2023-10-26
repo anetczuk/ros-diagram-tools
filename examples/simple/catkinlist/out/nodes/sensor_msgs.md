@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![sensor_msgs](sensor_msgs.png "sensor_msgs")](sensor_msgs.png)
 
+
 | Graph packages (2): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`package_b`](package_b.html) |  |
 | [`sensor_msgs`](sensor_msgs.html) |  |
 

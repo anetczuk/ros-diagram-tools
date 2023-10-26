@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![roscpp](roscpp.png "roscpp")](roscpp.png)
 
+
 | Graph packages (2): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`nexus_4wd_mecanum_gazebo`](nexus_4wd_mecanum_gazebo.html) |  |
 | [`roscpp`](roscpp.html) |  |
 

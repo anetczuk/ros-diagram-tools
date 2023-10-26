@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/gazebo/get_model_properties` |
-| Data type | `gazebo_msgs/GetModelProperties` |
+| Data type: | `gazebo_msgs/GetModelProperties` |
 | Listener: | [`/gazebo`](n__gazebo.html) |
 
 Message:

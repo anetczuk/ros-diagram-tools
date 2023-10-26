@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![move_base](move_base.png "move_base")](move_base.png)
 
+
 | Graph packages (2): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`move_base`](move_base.html) |  |
 | [`turtlebot3_navigation`](turtlebot3_navigation.html) |  |
 

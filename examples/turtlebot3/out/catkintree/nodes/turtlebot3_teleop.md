@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![turtlebot3_teleop](turtlebot3_teleop.png "turtlebot3_teleop")](turtlebot3_teleop.png)
 
+
 | Graph packages (5): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`geometry_msgs`](geometry_msgs.html) |  |
 | [`rospy`](rospy.html) |  |
 | [`turtlebot3`](turtlebot3.html) |  |

@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![turtlebot3_navigation](turtlebot3_navigation.png "turtlebot3_navigation")](turtlebot3_navigation.png)
 
+
 | Graph packages (6): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`amcl`](amcl.html) |  |
 | [`map_server`](map_server.html) |  |
 | [`move_base`](move_base.html) |  |

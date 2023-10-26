@@ -11,8 +11,10 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Package path: | `/opt/ros/noetic/share/gazebo_ros` |
 | Nodes: | `/gazebo /gazebo_gui` |
+
+
 | Graph packages (12): | Description: |
-| ----------------------------------- | ------------ |
+| -------------------- | ------------ |
 | [`dynamic_reconfigure`](dynamic_reconfigure.html) |  |
 | [`gazebo_dev`](gazebo_dev.html) | Gazebo package |
 | [`gazebo_msgs`](gazebo_msgs.html) | Gazebo package |

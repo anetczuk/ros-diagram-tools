@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![turtlebot3_slam](turtlebot3_slam.png "turtlebot3_slam")](turtlebot3_slam.png)
 
+
 | Graph packages (5): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`roscpp`](roscpp.html) |  |
 | [`sensor_msgs`](sensor_msgs.html) |  |
 | [`turtlebot3`](turtlebot3.html) |  |

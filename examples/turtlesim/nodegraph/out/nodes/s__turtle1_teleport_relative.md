@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/turtle1/teleport_relative` |
-| Data type | `turtlesim/TeleportRelative` |
+| Data type: | `turtlesim/TeleportRelative` |
 | Listener: | [`/turtlesim`](n__turtlesim.html) |
 
 Message:

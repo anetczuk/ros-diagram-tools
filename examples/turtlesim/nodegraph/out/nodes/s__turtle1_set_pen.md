@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/turtle1/set_pen` |
-| Data type | `turtlesim/SetPen` |
+| Data type: | `turtlesim/SetPen` |
 | Listener: | [`/turtlesim`](n__turtlesim.html) |
 
 Message:

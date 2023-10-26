@@ -11,8 +11,10 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Package path: | `/opt/ros/noetic/share/rosmaster` |
 | Nodes: | `` |
+
+
 | Graph packages (4): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`rosgraph`](rosgraph.html) |  |
 | [`roslaunch`](roslaunch.html) |  |
 | [`rosmaster`](rosmaster.html) |  |

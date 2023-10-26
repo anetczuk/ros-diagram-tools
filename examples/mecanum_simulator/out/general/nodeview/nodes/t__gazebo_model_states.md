@@ -7,10 +7,10 @@ Project is distributed under the BSD 3-Clause license.
 
 [![/gazebo/model_states](t__gazebo_model_states.png "/gazebo/model_states")](t__gazebo_model_states.png)
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Topic name: | `/gazebo/model_states` |
-| Data type | `gazebo_msgs/ModelStates` |
+| Data type: | `gazebo_msgs/ModelStates` |
 | Publishers: | `/gazebo` |
 | Subscribers: | `` |
 
@@ -42,11 +42,11 @@ geometry_msgs/Twist[] twist
 
 
 | ROS nodes (1): | Description: |
-| ----------------------------------- | ------------ |
+| -------------- | ------------ |
 | [`/gazebo`](n__gazebo.html) | Gazebo node |
 
 | ROS topics (1): | Description: |
-| ----------------------------------- | ------------ |
+| --------------- | ------------ |
 | [`/gazebo/model_states`](t__gazebo_model_states.html) |  |
 
 

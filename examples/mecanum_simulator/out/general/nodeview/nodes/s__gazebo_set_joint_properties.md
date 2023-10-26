@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/gazebo/set_joint_properties` |
-| Data type | `gazebo_msgs/SetJointProperties` |
+| Data type: | `gazebo_msgs/SetJointProperties` |
 | Listener: | [`/gazebo`](n__gazebo.html) |
 
 Message:

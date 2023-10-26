@@ -6,10 +6,10 @@ Project is distributed under the BSD 3-Clause license.
 ## Service
 
 
-|  |  |
-| --------------------------------- | -------- | ------------ |
+|     |     |
+| --- | --- |
 | Name: | `/gazebo/spawn_urdf_model` |
-| Data type | `gazebo_msgs/SpawnModel` |
+| Data type: | `gazebo_msgs/SpawnModel` |
 | Listener: | [`/gazebo`](n__gazebo.html) |
 
 Message:

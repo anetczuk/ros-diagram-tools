@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![turtlebot3_bringup](turtlebot3_bringup.png "turtlebot3_bringup")](turtlebot3_bringup.png)
 
+
 | Graph packages (16): | Description: |
-| ----------------------------------- | ------------ |
+| -------------------- | ------------ |
 | [`diagnostic_msgs`](diagnostic_msgs.html) |  |
 | [`hls_lfcd_lds_driver`](hls_lfcd_lds_driver.html) |  |
 | [`joint_state_publisher`](joint_state_publisher.html) |  |

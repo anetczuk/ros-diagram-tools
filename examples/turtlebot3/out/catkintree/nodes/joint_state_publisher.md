@@ -7,8 +7,9 @@ Project is distributed under the BSD 3-Clause license.
 
 [![joint_state_publisher](joint_state_publisher.png "joint_state_publisher")](joint_state_publisher.png)
 
+
 | Graph packages (2): | Description: |
-| ----------------------------------- | ------------ |
+| ------------------- | ------------ |
 | [`joint_state_publisher`](joint_state_publisher.html) |  |
 | [`turtlebot3_bringup`](turtlebot3_bringup.html) |  |
 
