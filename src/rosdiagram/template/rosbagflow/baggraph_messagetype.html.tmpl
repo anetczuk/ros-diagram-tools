@@ -12,6 +12,7 @@
 
 |load "../footer.html.tmpl" as tmpl_footer
 |load "../utils.html.tmpl" as tmpl_utils
+|import rosdiagram.template.utils_html as py_utils
 
 
 |template main( INPUT_DICT )
@@ -62,17 +63,17 @@ ${ tmpl_footer.print_header() }
 </head>
 <body>
     <div class="info_content">
-        <a href="../full_graph.html">back to Main graph</a>
+        ${ py_utils.link_simple( "back to Main graph", "../full_graph.html" ) }
     </div>
     <div class="info_content">
 |!  topic_urls = DATA_DICT.get( 'topic_urls', [] )
 |!  data_matrix = []
-|!  data_matrix.append( [ "Message:",  f"<code>{DATA_DICT.get('msgtype', '')}</code>" ] )
+|!  data_matrix.append( [ "Message:",  py_utils.code_inline( DATA_DICT.get('msgtype', '') ) ] )
 |!  link_list = [ generate_link( topic_url[0], topic_url[1] ) for topic_url in topic_urls ]
 |!  data_matrix.append( [ "Topic:", f"{ ' '.join( link_list ) }" ] )
         $<${ tmpl_utils.insert_table2( [], data_matrix ) }
         <br />
-        <pre><code>${DATA_DICT.get('msgdef', '')}</code></pre>
+        <pre>${ py_utils.code_inline(DATA_DICT.get('msgdef', '')) }</pre>
     </div>
 
 ${ tmpl_footer.print_footer() }
@@ -83,7 +84,7 @@ ${ tmpl_footer.print_footer() }
 
 |template generate_link( item_name, item_url )
 |{ if item_url:
-<a href="${item_url}">${item_name}</a>$>
+${ py_utils.link_simple( item_name, item_url ) }$>
 |}
 |{ else:
 ${item_name}$>

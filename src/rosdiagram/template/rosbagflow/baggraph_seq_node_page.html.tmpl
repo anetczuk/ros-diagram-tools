@@ -12,6 +12,7 @@
 
 |load "../footer.html.tmpl" as tmpl_footer
 |load "../utils.html.tmpl" as tmpl_utils
+|import rosdiagram.template.utils_html as py_utils
 
 
 |template main( INPUT_DICT )
@@ -46,14 +47,14 @@ ${ tmpl_footer.print_header() }
 </head>
 <body>
     <div class="info_content">
-        <a href="../full_graph.html">back to Main graph</a>
+        ${ py_utils.link_simple( "back to Main graph", "../full_graph.html" ) }
         <br />
     </div>
 |!
 |! node_info  = DATA_DICT.get('node_info', None)
 |{ if node_info:
     <div class="info_content">
-        Node: <code>${node_info.name}</code>
+        Node: ${ py_utils.code_inline(node_info.name) }
     </div>
 |}
 |!  root_url = DATA_DICT.get('root_url', '')
@@ -68,12 +69,12 @@ ${ tmpl_footer.print_header() }
 |!      subs_urls   = DATA_DICT.get( 'sub_urls', [] )
     <div class="info_content">
 |!      data_matrix = []
-|!      data_matrix.append( [ "Topic:",  f"<code>{topic_info.name}</code>" ] )
+|!      data_matrix.append( [ "Topic:",  py_utils.code_inline( topic_info.name ) ] )
 |!      data_matrix.append( [ "Message type:", generate_code_link( msg_type_label, msg_type_url, root_url ) ] )
 |!      link_list = [ generate_link( topic_url[0], topic_url[1] ) for topic_url in pubs_urls ]
-|!      data_matrix.append( [ "Publishers:", f"<code>{ ' '.join( link_list ) }</code>" ] )
+|!      data_matrix.append( [ "Publishers:", py_utils.code_inline( ' '.join( link_list ) ) ] )
 |!      link_list = [ generate_link( topic_url[0], topic_url[1] ) for topic_url in subs_urls ]
-|!      data_matrix.append( [ "Subscribers:", f"<code>{ ' '.join( link_list ) }</code>" ] )
+|!      data_matrix.append( [ "Subscribers:", py_utils.code_inline( ' '.join( link_list ) ) ] )
         $<${ tmpl_utils.insert_table2( [], data_matrix ) }
     </div>
 |}
@@ -116,13 +117,13 @@ ${ tmpl_footer.print_footer() }
 
 
 |template generate_code_link( item_name, item_url, base_url )
-<code>${ generate_link_base(item_name, item_url, base_url) }</code>$>
+${ py_utils.code_inline( generate_link_base(item_name, item_url, base_url) ) }$>
 |end template
 
 
 |template generate_link_base( item_name, item_url, base_url )
 |{ if item_url:
-<a href="${base_url}${item_url}">${item_name}</a>$>
+${ py_utils.link_simple( item_name, str(base_url) + str(item_url) ) }$>
 |}
 |{ else:
 ${item_name}$>
@@ -132,7 +133,7 @@ ${item_name}$>
 
 |template generate_link( item_name, item_url )
 |{ if item_url:
-<a href="${item_url}">${item_name}</a>$>
+${ py_utils.link_simple( item_name, item_url ) }$>
 |}
 |{ else:
 ${item_name}$>

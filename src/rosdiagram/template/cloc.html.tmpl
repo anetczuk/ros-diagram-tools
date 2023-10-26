@@ -12,6 +12,7 @@
 
 |load "footer.html.tmpl" as tmpl_footer
 |load "utils.html.tmpl" as tmpl_utils
+|import rosdiagram.template.utils_html as py_utils
 
 
 |template main( INPUT_DICT )
@@ -61,15 +62,7 @@ ${DATA_DICT.get('head_css_style', '')}
 </head>
 <body>
     <div class="top_content">
-|!
-|! main_page_link = DATA_DICT.get('main_page_link')
-|{ if main_page_link:
-        <a href="${main_page_link}">back to Main graph</a>
-|}
-|{     else:
-        Main graph
-|}
-        <br />
+${ tmpl_utils.add_default_main_link( DATA_DICT ) }$>
     </div>
     <div class="center_content">
 ${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
@@ -84,7 +77,7 @@ ${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
 |!      header_list.append( "Lines number:" )
 |!      data_matrix = []
 |{      for item_data in pkg_list:
-|!          data_matrix.append( [ f"<a href=\"{ item_data[1] }\">{ item_data[0] }</a>", f"<code>{ item_data[2] }</code>" ] )
+|!          data_matrix.append( [ py_utils.link_simple( item_data[0], item_data[1] ), py_utils.code_inline( item_data[2] ) ] )
 |}
         $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
     </div>

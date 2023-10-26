@@ -13,6 +13,7 @@
 
 |load "../footer.html.tmpl" as tmpl_footer
 |load "../utils.html.tmpl" as tmpl_utils
+|import rosdiagram.template.utils_html as py_utils
 
 
 |template main( INPUT_DICT )
@@ -87,10 +88,10 @@ ${ tmpl_footer.print_header() }
 |!     url  = item[1]
 |!     excl = "(excluded)" if item[2] is True else ""
 |{     if url is not None:
-            <li><a href="${url}"><code>${name}</code></a> ${excl}</li>
+            <li>${ py_utils.link_simple( py_utils.code_inline(name), url ) } ${excl}</li>
 |}
 |{     else:
-            <li><code>${name}</code> ${excl}</li>
+            <li>${ py_utils.code_inline(name) } ${excl}</li>
 |}
 |}
         </ul>
@@ -140,7 +141,7 @@ ${ tmpl_footer.print_header() }
         Exclude set:<br />
         <ul>
 |{     for item in exclude_set:
-            <li><code>${item}</code></li>
+            <li>${ py_utils.code_inline(item) }</li>
 |}
         </ul>
 |}
@@ -153,13 +154,13 @@ ${ tmpl_footer.print_footer() }
 
 
 |template generate_code_link( item_name, item_url )
-<code>${ generate_link(item_name, item_url) }</code>$>
+${ py_utils.code_inline(generate_link(item_name, item_url)) }$>
 |end template
 
 
 |template generate_link( item_name, item_url )
 |{ if item_url:
-<a href="${item_url}">${item_name}</a>$>
+${ py_utils.link_simple( item_name, item_url ) }$>
 |}
 |{ else:
 ${item_name}$>

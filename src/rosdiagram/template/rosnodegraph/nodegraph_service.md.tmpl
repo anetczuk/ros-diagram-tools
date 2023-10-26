@@ -12,6 +12,7 @@
 
 |load "../footer.md.tmpl" as tmpl_footer
 |load "../utils.md.tmpl" as tmpl_utils
+|import rosdiagram.template.utils_md as py_utils
 
 
 |template main( INPUT_DICT )
@@ -42,9 +43,9 @@ ${ tmpl_footer.print_footer() }
 |! msg_type     = DATA_DICT.get('msg_type')
 |{ if srv_name and srv_listener:
 |!      data_matrix = []
-|!      data_matrix.append( [ "Name:", f"`{srv_name}`" ] )
+|!      data_matrix.append( [ "Name:", py_utils.code_inline( srv_name ) ] )
 |{      if msg_type:
-|!          data_matrix.append( [ "Data type:", f"`{msg_type}`" ] )
+|!          data_matrix.append( [ "Data type:", py_utils.code_inline( msg_type ) ] )
 |}
 |!      data_matrix.append( [ "Listener:", tmpl_utils.ros_item_link( srv_listener ) ] )
         $<${ tmpl_utils.insert_table2( [], data_matrix ) }

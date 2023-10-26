@@ -12,6 +12,7 @@
 
 |load "../footer.html.tmpl" as tmpl_footer
 |load "../utils.html.tmpl" as tmpl_utils
+|import rosdiagram.template.utils_html as py_utils
 
 
 |template main( INPUT_DICT )
@@ -70,7 +71,7 @@ ${ tmpl_footer.print_header() }
 </head>
 <body>
     <div class="info_content">
-        <a href="../full_graph.html">back to Main graph</a>
+        ${ py_utils.link_simple( "back to Main graph", "../full_graph.html" ) }
     </div>
     <div class="info_content">
 |!
@@ -115,11 +116,11 @@ ${ tmpl_footer.print_header() }
 |}
     <div class="info_content">
         Data:
-        <pre><code>${DATA_DICT.get('msg_data')}</code></pre>
+        <pre>${ py_utils.code_inline(DATA_DICT.get('msg_data')) }</pre>
     </div>
     <div class="info_content">
-        Message: <code>${item.msgtype}</code><br/>
-        <pre><code>${item.msgdef}</code></pre>
+        Message: ${ py_utils.code_inline(item.msgtype) }<br/>
+        <pre>${ py_utils.code_inline(item.msgdef) }</pre>
     </div>
 
 ${ tmpl_footer.print_footer() }
@@ -129,13 +130,13 @@ ${ tmpl_footer.print_footer() }
 
 
 |template generate_code_link( item_name, item_url, base_url )
-<code>${ generate_link_base(item_name, item_url, base_url) }</code>$>
+${ py_utils.code_inline( generate_link_base(item_name, item_url, base_url) ) }$>
 |end template
 
 
 |template generate_link_base( item_name, item_url, base_url )
 |{ if item_url:
-<a href="${base_url}${item_url}">${item_name}</a>$>
+${ py_utils.link_simple( item_name, str(base_url) + str(item_url) ) }$>
 |}
 |{ else:
 ${item_name}$>
@@ -145,7 +146,7 @@ ${item_name}$>
 
 |template generate_link( item_name, item_url )
 |{ if item_url:
-<a href="${item_url}">${item_name}</a>$>
+${ py_utils.link_simple( item_name, item_url ) }$>
 |}
 |{ else:
 ${item_name}$>

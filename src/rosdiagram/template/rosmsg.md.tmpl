@@ -12,6 +12,7 @@
 
 |load "footer.md.tmpl" as tmpl_footer
 |load "utils.md.tmpl" as tmpl_utils
+|import rosdiagram.template.utils_md as py_utils
 
 
 |template main( INPUT_DICT )
@@ -45,11 +46,11 @@ ${ tmpl_footer.print_header() }
 |!  item_type = DATA_DICT.get('item_type')
 |!  data_matrix = []
 |{  if item_type:
-|!      data_matrix.append( [ "Data type:", f"`{ item_type }`" ] )
+|!      data_matrix.append( [ "Data type:", py_utils.code_inline( item_type ) ] )
 |}
 |!  item_users = DATA_DICT.get('item_users')
 |{  if item_users:
-|!      data_matrix.append( [ "Usage:", f"`{ ' '.join(item_users) }`" ] )
+|!      data_matrix.append( [ "Usage:", py_utils.code_inline( ' '.join(item_users) ) ] )
 |}
 ${ tmpl_utils.insert_table2( [], data_matrix ) }
 
@@ -78,7 +79,7 @@ ${ tmpl_footer.print_footer() }
 |!      data_row = []
 |!      data_row.append( tmpl_utils.ros_link( item_data[0], item_data[1] ) )
 |{      if item_data[2] > 0:
-|!          data_row.append( f"`{ item_data[2] }`" )
+|!          data_row.append( py_utils.code_inline( item_data[2] ) )
 |}
 |{  else:
 |!          data_row.append( "" )

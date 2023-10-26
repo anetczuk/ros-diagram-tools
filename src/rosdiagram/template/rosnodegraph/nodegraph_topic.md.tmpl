@@ -12,6 +12,7 @@
 
 |load "../footer.md.tmpl" as tmpl_footer
 |load "../utils.md.tmpl" as tmpl_utils
+|import rosdiagram.template.utils_md as py_utils
 
 
 |template main( INPUT_DICT )
@@ -50,13 +51,13 @@ ${ tmpl_footer.print_footer() }
 |!  msg_content = DATA_DICT.get('msg_content')
 |!  data_matrix = []
 |{  if topic_name:
-|!      data_matrix.append( [ "Topic name:", f"`{topic_name}`" ] )
+|!      data_matrix.append( [ "Topic name:", py_utils.code_inline( topic_name ) ] )
 |}
 |{  if msg_type:
-|!      data_matrix.append( [ "Data type:", f"`{msg_type}`" ] )
+|!      data_matrix.append( [ "Data type:", py_utils.code_inline( msg_type ) ] )
 |}
-|!  data_matrix.append( [ "Publishers:", f"`{ ' '.join(topic_pubs) }`" ] )
-|!  data_matrix.append( [ "Subscribers:", f"`{ ' '.join(topic_subs) }`" ] )
+|!  data_matrix.append( [ "Publishers:", py_utils.code_inline( ' '.join(topic_pubs) ) ] )
+|!  data_matrix.append( [ "Subscribers:", py_utils.code_inline( ' '.join(topic_subs) ) ] )
         $<${ tmpl_utils.insert_table2( [], data_matrix ) }
 
 |!

@@ -12,6 +12,7 @@
 
 |load "footer.html.tmpl" as tmpl_footer
 |load "utils.html.tmpl" as tmpl_utils
+|import rosdiagram.template.utils_html as py_utils
 
 
 |template main( INPUT_DICT )
@@ -84,9 +85,9 @@ ${DATA_DICT.get('head_css_style', '')}
 |!      data_matrix = []
 |{      for item_data in params_list:
 |!          data_row = []
-|!          data_row.append( f"<a href=\"{ item_data[1] }\">{ item_data[0] }</a>" )
-|!          data_row.append( f"<code>{ item_data[2] }</code>" )
-|!          data_row.append( f"<code>{ item_data[3] }</code>" )
+|!          data_row.append( py_utils.link_simple( item_data[0], item_data[1] ) )
+|!          data_row.append( py_utils.code_inline( item_data[2] ) )
+|!          data_row.append( py_utils.code_inline( item_data[3] ) )
 |!          data_matrix.append( data_row )
 |}
         $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }

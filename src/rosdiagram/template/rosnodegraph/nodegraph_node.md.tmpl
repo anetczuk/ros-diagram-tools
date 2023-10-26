@@ -12,6 +12,7 @@
 
 |load "../footer.md.tmpl" as tmpl_footer
 |load "../utils.md.tmpl" as tmpl_utils
+|import rosdiagram.template.utils_md as py_utils
 
 
 |template main( INPUT_DICT )
@@ -29,8 +30,8 @@ ${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
 |!  pkg_name = DATA_DICT.get('pkg_name', "")
 |{  if pkg_path or pkg_name:
 |!      data_matrix = []
-|!      data_matrix.append( [ "Package name:", f"`{pkg_name}`" ] )
-|!      data_matrix.append( [ "Package path:", f"`{pkg_path}`" ] )
+|!      data_matrix.append( [ "Package name:", py_utils.code_inline( pkg_name ) ] )
+|!      data_matrix.append( [ "Package path:", py_utils.code_inline( pkg_path ) ] )
         $<${ tmpl_utils.insert_table2( [], data_matrix ) }
 
 |}

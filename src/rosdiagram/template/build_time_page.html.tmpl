@@ -61,15 +61,7 @@ ${DATA_DICT.get('head_css_style', '')}
 
 <body>
     <div class="top_content">
-|!
-|! main_page_link = DATA_DICT.get('main_page_link')
-|{ if main_page_link:
-        <a href="${main_page_link}">back to Main graph</a>
-|}
-|{     else:
-        Main graph
-|}
-        <br />
+${ tmpl_utils.add_default_main_link( DATA_DICT ) }$>
     </div>
 
     <div class="center_content">

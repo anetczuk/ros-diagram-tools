@@ -12,6 +12,7 @@
 
 |load "footer.md.tmpl" as tmpl_footer
 |load "utils.md.tmpl" as tmpl_utils
+|import rosdiagram.template.utils_md as py_utils
 
 
 |template main( INPUT_DICT )
@@ -32,7 +33,7 @@ ${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
 |!      header_list.append( "Lines number:" )
 |!      data_matrix = []
 |{      for item_data in pkg_list:
-|!          data_matrix.append( [ f"[{ item_data[0] }]({ item_data[1] })", f"`{ item_data[2] }`" ] )
+|!          data_matrix.append( [ py_utils.link_simple( item_data[0], item_data[1] ), py_utils.code_inline( item_data[2] ) ] )
 |}
         $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
 |}

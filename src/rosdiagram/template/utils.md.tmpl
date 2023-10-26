@@ -7,6 +7,8 @@
 |* Any non-python content and non-template content is treated as text. 
 |* 
 
+|import rosdiagram.template.utils_md as py_utils
+
 
 |template insert_table2( header_list, data_matrix )
 |*
@@ -89,9 +91,9 @@ ${ ros_link( item_name, item_url ) }$>
 
 |template ros_link( item_name, item_url )
 |{ if item_url:
-[`${item_name}`](${item_url})$>
+[${ py_utils.code_inline(item_name) }](${item_url})$>
 |}
 |{ else:
-`${item_name}`
+${ py_utils.code_inline(item_name) }$>
 |}
 |end template

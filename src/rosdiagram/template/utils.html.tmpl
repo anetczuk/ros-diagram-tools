@@ -7,6 +7,21 @@
 |* Any non-python content and non-template content is treated as text. 
 |* 
 
+|import rosdiagram.template.utils_html as py_utils
+
+
+|template add_default_main_link( DATA_DICT )
+|!
+|! main_page_link = DATA_DICT.get('main_page_link')
+|{ if main_page_link:
+        ${ py_utils.link_simple( "back to Main graph", main_page_link ) }
+|}
+|{ else:
+        Main graph
+|}
+        <br />
+|end template
+
 
 |template add_graph_default_image( DATA_DICT )
 |!
@@ -81,9 +96,9 @@ ${ ros_link( item_name, item_url ) }$>
 
 |template ros_link( item_name, item_url )
 |{ if item_url:
-<a href="${item_url}"><code>${item_name}</code></a>$>
+<a href="${item_url}">${ py_utils.code_inline(item_name) }</a>$>
 |}
 |{ else:
-<code>${item_name}</code>$>
+${ py_utils.code_inline(item_name) }$>
 |}
 |end template
