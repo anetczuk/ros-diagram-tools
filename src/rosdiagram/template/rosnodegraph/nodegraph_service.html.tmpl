@@ -84,27 +84,18 @@ ${ tmpl_footer.print_footer() }
 
 |template ros_service_info( DATA_DICT )
 |!
-|! srv_name     = DATA_DICT.get('srv_name')
-|! srv_listener = DATA_DICT.get('srv_listener')
-|! msg_type     = DATA_DICT.get('msg_type')
-|{ if srv_name and srv_listener:
+|!  srv_name     = DATA_DICT.get('srv_name')
+|!  srv_listener = DATA_DICT.get('srv_listener')
+|!  msg_type     = DATA_DICT.get('msg_type')
+|{  if srv_name and srv_listener:
     <div class="info_content">
-        <table>
-            <tr>
-                <td>Name:</td>
-                <td><code>${srv_name}</code></td>
-            </tr>
-|{ if msg_type:
-            <tr>
-                <td>Data type:</td>
-                <td><code>${msg_type}</code></td>
-            </tr>
+|!      data_matrix = []
+|!      data_matrix.append( [ "Name:", f"<code>{srv_name}</code>" ] )
+|{      if msg_type:
+|!          data_matrix.append( [ "Data type:", f"<code>{msg_type}</code>" ] )
 |}
-            <tr>
-                <td>Listener:</td>
-                <td>${ tmpl_utils.ros_item_link( srv_listener ) }</td>
-            </tr>
-        </table>
+|!      data_matrix.append( [ "Listener:", tmpl_utils.ros_item_link( srv_listener ) ] )
+        $<${ tmpl_utils.insert_table2( [], data_matrix ) }
     </div>
 |!
 |!     msg_content = DATA_DICT.get('msg_content')

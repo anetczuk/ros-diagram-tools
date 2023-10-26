@@ -73,20 +73,14 @@ ${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
     </div>
 
 |!
-|! pkg_path = DATA_DICT.get('pkg_path', "")
-|! pkg_name = DATA_DICT.get('pkg_name', "")
-|{ if pkg_path or pkg_name:
+|!  pkg_path = DATA_DICT.get('pkg_path', "")
+|!  pkg_name = DATA_DICT.get('pkg_name', "")
+|{  if pkg_path or pkg_name:
     <div class="info_content">
-        <table>
-            <tr>
-                <td>Package name:</td>
-                <td><code>${pkg_name}</code></td>
-            </tr>
-            <tr>
-                <td>Package path:</td>
-                <td><code>${pkg_path}</code></td>
-            </tr>
-        </table>
+|!      data_matrix = []
+|!      data_matrix.append( [ "Package name:", f"<code>{pkg_name}</code>" ] )
+|!      data_matrix.append( [ "Package path:", f"<code>{pkg_path}</code>" ] )
+        $<${ tmpl_utils.insert_table2( [], data_matrix ) }
     </div>
 
 |}

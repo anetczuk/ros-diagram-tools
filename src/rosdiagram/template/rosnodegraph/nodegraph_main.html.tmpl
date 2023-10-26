@@ -91,20 +91,16 @@ ${ tmpl_footer.print_footer() }
 |template ros_nodes_table( items_list )
 |{ if items_list:
     <div class="bottom_content">
-        <table>
-            <tr>
-                <th>ROS nodes (${ len(items_list) }):</th>
-                <th>Package:</th>
-                <th>Description:</th>
-            </tr>
-|{     for item_data in items_list:
-            <tr>
-                <td>${ tmpl_utils.ros_link( item_data[0], item_data[1] ) }</td>
-                <td>${ item_data[2] }</td>
-                <td>${ item_data[3] if len(item_data) > 3 else "" }</td>
-            </tr>
+|!      header_list = [ f"ROS nodes ({ len(items_list) }):", "Package:", "Description:" ]
+|!      data_matrix = []
+|{      for item_data in items_list:
+|!          data_row = []
+|!          data_row.append( tmpl_utils.ros_link( item_data[0], item_data[1] ) )
+|!          data_row.append( item_data[2] )
+|!          data_row.append( item_data[3] if len(item_data) > 3 else '' )
+|!          data_matrix.append( data_row )
 |}
-        </table>
+        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
         <br />
     </div>
 

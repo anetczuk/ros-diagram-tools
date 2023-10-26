@@ -41,13 +41,13 @@ ${ tmpl_footer.print_footer() }
 |! srv_listener = DATA_DICT.get('srv_listener')
 |! msg_type     = DATA_DICT.get('msg_type')
 |{ if srv_name and srv_listener:
-    $<|  |  |
-    $<| --------------------------------- | -------- | ------------ |
-    $<| Name: | `${srv_name}` |
-|{ if msg_type:
-    $<| Data type | `${msg_type}` |
+|!      data_matrix = []
+|!      data_matrix.append( [ "Name:", f"`{srv_name}`" ] )
+|{      if msg_type:
+|!          data_matrix.append( [ "Data type:", f"`{msg_type}`" ] )
 |}
-    $<| Listener: | ${ tmpl_utils.ros_item_link( srv_listener ) } |
+|!      data_matrix.append( [ "Listener:", tmpl_utils.ros_item_link( srv_listener ) ] )
+        $<${ tmpl_utils.insert_table2( [], data_matrix ) }
 
 |!
 |!     msg_content = DATA_DICT.get('msg_content')

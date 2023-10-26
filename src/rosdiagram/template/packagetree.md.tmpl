@@ -25,17 +25,19 @@ ${ tmpl_footer.print_header() }
 ${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
 
 |!
-|! pkg_path = DATA_DICT.get('pkg_path', "")
-|! pkg_nodes = DATA_DICT.get('pkg_nodes', [])
-|{ if pkg_path or pkg_nodes:
-    $<|     |     |
-    $<| --- | --- |
-    $<| Package path: | `${pkg_path}` |
-    $<| Nodes: | `${ " ".join(pkg_nodes) }` |
+|!  pkg_path = DATA_DICT.get('pkg_path', "")
+|!  pkg_nodes = DATA_DICT.get('pkg_nodes', [])
+|{  if pkg_path or pkg_nodes:
+|!      data_matrix = []
+|!      data_matrix.append( [ "Package path:", f"`{ pkg_path }`" ] )
+|!      data_matrix.append( [ "Nodes:",        f"`{ ' '.join(pkg_nodes) }`" ] )
+        $<${ tmpl_utils.insert_table2( [], data_matrix ) }
+
 |}
+
 |!
-|! packages_list = DATA_DICT.get('graph_packages', [])
-${ tmpl_utils.ros_link_table( packages_list, "Graph packages" ) }$>
+|!  packages_list = DATA_DICT.get('graph_packages', [])
+${  tmpl_utils.ros_link_table( packages_list, "Graph packages" ) }$>
 |!
 
 ${ tmpl_footer.print_footer() }

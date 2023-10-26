@@ -24,13 +24,21 @@ ${ tmpl_footer.print_header() }
 
 
 |!
-|! params_list = DATA_DICT.get('params_list', [])
-|{ if params_list:
-    $<| Parameters (${ len(params_list) }): | Type: | Value: |
-    $<| --------------------------------- | -------- | ------------ |
-|{     for item_data in params_list:
-    $<| [${ item_data[0] }](${ item_data[1] }) | `${ item_data[2] }` | `{ item_data[3] }` |
+|!  params_list = DATA_DICT.get('params_list', [])
+|{  if params_list:
+|!      header_list = []
+|!      header_list.append( f"Parameters ({ len(params_list) }):" )
+|!      header_list.append( "Type:" )
+|!      header_list.append( "Value:" )
+|!      data_matrix = []
+|{      for item_data in params_list:
+|!          data_row = []
+|!          data_row.append( f"[{ item_data[0] }]({ item_data[1] })" )
+|!          data_row.append( f"`{ item_data[2] }`" )
+|!          data_row.append( f"`{ item_data[3] }`" )
+|!          data_matrix.append( data_row )
 |}
+        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
 |}
 
 

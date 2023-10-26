@@ -12,6 +12,7 @@
 |import rosdiagram.textutils as textutils
 
 |load "footer.md.tmpl" as tmpl_footer
+|load "utils.md.tmpl" as tmpl_utils
 
 
 |template main( INPUT_DICT )
@@ -26,67 +27,78 @@ ${ tmpl_footer.print_header() }
 $<[![missing image](${DATA_DICT.get('svg_name')} "missing image")](${DATA_DICT.get('svg_name')})
 
 
-Stats:
-$<|  |  |
-$<| --- | --- |
-$<| **Build time:** | ${ DATA_DICT.get('total_time') } |
-$<| **Packages time sum:** | ${ DATA_DICT.get('packages_total_time') } |
-$<| **High load duration:** | ${ DATA_DICT.get('high_load_duration') } |
-$<| **Start gap duration:** | ${ DATA_DICT.get('start_gap_duration') } |
-$<| **Critical path gap duration:** | ${ DATA_DICT.get('critical_gap_duration') } |
+**Stats:**
+
+|!  data_matrix = []
+|!  data_matrix.append( [ f"**Build time:**", DATA_DICT.get('total_time') ] )
+|!  data_matrix.append( [ f"**Packages time sum:**", DATA_DICT.get('packages_total_time') ] )
+|!  data_matrix.append( [ f"**High load duration:**", DATA_DICT.get('high_load_duration') ] )
+|!  data_matrix.append( [ f"**Start gap duration:**", DATA_DICT.get('start_gap_duration') ] )
+|!  data_matrix.append( [ f"**Critical path gap duration:**", DATA_DICT.get('critical_gap_duration') ] )
+    $<${ tmpl_utils.insert_table2( [], data_matrix ) }
 
 
 |!
-|! pipeline_times = DATA_DICT.get('pipeline_times')
+|!  pipeline_times = DATA_DICT.get('pipeline_times')
 |!
-|{ if pipeline_times:
-    $<| Name: | Busy time: | Efficiency: |
-    $<| --- | --- |
-|{ for item in pipeline_times:
-    $<| ${ item[0] } | ${ textutils.time_to_string( item[1] ) } | ${ round( item[2] * 100, 2 ) } %< |
+|{  if pipeline_times:
+        $<**Pipeline:**
+
+|!      header_list = [ "Name:", "Busy time:", "Efficiency:" ]
+|!      data_matrix = []
+|{      for item in pipeline_times:
+|!          data_row = []
+|!          data_row.append( item[0] )
+|!          data_row.append( textutils.time_to_string( item[1] ) )
+|!          data_row.append( f"{ round( item[2] * 100, 2 ) } %" )
+|!          data_matrix.append( data_row )
 |}
-|}
-
-
-|!
-|! critical_path = DATA_DICT.get('critical_path')
-|!
-|{ if critical_path:
-    $<**Critical path:**
-
-    $<| Name: | Duration: | Gap: | Start time: | End time: |
-    $<| --- | --- |
-|{ for item in critical_path:
-    $<| ${ item[0] } | ${ item[1] } | ${ item[2] } | ${ item[3] } | ${ item[4] } |
-|}
+        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
 |}
 
 
 |!
-|! dur_list = DATA_DICT.get('duration_list')
+|!  critical_path = DATA_DICT.get('critical_path')
 |!
-|{ if dur_list:
-    $<**Packages (duration order):**
+|{  if critical_path:
+        $<**Critical path:**
 
-    $<| Name: | Duration: | Start time: | End time: |
-    $<| --- | --- |
-|{ for item in dur_list:
-    $<| ${ item[0] } | ${ item[1] } | ${ item[2] } | ${ item[3] } |
+|!      header_list = [ "Name:", "Duration:", "Gap:", "Start time:", "End time:" ]
+|!      data_matrix = []
+|{      for item in critical_path:
+|!          data_matrix.append( [ item[0], item[1], item[2], item[3], item[4] ] )
 |}
+        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
 |}
 
 
 |!
-|! package_list = DATA_DICT.get('packages_list')
+|!  dur_list = DATA_DICT.get('duration_list')
 |!
-|{ if package_list:
-    $<**Packages (name order):**
+|{  if dur_list:
+        $<**Packages (duration order):**
 
-    $<| Name: | Duration: | Start time: | End time: |
-    $<| --- | --- |
-|{ for item in package_list:
-    $<| ${ item[0] } | ${ item[1] } | ${ item[2] } | ${ item[3] } |
+|!      header_list = [ "Name:", "Duration:", "Start time:", "End time:" ]
+|!      data_matrix = []
+|{      for item in dur_list:
+|!          data_matrix.append( [ item[0], item[1], item[2], item[3] ] )
 |}
+        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
+|}
+
+
+|!
+|!  package_list = DATA_DICT.get('packages_list')
+|!
+|{  if package_list:
+        $<**Packages (name order):**
+
+|!      header_list = [ "Name:", "Duration:", "Start time:", "End time:" ]
+|!      data_matrix = []
+|{      for item in package_list:
+|!          data_matrix.append( [ item[0], item[1], item[2], item[3] ] )
+|}
+        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
 |}
 
 

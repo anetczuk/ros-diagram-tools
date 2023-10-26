@@ -11,6 +11,7 @@
 |import showgraph.datadict as data_dict
 
 |load "../footer.html.tmpl" as tmpl_footer
+|load "../utils.html.tmpl" as tmpl_utils
 
 
 |template main( INPUT_DICT )
@@ -55,43 +56,25 @@ ${ tmpl_footer.print_header() }
         Node: <code>${node_info.name}</code>
     </div>
 |}
-|! root_url = DATA_DICT.get('root_url', '')
+|!  root_url = DATA_DICT.get('root_url', '')
 |!
-|! msgtype_dict = DATA_DICT.get('msgtypes_dict', {})
-|! topic_info   = DATA_DICT.get('topic_info', None)
-|{ if topic_info:
-|!     msg_type_label = f"{topic_info.msgtype}" if topic_info.msgtype else "unknown"
-|!     msg_type_info  = msgtype_dict.get( topic_info.msgtype, {} )
-|!     msg_type_url   = msg_type_info.get( 'suburl', None )
-|!     pubs_urls   = DATA_DICT.get( 'pub_urls', [] )
-|!     subs_urls   = DATA_DICT.get( 'sub_urls', [] )
+|!  msgtype_dict = DATA_DICT.get('msgtypes_dict', {})
+|!  topic_info   = DATA_DICT.get('topic_info', None)
+|{  if topic_info:
+|!      msg_type_label = f"{topic_info.msgtype}" if topic_info.msgtype else "unknown"
+|!      msg_type_info  = msgtype_dict.get( topic_info.msgtype, {} )
+|!      msg_type_url   = msg_type_info.get( 'suburl', None )
+|!      pubs_urls   = DATA_DICT.get( 'pub_urls', [] )
+|!      subs_urls   = DATA_DICT.get( 'sub_urls', [] )
     <div class="info_content">
-        <table>
-            <tr>
-                <td>Topic:</td>
-                <td><code>${topic_info.name}</code></td>
-            </tr>
-            <tr>
-                <td>Message type:</td>
-                <td>${generate_code_link( msg_type_label, msg_type_url, root_url )}</td>
-            </tr>
-            <tr>
-                <td>Publishers:</td>
-                <td><code>
-|{     for topic_url in pubs_urls:
-           ${ generate_link( topic_url[0], topic_url[1] ) }
-|}
-                </code></td>
-            </tr>
-            <tr>
-                <td>Subscribers:</td>
-                <td><code>
-|{     for topic_url in subs_urls:
-           ${ generate_link( topic_url[0], topic_url[1] ) }
-|}
-                </code></td>
-            </tr>
-        </table>
+|!      data_matrix = []
+|!      data_matrix.append( [ "Topic:",  f"<code>{topic_info.name}</code>" ] )
+|!      data_matrix.append( [ "Message type:", generate_code_link( msg_type_label, msg_type_url, root_url ) ] )
+|!      link_list = [ generate_link( topic_url[0], topic_url[1] ) for topic_url in pubs_urls ]
+|!      data_matrix.append( [ "Publishers:", f"<code>{ ' '.join( link_list ) }</code>" ] )
+|!      link_list = [ generate_link( topic_url[0], topic_url[1] ) for topic_url in subs_urls ]
+|!      data_matrix.append( [ "Subscribers:", f"<code>{ ' '.join( link_list ) }</code>" ] )
+        $<${ tmpl_utils.insert_table2( [], data_matrix ) }
     </div>
 |}
     <div class="center_content">

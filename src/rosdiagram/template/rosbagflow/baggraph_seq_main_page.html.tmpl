@@ -12,6 +12,7 @@
 |import showgraph.datadict as data_dict
 
 |load "../footer.html.tmpl" as tmpl_footer
+|load "../utils.html.tmpl" as tmpl_utils
 
 
 |template main( INPUT_DICT )
@@ -113,31 +114,24 @@ ${ tmpl_footer.print_header() }
     </div>
     <div class="bottom_content">
 |!
-|! errors_data  = DATA_DICT.get('errors_data', [])
+|!  errors_data  = DATA_DICT.get('errors_data', [])
 |!
         Errors (${len(errors_data)}):<br/>
-        <table>
-|!
-|{ for item in errors_data:
-|!     item_label   = item.get('timestamp')
-|!     item_url     = item.get('url')
-|!     item_topics  = item.get('topics')
-|!     item_notes   = item.get('notes')
-            <tr>
-                <td>${ generate_link(item_label, item_url) }</td>
-                <td>
-|{     for topic_url in item_topics:
-           ${ generate_link( topic_url[0], topic_url[1] ) }
+|!  data_matrix = []
+|{  for item in errors_data:
+|!      item_label   = item.get('timestamp')
+|!      item_url     = item.get('url')
+|!      item_topics  = item.get('topics')
+|!      item_notes   = item.get('notes')
+|!      data_row = []
+|!      data_row.append( generate_link(item_label, item_url) )
+|!      link_list = [ generate_link( topic_url[0], topic_url[1] ) for topic_url in item_topics ]
+|!      data_row.append( f"{ ' '.join( link_list ) }" )
+|!      notes_list = [ print_note( note ) for note in item_notes ]
+|!      data_row.append( f"{ ' '.join( notes_list ) }" )
+|!      data_matrix.append( data_row )
 |}
-                </td>
-                <td>
-|{     for note in item_notes:
-           ${ print_note( note ) }
-|}
-                </td>
-            </tr>
-|}
-        </table>
+        $<${ tmpl_utils.insert_table2( [], data_matrix ) }
     </div>
     <div class="bottom_content">
 |!

@@ -73,24 +73,23 @@ ${DATA_DICT.get('head_css_style', '')}
     <div class="center_content">
     </div>
 |!
-|! params_list = DATA_DICT.get('params_list', [])
-|{ if params_list:
+|!  params_list = DATA_DICT.get('params_list', [])
+|{  if params_list:
 
     <div class="bottom_content data">
-        <table>
-            <tr>
-                <th>Parameters (${ len(params_list) }):</th>
-                <th>Type:</th>
-                <th>Value:</th>
-            </tr>
-|{     for item_data in params_list:
-            <tr>
-                <td><a href="${ item_data[1] }">${ item_data[0] }</a></td>
-                <td><code>${ item_data[2] }</code></td>
-                <td><code>${ item_data[3] }</code></td>
-            </tr>
+|!      header_list = []
+|!      header_list.append( f"Parameters ({ len(params_list) }):" )
+|!      header_list.append( "Type:" )
+|!      header_list.append( "Value:" )
+|!      data_matrix = []
+|{      for item_data in params_list:
+|!          data_row = []
+|!          data_row.append( f"<a href=\"{ item_data[1] }\">{ item_data[0] }</a>" )
+|!          data_row.append( f"<code>{ item_data[2] }</code>" )
+|!          data_row.append( f"<code>{ item_data[3] }</code>" )
+|!          data_matrix.append( data_row )
 |}
-        </table>
+        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
         <br />
     </div>
 |}

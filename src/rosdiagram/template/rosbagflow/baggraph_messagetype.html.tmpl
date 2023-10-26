@@ -11,6 +11,7 @@
 |import showgraph.datadict as data_dict
 
 |load "../footer.html.tmpl" as tmpl_footer
+|load "../utils.html.tmpl" as tmpl_utils
 
 
 |template main( INPUT_DICT )
@@ -64,21 +65,12 @@ ${ tmpl_footer.print_header() }
         <a href="../full_graph.html">back to Main graph</a>
     </div>
     <div class="info_content">
-|! topic_urls = DATA_DICT.get( 'topic_urls', [] )
-        <table>
-            <tr>
-                <td>Message:</td>
-                <td><code>${DATA_DICT.get('msgtype', '')}</code></td>
-            </tr>
-            <tr>
-                <td>Topic:</td>
-                <td>
-|{     for topic_url in topic_urls:
-           ${ generate_link( topic_url[0], topic_url[1] ) }
-|}
-                </td>
-            </tr>
-        </table>
+|!  topic_urls = DATA_DICT.get( 'topic_urls', [] )
+|!  data_matrix = []
+|!  data_matrix.append( [ "Message:",  f"<code>{DATA_DICT.get('msgtype', '')}</code>" ] )
+|!  link_list = [ generate_link( topic_url[0], topic_url[1] ) for topic_url in topic_urls ]
+|!  data_matrix.append( [ "Topic:", f"{ ' '.join( link_list ) }" ] )
+        $<${ tmpl_utils.insert_table2( [], data_matrix ) }
         <br />
         <pre><code>${DATA_DICT.get('msgdef', '')}</code></pre>
     </div>

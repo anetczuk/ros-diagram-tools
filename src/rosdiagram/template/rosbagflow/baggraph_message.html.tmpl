@@ -11,6 +11,7 @@
 |import showgraph.datadict as data_dict
 
 |load "../footer.html.tmpl" as tmpl_footer
+|load "../utils.html.tmpl" as tmpl_utils
 
 
 |template main( INPUT_DICT )
@@ -73,52 +74,28 @@ ${ tmpl_footer.print_header() }
     </div>
     <div class="info_content">
 |!
-|! root_url = DATA_DICT.get( 'root_url', '' )
+|!  root_url = DATA_DICT.get( 'root_url', '' )
 |!
-|! item          = DATA_DICT.get( 'item' )
-|! item_pub_url  = DATA_DICT.get( 'pub_url', [] )
-|! item_sub_urls = DATA_DICT.get( 'sub_urls', [] )
-|! item_topics   = DATA_DICT.get( 'topic_urls', [] )
+|!  item          = DATA_DICT.get( 'item' )
+|!  item_pub_url  = DATA_DICT.get( 'pub_url', [] )
+|!  item_sub_urls = DATA_DICT.get( 'sub_urls', [] )
+|!  item_topics   = DATA_DICT.get( 'topic_urls', [] )
 |!
-|! msgtype_dict   = DATA_DICT.get( 'msgtypes_dict', {} )
-|! msg_type_info  = msgtype_dict.get( item.msgtype, {} )
-|! msg_type_url   = msg_type_info.get( 'suburl', None )
-|! msg_type_label = item.msgtype if item.msgtype else "unknown"
+|!  msgtype_dict   = DATA_DICT.get( 'msgtypes_dict', {} )
+|!  msg_type_info  = msgtype_dict.get( item.msgtype, {} )
+|!  msg_type_url   = msg_type_info.get( 'suburl', None )
+|!  msg_type_label = item.msgtype if item.msgtype else "unknown"
 |!
-        <table>
-            <tr>
-                <td>Timestamp:</td>
-                <td>${DATA_DICT.get('timestamp', '')}</td>
-            </tr>
-            <tr>
-                <td>Delta time:</td>
-                <td>${DATA_DICT.get('time_value', '')} ${DATA_DICT.get('time_unit', '')}</td>
-            </tr>
-            <tr>
-                <td>Type:</td>
-                <td>${generate_code_link( msg_type_label, msg_type_url, root_url )}</td>
-            </tr>
-            <tr>
-                <td>Topic:</td>
-                <td>
-|{     for topic_url in item_topics:
-           ${ generate_link( topic_url[0], topic_url[1] ) }
-|}
-                </td>
-            </tr>
-            <tr>
-                <td>Publisher:</td>
-                <td>${ generate_link( item_pub_url[0], item_pub_url[1] ) }</td>
-            </tr>
-            <tr>
-                <td>Subscribers:</td>
-                <td>
-|{     for sub_url in item_sub_urls:
-           ${ generate_link( sub_url[0], sub_url[1] ) }
-|}
-                </td>
-            </tr>
-        </table>
+|!  data_matrix = []
+|!  data_matrix.append( [ "Timestamp:",  DATA_DICT.get('timestamp', '') ] )
+|!  data_matrix.append( [ "Delta time:", f"{DATA_DICT.get('time_value', '')} {DATA_DICT.get('time_unit', '')}" ] )
+|!  data_matrix.append( [ "Type:", generate_code_link( msg_type_label, msg_type_url, root_url ) ] )
+|!  link_list = [ generate_link( topic_url[0], topic_url[1] ) for topic_url in item_topics ]
+|!  data_matrix.append( [ "Topic:", f"{ ' '.join( link_list ) }" ] )
+|!  data_matrix.append( [ "Publisher:", generate_link( item_pub_url[0], item_pub_url[1] ) ] )
+|!  link_list = [ generate_link( sub_url[0], sub_url[1] ) for sub_url in item_sub_urls ]
+|!  data_matrix.append( [ "Subscribers:", f"{ ' '.join( link_list ) }" ] )
+        $<${ tmpl_utils.insert_table2( [], data_matrix ) }
     </div>
 |!
 |! notes = DATA_DICT.get('notes_content')

@@ -12,6 +12,7 @@
 |import rosdiagram.textutils as textutils
 
 |load "footer.html.tmpl" as tmpl_footer
+|load "utils.html.tmpl" as tmpl_utils
 
 
 |template main( INPUT_DICT )
@@ -77,46 +78,32 @@ ${DATA_DICT.get('head_css_style', '')}
     
     <div class="info_content">
         <span style="font-weight: bold;">Stats:</span>
-        <table>
-            <tr>
-                <td><b>Build time:</b></td> <td>${ DATA_DICT.get('total_time') }</td>
-            </tr>
-            <tr>
-                <td><b>Packages time sum:</b></td> <td>${ DATA_DICT.get('packages_total_time') }</td>
-            </tr>
-            <tr>
-                <td><b>High load duration:</b></td> <td>${ DATA_DICT.get('high_load_duration') }</td>
-            </tr>
-            <tr>
-                <td><b>Start gap duration:</b></td> <td>${ DATA_DICT.get('start_gap_duration') }</td>
-            </tr>
-            <tr>
-                <td><b>Critical path gap duration:</b></td> <td>${ DATA_DICT.get('critical_gap_duration') }</td>
-            </tr>
-        </table>
+|!      data_matrix = []
+|!      data_matrix.append( [ f"<b>Build time:</b>", DATA_DICT.get('total_time') ] )
+|!      data_matrix.append( [ f"<b>Packages time sum:</b>", DATA_DICT.get('packages_total_time') ] )
+|!      data_matrix.append( [ f"<b>High load duration:</b>", DATA_DICT.get('high_load_duration') ] )
+|!      data_matrix.append( [ f"<b>Start gap duration:</b>", DATA_DICT.get('start_gap_duration') ] )
+|!      data_matrix.append( [ f"<b>Critical path gap duration:</b>", DATA_DICT.get('critical_gap_duration') ] )
+        $<${ tmpl_utils.insert_table2( [], data_matrix ) }
     </div>
 
 
 |!
-|! pipeline_times = DATA_DICT.get('pipeline_times')
+|!  pipeline_times = DATA_DICT.get('pipeline_times')
 |!
-|{ if pipeline_times:
+|{  if pipeline_times:
     <div class="info_content">
         <span style="font-weight: bold;">Pipeline:</span>
-        <table>
-            <tr>
-                <th>Name:</th>
-                <th>Busy time:</th>
-                <th>Efficiency:</th>
-            </tr>
-|{ for item in pipeline_times:
-            <tr>
-                <td>${ item[0] }</td>
-                <td>${ textutils.time_to_string( item[1] ) }</td>
-                <td>${ round( item[2] * 100, 2 ) } %</td>
-            </tr>
+|!      header_list = [ "Name:", "Busy time:", "Efficiency:" ]
+|!      data_matrix = []
+|{      for item in pipeline_times:
+|!          data_row = []
+|!          data_row.append( item[0] )
+|!          data_row.append( textutils.time_to_string( item[1] ) )
+|!          data_row.append( f"{ round( item[2] * 100, 2 ) } %" )
+|!          data_matrix.append( data_row )
 |}
-        </table>
+        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
     </div>
 |}
 
@@ -126,24 +113,12 @@ ${DATA_DICT.get('head_css_style', '')}
 |{ if critical_path:
     <div class="info_content">
         <span style="font-weight: bold;">Critical path:</span>
-        <table>
-            <tr>
-                <th>Name:</th>
-                <th>Duration:</th>
-                <th>Gap:</th>
-                <th>Start time:</th>
-                <th>End time:</th>
-            </tr>
-|{ for item in critical_path:
-            <tr>
-                <td>${ item[0] }</td>
-                <td>${ item[1] }</td>
-                <td>${ item[2] }</td>
-                <td>${ item[3] }</td>
-                <td>${ item[4] }</td>
-            </tr>
+|!      header_list = [ "Name:", "Duration:", "Gap:", "Start time:", "End time:" ]
+|!      data_matrix = []
+|{      for item in critical_path:
+|!          data_matrix.append( [ item[0], item[1], item[2], item[3], item[4] ] )
 |}
-        </table>
+        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
     </div>
 |}
     
@@ -153,22 +128,12 @@ ${DATA_DICT.get('head_css_style', '')}
 |{ if dur_list:
     <div class="info_content">
         <span style="font-weight: bold;">Packages (duration order):</span>
-        <table>
-            <tr>
-                <th>Name:</th>
-                <th>Duration:</th>
-                <th>Start time:</th>
-                <th>End time:</th>
-            </tr>
-|{ for item in dur_list:
-            <tr>
-                <td>${ item[0] }</td>
-                <td>${ item[1] }</td>
-                <td>${ item[2] }</td>
-                <td>${ item[3] }</td>
-            </tr>
+|!      header_list = [ "Name:", "Duration:", "Start time:", "End time:" ]
+|!      data_matrix = []
+|{      for item in dur_list:
+|!          data_matrix.append( [ item[0], item[1], item[2], item[3] ] )
 |}
-        </table>
+        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
     </div>
 |}
     
@@ -178,22 +143,12 @@ ${DATA_DICT.get('head_css_style', '')}
 |{ if package_list:
     <div class="info_content">
         <span style="font-weight: bold;">Packages (name order):</span>
-        <table>
-            <tr>
-                <th>Name:</th>
-                <th>Duration:</th>
-                <th>Start time:</th>
-                <th>End time:</th>
-            </tr>
-|{ for item in package_list:
-            <tr>
-                <td>${ item[0] }</td>
-                <td>${ item[1] }</td>
-                <td>${ item[2] }</td>
-                <td>${ item[3] }</td>
-            </tr>
+|!      header_list = [ "Name:", "Duration:", "Start time:", "End time:" ]
+|!      data_matrix = []
+|{      for item in package_list:
+|!          data_matrix.append( [ item[0], item[1], item[2], item[3] ] )
 |}
-        </table>
+        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
     </div>
 |}
 

@@ -25,13 +25,13 @@ ${ tmpl_footer.print_header() }
 ${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
 
 |!
-|! pkg_path = DATA_DICT.get('pkg_path', "")
-|! pkg_name = DATA_DICT.get('pkg_name', "")
-|{ if pkg_path or pkg_name:
-    $>|  |  |
-    $>| --- | --- |
-    $>| Package name: | `${pkg_name}` |
-    $>| Package path: | `${pkg_path}` |
+|!  pkg_path = DATA_DICT.get('pkg_path', "")
+|!  pkg_name = DATA_DICT.get('pkg_name', "")
+|{  if pkg_path or pkg_name:
+|!      data_matrix = []
+|!      data_matrix.append( [ "Package name:", f"`{pkg_name}`" ] )
+|!      data_matrix.append( [ "Package path:", f"`{pkg_path}`" ] )
+        $<${ tmpl_utils.insert_table2( [], data_matrix ) }
 
 |}
 |!

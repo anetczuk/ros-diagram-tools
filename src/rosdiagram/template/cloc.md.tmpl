@@ -27,11 +27,14 @@ ${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
 |!
 |! pkg_list = DATA_DICT.get('packages', [])
 |{ if pkg_list:
-    $<| Packages (${ len(pkg_list) }): | Lines number: |
-    $<| --- | --- |
-|{     for item_data in pkg_list:
-    $<| [${ item_data[0] }](${ item_data[1] }) | `${ item_data[2] }` |
+|!      header_list = []
+|!      header_list.append( f"Packages ({ len(pkg_list) }):" )
+|!      header_list.append( "Lines number:" )
+|!      data_matrix = []
+|{      for item_data in pkg_list:
+|!          data_matrix.append( [ f"[{ item_data[0] }]({ item_data[1] })", f"`{ item_data[2] }`" ] )
 |}
+        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
 |}
 
 ${ tmpl_footer.print_footer() }

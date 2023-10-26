@@ -43,21 +43,21 @@ ${ tmpl_footer.print_footer() }
 
 |template ros_topic_info( DATA_DICT )
 |!
-|! topic_name  = DATA_DICT.get('topic_name')
-|! topic_pubs  = DATA_DICT.get('topic_pubs')
-|! topic_subs  = DATA_DICT.get('topic_subs')
-|! msg_type    = DATA_DICT.get('msg_type')
-|! msg_content = DATA_DICT.get('msg_content')
-    $<|  |  |
-    $<| --------------------------------- | -------- | ------------ |
-|{ if topic_name:
-    $<| Topic name: | `${topic_name}` |
+|!  topic_name  = DATA_DICT.get('topic_name')
+|!  topic_pubs  = DATA_DICT.get('topic_pubs')
+|!  topic_subs  = DATA_DICT.get('topic_subs')
+|!  msg_type    = DATA_DICT.get('msg_type')
+|!  msg_content = DATA_DICT.get('msg_content')
+|!  data_matrix = []
+|{  if topic_name:
+|!      data_matrix.append( [ "Topic name:", f"`{topic_name}`" ] )
 |}
-|{ if msg_type:
-    $<| Data type | `${msg_type}` |
+|{  if msg_type:
+|!      data_matrix.append( [ "Data type:", f"`{msg_type}`" ] )
 |}
-    $<| Publishers: | `${ " ".join(topic_pubs) }` |
-    $<| Subscribers: | `${ " ".join(topic_subs) }` |
+|!  data_matrix.append( [ "Publishers:", f"`{ ' '.join(topic_pubs) }`" ] )
+|!  data_matrix.append( [ "Subscribers:", f"`{ ' '.join(topic_subs) }`" ] )
+        $<${ tmpl_utils.insert_table2( [], data_matrix ) }
 
 |!
 |{ if msg_content:

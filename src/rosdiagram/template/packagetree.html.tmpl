@@ -76,26 +76,20 @@ ${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
     </div>
 
 |!
-|! pkg_path = DATA_DICT.get('pkg_path', "")
-|! pkg_nodes = DATA_DICT.get('pkg_nodes', [])
-|{ if pkg_path or pkg_nodes:
+|!  pkg_path = DATA_DICT.get('pkg_path', "")
+|!  pkg_nodes = DATA_DICT.get('pkg_nodes', [])
+|{  if pkg_path or pkg_nodes:
     <div class="info_content">
-        <table>
-            <tr>
-                <td>Package path:</td>
-                <td><code>${pkg_path}</code></td>
-            </tr>
-            <tr>
-                <td>Nodes:</td>
-                <td><code>${ " ".join(pkg_nodes) }</code></td>
-            </tr>
-        </table>
+|!      data_matrix = []
+|!      data_matrix.append( [ "Package path:", f"<code>{ pkg_path }</code>" ] )
+|!      data_matrix.append( [ "Nodes:",        f"<code>{ ' '.join(pkg_nodes) }</code>" ] )
+        $<${ tmpl_utils.insert_table2( [], data_matrix ) }
     </div>
 
 |}
 |!
-|! packages_list = DATA_DICT.get('graph_packages', [])
-${ tmpl_utils.ros_link_table( packages_list, "Graph packages" ) }$>
+|!  packages_list = DATA_DICT.get('graph_packages', [])
+${  tmpl_utils.ros_link_table( packages_list, "Graph packages" ) }$>
 |!
 
 ${ tmpl_footer.print_footer() }

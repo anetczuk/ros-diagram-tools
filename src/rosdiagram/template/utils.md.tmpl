@@ -8,6 +8,44 @@
 |* 
 
 
+|template insert_table2( header_list, data_matrix )
+|*
+|****** generate header row
+|*
+|{  if header_list:
+            $<|$>
+|{      for header_item in header_list:
+            $< ${header_item} |$>
+|}
+
+            $<|$>
+|{      for header_item in header_list:
+|!          column_len = len( header_item )
+            $< ${ "-" * column_len } |$>
+|}
+|}
+|{  else:
+|*****  no header, get number of columns from data_matrix
+|{      if len(data_matrix) > 0:
+|!          header_len = len( data_matrix[0] )
+            $<${ "|     " * header_len }|
+            $<${ "| --- " * header_len }|$>
+|}
+|}
+|*
+|****** generate data rows
+|*
+|{      for data_row in data_matrix:
+
+            $<|$>
+|{          for data_item in data_row:
+                $< ${data_item} |$>
+|}
+|}
+|*
+|end template
+
+
 |template ros_link_list( items_list, list_title )
 |{ if items_list:
     $<$list_title (${ len(items_list) }):
@@ -29,11 +67,14 @@
 
 |template ros_link_table( items_list, list_title )
 |{ if items_list:
-    $<| $list_title (${ len(items_list) }): | Description: |
-    $<| ----------------------------------- | ------------ |
-|{     for item_data in items_list:
-    $<| ${ ros_link( item_data[0], item_data[1] ) } | ${ item_data[2] if len(item_data) > 2 else "" } |
+|!      header_list = []
+|!      header_list.append( f"{list_title} ({ len(items_list) }):" )
+|!      header_list.append( "Description:" )
+|!      data_matrix = []
+|{      for item_data in items_list:
+|!          data_matrix.append( [ ros_link( item_data[0], item_data[1] ), item_data[2] if len(item_data) > 2 else '' ] )
 |}
+        $<${ insert_table2( header_list, data_matrix ) }
 
 |}
 |end template

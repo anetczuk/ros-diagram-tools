@@ -93,34 +93,22 @@ ${ tmpl_footer.print_footer() }
 
 |template ros_topic_info( DATA_DICT )
 |!
-|! topic_name  = DATA_DICT.get('topic_name')
-|! topic_pubs  = DATA_DICT.get('topic_pubs')
-|! topic_subs  = DATA_DICT.get('topic_subs')
-|! msg_type    = DATA_DICT.get('msg_type')
-|! msg_content = DATA_DICT.get('msg_content')
+|!  topic_name  = DATA_DICT.get('topic_name')
+|!  topic_pubs  = DATA_DICT.get('topic_pubs')
+|!  topic_subs  = DATA_DICT.get('topic_subs')
+|!  msg_type    = DATA_DICT.get('msg_type')
+|!  msg_content = DATA_DICT.get('msg_content')
     <div class="info_content">
-        <table>
-|{ if topic_name:
-            <tr>
-                <td>Topic name:</td>
-                <td><code>${topic_name}</code></td>
-            </tr>
+|!  data_matrix = []
+|{  if topic_name:
+|!      data_matrix.append( [ "Topic name:", f"<code>{topic_name}</code>" ] )
 |}
-|{ if msg_type:
-            <tr>
-                <td>Data type:</td>
-                <td><code>${msg_type}</code></td>
-            </tr>
+|{  if msg_type:
+|!      data_matrix.append( [ "Data type:", f"<code>{msg_type}</code>" ] )
 |}
-            <tr>
-                <td>Publishers:</td>
-                <td><code>${ " ".join(topic_pubs) }</code></td>
-            </tr>
-            <tr>
-                <td>Subscribers:</td>
-                <td><code>${ " ".join(topic_subs) }</code></td>
-            </tr>
-        </table>
+|!  data_matrix.append( [ "Publishers:", f"<code>{ ' '.join(topic_pubs) }</code>" ] )
+|!  data_matrix.append( [ "Subscribers:", f"<code>{ ' '.join(topic_subs) }</code>" ] )
+        $<${ tmpl_utils.insert_table2( [], data_matrix ) }
     </div>
 
 |{ if msg_content:

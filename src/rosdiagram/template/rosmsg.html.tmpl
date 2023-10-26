@@ -94,22 +94,16 @@ ${DATA_DICT.get('head_css_style', '')}
 
 
     <div class="info_content">
-        <table>
-|! item_type = DATA_DICT.get('item_type')
-|{ if item_type:
-            <tr>
-                <td>Data type:</td>
-                <td><code>${item_type}</code></td>
-            </tr>
+|!  item_type = DATA_DICT.get('item_type')
+|!  data_matrix = []
+|{  if item_type:
+|!      data_matrix.append( [ "Data type:", f"<code>{ item_type }</code>" ] )
 |}
-|! item_users = DATA_DICT.get('item_users')
-|{ if item_users:
-            <tr>
-                <td>Usage:</td>
-                <td><code>${" ".join(item_users)}</code></td>
-            </tr>
+|!  item_users = DATA_DICT.get('item_users')
+|{  if item_users:
+|!      data_matrix.append( [ "Usage:", f"<code>{ ' '.join(item_users) }</code>" ] )
 |}
-        </table>
+        $<${ tmpl_utils.insert_table2( [], data_matrix ) }
     </div>
 
 |! item_content = DATA_DICT.get('item_content')
@@ -133,20 +127,19 @@ ${ tmpl_footer.print_footer() }
 |template msgs_table( items_list, list_title )
 |{ if items_list:
     <div class="bottom_content">
-        <table>
-            <tr>
-                <th><b>$list_title (${ len(items_list) }):</b></th>
-                <th><b>In use:</b></th>
-            </tr>
-|{     for item_data in items_list:
-            <tr>
-                <td>${ tmpl_utils.ros_link( item_data[0], item_data[1] ) }</td>
-|{ if item_data[2] > 0:
-                <td><code>${ item_data[2] }</code></td>
+|!  header_list = []
+|!  header_list.append( f"<b>{list_title} ({ len(items_list) }):</b>" )
+|!  header_list.append( f"<b>In use:</b>" )
+|!  data_matrix = []
+|{  for item_data in items_list:
+|!      data_row = []
+|!      data_row.append( tmpl_utils.ros_link( item_data[0], item_data[1] ) )
+|{      if item_data[2] > 0:
+|!          data_row.append( f"<code>{ item_data[2] }</code>" )
 |}
-            </tr>
+|!      data_matrix.append( data_row )
 |}
-        </table>
+        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
         <br />
     </div>
 

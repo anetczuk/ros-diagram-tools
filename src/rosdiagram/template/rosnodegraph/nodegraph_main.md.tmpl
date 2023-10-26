@@ -42,12 +42,17 @@ ${ tmpl_footer.print_footer() }
 
 
 |template ros_nodes_table( items_list )
-|{ if items_list:
-    $<| ROS nodes (${ len(items_list) }): | Package: | Description: |
-    $<| --------------------------------- | -------- | ------------ |
-|{     for item_data in items_list:
-    $<| ${ tmpl_utils.ros_link( item_data[0], item_data[1] ) } | ${ item_data[2] } | ${ item_data[3] if len(item_data) > 3 else "" } |
+|{  if items_list:
+|!      header_list = [ f"ROS nodes ({ len(items_list) }):", "Package:", "Description:" ]
+|!      data_matrix = []
+|{      for item_data in items_list:
+|!          data_row = []
+|!          data_row.append( tmpl_utils.ros_link( item_data[0], item_data[1] ) )
+|!          data_row.append( item_data[2] )
+|!          data_row.append( item_data[3] if len(item_data) > 3 else '' )
+|!          data_matrix.append( data_row )
 |}
+        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
 
 |}
 |end template

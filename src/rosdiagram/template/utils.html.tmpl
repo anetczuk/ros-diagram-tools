@@ -18,6 +18,26 @@ ${DATA_DICT.get('graph_map', '')}$>
 |end template
 
 
+|template insert_table2( header_list, data_matrix )
+        <table>
+|{  if header_list:
+            <tr>
+|{      for header_item in header_list:
+                <th>${header_item}</th>
+|}
+            </tr>
+|}
+|{  for data_row in data_matrix:
+            <tr>
+|{      for data_item in data_row:
+                <td>${data_item}</td>
+|}
+            </tr>
+|}
+        </table>$>
+|end template
+
+
 |template ros_link_list( items_list, list_title )
 |{ if items_list:
     <div class="bottom_content">
@@ -35,20 +55,16 @@ ${DATA_DICT.get('graph_map', '')}$>
 
 
 |template ros_link_table( items_list, list_title )
-|{ if items_list:
+|{  if items_list:
     <div class="bottom_content">
-        <table>
-            <tr>
-                <th>$list_title (${ len(items_list) }):</th>
-                <th>Description:</th>
-            </tr>
-|{     for item_data in items_list:
-            <tr>
-                <td>${ ros_link( item_data[0], item_data[1] ) }</td>
-                <td>${ item_data[2] if len(item_data) > 2 else "" }</td>
-            </tr>
+|!      header_list = []
+|!      header_list.append( f"{list_title} ({ len(items_list) }):" )
+|!      header_list.append( "Description:" )
+|!      data_matrix = []
+|{      for item_data in items_list:
+|!          data_matrix.append( [ ros_link( item_data[0], item_data[1] ), item_data[2] if len(item_data) > 2 else '' ] )
 |}
-        </table>
+        $<${ insert_table2( header_list, data_matrix ) }
         <br />
     </div>
 
