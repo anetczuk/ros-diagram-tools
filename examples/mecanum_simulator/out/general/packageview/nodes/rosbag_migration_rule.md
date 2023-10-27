@@ -15,8 +15,8 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (2): | Description: |
 | ------------------- | ------------ |
-| [`rosbag_migration_rule`](rosbag_migration_rule.html) |  |
-| [`trajectory_msgs`](trajectory_msgs.html) |  |
+| [`rosbag_migration_rule`](rosbag_migration_rule.md) |  |
+| [`trajectory_msgs`](trajectory_msgs.md) |  |
 
 
 </br>

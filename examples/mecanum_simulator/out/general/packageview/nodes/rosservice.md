@@ -15,14 +15,14 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (8): | Description: |
 | ------------------- | ------------ |
-| [`dynamic_reconfigure`](dynamic_reconfigure.html) |  |
-| [`genpy`](genpy.html) |  |
-| [`rosgraph`](rosgraph.html) |  |
-| [`roslib`](roslib.html) |  |
-| [`rosmsg`](rosmsg.html) |  |
-| [`rospy`](rospy.html) |  |
-| [`rosservice`](rosservice.html) |  |
-| [`roswtf`](roswtf.html) |  |
+| [`dynamic_reconfigure`](dynamic_reconfigure.md) |  |
+| [`genpy`](genpy.md) |  |
+| [`rosgraph`](rosgraph.md) |  |
+| [`roslib`](roslib.md) |  |
+| [`rosmsg`](rosmsg.md) |  |
+| [`rospy`](rospy.md) |  |
+| [`rosservice`](rosservice.md) |  |
+| [`roswtf`](roswtf.md) |  |
 
 
 </br>

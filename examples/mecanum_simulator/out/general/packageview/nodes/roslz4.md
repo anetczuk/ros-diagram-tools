@@ -15,8 +15,8 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (2): | Description: |
 | ------------------- | ------------ |
-| [`rosbag_storage`](rosbag_storage.html) |  |
-| [`roslz4`](roslz4.html) |  |
+| [`rosbag_storage`](rosbag_storage.md) |  |
+| [`roslz4`](roslz4.md) |  |
 
 
 </br>

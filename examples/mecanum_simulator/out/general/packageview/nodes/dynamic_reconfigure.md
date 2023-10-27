@@ -15,14 +15,14 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (8): | Description: |
 | ------------------- | ------------ |
-| [`dynamic_reconfigure`](dynamic_reconfigure.html) |  |
-| [`gazebo_ros`](gazebo_ros.html) | Gazebo package |
-| [`message_runtime`](message_runtime.html) |  |
-| [`roscpp`](roscpp.html) |  |
-| [`roslib`](roslib.html) |  |
-| [`rospy`](rospy.html) |  |
-| [`rosservice`](rosservice.html) |  |
-| [`std_msgs`](std_msgs.html) |  |
+| [`dynamic_reconfigure`](dynamic_reconfigure.md) |  |
+| [`gazebo_ros`](gazebo_ros.md) | Gazebo package |
+| [`message_runtime`](message_runtime.md) |  |
+| [`roscpp`](roscpp.md) |  |
+| [`roslib`](roslib.md) |  |
+| [`rospy`](rospy.md) |  |
+| [`rosservice`](rosservice.md) |  |
+| [`std_msgs`](std_msgs.md) |  |
 
 
 </br>

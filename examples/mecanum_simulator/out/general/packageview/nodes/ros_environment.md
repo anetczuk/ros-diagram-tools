@@ -15,9 +15,9 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (3): | Description: |
 | ------------------- | ------------ |
-| [`ros_environment`](ros_environment.html) |  |
-| [`roslib`](roslib.html) |  |
-| [`rospack`](rospack.html) |  |
+| [`ros_environment`](ros_environment.md) |  |
+| [`roslib`](roslib.md) |  |
+| [`rospack`](rospack.md) |  |
 
 
 </br>

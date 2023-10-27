@@ -17,11 +17,11 @@ Project is distributed under the BSD 3-Clause license.
 
 | ROS nodes (1): | Description: |
 | -------------- | ------------ |
-| [`/node1`](n__node1.html) |  |
+| [`/node1`](n__node1.md) |  |
 
 | ROS topics (1): | Description: |
 | --------------- | ------------ |
-| [`/topic2`](t__topic2.html) |  |
+| [`/topic2`](t__topic2.md) |  |
 
 
 </br>

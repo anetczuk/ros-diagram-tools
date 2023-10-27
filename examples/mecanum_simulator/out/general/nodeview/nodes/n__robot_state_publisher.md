@@ -14,22 +14,22 @@ Project is distributed under the BSD 3-Clause license.
 
 | ROS nodes (3): | Description: |
 | -------------- | ------------ |
-| [`/gazebo`](n__gazebo.html) | Gazebo node |
-| [`/robot_state_publisher`](n__robot_state_publisher.html) |  |
-| [`/rosout`](n__rosout.html) |  |
+| [`/gazebo`](n__gazebo.md) | Gazebo node |
+| [`/robot_state_publisher`](n__robot_state_publisher.md) |  |
+| [`/rosout`](n__rosout.md) |  |
 
 | ROS topics (5): | Description: |
 | --------------- | ------------ |
-| [`/clock`](t__clock.html) |  |
-| [`/joint_states`](t__joint_states.html) |  |
-| [`/rosout`](t__rosout.html) |  |
-| [`/tf`](t__tf.html) |  |
-| [`/tf_static`](t__tf_static.html) |  |
+| [`/clock`](t__clock.md) |  |
+| [`/joint_states`](t__joint_states.md) |  |
+| [`/rosout`](t__rosout.md) |  |
+| [`/tf`](t__tf.md) |  |
+| [`/tf_static`](t__tf_static.md) |  |
 
 | ROS services (2): | Description: |
 | ----------------- | ------------ |
-| [`/robot_state_publisher/get_loggers`](s__robot_state_publisher_get_loggers.html) |  |
-| [`/robot_state_publisher/set_logger_level`](s__robot_state_publisher_set_logger_level.html) |  |
+| [`/robot_state_publisher/get_loggers`](s__robot_state_publisher_get_loggers.md) |  |
+| [`/robot_state_publisher/set_logger_level`](s__robot_state_publisher_set_logger_level.md) |  |
 
 
 </br>

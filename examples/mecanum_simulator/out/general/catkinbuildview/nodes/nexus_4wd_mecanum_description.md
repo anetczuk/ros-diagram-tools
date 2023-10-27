@@ -15,9 +15,9 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (3): | Description: |
 | ------------------- | ------------ |
-| [`nexus_4wd_mecanum_description`](nexus_4wd_mecanum_description.html) |  |
-| [`robot_state_publisher`](robot_state_publisher.html) |  |
-| [`urdf`](urdf.html) |  |
+| [`nexus_4wd_mecanum_description`](nexus_4wd_mecanum_description.md) |  |
+| [`robot_state_publisher`](robot_state_publisher.md) |  |
+| [`urdf`](urdf.md) |  |
 
 
 </br>

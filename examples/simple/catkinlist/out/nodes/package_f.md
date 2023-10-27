@@ -10,7 +10,7 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (1): | Description: |
 | ------------------- | ------------ |
-| [`package_f`](package_f.html) |  |
+| [`package_f`](package_f.md) |  |
 
 
 </br>

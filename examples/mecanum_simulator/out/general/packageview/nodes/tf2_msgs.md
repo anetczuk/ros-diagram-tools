@@ -15,12 +15,12 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (6): | Description: |
 | ------------------- | ------------ |
-| [`actionlib_msgs`](actionlib_msgs.html) |  |
-| [`geometry_msgs`](geometry_msgs.html) |  |
-| [`message_generation`](message_generation.html) |  |
-| [`tf2`](tf2.html) |  |
-| [`tf2_msgs`](tf2_msgs.html) |  |
-| [`tf2_ros`](tf2_ros.html) |  |
+| [`actionlib_msgs`](actionlib_msgs.md) |  |
+| [`geometry_msgs`](geometry_msgs.md) |  |
+| [`message_generation`](message_generation.md) |  |
+| [`tf2`](tf2.md) |  |
+| [`tf2_msgs`](tf2_msgs.md) |  |
+| [`tf2_ros`](tf2_ros.md) |  |
 
 
 </br>

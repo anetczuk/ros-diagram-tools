@@ -10,8 +10,8 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (2): | Description: |
 | ------------------- | ------------ |
-| [`interactive_markers`](interactive_markers.html) |  |
-| [`turtlebot3_example`](turtlebot3_example.html) |  |
+| [`interactive_markers`](interactive_markers.md) |  |
+| [`turtlebot3_example`](turtlebot3_example.md) |  |
 
 
 </br>

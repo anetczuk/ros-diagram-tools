@@ -7,14 +7,14 @@ Project is distributed under the BSD 3-Clause license.
 
 
 Content (8):
- - [`code distribution graph`](clockpackview/full_graph.html)
- - [`catkin build deps view`](catkinbuildview/full_graph.html)
- - [`catkin run deps view`](catkinrunview/full_graph.html)
- - [`packages view`](packageview/full_graph.html)
- - [`parameters view`](paramview/main_page.html)
- - [`messages view`](msgview/main_page.html)
- - [`nodes view`](nodeview/full_graph.html)
- - [`catkin build view`](../catkinschedule/full_graph.html)
+ - [`code distribution graph`](clockpackview/full_graph.md)
+ - [`catkin build deps view`](catkinbuildview/full_graph.md)
+ - [`catkin run deps view`](catkinrunview/full_graph.md)
+ - [`packages view`](packageview/full_graph.md)
+ - [`parameters view`](paramview/main_page.md)
+ - [`messages view`](msgview/main_page.md)
+ - [`nodes view`](nodeview/full_graph.md)
+ - [`catkin build view`](../catkinschedule/full_graph.md)
 
 
 </br>

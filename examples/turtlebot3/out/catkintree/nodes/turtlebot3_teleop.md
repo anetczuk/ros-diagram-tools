@@ -10,11 +10,11 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (5): | Description: |
 | ------------------- | ------------ |
-| [`geometry_msgs`](geometry_msgs.html) |  |
-| [`rospy`](rospy.html) |  |
-| [`turtlebot3`](turtlebot3.html) |  |
-| [`turtlebot3_bringup`](turtlebot3_bringup.html) |  |
-| [`turtlebot3_teleop`](turtlebot3_teleop.html) |  |
+| [`geometry_msgs`](geometry_msgs.md) |  |
+| [`rospy`](rospy.md) |  |
+| [`turtlebot3`](turtlebot3.md) |  |
+| [`turtlebot3_bringup`](turtlebot3_bringup.md) |  |
+| [`turtlebot3_teleop`](turtlebot3_teleop.md) |  |
 
 
 </br>

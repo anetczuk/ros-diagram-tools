@@ -10,8 +10,8 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (2): | Description: |
 | ------------------- | ------------ |
-| [`package_b`](package_b.html) |  |
-| [`std_msgs`](std_msgs.html) |  |
+| [`package_b`](package_b.md) |  |
+| [`std_msgs`](std_msgs.md) |  |
 
 
 </br>

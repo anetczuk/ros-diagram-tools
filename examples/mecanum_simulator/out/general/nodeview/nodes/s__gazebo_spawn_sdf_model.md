@@ -10,7 +10,7 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Name: | `/gazebo/spawn_sdf_model` |
 | Data type: | `gazebo_msgs/SpawnModel` |
-| Listener: | [`/gazebo`](n__gazebo.html) |
+| Listener: | [`/gazebo`](n__gazebo.md) |
 
 Message:
 ```

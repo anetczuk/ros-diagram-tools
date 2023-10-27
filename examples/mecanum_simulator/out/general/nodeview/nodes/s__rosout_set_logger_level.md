@@ -10,7 +10,7 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Name: | `/rosout/set_logger_level` |
 | Data type: | `roscpp/SetLoggerLevel` |
-| Listener: | [`/rosout`](n__rosout.html) |
+| Listener: | [`/rosout`](n__rosout.md) |
 
 Message:
 ```

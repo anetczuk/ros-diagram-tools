@@ -10,9 +10,9 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (3): | Description: |
 | ------------------- | ------------ |
-| [`std_msgs`](std_msgs.html) |  |
-| [`turtlebot3_bringup`](turtlebot3_bringup.html) |  |
-| [`turtlebot3_example`](turtlebot3_example.html) |  |
+| [`std_msgs`](std_msgs.md) |  |
+| [`turtlebot3_bringup`](turtlebot3_bringup.md) |  |
+| [`turtlebot3_example`](turtlebot3_example.md) |  |
 
 
 </br>

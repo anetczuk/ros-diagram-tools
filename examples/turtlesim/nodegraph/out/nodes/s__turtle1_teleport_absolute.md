@@ -10,7 +10,7 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Name: | `/turtle1/teleport_absolute` |
 | Data type: | `turtlesim/TeleportAbsolute` |
-| Listener: | [`/turtlesim`](n__turtlesim.html) |
+| Listener: | [`/turtlesim`](n__turtlesim.md) |
 
 Message:
 ```

@@ -9,18 +9,18 @@ Project is distributed under the BSD 3-Clause license.
 
 | ROS nodes (2): | Description: |
 | -------------- | ------------ |
-| [`/node1`](n__node1.html) |  |
-| [`/node2`](n__node2.html) | description example |
+| [`/node1`](n__node1.md) |  |
+| [`/node2`](n__node2.md) | description example |
 
 | ROS topics (3): | Description: |
 | --------------- | ------------ |
-| [`/topic1`](t__topic1.html) |  |
-| [`/topic2`](t__topic2.html) |  |
-| [`/topic3`](t__topic3.html) | important topic |
+| [`/topic1`](t__topic1.md) |  |
+| [`/topic2`](t__topic2.md) |  |
+| [`/topic3`](t__topic3.md) | important topic |
 
 | ROS services (1): | Description: |
 | ----------------- | ------------ |
-| [`/service1`](s__service1.html) |  |
+| [`/service1`](s__service1.md) |  |
 
 
 </br>

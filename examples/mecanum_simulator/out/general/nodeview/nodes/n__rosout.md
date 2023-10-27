@@ -9,21 +9,21 @@ Project is distributed under the BSD 3-Clause license.
 
 | ROS nodes (4): | Description: |
 | -------------- | ------------ |
-| [`/gazebo`](n__gazebo.html) | Gazebo node |
-| [`/gazebo_gui`](n__gazebo_gui.html) |  |
-| [`/robot_state_publisher`](n__robot_state_publisher.html) |  |
-| [`/rosout`](n__rosout.html) |  |
+| [`/gazebo`](n__gazebo.md) | Gazebo node |
+| [`/gazebo_gui`](n__gazebo_gui.md) |  |
+| [`/robot_state_publisher`](n__robot_state_publisher.md) |  |
+| [`/rosout`](n__rosout.md) |  |
 
 | ROS topics (3): | Description: |
 | --------------- | ------------ |
-| [`/clock`](t__clock.html) |  |
-| [`/rosout`](t__rosout.html) |  |
-| [`/rosout_agg`](t__rosout_agg.html) |  |
+| [`/clock`](t__clock.md) |  |
+| [`/rosout`](t__rosout.md) |  |
+| [`/rosout_agg`](t__rosout_agg.md) |  |
 
 | ROS services (2): | Description: |
 | ----------------- | ------------ |
-| [`/rosout/get_loggers`](s__rosout_get_loggers.html) | returns ROS loggers |
-| [`/rosout/set_logger_level`](s__rosout_set_logger_level.html) |  |
+| [`/rosout/get_loggers`](s__rosout_get_loggers.md) | returns ROS loggers |
+| [`/rosout/set_logger_level`](s__rosout_set_logger_level.md) |  |
 
 
 </br>

@@ -15,13 +15,13 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (7): | Description: |
 | ------------------- | ------------ |
-| [`gazebo_msgs`](gazebo_msgs.html) | Gazebo package |
-| [`geometry_msgs`](geometry_msgs.html) |  |
-| [`message_runtime`](message_runtime.html) |  |
-| [`robot_state_publisher`](robot_state_publisher.html) |  |
-| [`sensor_msgs`](sensor_msgs.html) |  |
-| [`std_msgs`](std_msgs.html) |  |
-| [`tf`](tf.html) |  |
+| [`gazebo_msgs`](gazebo_msgs.md) | Gazebo package |
+| [`geometry_msgs`](geometry_msgs.md) |  |
+| [`message_runtime`](message_runtime.md) |  |
+| [`robot_state_publisher`](robot_state_publisher.md) |  |
+| [`sensor_msgs`](sensor_msgs.md) |  |
+| [`std_msgs`](std_msgs.md) |  |
+| [`tf`](tf.md) |  |
 
 
 </br>

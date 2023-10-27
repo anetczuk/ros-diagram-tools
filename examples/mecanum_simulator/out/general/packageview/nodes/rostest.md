@@ -15,13 +15,13 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (7): | Description: |
 | ------------------- | ------------ |
-| [`actionlib`](actionlib.html) |  |
-| [`rosgraph`](rosgraph.html) |  |
-| [`roslaunch`](roslaunch.html) |  |
-| [`rosmaster`](rosmaster.html) |  |
-| [`rospy`](rospy.html) |  |
-| [`rostest`](rostest.html) |  |
-| [`rosunit`](rosunit.html) |  |
+| [`actionlib`](actionlib.md) |  |
+| [`rosgraph`](rosgraph.md) |  |
+| [`roslaunch`](roslaunch.md) |  |
+| [`rosmaster`](rosmaster.md) |  |
+| [`rospy`](rospy.md) |  |
+| [`rostest`](rostest.md) |  |
+| [`rosunit`](rosunit.md) |  |
 
 
 </br>

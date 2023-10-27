@@ -40,11 +40,11 @@ dynamic_reconfigure/GroupState[] groups
 
 | ROS nodes (1): | Description: |
 | -------------- | ------------ |
-| [`/gazebo`](n__gazebo.html) | Gazebo node |
+| [`/gazebo`](n__gazebo.md) | Gazebo node |
 
 | ROS topics (1): | Description: |
 | --------------- | ------------ |
-| [`/gazebo/parameter_updates`](t__gazebo_parameter_updates.html) |  |
+| [`/gazebo/parameter_updates`](t__gazebo_parameter_updates.md) |  |
 
 
 </br>

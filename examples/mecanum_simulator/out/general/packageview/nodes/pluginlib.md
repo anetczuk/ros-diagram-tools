@@ -15,9 +15,9 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (3): | Description: |
 | ------------------- | ------------ |
-| [`pluginlib`](pluginlib.html) |  |
-| [`rosbag_storage`](rosbag_storage.html) |  |
-| [`urdf`](urdf.html) |  |
+| [`pluginlib`](pluginlib.md) |  |
+| [`rosbag_storage`](rosbag_storage.md) |  |
+| [`urdf`](urdf.md) |  |
 
 
 </br>

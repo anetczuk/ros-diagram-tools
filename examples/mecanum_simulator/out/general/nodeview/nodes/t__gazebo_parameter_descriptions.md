@@ -88,11 +88,11 @@ dynamic_reconfigure/Config dflt
 
 | ROS nodes (1): | Description: |
 | -------------- | ------------ |
-| [`/gazebo`](n__gazebo.html) | Gazebo node |
+| [`/gazebo`](n__gazebo.md) | Gazebo node |
 
 | ROS topics (1): | Description: |
 | --------------- | ------------ |
-| [`/gazebo/parameter_descriptions`](t__gazebo_parameter_descriptions.html) |  |
+| [`/gazebo/parameter_descriptions`](t__gazebo_parameter_descriptions.md) |  |
 
 
 </br>

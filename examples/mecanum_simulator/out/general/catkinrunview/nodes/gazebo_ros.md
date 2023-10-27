@@ -15,8 +15,8 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (2): | Description: |
 | ------------------- | ------------ |
-| [`gazebo_ros`](gazebo_ros.html) | Gazebo package |
-| [`nexus_4wd_mecanum_gazebo`](nexus_4wd_mecanum_gazebo.html) |  |
+| [`gazebo_ros`](gazebo_ros.md) | Gazebo package |
+| [`nexus_4wd_mecanum_gazebo`](nexus_4wd_mecanum_gazebo.md) |  |
 
 
 </br>

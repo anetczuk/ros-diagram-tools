@@ -10,9 +10,9 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (3): | Description: |
 | ------------------- | ------------ |
-| [`rospy`](rospy.html) |  |
-| [`turtlebot3_example`](turtlebot3_example.html) |  |
-| [`turtlebot3_teleop`](turtlebot3_teleop.html) |  |
+| [`rospy`](rospy.md) |  |
+| [`turtlebot3_example`](turtlebot3_example.md) |  |
+| [`turtlebot3_teleop`](turtlebot3_teleop.md) |  |
 
 
 </br>

@@ -10,8 +10,8 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (2): | Description: |
 | ------------------- | ------------ |
-| [`package_a`](package_a.html) |  |
-| [`tf`](tf.html) |  |
+| [`package_a`](package_a.md) |  |
+| [`tf`](tf.md) |  |
 
 
 </br>

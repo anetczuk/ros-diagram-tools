@@ -10,9 +10,9 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (3): | Description: |
 | ------------------- | ------------ |
-| [`geometry_msgs`](geometry_msgs.html) |  |
-| [`turtlebot3_example`](turtlebot3_example.html) |  |
-| [`turtlebot3_teleop`](turtlebot3_teleop.html) |  |
+| [`geometry_msgs`](geometry_msgs.md) |  |
+| [`turtlebot3_example`](turtlebot3_example.md) |  |
+| [`turtlebot3_teleop`](turtlebot3_teleop.md) |  |
 
 
 </br>

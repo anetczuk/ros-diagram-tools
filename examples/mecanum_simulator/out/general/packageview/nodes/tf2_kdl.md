@@ -15,10 +15,10 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (4): | Description: |
 | ------------------- | ------------ |
-| [`robot_state_publisher`](robot_state_publisher.html) |  |
-| [`tf2`](tf2.html) |  |
-| [`tf2_kdl`](tf2_kdl.html) |  |
-| [`tf2_ros`](tf2_ros.html) |  |
+| [`robot_state_publisher`](robot_state_publisher.md) |  |
+| [`tf2`](tf2.md) |  |
+| [`tf2_kdl`](tf2_kdl.md) |  |
+| [`tf2_ros`](tf2_ros.md) |  |
 
 
 </br>

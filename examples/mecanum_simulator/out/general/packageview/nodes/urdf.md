@@ -15,12 +15,12 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (6): | Description: |
 | ------------------- | ------------ |
-| [`kdl_parser`](kdl_parser.html) |  |
-| [`nexus_4wd_mecanum_description`](nexus_4wd_mecanum_description.html) |  |
-| [`pluginlib`](pluginlib.html) |  |
-| [`rosconsole_bridge`](rosconsole_bridge.html) |  |
-| [`roscpp`](roscpp.html) |  |
-| [`urdf`](urdf.html) |  |
+| [`kdl_parser`](kdl_parser.md) |  |
+| [`nexus_4wd_mecanum_description`](nexus_4wd_mecanum_description.md) |  |
+| [`pluginlib`](pluginlib.md) |  |
+| [`rosconsole_bridge`](rosconsole_bridge.md) |  |
+| [`roscpp`](roscpp.md) |  |
+| [`urdf`](urdf.md) |  |
 
 
 </br>

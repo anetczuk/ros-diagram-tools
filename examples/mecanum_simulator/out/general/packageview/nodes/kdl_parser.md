@@ -15,11 +15,11 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (5): | Description: |
 | ------------------- | ------------ |
-| [`kdl_parser`](kdl_parser.html) |  |
-| [`nexus_4wd_mecanum_description`](nexus_4wd_mecanum_description.html) |  |
-| [`robot_state_publisher`](robot_state_publisher.html) |  |
-| [`rosconsole`](rosconsole.html) |  |
-| [`urdf`](urdf.html) |  |
+| [`kdl_parser`](kdl_parser.md) |  |
+| [`nexus_4wd_mecanum_description`](nexus_4wd_mecanum_description.md) |  |
+| [`robot_state_publisher`](robot_state_publisher.md) |  |
+| [`rosconsole`](rosconsole.md) |  |
+| [`urdf`](urdf.md) |  |
 
 
 </br>

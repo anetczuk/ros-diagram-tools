@@ -10,8 +10,8 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (2): | Description: |
 | ------------------- | ------------ |
-| [`diagnostic_msgs`](diagnostic_msgs.html) |  |
-| [`turtlebot3_bringup`](turtlebot3_bringup.html) |  |
+| [`diagnostic_msgs`](diagnostic_msgs.md) |  |
+| [`turtlebot3_bringup`](turtlebot3_bringup.md) |  |
 
 
 </br>

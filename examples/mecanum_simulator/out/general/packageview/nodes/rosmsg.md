@@ -15,13 +15,13 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (7): | Description: |
 | ------------------- | ------------ |
-| [`catkin`](catkin.html) |  |
-| [`genmsg`](genmsg.html) |  |
-| [`genpy`](genpy.html) |  |
-| [`rosbag`](rosbag.html) |  |
-| [`roslib`](roslib.html) |  |
-| [`rosmsg`](rosmsg.html) |  |
-| [`rosservice`](rosservice.html) |  |
+| [`catkin`](catkin.md) |  |
+| [`genmsg`](genmsg.md) |  |
+| [`genpy`](genpy.md) |  |
+| [`rosbag`](rosbag.md) |  |
+| [`roslib`](roslib.md) |  |
+| [`rosmsg`](rosmsg.md) |  |
+| [`rosservice`](rosservice.md) |  |
 
 
 </br>

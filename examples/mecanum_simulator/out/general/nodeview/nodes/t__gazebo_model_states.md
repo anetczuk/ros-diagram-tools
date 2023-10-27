@@ -43,11 +43,11 @@ geometry_msgs/Twist[] twist
 
 | ROS nodes (1): | Description: |
 | -------------- | ------------ |
-| [`/gazebo`](n__gazebo.html) | Gazebo node |
+| [`/gazebo`](n__gazebo.md) | Gazebo node |
 
 | ROS topics (1): | Description: |
 | --------------- | ------------ |
-| [`/gazebo/model_states`](t__gazebo_model_states.html) |  |
+| [`/gazebo/model_states`](t__gazebo_model_states.md) |  |
 
 
 </br>

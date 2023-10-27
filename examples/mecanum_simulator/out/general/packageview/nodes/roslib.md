@@ -15,19 +15,19 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (13): | Description: |
 | -------------------- | ------------ |
-| [`catkin`](catkin.html) |  |
-| [`dynamic_reconfigure`](dynamic_reconfigure.html) |  |
-| [`gazebo_ros`](gazebo_ros.html) | Gazebo package |
-| [`ros_environment`](ros_environment.html) |  |
-| [`rosbag`](rosbag.html) |  |
-| [`roslaunch`](roslaunch.html) |  |
-| [`roslib`](roslib.html) |  |
-| [`rosmsg`](rosmsg.html) |  |
-| [`rospack`](rospack.html) |  |
-| [`rospy`](rospy.html) |  |
-| [`rosservice`](rosservice.html) |  |
-| [`rosunit`](rosunit.html) |  |
-| [`roswtf`](roswtf.html) |  |
+| [`catkin`](catkin.md) |  |
+| [`dynamic_reconfigure`](dynamic_reconfigure.md) |  |
+| [`gazebo_ros`](gazebo_ros.md) | Gazebo package |
+| [`ros_environment`](ros_environment.md) |  |
+| [`rosbag`](rosbag.md) |  |
+| [`roslaunch`](roslaunch.md) |  |
+| [`roslib`](roslib.md) |  |
+| [`rosmsg`](rosmsg.md) |  |
+| [`rospack`](rospack.md) |  |
+| [`rospy`](rospy.md) |  |
+| [`rosservice`](rosservice.md) |  |
+| [`rosunit`](rosunit.md) |  |
+| [`roswtf`](roswtf.md) |  |
 
 
 </br>

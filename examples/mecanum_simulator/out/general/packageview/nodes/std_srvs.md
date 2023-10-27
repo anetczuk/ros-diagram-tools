@@ -15,12 +15,12 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (6): | Description: |
 | ------------------- | ------------ |
-| [`gazebo_msgs`](gazebo_msgs.html) | Gazebo package |
-| [`gazebo_ros`](gazebo_ros.html) | Gazebo package |
-| [`message_runtime`](message_runtime.html) |  |
-| [`nexus_4wd_mecanum_gazebo`](nexus_4wd_mecanum_gazebo.html) |  |
-| [`rosbag`](rosbag.html) |  |
-| [`std_srvs`](std_srvs.html) |  |
+| [`gazebo_msgs`](gazebo_msgs.md) | Gazebo package |
+| [`gazebo_ros`](gazebo_ros.md) | Gazebo package |
+| [`message_runtime`](message_runtime.md) |  |
+| [`nexus_4wd_mecanum_gazebo`](nexus_4wd_mecanum_gazebo.md) |  |
+| [`rosbag`](rosbag.md) |  |
+| [`std_srvs`](std_srvs.md) |  |
 
 
 </br>

@@ -10,8 +10,8 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (2): | Description: |
 | ------------------- | ------------ |
-| [`map_server`](map_server.html) |  |
-| [`turtlebot3_navigation`](turtlebot3_navigation.html) |  |
+| [`map_server`](map_server.md) |  |
+| [`turtlebot3_navigation`](turtlebot3_navigation.md) |  |
 
 
 </br>

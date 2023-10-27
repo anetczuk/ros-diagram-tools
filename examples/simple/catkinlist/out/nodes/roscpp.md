@@ -10,9 +10,9 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (3): | Description: |
 | ------------------- | ------------ |
-| [`package_a`](package_a.html) |  |
-| [`package_c`](package_c.html) | important package |
-| [`roscpp`](roscpp.html) | other important package |
+| [`package_a`](package_a.md) |  |
+| [`package_c`](package_c.md) | important package |
+| [`roscpp`](roscpp.md) | other important package |
 
 
 </br>

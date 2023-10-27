@@ -15,15 +15,15 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (9): | Description: |
 | ------------------- | ------------ |
-| [`genmsg`](genmsg.html) |  |
-| [`genpy`](genpy.html) |  |
-| [`message_generation`](message_generation.html) |  |
-| [`message_runtime`](message_runtime.html) |  |
-| [`rosbag`](rosbag.html) |  |
-| [`rosmsg`](rosmsg.html) |  |
-| [`rospy`](rospy.html) |  |
-| [`rosservice`](rosservice.html) |  |
-| [`rostopic`](rostopic.html) |  |
+| [`genmsg`](genmsg.md) |  |
+| [`genpy`](genpy.md) |  |
+| [`message_generation`](message_generation.md) |  |
+| [`message_runtime`](message_runtime.md) |  |
+| [`rosbag`](rosbag.md) |  |
+| [`rosmsg`](rosmsg.md) |  |
+| [`rospy`](rospy.md) |  |
+| [`rosservice`](rosservice.md) |  |
+| [`rostopic`](rostopic.md) |  |
 
 
 </br>

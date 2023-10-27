@@ -31,11 +31,11 @@ float64[] effort
 
 | ROS nodes (1): | Description: |
 | -------------- | ------------ |
-| [`/robot_state_publisher`](n__robot_state_publisher.html) |  |
+| [`/robot_state_publisher`](n__robot_state_publisher.md) |  |
 
 | ROS topics (1): | Description: |
 | --------------- | ------------ |
-| [`/joint_states`](t__joint_states.html) |  |
+| [`/joint_states`](t__joint_states.md) |  |
 
 
 </br>

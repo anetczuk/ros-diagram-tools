@@ -31,11 +31,11 @@ geometry_msgs/Vector3 angular
 
 | ROS nodes (1): | Description: |
 | -------------- | ------------ |
-| [`/turtlesim`](n__turtlesim.html) |  |
+| [`/turtlesim`](n__turtlesim.md) |  |
 
 | ROS topics (1): | Description: |
 | --------------- | ------------ |
-| [`/turtle1/cmd_vel`](t__turtle1_cmd_vel.html) |  |
+| [`/turtle1/cmd_vel`](t__turtle1_cmd_vel.md) |  |
 
 
 </br>

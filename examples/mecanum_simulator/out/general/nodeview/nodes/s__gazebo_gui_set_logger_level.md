@@ -10,7 +10,7 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Name: | `/gazebo_gui/set_logger_level` |
 | Data type: | `roscpp/SetLoggerLevel` |
-| Listener: | [`/gazebo_gui`](n__gazebo_gui.html) |
+| Listener: | [`/gazebo_gui`](n__gazebo_gui.md) |
 
 Message:
 ```

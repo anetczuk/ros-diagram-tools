@@ -10,7 +10,7 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Name: | `/turtlesim/get_loggers` |
 | Data type: | `roscpp/GetLoggers` |
-| Listener: | [`/turtlesim`](n__turtlesim.html) |
+| Listener: | [`/turtlesim`](n__turtlesim.md) |
 
 Message:
 ```

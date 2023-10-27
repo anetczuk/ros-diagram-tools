@@ -10,7 +10,7 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Name: | `/robot_state_publisher/set_logger_level` |
 | Data type: | `roscpp/SetLoggerLevel` |
-| Listener: | [`/robot_state_publisher`](n__robot_state_publisher.html) |
+| Listener: | [`/robot_state_publisher`](n__robot_state_publisher.md) |
 
 Message:
 ```

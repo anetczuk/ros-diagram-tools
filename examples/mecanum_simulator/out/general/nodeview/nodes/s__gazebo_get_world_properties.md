@@ -10,7 +10,7 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Name: | `/gazebo/get_world_properties` |
 | Data type: | `gazebo_msgs/GetWorldProperties` |
-| Listener: | [`/gazebo`](n__gazebo.html) |
+| Listener: | [`/gazebo`](n__gazebo.md) |
 
 Message:
 ```

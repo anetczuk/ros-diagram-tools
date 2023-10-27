@@ -15,8 +15,8 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (2): | Description: |
 | ------------------- | ------------ |
-| [`rosclean`](rosclean.html) |  |
-| [`roslaunch`](roslaunch.html) |  |
+| [`rosclean`](rosclean.md) |  |
+| [`roslaunch`](roslaunch.md) |  |
 
 
 </br>

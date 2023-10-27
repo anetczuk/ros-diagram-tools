@@ -15,9 +15,9 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (3): | Description: |
 | ------------------- | ------------ |
-| [`genmsg`](genmsg.html) |  |
-| [`gennodejs`](gennodejs.html) |  |
-| [`message_generation`](message_generation.html) |  |
+| [`genmsg`](genmsg.md) |  |
+| [`gennodejs`](gennodejs.md) |  |
+| [`message_generation`](message_generation.md) |  |
 
 
 </br>

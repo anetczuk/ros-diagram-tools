@@ -10,7 +10,7 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Name: | `/gazebo/reset_world` |
 | Data type: | `std_srvs/Empty` |
-| Listener: | [`/gazebo`](n__gazebo.html) |
+| Listener: | [`/gazebo`](n__gazebo.md) |
 
 Message:
 ```

@@ -33,11 +33,11 @@ gazebo_msgs/SensorPerformanceMetric[] sensors
 
 | ROS nodes (1): | Description: |
 | -------------- | ------------ |
-| [`/gazebo`](n__gazebo.html) | Gazebo node |
+| [`/gazebo`](n__gazebo.md) | Gazebo node |
 
 | ROS topics (1): | Description: |
 | --------------- | ------------ |
-| [`/gazebo/performance_metrics`](t__gazebo_performance_metrics.html) |  |
+| [`/gazebo/performance_metrics`](t__gazebo_performance_metrics.md) |  |
 
 
 </br>

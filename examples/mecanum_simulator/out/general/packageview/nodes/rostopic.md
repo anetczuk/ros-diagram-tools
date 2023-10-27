@@ -15,11 +15,11 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (5): | Description: |
 | ------------------- | ------------ |
-| [`genpy`](genpy.html) |  |
-| [`rosbag`](rosbag.html) |  |
-| [`rosnode`](rosnode.html) |  |
-| [`rospy`](rospy.html) |  |
-| [`rostopic`](rostopic.html) |  |
+| [`genpy`](genpy.md) |  |
+| [`rosbag`](rosbag.md) |  |
+| [`rosnode`](rosnode.md) |  |
+| [`rospy`](rospy.md) |  |
+| [`rostopic`](rostopic.md) |  |
 
 
 </br>

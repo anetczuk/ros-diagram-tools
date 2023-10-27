@@ -15,12 +15,12 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (6): | Description: |
 | ------------------- | ------------ |
-| [`catkin`](catkin.html) |  |
-| [`message_generation`](message_generation.html) |  |
-| [`message_runtime`](message_runtime.html) |  |
-| [`rosbuild`](rosbuild.html) |  |
-| [`rosconsole`](rosconsole.html) |  |
-| [`roswtf`](roswtf.html) |  |
+| [`catkin`](catkin.md) |  |
+| [`message_generation`](message_generation.md) |  |
+| [`message_runtime`](message_runtime.md) |  |
+| [`rosbuild`](rosbuild.md) |  |
+| [`rosconsole`](rosconsole.md) |  |
+| [`roswtf`](roswtf.md) |  |
 
 
 </br>

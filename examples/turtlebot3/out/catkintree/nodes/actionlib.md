@@ -10,8 +10,8 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (2): | Description: |
 | ------------------- | ------------ |
-| [`actionlib`](actionlib.html) |  |
-| [`turtlebot3_example`](turtlebot3_example.html) |  |
+| [`actionlib`](actionlib.md) |  |
+| [`turtlebot3_example`](turtlebot3_example.md) |  |
 
 
 </br>

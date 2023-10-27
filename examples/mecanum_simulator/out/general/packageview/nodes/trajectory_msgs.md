@@ -15,12 +15,12 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (6): | Description: |
 | ------------------- | ------------ |
-| [`gazebo_msgs`](gazebo_msgs.html) | Gazebo package |
-| [`geometry_msgs`](geometry_msgs.html) |  |
-| [`message_runtime`](message_runtime.html) |  |
-| [`rosbag_migration_rule`](rosbag_migration_rule.html) |  |
-| [`std_msgs`](std_msgs.html) |  |
-| [`trajectory_msgs`](trajectory_msgs.html) |  |
+| [`gazebo_msgs`](gazebo_msgs.md) | Gazebo package |
+| [`geometry_msgs`](geometry_msgs.md) |  |
+| [`message_runtime`](message_runtime.md) |  |
+| [`rosbag_migration_rule`](rosbag_migration_rule.md) |  |
+| [`std_msgs`](std_msgs.md) |  |
+| [`trajectory_msgs`](trajectory_msgs.md) |  |
 
 
 </br>

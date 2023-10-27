@@ -15,16 +15,16 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (10): | Description: |
 | -------------------- | ------------ |
-| [`catkin`](catkin.html) |  |
-| [`gencpp`](gencpp.html) |  |
-| [`geneus`](geneus.html) |  |
-| [`genlisp`](genlisp.html) |  |
-| [`genmsg`](genmsg.html) |  |
-| [`gennodejs`](gennodejs.html) |  |
-| [`genpy`](genpy.html) |  |
-| [`message_generation`](message_generation.html) |  |
-| [`rosbag`](rosbag.html) |  |
-| [`rosmsg`](rosmsg.html) |  |
+| [`catkin`](catkin.md) |  |
+| [`gencpp`](gencpp.md) |  |
+| [`geneus`](geneus.md) |  |
+| [`genlisp`](genlisp.md) |  |
+| [`genmsg`](genmsg.md) |  |
+| [`gennodejs`](gennodejs.md) |  |
+| [`genpy`](genpy.md) |  |
+| [`message_generation`](message_generation.md) |  |
+| [`rosbag`](rosbag.md) |  |
+| [`rosmsg`](rosmsg.md) |  |
 
 
 </br>

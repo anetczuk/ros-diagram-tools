@@ -31,11 +31,11 @@ geometry_msgs/Vector3 angular
 
 | ROS nodes (1): | Description: |
 | -------------- | ------------ |
-| [`/gazebo`](n__gazebo.html) | Gazebo node |
+| [`/gazebo`](n__gazebo.md) | Gazebo node |
 
 | ROS topics (1): | Description: |
 | --------------- | ------------ |
-| [`/cmd_vel`](t__cmd_vel.html) |  |
+| [`/cmd_vel`](t__cmd_vel.md) |  |
 
 
 </br>

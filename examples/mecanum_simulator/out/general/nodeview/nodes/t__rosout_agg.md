@@ -39,11 +39,11 @@ string[] topics
 
 | ROS nodes (1): | Description: |
 | -------------- | ------------ |
-| [`/rosout`](n__rosout.html) |  |
+| [`/rosout`](n__rosout.md) |  |
 
 | ROS topics (1): | Description: |
 | --------------- | ------------ |
-| [`/rosout_agg`](t__rosout_agg.html) |  |
+| [`/rosout_agg`](t__rosout_agg.md) |  |
 
 
 </br>

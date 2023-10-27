@@ -51,11 +51,11 @@ geometry_msgs/TwistWithCovariance twist
 
 | ROS nodes (1): | Description: |
 | -------------- | ------------ |
-| [`/gazebo`](n__gazebo.html) | Gazebo node |
+| [`/gazebo`](n__gazebo.md) | Gazebo node |
 
 | ROS topics (1): | Description: |
 | --------------- | ------------ |
-| [`/odom`](t__odom.html) | topic with odometry |
+| [`/odom`](t__odom.md) | topic with odometry |
 
 
 </br>

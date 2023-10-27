@@ -39,11 +39,11 @@ geometry_msgs/TransformStamped[] transforms
 
 | ROS nodes (1): | Description: |
 | -------------- | ------------ |
-| [`/robot_state_publisher`](n__robot_state_publisher.html) |  |
+| [`/robot_state_publisher`](n__robot_state_publisher.md) |  |
 
 | ROS topics (1): | Description: |
 | --------------- | ------------ |
-| [`/tf_static`](t__tf_static.html) |  |
+| [`/tf_static`](t__tf_static.md) |  |
 
 
 </br>

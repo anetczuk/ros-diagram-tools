@@ -44,11 +44,11 @@ string reference_frame
 
 | ROS nodes (1): | Description: |
 | -------------- | ------------ |
-| [`/gazebo`](n__gazebo.html) | Gazebo node |
+| [`/gazebo`](n__gazebo.md) | Gazebo node |
 
 | ROS topics (1): | Description: |
 | --------------- | ------------ |
-| [`/gazebo/set_link_state`](t__gazebo_set_link_state.html) |  |
+| [`/gazebo/set_link_state`](t__gazebo_set_link_state.md) |  |
 
 
 </br>

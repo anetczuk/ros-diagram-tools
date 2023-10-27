@@ -28,11 +28,11 @@ float32 angular_velocity
 
 | ROS nodes (1): | Description: |
 | -------------- | ------------ |
-| [`/turtlesim`](n__turtlesim.html) |  |
+| [`/turtlesim`](n__turtlesim.md) |  |
 
 | ROS topics (1): | Description: |
 | --------------- | ------------ |
-| [`/turtle1/pose`](t__turtle1_pose.html) |  |
+| [`/turtle1/pose`](t__turtle1_pose.md) |  |
 
 
 </br>

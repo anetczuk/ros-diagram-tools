@@ -15,10 +15,10 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (4): | Description: |
 | ------------------- | ------------ |
-| [`roslaunch`](roslaunch.html) |  |
-| [`roslib`](roslib.html) |  |
-| [`rostest`](rostest.html) |  |
-| [`rosunit`](rosunit.html) |  |
+| [`roslaunch`](roslaunch.md) |  |
+| [`roslib`](roslib.md) |  |
+| [`rostest`](rostest.md) |  |
+| [`rosunit`](rosunit.md) |  |
 
 
 </br>

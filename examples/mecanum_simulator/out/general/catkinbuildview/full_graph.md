@@ -10,18 +10,18 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (12): | Description: |
 | -------------------- | ------------ |
-| [`gazebo-dev`](nodes/gazebo_dev.html) |  |
-| [`geometry_msgs`](nodes/geometry_msgs.html) |  |
-| [`message_generation`](nodes/message_generation.html) |  |
-| [`nav_msgs`](nodes/nav_msgs.html) |  |
-| [`nexus_4wd_mecanum_description`](nodes/nexus_4wd_mecanum_description.html) |  |
-| [`nexus_4wd_mecanum_gazebo`](nodes/nexus_4wd_mecanum_gazebo.html) |  |
-| [`robot_state_publisher`](nodes/robot_state_publisher.html) |  |
-| [`roscpp`](nodes/roscpp.html) |  |
-| [`std_msgs`](nodes/std_msgs.html) |  |
-| [`std_srvs`](nodes/std_srvs.html) |  |
-| [`tf`](nodes/tf.html) |  |
-| [`urdf`](nodes/urdf.html) |  |
+| [`gazebo-dev`](nodes/gazebo_dev.md) |  |
+| [`geometry_msgs`](nodes/geometry_msgs.md) |  |
+| [`message_generation`](nodes/message_generation.md) |  |
+| [`nav_msgs`](nodes/nav_msgs.md) |  |
+| [`nexus_4wd_mecanum_description`](nodes/nexus_4wd_mecanum_description.md) |  |
+| [`nexus_4wd_mecanum_gazebo`](nodes/nexus_4wd_mecanum_gazebo.md) |  |
+| [`robot_state_publisher`](nodes/robot_state_publisher.md) |  |
+| [`roscpp`](nodes/roscpp.md) |  |
+| [`std_msgs`](nodes/std_msgs.md) |  |
+| [`std_srvs`](nodes/std_srvs.md) |  |
+| [`tf`](nodes/tf.md) |  |
+| [`urdf`](nodes/urdf.md) |  |
 
 
 </br>

@@ -10,7 +10,7 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Name: | `/gazebo_gui/get_loggers` |
 | Data type: | `roscpp/GetLoggers` |
-| Listener: | [`/gazebo_gui`](n__gazebo_gui.html) |
+| Listener: | [`/gazebo_gui`](n__gazebo_gui.md) |
 
 Message:
 ```

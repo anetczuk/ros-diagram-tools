@@ -10,8 +10,8 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (2): | Description: |
 | ------------------- | ------------ |
-| [`hls_lfcd_lds_driver`](hls_lfcd_lds_driver.html) |  |
-| [`turtlebot3_bringup`](turtlebot3_bringup.html) |  |
+| [`hls_lfcd_lds_driver`](hls_lfcd_lds_driver.md) |  |
+| [`turtlebot3_bringup`](turtlebot3_bringup.md) |  |
 
 
 </br>

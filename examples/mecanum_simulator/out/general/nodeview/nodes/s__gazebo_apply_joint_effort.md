@@ -10,7 +10,7 @@ Project is distributed under the BSD 3-Clause license.
 | --- | --- |
 | Name: | `/gazebo/apply_joint_effort` |
 | Data type: | `gazebo_msgs/ApplyJointEffort` |
-| Listener: | [`/gazebo`](n__gazebo.html) |
+| Listener: | [`/gazebo`](n__gazebo.md) |
 
 Message:
 ```

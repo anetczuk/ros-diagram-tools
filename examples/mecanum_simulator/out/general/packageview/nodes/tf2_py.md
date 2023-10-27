@@ -15,10 +15,10 @@ Project is distributed under the BSD 3-Clause license.
 
 | Graph packages (4): | Description: |
 | ------------------- | ------------ |
-| [`rospy`](rospy.html) |  |
-| [`tf2`](tf2.html) |  |
-| [`tf2_py`](tf2_py.html) |  |
-| [`tf2_ros`](tf2_ros.html) |  |
+| [`rospy`](rospy.md) |  |
+| [`tf2`](tf2.md) |  |
+| [`tf2_py`](tf2_py.md) |  |
+| [`tf2_ros`](tf2_ros.md) |  |
 
 
 </br>

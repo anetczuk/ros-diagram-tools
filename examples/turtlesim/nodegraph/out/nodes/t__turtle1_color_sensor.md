@@ -26,11 +26,11 @@ uint8 b
 
 | ROS nodes (1): | Description: |
 | -------------- | ------------ |
-| [`/turtlesim`](n__turtlesim.html) |  |
+| [`/turtlesim`](n__turtlesim.md) |  |
 
 | ROS topics (1): | Description: |
 | --------------- | ------------ |
-| [`/turtle1/color_sensor`](t__turtle1_color_sensor.html) |  |
+| [`/turtle1/color_sensor`](t__turtle1_color_sensor.md) |  |
 
 
 </br>
