@@ -29,7 +29,7 @@ DATA_SUBDIR = "data"
 ## ===================================================================
 
 
-def generate( messages_dir, services_dir, out_dir, topicsdumppath=None, servicesdumppath=None ):
+def generate( messages_dir, services_dir, out_dir, outhtml, outmarkdown, topicsdumppath=None, servicesdumppath=None ):
     msg_dict = read_msg_dir( messages_dir )
     srv_dict = read_srv_dir( services_dir )
     topics_dict = None
@@ -46,10 +46,10 @@ def generate( messages_dir, services_dir, out_dir, topicsdumppath=None, services
         for service, data in services_dict.items():
             use_dict[ service ] = data.get("type")
         services_dict = use_dict
-    generate_pages( msg_dict, srv_dict, out_dir, topics_dict, services_dict )
+    generate_pages( msg_dict, srv_dict, out_dir, outhtml, outmarkdown, topics_dict, services_dict )
 
 
-def generate_pages( msg_dict, srv_dict, out_dir, topics_dict, services_dict ):
+def generate_pages( msg_dict, srv_dict, out_dir, outhtml, outmarkdown, topics_dict, services_dict ):
     os.makedirs( out_dir, exist_ok=True )
 
     data_dir = os.path.join( out_dir, DATA_SUBDIR )
@@ -59,10 +59,10 @@ def generate_pages( msg_dict, srv_dict, out_dir, topics_dict, services_dict ):
     services_list = None
 
     if msg_dict:
-        messages_list = generate_subpages( msg_dict, out_dir, topics_dict )
+        messages_list = generate_subpages( msg_dict, out_dir, outhtml, outmarkdown, topics_dict )
 
     if srv_dict:
-        services_list = generate_subpages( srv_dict, out_dir, services_dict )
+        services_list = generate_subpages( srv_dict, out_dir, outhtml, outmarkdown, services_dict )
 
     main_dict = {   "style": {},
                     "item_type": None,
@@ -71,14 +71,16 @@ def generate_pages( msg_dict, srv_dict, out_dir, topics_dict, services_dict ):
                     "srv_items": ("Services", services_list)
                     }
 
-    template = "rosmsg.html"
-    generate_from_template( out_dir, main_dict, template_name=template )
+    if outhtml:
+        template = "rosmsg.html"
+        generate_from_template( out_dir, main_dict, template_name=template )
 
-    template = "rosmsg.md"
-    generate_from_template( out_dir, main_dict, template_name=template )
+    if outmarkdown:
+        template = "rosmsg.md"
+        generate_from_template( out_dir, main_dict, template_name=template )
 
 
-def generate_subpages( data_dict, out_dir, use_dict ):
+def generate_subpages( data_dict, out_dir, outhtml, outmarkdown, use_dict ):
     messages_list = []
     for item, content in data_dict.items():
         ## extract users of items
@@ -90,7 +92,7 @@ def generate_subpages( data_dict, out_dir, use_dict ):
 
         item_file = prepare_filesystem_name( item )
         data_subdir  = os.path.join( DATA_SUBDIR, item_file )
-        data_subpath = os.path.join( data_subdir, "main_page.html" )
+        data_subpath = os.path.join( data_subdir, "main_page.autolink" )
         in_use = len(users_list)
         messages_list.append( (item, data_subpath, in_use) )
 
@@ -102,11 +104,13 @@ def generate_subpages( data_dict, out_dir, use_dict ):
                         "item_users": users_list
                         }
 
-        template = "rosmsg.html"
-        generate_from_template( data_fullpath, data_dict, template_name=template )
+        if outhtml:
+            template = "rosmsg.html"
+            generate_from_template( data_fullpath, data_dict, template_name=template )
 
-        template = "rosmsg.md"
-        generate_from_template( data_fullpath, data_dict, template_name=template )
+        if outmarkdown:
+            template = "rosmsg.md"
+            generate_from_template( data_fullpath, data_dict, template_name=template )
 
     return messages_list
 
@@ -125,7 +129,9 @@ def configure_parser( parser ):
                          help="Path to directory containing dumped 'rostopic' output" )
     parser.add_argument( '--servicesdumppath', action='store', required=False, default="",
                          help="Path to directory containing dumped 'rostopic' output" )
-    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
+    parser.add_argument( '--outhtml', action='store_true', help='Output HTML' )
+    parser.add_argument( '--outmarkdown', action='store_true', help='Output Markdown' )
+    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output directory" )
 
 
 def process_arguments( args ):
@@ -136,11 +142,11 @@ def process_arguments( args ):
         logging.getLogger().setLevel( logging.INFO )
 
     ##
-    ## generate HTML data
+    ## generate data
     ##
-    if len( args.outdir ) > 0:
-        _LOGGER.info( "generating HTML" )
-        generate( args.msgsdumppath, args.srvsdumppath, args.outdir, args.topicsdumppath, args.servicesdumppath )
+    if (args.outhtml or args.outmarkdown) and args.outdir:
+        _LOGGER.info( "generating graphs" )
+        generate( args.msgsdumppath, args.srvsdumppath, args.outdir, args.outhtml, args.outmarkdown, args.topicsdumppath, args.servicesdumppath )
 
 
 def main():

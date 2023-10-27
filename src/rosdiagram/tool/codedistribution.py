@@ -125,7 +125,7 @@ def generate_graph( cloc_dict ):
     return dot_graph
 
 
-def generate_pages( data_dict, cloc_graph, out_dir, highlight_list=None ):
+def generate_pages( data_dict, cloc_graph, out_dir, outhtml, outmarkdown, highlight_list=None ):
     os.makedirs( out_dir, exist_ok=True )
 
     if cloc_graph is None:
@@ -166,11 +166,13 @@ def generate_pages( data_dict, cloc_graph, out_dir, highlight_list=None ):
                     "packages": packages_list
                     }
 
-    template = "cloc.html"
-    generate_from_template( out_dir, main_dict, template_name=template )
+    if outhtml:
+        template = "cloc.html"
+        generate_from_template( out_dir, main_dict, template_name=template )
 
-    template = "cloc.md"
-    generate_from_template( out_dir, main_dict, template_name=template )
+    if outmarkdown:
+        template = "cloc.md"
+        generate_from_template( out_dir, main_dict, template_name=template )
 
 
 def paint_nodes( graph: Graph, paint_list ):
@@ -203,7 +205,9 @@ def configure_parser( parser ):
                          help="List with items to highlight" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
-    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
+    parser.add_argument( '--outhtml', action='store_true', help='Output HTML' )
+    parser.add_argument( '--outmarkdown', action='store_true', help='Output Markdown' )
+    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output directory" )
 #     parser.add_argument( '--filter', action='store', required=False, default="",
 #                          help="Filter packages with items in file" )
 
@@ -230,11 +234,11 @@ def process_arguments( args ):
             graph.writePNG( args.outpng )
 
     ##
-    ## generate HTML data
+    ## generate data
     ##
-    if args.outdir:
-        _LOGGER.info( "generating HTML graph" )
-        generate_pages( data_dict, graph, args.outdir )
+    if (args.outhtml or args.outmarkdown) and args.outdir:
+        _LOGGER.info( "generating graphs" )
+        generate_pages( data_dict, graph, args.outdir, args.outhtml, args.outmarkdown )
 
 
 def main():

@@ -28,7 +28,7 @@ DATA_SUBDIR = "data"
 ## ===================================================================
 
 
-def generate_pages( params_dict, out_dir ):
+def generate_pages( params_dict, out_dir, outhtml, outmarkdown ):
     os.makedirs( out_dir, exist_ok=True )
 
     data_dir = os.path.join( out_dir, DATA_SUBDIR )
@@ -67,10 +67,14 @@ def generate_pages( params_dict, out_dir ):
     main_dict = {   "style": {},
                     "params_list": params_list
                     }
-    template = "rosparam.html"
-    generate_from_template( out_dir, main_dict, template_name=template )
-    template = "rosparam.md"
-    generate_from_template( out_dir, main_dict, template_name=template )
+
+    if outhtml:
+        template = "rosparam.html"
+        generate_from_template( out_dir, main_dict, template_name=template )
+
+    if outmarkdown:
+        template = "rosparam.md"
+        generate_from_template( out_dir, main_dict, template_name=template )
 
 
 def flatten_dict( d, parent=""):
@@ -102,8 +106,9 @@ def configure_parser( parser ):
     # pylint: disable=C0301
     parser.add_argument( '--dumpyamlfile', action='store', required=True,
                          help="Path to rosparam dump file" )
-    # parser.add_argument( '--descriptionjson', action='store', required=False, default="", help="Path to JSON file with items description" )
-    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
+    parser.add_argument( '--outhtml', action='store_true', help='Output HTML' )
+    parser.add_argument( '--outmarkdown', action='store_true', help='Output Markdown' )
+    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output directory" )
 
 
 def process_arguments( args ):
@@ -117,11 +122,11 @@ def process_arguments( args ):
         params_dict = yaml.safe_load( content_file )
 
     ##
-    ## generate HTML data
+    ## generate data
     ##
-    if len( args.outdir ) > 0:
-        _LOGGER.info( "generating HTML graph" )
-        generate_pages( params_dict, args.outdir )
+    if (args.outhtml or args.outmarkdown) and args.outdir:
+        _LOGGER.info( "generating graphs" )
+        generate_pages( params_dict, args.outdir, args.outhtml, args.outmarkdown )
 
 
 def main():

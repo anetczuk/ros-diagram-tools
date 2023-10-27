@@ -96,7 +96,7 @@ ${ ros_link( item_name, item_url ) }$>
 
 |template ros_link( item_name, item_url )
 |{ if item_url:
-<a href="${item_url}">${ py_utils.code_inline(item_name) }</a>$>
+<a href="${ py_utils.convert_autolink(item_url) }">${ py_utils.code_inline(item_name) }</a>$>
 |}
 |{ else:
 ${ py_utils.code_inline(item_name) }$>

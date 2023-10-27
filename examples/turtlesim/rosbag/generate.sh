@@ -33,5 +33,9 @@ echo "$files_list"
 
 plantuml $files_list -tsvg -nometadata -v
 
-cutycapt --url=file://$OUT_DIR/nodes/_turtlesim_2807_1673907554697.html --out=$OUT_DIR/node-page.png
-cutycapt --url=file://$OUT_DIR/msgs/0000751_msg.html --out=$OUT_DIR/message-page.png
+if [ -f "$OUT_DIR/nodes/_turtlesim_2807_1673907554697.html" ]; then
+    cutycapt --url=file://$OUT_DIR/nodes/_turtlesim_2807_1673907554697.html --out=$OUT_DIR/node-page.png
+fi
+if [ -f "$OUT_DIR/msgs/0000751_msg.html" ]; then
+    cutycapt --url=file://$OUT_DIR/msgs/0000751_msg.html --out=$OUT_DIR/message-page.png
+fi

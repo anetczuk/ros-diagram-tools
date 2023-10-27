@@ -20,7 +20,9 @@ mkdir -p $OUT_DIR
 $TOOL_DIR/rosdiagramtools.py buildtime -la \
                                        --buildlogfile $SCRIPT_DIR/build.log.txt \
                                        -st 1 -sp 150 \
-                                       --outhtml --outdir $OUT_DIR $@
+                                       --outhtml \
+                                       --outmarkdown \
+                                       --outdir $OUT_DIR $@
 
 files_list=$(find $OUT_DIR -type f -name "*.puml")
 
@@ -29,6 +31,10 @@ echo "$files_list"
 
 plantuml $files_list -tsvg -nometadata -v
 
-cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
+if [ -f "$OUT_DIR/full_graph.html" ]; then
+    cutycapt --url=file://$OUT_DIR/full_graph.html --out=$OUT_DIR/main-page.png
+fi
 
-convert "$OUT_DIR/schedule.svg" -strip -density 600 "$OUT_DIR/build-schedule.png"
+if [ -f "$OUT_DIR/schedule.svg" ]; then
+    convert "$OUT_DIR/schedule.svg" -strip -density 600 "$OUT_DIR/build-schedule.png"
+fi

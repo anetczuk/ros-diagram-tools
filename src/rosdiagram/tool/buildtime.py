@@ -146,11 +146,8 @@ class Schedule():
 ## ===============================================================
 
 
-def generate_pages( schedule: Schedule, out_dir, config_params_dict=None, scale_sec_step=20, scale_px_num=100 ):
+def generate_pages( schedule: Schedule, out_dir, outhtml, outmarkdown, scale_sec_step=20, scale_px_num=100 ):
     os.makedirs( out_dir, exist_ok=True )
-
-    if config_params_dict is None:
-        config_params_dict = {}
 
     # draw_path = os.path.join( out_dir, 'schedule.png' )
     # draw_shedule( schedule, draw_path )
@@ -160,10 +157,10 @@ def generate_pages( schedule: Schedule, out_dir, config_params_dict=None, scale_
     # generate_dot_graph( schedule )
 
     params_dict: Dict[ str, Any ] = {}
-    generate_graph_page( schedule, params_dict, out_dir )
+    generate_graph_page( schedule, params_dict, out_dir, outhtml, outmarkdown )
 
 
-def generate_graph_page( schedule: Schedule, item_config_dict, output_dir ):
+def generate_graph_page( schedule: Schedule, item_config_dict, output_dir, outhtml, outmarkdown ):
     page_params = item_config_dict.copy()
 
     build_time = schedule.endTime()
@@ -203,15 +200,17 @@ def generate_graph_page( schedule: Schedule, item_config_dict, output_dir ):
                             "packages_list": packages_list
                             } )
 
-    template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "build_time_page.html.tmpl" )
-    main_out_path = os.path.join( output_dir, "full_graph.html" )
-    texttemplate.generate( template_path, main_out_path, INPUT_DICT=page_params )
-    _LOGGER.info( "writing main page: file://%s", main_out_path )
+    if outhtml:
+        template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "build_time_page.html.tmpl" )
+        main_out_path = os.path.join( output_dir, "full_graph.html" )
+        texttemplate.generate( template_path, main_out_path, INPUT_DICT=page_params )
+        _LOGGER.info( "writing main page: file://%s", main_out_path )
 
-    template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "build_time_page.md.tmpl" )
-    main_out_path = os.path.join( output_dir, "full_graph.md" )
-    texttemplate.generate( template_path, main_out_path, INPUT_DICT=page_params )
-    _LOGGER.info( "writing main page: file://%s", main_out_path )
+    if outmarkdown:
+        template_path = os.path.join( SCRIPT_DIR, os.pardir, "template", "build_time_page.md.tmpl" )
+        main_out_path = os.path.join( output_dir, "full_graph.md" )
+        texttemplate.generate( template_path, main_out_path, INPUT_DICT=page_params )
+        _LOGGER.info( "writing main page: file://%s", main_out_path )
 
 
 ## ===================================================================
@@ -546,8 +545,9 @@ def configure_parser( parser ):
                          help="Path to catkin build log file" )
     parser.add_argument( '-st', '--scalesecstep', action='store', required=False, default=20, help="Scale time step. Timeline will be divided into steps of given size." )
     parser.add_argument( '-sp', '--scalepxnum', action='store', required=False, default=100, help="Scale pixel number - width in pixels of each timeline step." )
-    parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
-    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
+    parser.add_argument( '--outhtml', action='store_true', help='Output HTML' )
+    parser.add_argument( '--outmarkdown', action='store_true', help='Output Markdown' )
+    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output directory" )
 
 
 def process_arguments( args ):
@@ -562,13 +562,13 @@ def process_arguments( args ):
         return
 
     ##
-    ## generate HTML data
+    ## generate data
     ##
-    if args.outhtml and len( args.outdir ) > 0:
-        _LOGGER.info( "generating HTML graph" )
+    if (args.outhtml or args.outmarkdown) and args.outdir:
+        _LOGGER.info( "generating graphs" )
         scale_sec_step = args.scalesecstep
         scale_px_num   = args.scalepxnum
-        generate_pages( schedule, args.outdir, scale_sec_step=scale_sec_step, scale_px_num=scale_px_num )
+        generate_pages( schedule, args.outdir, args.outhtml, args.outmarkdown, scale_sec_step=scale_sec_step, scale_px_num=scale_px_num )
 
 
 def main():

@@ -52,7 +52,9 @@ def configure_parser( parser ):
                          help="Include ROS internal items like /rosout and /record_*" )
     parser.add_argument( '--customlist', action='store', required=False, default="", nargs='*',
                          help="Space-separated list of titles and links" )
-    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
+    parser.add_argument( '--outhtml', action='store_true', help='Output HTML' )
+    parser.add_argument( '--outmarkdown', action='store_true', help='Output Markdown' )
+    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output directory" )
 
 
 # pylint: disable=R0914,R0915
@@ -69,7 +71,7 @@ def process_arguments( args ):
         return
 
     ##
-    ## generate HTML data
+    ## generate data
     ##
 
     _LOGGER.info( "generating HTML output" )
@@ -108,9 +110,9 @@ def process_arguments( args ):
         # clocpacks_out_file = os.path.join(clocpacks_out_dir, "graph.png")
         # cloc_graph = codedistribution.generate_graph( cloc_data_dict )
         # cloc_graph.writePNG( clocpacks_out_file )
-        codedistribution.generate_pages( cloc_data_dict, None, clocpacks_out_dir, highlight_list=highlight_list )
+        codedistribution.generate_pages( cloc_data_dict, None, clocpacks_out_dir, args.outhtml, args.outmarkdown, highlight_list=highlight_list )
 
-        clocpacks_out_file = os.path.join(clocpacks_out_dir, "full_graph.html")
+        clocpacks_out_file = os.path.join(clocpacks_out_dir, "full_graph.autolink")
         index_items_list.append( ("code distribution graph", clocpacks_out_file ) )
 
     if os.path.isfile( catkindeps_file ):
@@ -130,9 +132,9 @@ def process_arguments( args ):
                                 "nodes_description": description_dict,
                                 "paint_function": None
                                 }
-        packagetree.generate_pages( packages_dict, packages_out_dir, config_params_dict )
+        packagetree.generate_pages( packages_dict, packages_out_dir, args.outhtml, args.outmarkdown, config_params_dict )
 
-        packages_out_file = os.path.join(packages_out_dir, "full_graph.html")
+        packages_out_file = os.path.join(packages_out_dir, "full_graph.autolink")
         index_items_list.append( ("catkin build deps view", packages_out_file ) )
 
         # catkin run tree
@@ -149,9 +151,9 @@ def process_arguments( args ):
                                 "nodes_description": description_dict,
                                 "paint_function": None
                                 }
-        packagetree.generate_pages( packages_dict, packages_out_dir, config_params_dict )
+        packagetree.generate_pages( packages_dict, packages_out_dir, args.outhtml, args.outmarkdown, config_params_dict )
 
-        packages_out_file = os.path.join(packages_out_dir, "full_graph.html")
+        packages_out_file = os.path.join(packages_out_dir, "full_graph.autolink")
         index_items_list.append( ("catkin run deps view", packages_out_file ) )
 
     if os.path.isdir( packs_info_dir ):
@@ -168,9 +170,9 @@ def process_arguments( args ):
                                 "nodes_description": description_dict,
                                 "paint_function": None
                                 }
-        packagetree.generate_pages( packages_dict, packages_out_dir, config_params_dict )
+        packagetree.generate_pages( packages_dict, packages_out_dir, args.outhtml, args.outmarkdown, config_params_dict )
 
-        packages_out_file = os.path.join(packages_out_dir, "full_graph.html")
+        packages_out_file = os.path.join(packages_out_dir, "full_graph.autolink")
         index_items_list.append( ("packages view", packages_out_file ) )
 
     if os.path.isfile( params_info_file ):
@@ -180,16 +182,16 @@ def process_arguments( args ):
         with open( params_info_file, 'r', encoding='utf-8' ) as content_file:
             params_dict = yaml.safe_load( content_file )
 
-        rosparamlist.generate_pages(params_dict, params_out_dir)
+        rosparamlist.generate_pages(params_dict, params_out_dir, args.outhtml, args.outmarkdown)
 
-        params_out_file = os.path.join(params_out_dir, "main_page.html")
+        params_out_file = os.path.join(params_out_dir, "main_page.autolink")
         index_items_list.append( ("parameters view", params_out_file ) )
 
     if os.path.isdir( msgs_info_dir ) or os.path.isdir( srv_info_dir ):
         _LOGGER.info( "\n\ngenerating rosmsgview output" )
         msg_out_dir = os.path.join(args.outdir, "msgview")
-        rosmsglist.generate( msgs_info_dir, srv_info_dir, msg_out_dir, topics_info_dir, services_info_dir )
-        msg_out_file = os.path.join(msg_out_dir, "main_page.html")
+        rosmsglist.generate( msgs_info_dir, srv_info_dir, msg_out_dir, args.outhtml, args.outmarkdown, topics_info_dir, services_info_dir )
+        msg_out_file = os.path.join(msg_out_dir, "main_page.autolink")
         index_items_list.append( ("messages view", msg_out_file ) )
 
     if os.path.isdir( nodes_info_dir ):
@@ -197,7 +199,7 @@ def process_arguments( args ):
         nodes_out_dir = os.path.join(args.outdir, "nodeview")
         nodes_dict, node_label_dict = rosnodegraph.read_nodes_data(nodes_info_dir,
                                                                    include_ros_internals=args.includerosinternals)
-        rosnodegraph.generate_node_pages( nodes_out_dir,
+        rosnodegraph.generate_node_pages( nodes_out_dir, args.outhtml, args.outmarkdown,
                                           nodes_dict,
                                           node_label_dict,
                                           nodes_classify_dict=nodes_classify_dict,
@@ -212,7 +214,7 @@ def process_arguments( args ):
                                           # paint_function=None
                                           )
 
-        nodes_out_file = os.path.join(nodes_out_dir, "full_graph.html")
+        nodes_out_file = os.path.join(nodes_out_dir, "full_graph.autolink")
         index_items_list.append( ("nodes view", nodes_out_file ) )
 
     if args.customlist:
@@ -226,7 +228,7 @@ def process_arguments( args ):
             index_items_list.append( (customlist[-1], "") )
 
     if index_items_list:
-        rosindex.generate_pages( index_items_list, args.outdir )
+        rosindex.generate_pages( index_items_list, args.outdir, args.outhtml, args.outmarkdown )
 
 
 def main():

@@ -22,10 +22,12 @@ $TOOL_DIR/rosdiagramtools.py rosnodegraph -la \
                                           --mainfullgraph \
                                           --descriptionjson "$SCRIPT_DIR/../description.json" \
                                           --highlightitems "$SCRIPT_DIR/../highlightnodes.txt" \
-                                          --outdir $OUT_DIR \
                                           --outpng "$OUT_DIR/whole_graph.png" \
                                           --outraw "$OUT_DIR/whole_graph.gv.txt" \
-                                          --outhtml $@
+                                          --outhtml \
+                                          --outmarkdown \
+                                          --outdir $OUT_DIR \
+                                          $@
 
 
 ## dot -Tpng graph.gv.txt -o graph2.png

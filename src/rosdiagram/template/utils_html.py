@@ -10,4 +10,10 @@ def code_inline( text ):
 
 
 def link_simple( label, url ):
-    return f"""<a href="{url}">{label}</a>"""
+    return f"""<a href="{ convert_autolink(url) }">{label}</a>"""
+
+
+def convert_autolink( url ):
+    if not url.endswith(".autolink"):
+        return url
+    return f"{url[:-8]}html"

@@ -21,6 +21,7 @@ $TOOL_DIR/rosdiagramtools.py packagetree --catkinlistfile $SCRIPT_DIR/catkin_lis
                                          --descriptionjson "$SCRIPT_DIR/../description.json" \
                                          --outraw $OUT_DIR/graph.gv.txt --outpng $OUT_DIR/graph.png \
                                          --outhtml \
+                                         --outmarkdown \
                                          --outdir $OUT_DIR $@
 
 

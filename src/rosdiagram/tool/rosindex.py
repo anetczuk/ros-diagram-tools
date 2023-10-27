@@ -23,7 +23,7 @@ DATA_SUBDIR = "data"
 ## ===================================================================
 
 
-def generate_pages( items_list, out_dir ):
+def generate_pages( items_list, out_dir, outhtml, outmarkdown ):
     os.makedirs( out_dir, exist_ok=True )
 
     ## convert to relative path
@@ -37,11 +37,13 @@ def generate_pages( items_list, out_dir ):
                     "items_list": converted_items_list
                     }
 
-    template = "rosindex.html"
-    generate_from_template( out_dir, main_dict, template_name=template )
+    if outhtml:
+        template = "rosindex.html"
+        generate_from_template( out_dir, main_dict, template_name=template )
 
-    template = "rosindex.md"
-    generate_from_template( out_dir, main_dict, template_name=template )
+    if outmarkdown:
+        template = "rosindex.md"
+        generate_from_template( out_dir, main_dict, template_name=template )
 
 
 ## ===================================================================
@@ -56,7 +58,9 @@ def configure_parser( parser ):
     parser.add_argument( '--topicsview', action='store', required=False, default="", help="Path to topics view" )
     parser.add_argument( '--customlist', action='store', required=False, default="", nargs='*',
                          help="Space-separated list of titles and links" )
-    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
+    parser.add_argument( '--outhtml', action='store_true', help='Output HTML' )
+    parser.add_argument( '--outmarkdown', action='store_true', help='Output Markdown' )
+    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output directory" )
 
 
 def process_arguments( args ):
@@ -87,11 +91,11 @@ def process_arguments( args ):
             items_list.append( (customlist[-1], "") )
 
     ##
-    ## generate HTML data
+    ## generate data
     ##
-    if len( args.outdir ) > 0:
-        _LOGGER.info( "generating HTML graph" )
-        generate_pages( items_list, args.outdir )
+    if (args.outhtml or args.outmarkdown) and args.outdir:
+        _LOGGER.info( "generating graphs" )
+        generate_pages( items_list, args.outdir, args.outhtml, args.outmarkdown )
 
 
 def main():

@@ -28,7 +28,10 @@ echo "generating codedistribution"
 OUT_DIR="$OUT_ROOT_DIR/codedistribution"
 mkdir -p "$OUT_DIR"
 $TOOL_PATH/rosdiagramtools.py codedistribution --clocdumpdir "$DUMP_DIR/clocdir" \
-                                               --outpng "$OUT_DIR/outgraph.png" --outdir "$OUT_DIR"
+                                               --outpng "$OUT_DIR/outgraph.png" \
+                                               --outhtml \
+                                               --outmarkdown \
+                                               --outdir "$OUT_DIR"
 
 
 echo "generating classifynodes"
@@ -45,19 +48,33 @@ CATKIN_PKG_OUT_DIR="$OUT_ROOT_DIR/catkintree"
 mkdir -p $CATKIN_PKG_OUT_DIR
 $TOOL_PATH/rosdiagramtools.py packagetree --catkinlistfile $DUMP_DIR/catkindeps/list.txt \
                                           --highlightitems $DUMP_DIR/catkindeps/packages.txt \
-                                          --outhtml --outdir $CATKIN_PKG_OUT_DIR
+                                          --outhtml \
+                                          --outmarkdown \
+                                          --outdir $CATKIN_PKG_OUT_DIR
 ## generate image from html
-cutycapt --url=file://$CATKIN_PKG_OUT_DIR/full_graph.html --out=$CATKIN_PKG_OUT_DIR/main-page.png
-cutycapt --url=file://$CATKIN_PKG_OUT_DIR/nodes/nexus_4wd_mecanum_gazebo.html --out=$CATKIN_PKG_OUT_DIR/node-page.png
+if [ -f "$CATKIN_PKG_OUT_DIR/full_graph.html" ]; then
+    cutycapt --url=file://$CATKIN_PKG_OUT_DIR/full_graph.html --out=$CATKIN_PKG_OUT_DIR/main-page.png
+fi
+if [ -f "$CATKIN_PKG_OUT_DIR/nodes/nexus_4wd_mecanum_gazebo.html" ]; then
+    cutycapt --url=file://$CATKIN_PKG_OUT_DIR/nodes/nexus_4wd_mecanum_gazebo.html --out=$CATKIN_PKG_OUT_DIR/node-page.png
+fi
 
 
 echo "generating buildtime"
 BUILD_OUT_DIR="$OUT_ROOT_DIR/catkinschedule"
 mkdir -p $BUILD_OUT_DIR
-$TOOL_PATH/rosdiagramtools.py buildtime --buildlogfile "$DUMP_DIR/build.log.txt" -st 1 -sp 80 --outhtml --outdir "$BUILD_OUT_DIR"
+$TOOL_PATH/rosdiagramtools.py buildtime --buildlogfile "$DUMP_DIR/build.log.txt" -st 1 -sp 80 \
+                                        --outhtml \
+                                        --outmarkdown \
+                                        --outdir "$BUILD_OUT_DIR"
+
 $SCRIPT_DIR/../convert_plantuml.sh "$BUILD_OUT_DIR"
-convert "$BUILD_OUT_DIR/schedule.svg" -strip -density 600 "$BUILD_OUT_DIR/schedule.png"
-cutycapt --url=file://$BUILD_OUT_DIR/full_graph.html --out=$BUILD_OUT_DIR/main-page.png
+if [ -f "$BUILD_OUT_DIR/schedule.svg" ]; then
+    convert "$BUILD_OUT_DIR/schedule.svg" -strip -density 600 "$BUILD_OUT_DIR/schedule.png"
+fi
+if [ -f "$BUILD_OUT_DIR/full_graph.html" ]; then
+    cutycapt --url=file://$BUILD_OUT_DIR/full_graph.html --out=$BUILD_OUT_DIR/main-page.png
+fi
 
 
 echo "running rosnodegraph"
@@ -73,7 +90,8 @@ $TOOL_PATH/rosdiagramtools.py rosnodegraph -la \
                                            --srvsdumppath $DUMP_DIR/srvinfo \
                                            --mainfullgraph \
                                            --includerosinternals \
-                                           --outpng "$NODE_OUT_DIR/whole_graph.png" --outraw "$NODE_OUT_DIR/graph.gv.txt"
+                                           --outpng "$NODE_OUT_DIR/whole_graph.png" \
+                                           --outraw "$NODE_OUT_DIR/graph.gv.txt"
 
 
 echo "running rostopicgraph"
@@ -87,15 +105,19 @@ $TOOL_PATH/rosdiagramtools.py rostopicgraph --topicsdumppath $DUMP_DIR/topicinfo
 echo "running index"
 INDEX_OUT_DIR="$OUT_ROOT_DIR/index"
 mkdir -p $INDEX_OUT_DIR
-$TOOL_PATH/rosdiagramtools.py rosindex --customlist "src code distribution" $OUT_DIR/codedistribution/full_graph.html \
-                                                    "catkin pkg tree" $CATKIN_PKG_OUT_DIR/full_graph.html \
-                                                    "catkin build" $BUILD_OUT_DIR/full_graph.html \
+$TOOL_PATH/rosdiagramtools.py rosindex --customlist "src code distribution" $OUT_DIR/codedistribution/full_graph.autolink \
+                                                    "catkin pkg tree" $CATKIN_PKG_OUT_DIR/full_graph.autolink \
+                                                    "catkin build" $BUILD_OUT_DIR/full_graph.autolink \
                                                     "nodes classify" $CLASSIFY_NODES_OUT_FILE \
                                                     "nodes graph" $NODE_OUT_DIR/whole_graph.png \
                                                     "topics graph" $TOPIC_OUT_DIR/graph.png \
+                                       --outhtml \
+                                       --outmarkdown \
                                        --outdir $INDEX_OUT_DIR
 
-cutycapt --url=file://$INDEX_OUT_DIR/main_page.html --out=$INDEX_OUT_DIR/main-page.png
+if [ -f "$INDEX_OUT_DIR/main_page.html" ]; then
+    cutycapt --url=file://$INDEX_OUT_DIR/main_page.html --out=$INDEX_OUT_DIR/main-page.png
+fi
 
 
 echo "running general script"
@@ -108,18 +130,35 @@ $TOOL_PATH/rosdiagramtools.py rosgeneral --dumprootdir $DUMP_DIR \
                                          --descriptionjsonfile $SCRIPT_DIR/description.json \
                                          --highlightnodeslist $SCRIPT_DIR/highlightnodes.txt \
                                          --highlightpackageslist $SCRIPT_DIR/highlightpackages.txt \
-                                         --customlist "catkin build view" $BUILD_OUT_DIR/full_graph.html \
+                                         --customlist "catkin build view" $BUILD_OUT_DIR/full_graph.autolink \
+                                         --outhtml \
+                                         --outmarkdown \
                                          --outdir $GENERAL_OUT_DIR
 
-cutycapt --url=file://$GENERAL_OUT_DIR/main_page.html --out=$GENERAL_OUT_DIR/main-page.png
-cutycapt --url=file://$GENERAL_OUT_DIR/paramview/main_page.html --out=$GENERAL_OUT_DIR/paramview-page.png
-cutycapt --url=file://$GENERAL_OUT_DIR/msgview/main_page.html --out=$GENERAL_OUT_DIR/msgview-page.png
-cutycapt --url=file://$GENERAL_OUT_DIR/nodeview/full_graph.html --out=$GENERAL_OUT_DIR/nodeview-main-page.png
-cutycapt --url=file://$GENERAL_OUT_DIR/nodeview/nodes/n__gazebo.html --out=$GENERAL_OUT_DIR/nodeview-node-page.png
-cutycapt --url=file://$GENERAL_OUT_DIR/nodeview/nodes/t__clock.html --out=$GENERAL_OUT_DIR/nodeview-topic-page.png
-cutycapt --url=file://$GENERAL_OUT_DIR/nodeview/nodes/s__gazebo_set_model_state.html --out=$GENERAL_OUT_DIR/nodeview-service-page.png
-cutycapt --url=file://$GENERAL_OUT_DIR/packageview/full_graph.html --out=$GENERAL_OUT_DIR/packageview-main-page.png
-
+if [ -f "$GENERAL_OUT_DIR/main_page.html" ]; then
+    cutycapt --url=file://$GENERAL_OUT_DIR/main_page.html --out=$GENERAL_OUT_DIR/main-page.png
+fi
+if [ -f "$GENERAL_OUT_DIR/paramview/main_page.html" ]; then
+    cutycapt --url=file://$GENERAL_OUT_DIR/paramview/main_page.html --out=$GENERAL_OUT_DIR/paramview-page.png
+fi
+if [ -f "$GENERAL_OUT_DIR/msgview/main_page.html" ]; then
+    cutycapt --url=file://$GENERAL_OUT_DIR/msgview/main_page.html --out=$GENERAL_OUT_DIR/msgview-page.png
+fi
+if [ -f "$GENERAL_OUT_DIR/nodeview/full_graph.html" ]; then
+    cutycapt --url=file://$GENERAL_OUT_DIR/nodeview/full_graph.html --out=$GENERAL_OUT_DIR/nodeview-main-page.png
+fi
+if [ -f "$GENERAL_OUT_DIR/nodeview/nodes/n__gazebo.html" ]; then
+    cutycapt --url=file://$GENERAL_OUT_DIR/nodeview/nodes/n__gazebo.html --out=$GENERAL_OUT_DIR/nodeview-node-page.png
+fi
+if [ -f "$GENERAL_OUT_DIR/nodeview/nodes/t__clock.html" ]; then
+    cutycapt --url=file://$GENERAL_OUT_DIR/nodeview/nodes/t__clock.html --out=$GENERAL_OUT_DIR/nodeview-topic-page.png
+fi
+if [ -f "$GENERAL_OUT_DIR/nodeview/nodes/s__gazebo_set_model_state.html" ]; then
+    cutycapt --url=file://$GENERAL_OUT_DIR/nodeview/nodes/s__gazebo_set_model_state.html --out=$GENERAL_OUT_DIR/nodeview-service-page.png
+fi
+if [ -f "$GENERAL_OUT_DIR/packageview/full_graph.html" ]; then
+    cutycapt --url=file://$GENERAL_OUT_DIR/packageview/full_graph.html --out=$GENERAL_OUT_DIR/packageview-main-page.png
+fi
 
 #### rosbagflow requires rosbag file
 

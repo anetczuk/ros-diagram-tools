@@ -10,4 +10,10 @@ def code_inline( data ):
 
 
 def link_simple( label, url ):
-    return f"[{label}]({url})"
+    return f"[{label}]({ convert_autolink(url) })"
+
+
+def convert_autolink( url ):
+    if not url.endswith(".autolink"):
+        return url
+    return f"{url[:-8]}md"

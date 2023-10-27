@@ -137,7 +137,7 @@ def get_build_timestamp( content ):
 
 
 def configure_parser( parser ):
-    parser.description = 'objects compilation time based on make output'
+    parser.description = 'calculate objects compilation time based on make output'
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
     # pylint: disable=C0301
     parser.add_argument( '-clf', '--compilelogfile', action='store', required=True,

@@ -203,7 +203,7 @@ def generate_graph_data( nodes_dict,
         graph.writePNG( output_png_file )
 
 
-def generate_node_pages( nodes_output_dir,                                      # pylint: disable=R0913
+def generate_node_pages( nodes_output_dir, outhtml, outmarkdown,                   # pylint: disable=R0913
                          nodes_dict,
                          node_label_dict,
                          nodes_classify_dict,
@@ -225,10 +225,10 @@ def generate_node_pages( nodes_output_dir,                                      
             highlight_list.append( TOPIC_PREFIX + item )
             highlight_list.append( SERVICE_PREFIX + item )
 
-    _LOGGER.info( "generating HTML graph" )
+    _LOGGER.info( "generating graphs" )
     os.makedirs( nodes_output_dir, exist_ok=True )
 
-    generate_pages( nodes_dict, nodes_output_dir,
+    generate_pages( nodes_dict, nodes_output_dir, outhtml, outmarkdown,
                     nodes_labels=node_label_dict,
                     nodes_description=description_dict,
                     topics_dump_dir=topics_dump_dir,
@@ -241,7 +241,7 @@ def generate_node_pages( nodes_output_dir,                                      
                     )
 
 
-def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=None,             # pylint: disable=R0913
+def generate_pages( nodes_dict, out_dir, outhtml, outmarkdown, nodes_labels=None, nodes_description=None,  # pylint: disable=R0913
                     topics_dump_dir=None, msgs_dump_dir=None, services_dump_dir=None, srvs_dump_dir=None,
                     nodes_classify_dict=None,
                     paint_function=None, main_full_graph=False
@@ -266,10 +266,10 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=No
     os.makedirs( sub_output_dir, exist_ok=True )
 
     item_filename  = prepare_filesystem_name( main_graph_name )
-    main_page_link = os.path.join( os.pardir, item_filename + ".html" )
+    main_page_link = os.path.join( os.pardir, item_filename + ".autolink" )
 
     _LOGGER.info( "generating subpages" )
-    subpages_dict = generate_subpages( sub_output_dir, nodes_dict,
+    subpages_dict = generate_subpages( sub_output_dir, outhtml, outmarkdown, nodes_dict,
                                        topics_dump_dir, msgs_dump_dir, services_dump_dir, srvs_dump_dir,
                                        nodes_classify_dict,
                                        nodes_labels, nodes_description, main_page_link, paint_function=paint_function )
@@ -296,15 +296,18 @@ def generate_pages( nodes_dict, out_dir, nodes_labels=None, nodes_description=No
                     "topics_list": topics_data_list,
                     "services_list": services_data_list
                     }
-    template = "rosnodegraph/nodegraph_main.html"
-    generate_from_template( out_dir, main_dict, template_name=template )
 
-    template = "rosnodegraph/nodegraph_main.md"
-    generate_from_template( out_dir, main_dict, template_name=template )
+    if outhtml:
+        template = "rosnodegraph/nodegraph_main.html"
+        generate_from_template( out_dir, main_dict, template_name=template )
+
+    if outmarkdown:
+        template = "rosnodegraph/nodegraph_main.md"
+        generate_from_template( out_dir, main_dict, template_name=template )
 
 
 ## returns dict: { <item_id>: <item_data_dict> }
-def generate_subpages( sub_output_dir, nodes_dict,                                        # pylint: disable=R0913,R0914
+def generate_subpages( sub_output_dir, outhtml, outmarkdown, nodes_dict,                # pylint: disable=R0913,R0914
                        topics_dump_dir, msgs_dump_dir, services_dump_dir, srvs_dump_dir,
                        nodes_classify_dict,
                        nodes_labels, nodes_description, main_page_link, paint_function=None ):
@@ -329,11 +332,19 @@ def generate_subpages( sub_output_dir, nodes_dict,                              
                                              paint_function=paint_function )
 
     _LOGGER.info( "generating item subpages" )
-    for _, node_data in nodes_subpages_dict.items():
-        node_data[ "template_name" ] = ["rosnodegraph/nodegraph_node.html", "rosnodegraph/nodegraph_node.md"]
+    template_list = []
+    if outhtml:
+        template_list.append( "rosnodegraph/nodegraph_node.html" )
+    if outmarkdown:
+        template_list.append( "rosnodegraph/nodegraph_node.md" )
 
-    topics_subpages_dict   = get_topic_subpages( topics_subpages_dict, nodes_dict, topics_dict, msgs_dump_dir )
-    services_subpages_dict = get_service_subpages( services_subpages_dict, nodes_dict,
+    for _, node_data in nodes_subpages_dict.items():
+        node_data[ "template_name" ] = template_list
+
+    topics_subpages_dict   = get_topic_subpages( outhtml, outmarkdown,
+                                                 topics_subpages_dict, nodes_dict, topics_dict, msgs_dump_dir )
+    services_subpages_dict = get_service_subpages( outhtml, outmarkdown,
+                                                   services_subpages_dict, nodes_dict,
                                                    nodes_labels, services_dict, srvs_dump_dir )
 
     subpages_dict = {}
@@ -416,9 +427,15 @@ def convert_nodes_links_list( items_lists, sub_items_dict, link_subdir, labels_d
     return converted_list
 
 
-def get_topic_subpages( topics_subpages_dict, nodes_dict, topics_dict, msgs_dump_dir ):
+def get_topic_subpages( outhtml, outmarkdown, topics_subpages_dict, nodes_dict, topics_dict, msgs_dump_dir ):
     topic_labels = rostopicdata.fix_names( topics_dict )
     topics_info  = get_topics_info( nodes_dict, topics_dict, msgs_dump_dir )
+
+    templates_list = []
+    if outhtml:
+        templates_list.append( "rosnodegraph/nodegraph_topic.html" )
+    if outmarkdown:
+        templates_list.append( "rosnodegraph/nodegraph_topic.md" )
 
     for topic_id, topic_data in topics_info.items():
         pubs_list = topic_data.get( "pubs", [] )
@@ -432,7 +449,7 @@ def get_topic_subpages( topics_subpages_dict, nodes_dict, topics_dict, msgs_dump
             subs_names = [ get_label( topic_labels, item_id, "<unknown>" ) for item_id in subs_list ]
 
         sub_dict = topics_subpages_dict[ topic_id ]
-        sub_dict[ "template_name" ] = [ "rosnodegraph/nodegraph_topic.html", "rosnodegraph/nodegraph_topic.md" ]
+        sub_dict[ "template_name" ] = templates_list
         sub_dict[ "topic_name" ]    = get_label( topic_labels, topic_id, "<unknown>" )
         sub_dict[ "topic_pubs" ]    = pubs_names
         sub_dict[ "topic_subs" ]    = subs_names
@@ -441,13 +458,20 @@ def get_topic_subpages( topics_subpages_dict, nodes_dict, topics_dict, msgs_dump
     return topics_subpages_dict
 
 
-def get_service_subpages( services_subpages_dict, nodes_dict, nodes_labels, services_dict, srvs_dump_dir ):
+def get_service_subpages( outhtml, outmarkdown, 
+                          services_subpages_dict, nodes_dict, nodes_labels, services_dict, srvs_dump_dir ):
     services_labels = rosservicedata.fix_names( services_dict )
     services_info = get_services_info( nodes_dict, services_dict, srvs_dump_dir )
 
+    templates_list = []
+    if outhtml:
+        templates_list.append( "rosnodegraph/nodegraph_service.html" )
+    if outmarkdown:
+        templates_list.append( "rosnodegraph/nodegraph_service.md" )
+
     for service_id, service_data in services_info.items():
         sub_dict = services_subpages_dict[ service_id ]
-        sub_dict[ "template_name" ] = [ "rosnodegraph/nodegraph_service.html", "rosnodegraph/nodegraph_service.md" ]
+        sub_dict[ "template_name" ] = templates_list
         sub_dict[ "srv_name" ]      = get_label( services_labels, service_id, "<unknown>" )
         sub_dict[ "msg_type" ]      = service_data.get( "type", "" )
         sub_dict[ "msg_content" ]   = service_data.get( "content", "" )
@@ -523,7 +547,8 @@ def configure_parser( parser ):
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
     parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
-    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
+    parser.add_argument( '--outmarkdown', action='store_true', help='Output Markdown' )
+    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output directory" )
 
 
 def process_arguments( args, paint_function=None ):
@@ -552,13 +577,13 @@ def process_arguments( args, paint_function=None ):
                              )
 
     ##
-    ## generate HTML data
+    ## generate data
     ##
-    if args.outhtml and nodes_output_dir:
+    if (args.outhtml or args.outmarkdown) and nodes_output_dir:
         nodes_classify_dict = read_dict( nodes_classify_file )
         description_dict = read_dict( args.descriptionjson )
 
-        generate_node_pages( nodes_output_dir,
+        generate_node_pages( nodes_output_dir, args.outhtml, args.outmarkdown,
                              nodes_dict,
                              labels_dict,
                              nodes_classify_dict=nodes_classify_dict,

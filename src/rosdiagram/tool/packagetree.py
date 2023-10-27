@@ -158,7 +158,7 @@ def generate( catkin_list_file, node_shape="box",
     return graph
 
 
-def generate_pages( deps_dict, out_dir, config_params_dict=None ):
+def generate_pages( deps_dict, out_dir, outhtml, outmarkdown, config_params_dict=None ):
     os.makedirs( out_dir, exist_ok=True )
 
     if config_params_dict is None:
@@ -187,9 +187,10 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
     all_items = sorted( main_graph.getNodeNamesAll() )          ## graph contains filtered nodes
 
     item_filename  = prepare_filesystem_name( main_graph_name )
-    main_page_link = os.path.join( os.pardir, item_filename + ".html" )
+    main_page_link = os.path.join( os.pardir, item_filename + ".autolink" )
 
-    subpages_dict = generate_subpages( sub_output_dir, deps_dict, all_items, main_page_link,
+    subpages_dict = generate_subpages( sub_output_dir, outhtml, outmarkdown,
+                                       deps_dict, all_items, main_page_link,
                                        highlight_list, nodes_classification, nodes_description,
                                        top_list=top_list, paint_function=paint_function )
 
@@ -207,15 +208,18 @@ def generate_pages( deps_dict, out_dir, config_params_dict=None ):
     if main_title is not None:
         main_dict[ "main_title" ] = main_title
 
-    template = "packagetree.html"
-    generate_from_template( out_dir, main_dict, template_name=template )
+    if outhtml:
+        template = "packagetree.html"
+        generate_from_template( out_dir, main_dict, template_name=template )
 
-    template = "packagetree.md"
-    generate_from_template( out_dir, main_dict, template_name=template )
+    if outmarkdown:
+        template = "packagetree.md"
+        generate_from_template( out_dir, main_dict, template_name=template )
 
 
 ## returns dict: { <item_id>: <item_data_dict> }
-def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link,               # pylint: disable=R0913
+def generate_subpages( sub_output_dir, outhtml, outmarkdown,                    # pylint: disable=R0913
+                       deps_dict, sub_items_list, main_page_link,
                        highlight_list=None, nodes_classification=None, nodes_description=None,
                        top_list=None, paint_function=None ):
     if highlight_list is None:
@@ -263,11 +267,13 @@ def generate_subpages( sub_output_dir, deps_dict, sub_items_list, main_page_link
 
         _LOGGER.info( "preparing page for item %s", item_id )
 
-        template = "packagetree.html"
-        generate_from_template( sub_output_dir, item_dict, template_name=template )
+        if outhtml:
+            template = "packagetree.html"
+            generate_from_template( sub_output_dir, item_dict, template_name=template )
 
-        template = "packagetree.md"
-        generate_from_template( sub_output_dir, item_dict, template_name=template )
+        if outmarkdown:
+            template = "packagetree.md"
+            generate_from_template( sub_output_dir, item_dict, template_name=template )
 
     return subpages_dict
 
@@ -292,8 +298,9 @@ def configure_parser( parser ):
     parser.add_argument( '--descriptionjson', action='store', required=False, default="", help="Path to JSON file with items description" )
     parser.add_argument( '--outraw', action='store', required=False, default="", help="Graph RAW output" )
     parser.add_argument( '--outpng', action='store', required=False, default="", help="Graph PNG output" )
-    parser.add_argument( '--outhtml', action='store_true', help="Output HTML" )
-    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output HTML" )
+    parser.add_argument( '--outhtml', action='store_true', help='Output HTML' )
+    parser.add_argument( '--outmarkdown', action='store_true', help='Output Markdown' )
+    parser.add_argument( '--outdir', action='store', required=False, default="", help="Output directory" )
 
 
 def process_arguments( args, paint_function=None ):
@@ -331,17 +338,17 @@ def process_arguments( args, paint_function=None ):
             graph.writePNG( args.outpng )
 
     ##
-    ## generate HTML data
+    ## generate data
     ##
-    if args.outhtml and len( args.outdir ) > 0:
-        _LOGGER.info( "generating HTML graph" )
+    if (args.outhtml or args.outmarkdown) and args.outdir:
+        _LOGGER.info( "generating graphs" )
         config_params_dict = {  "top_list": top_list,
                                 "highlight_list": highlight_list,
                                 "nodes_classification": nodes_classify_dict,
                                 "nodes_description": description_dict,
                                 "paint_function": paint_function
                                 }
-        generate_pages( data_dict, args.outdir, config_params_dict )
+        generate_pages( data_dict, args.outdir, args.outhtml, args.outmarkdown, config_params_dict )
 
 
 def main():

@@ -42,6 +42,7 @@ usage: rosdiagramtools.py codedistribution [-h] [-la]
                                            [--filteritems FILTERITEMS]
                                            [--highlight HIGHLIGHT]
                                            [--outraw OUTRAW] [--outpng OUTPNG]
+                                           [--outhtml] [--outmarkdown]
                                            [--outdir OUTDIR]
 
 Source code distribution over packages. Tool can be feed with JSON or with
@@ -60,7 +61,9 @@ optional arguments:
                         List with items to highlight
   --outraw OUTRAW       Graph RAW output
   --outpng OUTPNG       Graph PNG output
-  --outdir OUTDIR       Output HTML
+  --outhtml             Output HTML
+  --outmarkdown         Output Markdown
+  --outdir OUTDIR       Output directory
 ```
 
 
@@ -76,7 +79,8 @@ usage: rosdiagramtools.py packagetree [-h] [-la]
                                       [--highlightitems HIGHLIGHTITEMS]
                                       [--descriptionjson DESCRIPTIONJSON]
                                       [--outraw OUTRAW] [--outpng OUTPNG]
-                                      [--outhtml] [--outdir OUTDIR]
+                                      [--outhtml] [--outmarkdown]
+                                      [--outdir OUTDIR]
 
 Packages graph. Tool can be feed with catkin putput (based on package.xml) or
 with rospack output.
@@ -101,7 +105,8 @@ optional arguments:
   --outraw OUTRAW       Graph RAW output
   --outpng OUTPNG       Graph PNG output
   --outhtml             Output HTML
-  --outdir OUTDIR       Output HTML
+  --outmarkdown         Output Markdown
+  --outdir OUTDIR       Output directory
 ```
 
 
@@ -130,7 +135,8 @@ optional arguments:
 ```
 usage: rosdiagramtools.py buildtime [-h] [-la] --buildlogfile BUILDLOGFILE
                                     [-st SCALESECSTEP] [-sp SCALEPXNUM]
-                                    [--outhtml] [--outdir OUTDIR]
+                                    [--outhtml] [--outmarkdown]
+                                    [--outdir OUTDIR]
 
 catkin build schedule
 
@@ -146,7 +152,8 @@ optional arguments:
                         Scale pixel number - width in pixels of each timeline
                         step.
   --outhtml             Output HTML
-  --outdir OUTDIR       Output HTML
+  --outmarkdown         Output Markdown
+  --outdir OUTDIR       Output directory
 ```
 
 
@@ -156,7 +163,7 @@ optional arguments:
 usage: rosdiagramtools.py maketime [-h] [-la] -clf COMPILELOGFILE
                                    [--outfile OUTFILE]
 
-objects compilation time based on make output
+calculate objects compilation time based on make output
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -171,6 +178,7 @@ optional arguments:
 ## <a name="rosparamlist_help"></a> rosdiagramtools.py rosparamlist --help
 ```
 usage: rosdiagramtools.py rosparamlist [-h] [-la] --dumpyamlfile DUMPYAMLFILE
+                                       [--outhtml] [--outmarkdown]
                                        [--outdir OUTDIR]
 
 rosparam parameters list
@@ -180,7 +188,9 @@ optional arguments:
   -la, --logall         Log all messages
   --dumpyamlfile DUMPYAMLFILE
                         Path to rosparam dump file
-  --outdir OUTDIR       Output HTML
+  --outhtml             Output HTML
+  --outmarkdown         Output Markdown
+  --outdir OUTDIR       Output directory
 ```
 
 
@@ -191,6 +201,7 @@ usage: rosdiagramtools.py rosmsglist [-h] [-la] [--msgsdumppath MSGSDUMPPATH]
                                      [--srvsdumppath SRVSDUMPPATH]
                                      [--topicsdumppath TOPICSDUMPPATH]
                                      [--servicesdumppath SERVICESDUMPPATH]
+                                     [--outhtml] [--outmarkdown]
                                      [--outdir OUTDIR]
 
 rosmsg and rossrv messages list
@@ -206,7 +217,9 @@ optional arguments:
                         Path to directory containing dumped 'rostopic' output
   --servicesdumppath SERVICESDUMPPATH
                         Path to directory containing dumped 'rostopic' output
-  --outdir OUTDIR       Output HTML
+  --outhtml             Output HTML
+  --outmarkdown         Output Markdown
+  --outdir OUTDIR       Output directory
 ```
 
 
@@ -224,7 +237,7 @@ usage: rosdiagramtools.py rosnodegraph [-h] [-la]
                                        [--descriptionjson DESCRIPTIONJSON]
                                        [-mfg] [-iri] [--outraw OUTRAW]
                                        [--outpng OUTPNG] [--outhtml]
-                                       [--outdir OUTDIR]
+                                       [--outmarkdown] [--outdir OUTDIR]
 
 rosnode connection graph
 
@@ -255,7 +268,8 @@ optional arguments:
   --outraw OUTRAW       Graph RAW output
   --outpng OUTPNG       Graph PNG output
   --outhtml             Output HTML
-  --outdir OUTDIR       Output HTML
+  --outmarkdown         Output Markdown
+  --outdir OUTDIR       Output directory
 ```
 
 
@@ -287,6 +301,7 @@ usage: rosdiagramtools.py rosindex [-h] [-la] [--packagesview PACKAGESVIEW]
                                    [--nodesview NODESVIEW]
                                    [--topicsview TOPICSVIEW]
                                    [--customlist [CUSTOMLIST [CUSTOMLIST ...]]]
+                                   [--outhtml] [--outmarkdown]
                                    [--outdir OUTDIR]
 
 index of diagrams
@@ -304,7 +319,9 @@ optional arguments:
                         Path to topics view
   --customlist [CUSTOMLIST [CUSTOMLIST ...]]
                         Space-separated list of titles and links
-  --outdir OUTDIR       Output HTML
+  --outhtml             Output HTML
+  --outmarkdown         Output Markdown
+  --outdir OUTDIR       Output directory
 ```
 
 
@@ -320,6 +337,7 @@ usage: rosdiagramtools.py rosgeneral [-h] [-la] [--dumprootdir DUMPROOTDIR]
                                      [--highlightpackageslist HIGHLIGHTPACKAGESLIST]
                                      [-iri]
                                      [--customlist [CUSTOMLIST [CUSTOMLIST ...]]]
+                                     [--outhtml] [--outmarkdown]
                                      [--outdir OUTDIR]
 
 index of diagrams
@@ -346,7 +364,9 @@ optional arguments:
                         Include ROS internal items like /rosout and /record_*
   --customlist [CUSTOMLIST [CUSTOMLIST ...]]
                         Space-separated list of titles and links
-  --outdir OUTDIR       Output HTML
+  --outhtml             Output HTML
+  --outmarkdown         Output Markdown
+  --outdir OUTDIR       Output directory
 ```
 
 
