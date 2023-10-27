@@ -20,6 +20,10 @@ Generated main graph view:
 
 [![main graph view](catkinschedule/out/main-page-small.png "main graph view")](catkinschedule/out/main-page.png)
 
+*HTML* [output](catkinschedule/out/full_graph.html).
+
+*Markdown* [output](catkinschedule/out/full_graph.md).
+
 
 ## `rosnodegraph`
 
@@ -38,6 +42,10 @@ Generated topic graph view:
 Generated service graph view:
 
 [![service graph view](nodegraph/out/service-page-small.png "service graph view")](nodegraph/out/service-page.png)
+
+*HTML* [output](nodegraph/out/full_graph.html).
+
+*Markdown* [output](nodegraph/out/full_graph.md).
 
 
 ## `rosbagflow`

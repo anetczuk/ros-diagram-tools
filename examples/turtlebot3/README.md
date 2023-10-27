@@ -31,6 +31,10 @@ Generated package graph view:
 
 [![package graph view](out/catkintree/node-page-small.png "package graph view")](out/catkintree/node-page.png)
 
+*HTML* [output](out/catkintree/full_graph.html).
+
+*Markdown* [output](out/catkintree/full_graph.md).
+
 
 ## `buildtime`
 
@@ -41,6 +45,10 @@ Generated diagram:
 Generated main graph view:
 
 [![main graph view](out/catkinschedule/main-page-small.png "main graph view")](out/catkinschedule/main-page.png)
+
+*HTML* [output](out/catkinschedule/full_graph.html).
+
+*Markdown* [output](out/catkinschedule/full_graph.md).
 
 
 ## `rosverify`

@@ -14,10 +14,18 @@ Script `generate.sh` generates diagrams and views from duped data.
 
 [![code distribution chart](out/codedistribution/full_graph-small.png "code distribution chart")](out/codedistribution/full_graph.png)
 
+*HTML* [output](out/codedistribution/full_graph.html).
+
+*Markdown* [output](out/codedistribution/full_graph.md).
+
 
 ## `codedistribution` over `dumpclocpack` dump
 
 [![code distribution chart](out/general/clockpackview/full_graph-small.png "code distribution chart")](out/general/clockpackview/full_graph.png)
+
+*HTML* [output](out/general/clockpackview/full_graph.html).
+
+*Markdown* [output](out/general/clockpackview/full_graph.md).
 
 
 ## `packagetree` over `dumpcatkindeps` dump
@@ -34,6 +42,10 @@ Generated package graph view:
 
 [![package graph view](out/catkintree/node-page-small.png "package graph view")](out/catkintree/node-page.png)
 
+*HTML* [output](out/catkintree/full_graph.html).
+
+*Markdown* [output](out/catkintree/full_graph.md).
+
 
 ## `packagetree` over `dumprospack` dump
 
@@ -45,6 +57,10 @@ Generated main graph view:
 
 [![main graph view](out/general/packageview-main-page-small.png "main graph view")](out/general/packageview-main-page.png)
 
+*HTML* [output](out/general/packageview/full_graph.html).
+
+*Markdown* [output](out/general/packageview/full_graph.md).
+
 
 ## `buildtime`
 
@@ -55,6 +71,10 @@ Generated diagram:
 Generated main graph view:
 
 [![main graph view](out/catkinschedule/main-page-small.png "main graph view")](out/catkinschedule/main-page.png)
+
+*HTML* [output](out/catkinschedule/full_graph.html).
+
+*Markdown* [output](out/catkinschedule/full_graph.md).
 
 
 ## `classifynodes`
@@ -120,7 +140,18 @@ Generated service graph view:
 
 [![service graph view](out/general/nodeview-service-page-small.png "service graph view")](out/general/nodeview-service-page.png)
 
+*HTML* [output](out/general/nodeview/full_graph.html).
+
+*Markdown* [output](out/general/nodeview/full_graph.md).
+
 
 ## `rostopicgraph`
 
 [![ROS nodes and topics graph](out/topictree/graph-small.png "ROS nodes and topics graph")](out/topictree/graph.png)
+
+
+## `rosgeneral`
+
+*HTML* [output](out/general/main_page.html).
+
+*Markdown* [output](out/general/main_page.md).

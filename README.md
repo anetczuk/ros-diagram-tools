@@ -12,6 +12,8 @@ Package can produce following diagrams:
 
 In addition there is `rosverifier` tool detecting packages overlay in *catkin* workspace.
 
+Output can be generated in `HTML` and `Markdown` format.
+
 Main motivation for the project was to present variuos aspects of *ROS* workspace in easy to understand form.
 
 
@@ -230,7 +232,7 @@ Help [output](doc/cmd_args_tools.md#rosnodegraph_help).
 
 [![ROS nodes, topics and services graph](examples/simple/rosnodelist/out/full_graph-small.png "ROS nodes, topics and services graph")](examples/simple/rosnodelist/out/full_graph.png)
 
-In addition, for given graph interactive web page can be generated, [example here](examples/simple/rosnodelist/out/full_graph.html).
+In addition, for given graph interactive web page can be generated, [example here](examples/simple/rosnodelist/out/full_graph.md).
 
 Following animation shows navigation thorough nodes of graph:
 
