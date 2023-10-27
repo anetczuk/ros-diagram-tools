@@ -146,7 +146,8 @@ def process_arguments( args ):
     ##
     if (args.outhtml or args.outmarkdown) and args.outdir:
         _LOGGER.info( "generating graphs" )
-        generate( args.msgsdumppath, args.srvsdumppath, args.outdir, args.outhtml, args.outmarkdown, args.topicsdumppath, args.servicesdumppath )
+        generate( args.msgsdumppath, args.srvsdumppath, args.outdir, args.outhtml, args.outmarkdown,
+                  args.topicsdumppath, args.servicesdumppath )
 
 
 def main():

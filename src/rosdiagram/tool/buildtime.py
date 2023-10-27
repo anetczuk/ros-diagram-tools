@@ -568,7 +568,8 @@ def process_arguments( args ):
         _LOGGER.info( "generating graphs" )
         scale_sec_step = args.scalesecstep
         scale_px_num   = args.scalepxnum
-        generate_pages( schedule, args.outdir, args.outhtml, args.outmarkdown, scale_sec_step=scale_sec_step, scale_px_num=scale_px_num )
+        generate_pages( schedule, args.outdir, args.outhtml, args.outmarkdown,
+                        scale_sec_step=scale_sec_step, scale_px_num=scale_px_num )
 
 
 def main():

@@ -21,7 +21,7 @@ _LOGGER = logging.getLogger(__name__)
 def generate( template_path, output_path, *args, **kwargs ):
     engine = texthon.Engine()
 
-    parser = texthon.parser.Parser( directive_token = "|" )
+    parser = texthon.parser.Parser( directive_token="|" )
     module_def = engine.load_file( template_path, parser=parser )       # parse and store the parsed module
 
     # store the path so we can find the compiled module later

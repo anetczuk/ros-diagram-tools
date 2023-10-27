@@ -5,6 +5,7 @@
 # LICENSE file in the root directory of this source tree.
 #
 
+
 def code_inline( text ):
     return f"<code>{text}</code>"
 

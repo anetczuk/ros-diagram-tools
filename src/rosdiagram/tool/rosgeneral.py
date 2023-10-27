@@ -110,7 +110,8 @@ def process_arguments( args ):
         # clocpacks_out_file = os.path.join(clocpacks_out_dir, "graph.png")
         # cloc_graph = codedistribution.generate_graph( cloc_data_dict )
         # cloc_graph.writePNG( clocpacks_out_file )
-        codedistribution.generate_pages( cloc_data_dict, None, clocpacks_out_dir, args.outhtml, args.outmarkdown, highlight_list=highlight_list )
+        codedistribution.generate_pages( cloc_data_dict, None, clocpacks_out_dir, args.outhtml, args.outmarkdown,
+                                         highlight_list=highlight_list )
 
         clocpacks_out_file = os.path.join(clocpacks_out_dir, "full_graph.autolink")
         index_items_list.append( ("code distribution graph", clocpacks_out_file ) )
@@ -132,7 +133,8 @@ def process_arguments( args ):
                                 "nodes_description": description_dict,
                                 "paint_function": None
                                 }
-        packagetree.generate_pages( packages_dict, packages_out_dir, args.outhtml, args.outmarkdown, config_params_dict )
+        packagetree.generate_pages( packages_dict, packages_out_dir, args.outhtml, args.outmarkdown,
+                                    config_params_dict )
 
         packages_out_file = os.path.join(packages_out_dir, "full_graph.autolink")
         index_items_list.append( ("catkin build deps view", packages_out_file ) )
@@ -151,7 +153,8 @@ def process_arguments( args ):
                                 "nodes_description": description_dict,
                                 "paint_function": None
                                 }
-        packagetree.generate_pages( packages_dict, packages_out_dir, args.outhtml, args.outmarkdown, config_params_dict )
+        packagetree.generate_pages( packages_dict, packages_out_dir, args.outhtml, args.outmarkdown,
+                                    config_params_dict )
 
         packages_out_file = os.path.join(packages_out_dir, "full_graph.autolink")
         index_items_list.append( ("catkin run deps view", packages_out_file ) )
@@ -170,7 +173,8 @@ def process_arguments( args ):
                                 "nodes_description": description_dict,
                                 "paint_function": None
                                 }
-        packagetree.generate_pages( packages_dict, packages_out_dir, args.outhtml, args.outmarkdown, config_params_dict )
+        packagetree.generate_pages( packages_dict, packages_out_dir, args.outhtml, args.outmarkdown,
+                                    config_params_dict )
 
         packages_out_file = os.path.join(packages_out_dir, "full_graph.autolink")
         index_items_list.append( ("packages view", packages_out_file ) )
@@ -190,7 +194,8 @@ def process_arguments( args ):
     if os.path.isdir( msgs_info_dir ) or os.path.isdir( srv_info_dir ):
         _LOGGER.info( "\n\ngenerating rosmsgview output" )
         msg_out_dir = os.path.join(args.outdir, "msgview")
-        rosmsglist.generate( msgs_info_dir, srv_info_dir, msg_out_dir, args.outhtml, args.outmarkdown, topics_info_dir, services_info_dir )
+        rosmsglist.generate( msgs_info_dir, srv_info_dir, msg_out_dir, args.outhtml, args.outmarkdown,
+                             topics_info_dir, services_info_dir )
         msg_out_file = os.path.join(msg_out_dir, "main_page.autolink")
         index_items_list.append( ("messages view", msg_out_file ) )
 

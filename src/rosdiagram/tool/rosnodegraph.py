@@ -241,7 +241,7 @@ def generate_node_pages( nodes_output_dir, outhtml, outmarkdown,                
                     )
 
 
-def generate_pages( nodes_dict, out_dir, outhtml, outmarkdown, nodes_labels=None, nodes_description=None,  # pylint: disable=R0913
+def generate_pages( nodes_dict, out_dir, outhtml, outmarkdown, nodes_labels=None, nodes_description=None,  # pylint: disable=R0913,R0914
                     topics_dump_dir=None, msgs_dump_dir=None, services_dump_dir=None, srvs_dump_dir=None,
                     nodes_classify_dict=None,
                     paint_function=None, main_full_graph=False
@@ -458,7 +458,7 @@ def get_topic_subpages( outhtml, outmarkdown, topics_subpages_dict, nodes_dict, 
     return topics_subpages_dict
 
 
-def get_service_subpages( outhtml, outmarkdown, 
+def get_service_subpages( outhtml, outmarkdown,
                           services_subpages_dict, nodes_dict, nodes_labels, services_dict, srvs_dump_dir ):
     services_labels = rosservicedata.fix_names( services_dict )
     services_info = get_services_info( nodes_dict, services_dict, srvs_dump_dir )
