@@ -7,74 +7,13 @@
 
 import os
 import logging
-import re
 
-from showgraph.io import prepare_filesystem_name, read_file, read_list
+from rosdiagram.ros.rosparsetools import read_services, read_service        # noqa pylint: disable=W0611
 
 
 _LOGGER = logging.getLogger(__name__)
 
 SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
-
-
-## ===================================================================
-
-
-def read_services( service_dir ):
-    """
-    Read services from dump directory.
-
-    Return dict with following structure:
-    { "<service_id>": {                   ## service id
-                        "type": str,      ## service type - type of message
-                       }
-      }
-    """
-    if not service_dir:
-        return None
-    services_dict = {}
-    list_path = os.path.join( service_dir, "list.txt" )
-    _LOGGER.debug( "reading services list file: %s", list_path )
-    topics_list = read_list( list_path )
-    for item in topics_list:
-        services_dict[ item ] = read_service( service_dir, item )
-    return services_dict
-
-
-def read_service( services_dump_dir, service_id ):
-    if not services_dump_dir or not service_id:
-        return None
-    item_file = prepare_filesystem_name( service_id )
-    item_path = os.path.join( services_dump_dir, item_file + ".txt" )
-    if not os.path.isfile( item_path ):
-        return None
-    item_content = read_file( item_path )
-    return parse_content( item_content )
-
-
-def parse_content( content ):
-    msg_type = None
-
-    for line in content.splitlines():
-        if len(line) < 1:
-            continue
-
-        if "Type:" in line:
-            msg_type = match_type( line )
-            continue
-
-    deps_dict = {}
-    deps_dict['type'] = msg_type
-    return deps_dict
-
-
-def match_type( line ):
-    matched = re.findall( r"^Type: (.*)$", line )
-    m_size  = len( matched )
-    if m_size != 1:
-        _LOGGER.warning( "invalid state for line: %s", line )
-        return None
-    return matched[0]
 
 
 ## ===================================================================

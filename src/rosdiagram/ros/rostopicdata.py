@@ -8,13 +8,11 @@
 import os
 import logging
 
-import re
 from typing import List
 import copy
 
-from showgraph.io import read_list, prepare_filesystem_name
-
 from rosdiagram.utils import get_create_item
+from rosdiagram.ros.rosparsetools import read_topics                                # noqa pylint: disable=W0611
 from rosdiagram.ros.rosutils import is_ros_internal_topic, is_ros_internal_node
 
 
@@ -24,120 +22,6 @@ SCRIPT_DIR = os.path.dirname( os.path.abspath(__file__) )
 
 
 ## ===================================================================
-
-
-def read_topics( topic_dir ):
-    """Read topics dump directory.
-
-    Returns dict with following structure:
-    { "<topic_id>": {                   ## topic id
-                      "type": str,      ## topic type - type of message
-                      "pubs": [],       ## list of publishers of topic
-                      "subs": []        ## list of subscribers of topic
-                     }
-      }
-    """
-    if not topic_dir:
-        return None
-    topics_dict = {}
-    topics_path = os.path.join( topic_dir, "list.txt" )
-    _LOGGER.debug( "reading topics list file: %s", topics_path )
-    topics_list = read_list( topics_path )
-    for item in topics_list:
-        topic_filename  = prepare_filesystem_name( item )
-        topic_item_path = os.path.join( topic_dir, topic_filename + ".txt" )
-        content   = read_content( topic_item_path )
-        deps_dict = parse_content( content )
-        topics_dict[ item ] = deps_dict
-    return topics_dict
-
-
-def read_content( deps_file=None ):
-    content = ""
-    if os.path.isfile( deps_file ):
-        ## read content from file
-        _LOGGER.debug( "reading topic info file: %s", deps_file )
-        with open( deps_file, 'r', encoding='utf-8' ) as content_file:
-            content = content_file.read()
-    else:
-        ## execute 'catkin list'
-        #TODO: implement
-        _LOGGER.error( "executing catkin not implemented" )
-        content = ""
-    return content
-
-
-def parse_content( content ):
-    """Parse topic dump content.
-
-    Returns dict: { type: topic_type
-                    pubs: publishers_list
-                    subs: subscribers_list }
-    """
-    publishers  = []
-    subscribers = []
-
-    msg_type         = None
-    publishers_list  = False
-    subscribers_list = False
-
-    for line in content.splitlines():
-        if len(line) < 1:
-            continue
-
-        if "Type:" in line:
-            msg_type = match_type( line )
-            continue
-
-        if "Publishers:" in line:
-            publishers_list  = True
-            subscribers_list = False
-            continue
-        if "Subscribers:" in line:
-            publishers_list  = False
-            subscribers_list = True
-            continue
-
-        if publishers_list is True:
-            if subscribers_list is True:
-                _LOGGER.warning( "forbidden state" )
-                continue
-            node = match_node( line )
-            if node is None:
-                continue
-            publishers.append( node )
-        else:
-            if subscribers_list is False:
-                ## both false
-                continue
-            node = match_node( line )
-            if node is None:
-                continue
-            subscribers.append( node )
-
-    deps_dict = {}
-    deps_dict['type'] = msg_type
-    deps_dict['pubs'] = publishers
-    deps_dict['subs'] = subscribers
-    return deps_dict
-
-
-def match_node( line ):
-    matched = re.findall( r"^ \* (.*) \(.*$", line )
-    m_size  = len( matched )
-    if m_size != 1:
-        _LOGGER.warning( "invalid state for line: %s", line )
-        return None
-    return matched[0]
-
-
-def match_type( line ):
-    matched = re.findall( r"^Type: (.*)$", line )
-    m_size  = len( matched )
-    if m_size != 1:
-        _LOGGER.warning( "invalid state for line: %s", line )
-        return None
-    return matched[0]
 
 
 def get_topic_subs_dict( topic_data ):

@@ -174,7 +174,6 @@ def read_nodes_data(nodes_dump_dir, include_ros_internals: bool = False):
         removed_items = filter_ros_nodes_dict( nodes_dict )
         _LOGGER.info("ignored ROS elements: %s", " ".join(removed_items))
     labels_dict = fix_names( nodes_dict )
-    # info_dict  = get_node_info_dict( nodes_dict, labels_dict, msgs_dump_dir, srvs_dump_dir )
     return (nodes_dict, labels_dict)
 
 

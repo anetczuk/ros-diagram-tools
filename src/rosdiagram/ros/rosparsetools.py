@@ -8,7 +8,7 @@
 #
 
 #
-# Keep this file as independent as possible (without dependencies), because it will be run on 
+# Keep this file as independent as possible (without dependencies), because it will be run on
 # ROS devices to retrieve ROS data.
 #
 
@@ -35,7 +35,7 @@ def extract_topics_from_node_data(node_info_dict):
     subs_list = node_info_dict[ "subs" ]
     pubs_list = get_names_from_list( pubs_list )
     subs_list = get_names_from_list( subs_list )
-    
+
     ret_list = set()
     ret_list.update( pubs_list )
     ret_list.update( subs_list )
@@ -351,7 +351,7 @@ def read_list( file_path ):
 
 
 def write_list( file_path, dump_list ):
-    with open(file_path, 'w') as fp:
+    with open(file_path, 'w', encoding='utf8' ) as fp:
         fp.write('\n'.join(dump_list))
 
 
@@ -436,9 +436,9 @@ def extractmsgs_process( args ):
     out_list_path = args.outlist
 
     if out_list_path:
-        _LOGGER.info(f"extracting msgs from {data_dir} to {out_list_path}")
+        _LOGGER.info("extracting msgs from %s to %s", data_dir, out_list_path)
     else:
-        _LOGGER.info(f"extracting msgs from {data_dir}")
+        _LOGGER.info("extracting msgs from %s", data_dir)
 
     out_dir = os.path.dirname( out_list_path )
     if out_dir:
@@ -468,9 +468,9 @@ def extractsrvs_process( args ):
     out_list_path = args.outlist
 
     if out_list_path:
-        _LOGGER.info(f"extracting srvs from {data_dir} to {out_list_path}")
+        _LOGGER.info("extracting srvs from %s to %s", data_dir, out_list_path)
     else:
-        _LOGGER.info(f"extracting srvs from {data_dir}")
+        _LOGGER.info("extracting srvs from %s", data_dir)
 
     out_dir = os.path.dirname( out_list_path )
     if out_dir:

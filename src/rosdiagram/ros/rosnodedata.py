@@ -8,12 +8,12 @@
 import os
 import logging
 
-import re
 from typing import List, Dict
 
-from showgraph.io import read_list, prepare_filesystem_name, read_file
+from showgraph.io import prepare_filesystem_name, read_file
 
 from rosdiagram.utils import get_create_item
+from rosdiagram.ros.rosparsetools import read_nodes, get_names_from_list            # noqa pylint: disable=W0611
 from rosdiagram.ros.rosmsgdata import read_msg
 from rosdiagram.ros.rosservicedata import get_service_type
 from rosdiagram.ros.rossrvdata import read_srv
@@ -36,118 +36,6 @@ class ROSNodeData():
 
     def fixNames(self):
         self.nodes_label_dict  = fix_names( self.nodes_dict )
-
-
-## ===================================================================
-
-
-def read_nodes( nodes_dir ):
-    if not nodes_dir:
-        return None
-    nodes_dict = {}
-    nodes_path = os.path.join( nodes_dir, "list.txt" )
-    _LOGGER.debug( "reading nodes list file: %s", nodes_path )
-    nodes_list = read_list( nodes_path )
-    for item in nodes_list:
-        node_filename = prepare_filesystem_name( item )
-        node_item_path = os.path.join( nodes_dir, node_filename + ".txt" )
-        content   = get_node_info( node_item_path )
-        deps_dict = parse_node_info( content )
-        nodes_dict[ item ] = deps_dict
-    return nodes_dict
-
-
-def get_node_info( deps_file=None ):
-    content = ""
-    if os.path.isfile( deps_file ):
-        ## read content from file
-        _LOGGER.debug( "reading node info file: %s", deps_file )
-        with open( deps_file, 'r', encoding='utf-8' ) as content_file:
-            content = content_file.read()
-    else:
-        ## execute 'catkin list'
-        #TODO: implement
-        _LOGGER.error( "executing catkin not implemented" )
-        content = ""
-    return content
-
-
-def parse_node_info( content ):
-    publications  = []
-    subscribtions = []
-    services      = []
-
-    ##  0 -- unset
-    ##  1 -- pubs
-    ##  2 -- subs
-    ##  3 -- services
-    section_mode = 0
-
-    for line in content.splitlines():
-        if len(line) < 1:
-            section_mode = 0
-            continue
-
-        if "Publications:" in line:
-            section_mode = 1
-            continue
-        if "Subscriptions:" in line:
-            section_mode = 2
-            continue
-        if "Services:" in line:
-            section_mode = 3
-            continue
-
-        if section_mode == 0:
-            ## initial state
-            continue
-        if section_mode == 1:
-            ## pubs
-            node = match_topic( line )
-            if node is None:
-                continue
-            publications.append( node )
-        elif section_mode == 2:
-            ## subs
-            node = match_topic( line )
-            if node is None:
-                continue
-            subscribtions.append( node )
-        elif section_mode == 3:
-            ## servs
-            node = match_service( line )
-            if node is None:
-                continue
-            services.append( (node, None) )
-        else:
-            _LOGGER.warning( "forbidden state %s", section_mode )
-            continue
-
-    deps_dict = {}
-    deps_dict["pubs"]  = publications
-    deps_dict["subs"]  = subscribtions
-    deps_dict["servs"] = services
-    return deps_dict
-
-
-## return pair: (topic name, message type)
-def match_topic( line ):
-    matched = re.findall( r"^ \* (\S+)\s*\[(.*)\]\s*$", line )
-#     matched = re.findall( r"^ \* (\S+)\s*[.*]\s*$", line )
-    if len( matched ) != 1 and len( matched[0] ) != 2:
-        _LOGGER.warning( "invalid state for line: %s %s", line, matched )
-        return None
-    match_data = matched[0]
-    return ( match_data[0], match_data[1] )
-
-
-def match_service( line ):
-    matched = re.findall( r"^ \* (\S+).*$", line )
-    m_size = len( matched )
-    if m_size != 1:
-        _LOGGER.warning( "invalid state for line: %s %s", line, m_size )
-        return None
-    return matched[0]
 
 
 ## ===================================================================
@@ -441,11 +329,6 @@ def get_services_info( nodes_dict, services_dict, srvs_dump_dir ):
             srv_data["content"] = srv_content
 
     return ret_data
-
-
-def get_names_from_list( items_list ) -> List[ str ]:
-    ret_list = [ item[0] for item in items_list ]
-    return list( dict.fromkeys( ret_list ) )
 
 
 ## =====================================================
