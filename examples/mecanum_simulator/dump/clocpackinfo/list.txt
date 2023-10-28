@@ -1,3 +1,5 @@
+/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description
+/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_gazebo
 /opt/ros/noetic/share/actionlib
 /opt/ros/noetic/share/actionlib_msgs
 /opt/ros/noetic/share/actionlib_tutorials
@@ -10,10 +12,10 @@
 /opt/ros/noetic/share/catkin
 /opt/ros/noetic/share/class_loader
 /opt/ros/noetic/share/cmake_modules
-/opt/ros/noetic/share/control_msgs
 /opt/ros/noetic/share/controller_interface
 /opt/ros/noetic/share/controller_manager
 /opt/ros/noetic/share/controller_manager_msgs
+/opt/ros/noetic/share/control_msgs
 /opt/ros/noetic/share/cpp_common
 /opt/ros/noetic/share/cv_bridge
 /opt/ros/noetic/share/diagnostic_aggregator
@@ -39,8 +41,8 @@
 /opt/ros/noetic/share/gl_dependency
 /opt/ros/noetic/share/hardware_interface
 /opt/ros/noetic/share/image_transport
-/opt/ros/noetic/share/interactive_marker_tutorials
 /opt/ros/noetic/share/interactive_markers
+/opt/ros/noetic/share/interactive_marker_tutorials
 /opt/ros/noetic/share/joint_state_publisher
 /opt/ros/noetic/share/joint_state_publisher_gui
 /opt/ros/noetic/share/kdl_conversions
@@ -54,8 +56,6 @@
 /opt/ros/noetic/share/message_runtime
 /opt/ros/noetic/share/mk
 /opt/ros/noetic/share/nav_msgs
-/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description
-/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_gazebo
 /opt/ros/noetic/share/nodelet
 /opt/ros/noetic/share/nodelet_topic_tools
 /opt/ros/noetic/share/nodelet_tutorial_math
@@ -71,7 +71,6 @@
 /opt/ros/noetic/share/realtime_tools
 /opt/ros/noetic/share/resource_retriever
 /opt/ros/noetic/share/robot_state_publisher
-/opt/ros/noetic/share/ros_environment
 /opt/ros/noetic/share/rosbag
 /opt/ros/noetic/share/rosbag_migration_rule
 /opt/ros/noetic/share/rosbag_storage
@@ -86,6 +85,7 @@
 /opt/ros/noetic/share/roscpp_traits
 /opt/ros/noetic/share/roscpp_tutorials
 /opt/ros/noetic/share/roscreate
+/opt/ros/noetic/share/ros_environment
 /opt/ros/noetic/share/rosgraph
 /opt/ros/noetic/share/rosgraph_msgs
 /opt/ros/noetic/share/roslang
@@ -166,10 +166,10 @@
 /opt/ros/noetic/share/topic_tools
 /opt/ros/noetic/share/trajectory_msgs
 /opt/ros/noetic/share/turtle_actionlib
-/opt/ros/noetic/share/turtle_tf
-/opt/ros/noetic/share/turtle_tf2
 /opt/ros/noetic/share/turtlebot3_msgs
 /opt/ros/noetic/share/turtlesim
+/opt/ros/noetic/share/turtle_tf
+/opt/ros/noetic/share/turtle_tf2
 /opt/ros/noetic/share/urdf
 /opt/ros/noetic/share/urdf_parser_plugin
 /opt/ros/noetic/share/urdf_tutorial

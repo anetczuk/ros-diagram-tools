@@ -1,5 +1,0 @@
-string load_namespace
----
-bool success
-string message
-

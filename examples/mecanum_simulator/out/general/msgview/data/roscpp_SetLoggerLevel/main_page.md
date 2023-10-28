@@ -8,7 +8,7 @@ Project is distributed under the BSD 3-Clause license.
 |     |     |
 | --- | --- |
 | Data type: | `roscpp/SetLoggerLevel` |
-| Usage: | `/gazebo/set_logger_level /gazebo_gui/set_logger_level /robot_state_publisher/set_logger_level /rosout/set_logger_level` |
+| Usage: | `/gazebo_gui/set_logger_level /gazebo/set_logger_level /robot_state_publisher/set_logger_level /rosout/set_logger_level` |
 
 ```
 string logger

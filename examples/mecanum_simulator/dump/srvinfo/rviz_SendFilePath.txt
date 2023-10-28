@@ -1,5 +1,0 @@
-std_msgs/String path
-  string data
----
-bool success
-

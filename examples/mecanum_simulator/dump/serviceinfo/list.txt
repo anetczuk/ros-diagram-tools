@@ -13,6 +13,8 @@
 /gazebo/get_model_state
 /gazebo/get_physics_properties
 /gazebo/get_world_properties
+/gazebo_gui/get_loggers
+/gazebo_gui/set_logger_level
 /gazebo/pause_physics
 /gazebo/reset_simulation
 /gazebo/reset_world
@@ -28,8 +30,6 @@
 /gazebo/spawn_sdf_model
 /gazebo/spawn_urdf_model
 /gazebo/unpause_physics
-/gazebo_gui/get_loggers
-/gazebo_gui/set_logger_level
 /robot_state_publisher/get_loggers
 /robot_state_publisher/set_logger_level
 /rosout/get_loggers

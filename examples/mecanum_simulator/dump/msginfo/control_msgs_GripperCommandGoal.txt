@@ -1,4 +1,0 @@
-control_msgs/GripperCommand command
-  float64 position
-  float64 max_effort
-

@@ -48,32 +48,3 @@ Services:
  * /gazebo/spawn_urdf_model
  * /gazebo/unpause_physics
 
-
-contacting node http://ubuntu-ros:35833/ ...
-Pid: 5533
-Connections:
- * topic: /rosout
-    * to: /rosout
-    * direction: outbound (51757 - 127.0.0.1:50982) [24]
-    * transport: TCPROS
- * topic: /clock
-    * to: /gazebo
-    * direction: outbound
-    * transport: INTRAPROCESS
- * topic: /clock
-    * to: /rosout
-    * direction: outbound (51757 - 127.0.0.1:43792) [44]
-    * transport: TCPROS
- * topic: /clock
-    * to: /robot_state_publisher
-    * direction: outbound (51757 - 127.0.0.1:43802) [50]
-    * transport: TCPROS
- * topic: /clock
-    * to: /gazebo_gui
-    * direction: outbound (51757 - 127.0.0.1:43806) [46]
-    * transport: TCPROS
- * topic: /clock
-    * to: /gazebo (http://ubuntu-ros:35833/)
-    * direction: inbound
-    * transport: INTRAPROCESS
-
