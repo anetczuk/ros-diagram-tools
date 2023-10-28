@@ -11,8 +11,8 @@
 ## Dump rosnode info to files
 ##
 
-##set -eu
-set -e
+set -eu
+#set -x
 
 
 if [ "$#" -ne 1 ]; then
@@ -34,7 +34,9 @@ echo "Dumping data to $INFO_DIR"
 
 rosnode list > "$INFO_DIR/list.txt"
 
-items_list=$(rosnode list)
+sort -o "$INFO_DIR/list.txt" "$INFO_DIR/list.txt"
+
+items_list=$(<"$INFO_DIR/list.txt")
 
 
 for item in $items_list; do

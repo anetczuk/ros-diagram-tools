@@ -11,8 +11,8 @@
 ## Dump rosparam info to files
 ##
 
-##set -eu
-set -e
+set -eu
+#set -x
 
 
 if [ "$#" -ne 1 ]; then

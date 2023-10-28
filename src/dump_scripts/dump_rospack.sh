@@ -11,8 +11,8 @@
 ## Dump rostopic info to files
 ##
 
-##set -eu
-set -e
+set -eu
+#set -x
 
 
 if [ "$#" -ne 1 ]; then
@@ -34,6 +34,7 @@ echo "Dumping data to $INFO_DIR"
 
 rospack list > "$INFO_DIR/list.txt"
 
+sort -o "$INFO_DIR/list.txt" "$INFO_DIR/list.txt"
 
 items_list=$(rospack list-names)
 

@@ -11,8 +11,8 @@
 ## Dump rostopic info to files
 ##
 
-##set -eu
-set -e
+set -eu
+#set -x
 
 
 if [ "$#" -ne 2 ]; then
@@ -47,6 +47,8 @@ LIST_FILE_PATH="$OUT_DIR/list.txt"
 
 
 roslaunch $LAUNCH_FILE --files > "$LIST_FILE_PATH"
+
+sort -o "$LIST_FILE_PATH" "$LIST_FILE_PATH"
 
 ## removing old files
 while read launch_file_output; do

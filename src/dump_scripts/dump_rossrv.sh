@@ -11,8 +11,8 @@
 ## Dump rostopic info to files
 ##
 
-##set -eu
-set -e
+set -eu
+#set -x
 
 
 if [ "$#" -lt 1 ]; then
@@ -38,6 +38,8 @@ if [[ $* == *--listprovided* ]]; then
 else
     rossrv list > "$INFO_DIR/list.txt"
 fi
+
+sort -o "$INFO_DIR/list.txt" "$INFO_DIR/list.txt"
 
 items_list=$(<"$INFO_DIR/list.txt")
 

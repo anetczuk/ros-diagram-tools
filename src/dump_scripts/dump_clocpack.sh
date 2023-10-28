@@ -11,8 +11,8 @@
 ## Dump cloc over list of packages
 ##
 
-##set -eu
-set -e
+set -eu
+#set -x
 
 
 if [ "$#" -ne 2 ]; then
@@ -60,5 +60,7 @@ while IFS= read -r line; do
     cloc --sum-one --follow-links "${src_dir}" > "$out_file" || true
     echo "$src_dir" >> "$LIST_PATH"
 done < "$PACKAGES_LIST_FILE"
+
+sort -o "$LIST_PATH" "$LIST_PATH"
 
 echo -e "\nDone.\n"
