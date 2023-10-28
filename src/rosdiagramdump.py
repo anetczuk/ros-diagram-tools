@@ -79,6 +79,12 @@ def dumpros( args ):
     execute_script( dumpscripts.DUMP_ROS_SH, args_list )
 
 
+def dumprosrelative( args ):
+    args_list = []
+    args_list.append( args.outdir )
+    execute_script( dumpscripts.DUMP_ROSRELATIVE_SH, args_list )
+
+
 def dumpclocdir( args ):
     args_list = []
     args_list.append( f"{args.clocrundir}" )
@@ -259,6 +265,14 @@ def main():                                                             # pylint
     subparser = subparsers.add_parser('dumpros', help=description)
     subparser.description = description
     subparser.set_defaults( func=dumpros )
+    subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
+
+    ## =================================================
+
+    description = "dump majority of data (related msgs and srvs)"
+    subparser = subparsers.add_parser('dumprosrelative', help=description)
+    subparser.description = description
+    subparser.set_defaults( func=dumprosrelative )
     subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
 
     ## =================================================

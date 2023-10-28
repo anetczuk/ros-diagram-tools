@@ -15,7 +15,7 @@
 set -e
 
 
-if [ "$#" -ne 1 ]; then
+if [ "$#" -lt 1 ]; then
     echo "Illegal number of parameters -- expected one parameter (output directory)"
     exit 1
 fi
@@ -32,9 +32,14 @@ mkdir -p $INFO_DIR
 echo "Dumping data to $INFO_DIR"
 
 
-rossrv list > "$INFO_DIR/list.txt"
+if [[ $* == *--listprovided* ]]; then
+    ## read data from already provided list file
+    echo "loading data from provided list"
+else
+    rossrv list > "$INFO_DIR/list.txt"
+fi
 
-items_list=$(rossrv list)
+items_list=$(<"$INFO_DIR/list.txt")
 
 
 for item in $items_list; do

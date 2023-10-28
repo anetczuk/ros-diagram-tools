@@ -41,7 +41,7 @@ for item in $items_list; do
     out_file="$INFO_DIR/"$(echo "$item" | sed "s/\//_/g")".txt"
     echo "Writing $out_file"
     ## command might fail in case of "record" nodes
-    rosnode info $item > $out_file || true
+    rosnode info -q $item > $out_file || true
 done
 
 echo -e "\nDone.\n"

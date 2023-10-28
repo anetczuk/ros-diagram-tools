@@ -32,7 +32,10 @@ EOF
 
 SCRIPTS_LIST=""
 
-for FILE in $DUMP_DIR/*; do
+
+## $1 - FILE
+append_file() {
+    local FILE=$1
     BASENAME=$(basename $FILE)
     VAR_NAME=${BASENAME^^}
     VAR_NAME=${VAR_NAME/./_}
@@ -49,7 +52,15 @@ for FILE in $DUMP_DIR/*; do
     echo -e "\n" >> $OUTPUT_PATH
 
     SCRIPTS_LIST="$VAR_NAME,\n                 ${SCRIPTS_LIST}" 
+}
+
+
+for FILE in $DUMP_DIR/*; do
+    append_file $FILE
 done
+
+
+append_file "$SCRIPT_DIR/rosdiagram/ros/rosparsetools.py"
 
 
 echo "# all scripts"  >> $OUTPUT_PATH

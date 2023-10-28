@@ -1,7 +1,7 @@
 ## <a name="main_help"></a> rosdiagramdump.py --help
 ```
 usage: rosdiagramdump.py [-h] [-la] [--listtools]
-                         {dumpclocdir,dumpclocpack,dumpcatkindeps,dumprosparam,dumprospack,dumprosmsg,dumprossrv,dumprosnode,dumprostopic,dumprosservice,dumproslaunch,dumpros,extractscripts}
+                         {dumpclocdir,dumpclocpack,dumpcatkindeps,dumprosparam,dumprospack,dumprosmsg,dumprossrv,dumprosnode,dumprostopic,dumprosservice,dumproslaunch,dumpros,dumprosrelative,extractscripts}
                          ...
 
 dump tools
@@ -14,7 +14,7 @@ optional arguments:
 subcommands:
   use one of tools
 
-  {dumpclocdir,dumpclocpack,dumpcatkindeps,dumprosparam,dumprospack,dumprosmsg,dumprossrv,dumprosnode,dumprostopic,dumprosservice,dumproslaunch,dumpros,extractscripts}
+  {dumpclocdir,dumpclocpack,dumpcatkindeps,dumprosparam,dumprospack,dumprosmsg,dumprossrv,dumprosnode,dumprostopic,dumprosservice,dumproslaunch,dumpros,dumprosrelative,extractscripts}
                         one of tools
     dumpclocdir         dump result of 'cloc' command on given directory
     dumpclocpack        dump result of 'cloc' command on pack data
@@ -29,6 +29,7 @@ subcommands:
     dumprosservice      dump services info
     dumproslaunch       dump node names of launch file
     dumpros             dump majority of data
+    dumprosrelative     dump majority of data (related msgs and srvs)
     extractscripts      extract embedded scripts to files
 ```
 
@@ -189,6 +190,19 @@ optional arguments:
 usage: rosdiagramdump.py dumpros [-h] --outdir OUTDIR
 
 dump majority of data
+
+optional arguments:
+  -h, --help       show this help message and exit
+  --outdir OUTDIR  Output directory
+```
+
+
+
+## <a name="dumprosrelative_help"></a> rosdiagramdump.py dumprosrelative --help
+```
+usage: rosdiagramdump.py dumprosrelative [-h] --outdir OUTDIR
+
+dump majority of data (related msgs and srvs)
 
 optional arguments:
   -h, --help       show this help message and exit

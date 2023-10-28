@@ -95,7 +95,8 @@ echo ""
 
 
 ## requires running roscore
-$TOOL_PATH/rosdiagramdump.py dumpros --outdir $DUMP_DIR
+$TOOL_PATH/rosdiagramdump.py dumprosrelative --outdir $DUMP_DIR
+#$TOOL_PATH/rosdiagramdump.py dumpros --outdir $DUMP_DIR
 
 
 terminate_roscore

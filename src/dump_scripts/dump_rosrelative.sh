@@ -11,8 +11,8 @@
 ## Dump rostopic info to files
 ##
 
-##set -eu
-set -e
+set -eu
+#set -x
 
 
 if [ "$#" -ne 1 ]; then
@@ -53,10 +53,14 @@ $SCRIPT_DIR/dump_rostopic.sh "$INFO_DIR/topicinfo"
 echo "executing: $SCRIPT_DIR/dump_rosservice.sh $INFO_DIR/serviceinfo"
 $SCRIPT_DIR/dump_rosservice.sh "$INFO_DIR/serviceinfo"
 
+$SCRIPT_DIR/rosparsetools.py extractmsgs --topicsdumpdir "$INFO_DIR/topicinfo" --outlist "$INFO_DIR/msginfo/list.txt"
+
 echo "executing: $SCRIPT_DIR/dump_rosmsg.sh $INFO_DIR/msginfo"
-$SCRIPT_DIR/dump_rosmsg.sh "$INFO_DIR/msginfo"
+$SCRIPT_DIR/dump_rosmsg.sh "$INFO_DIR/msginfo" --listprovided
+
+$SCRIPT_DIR/rosparsetools.py extractsrvs --servicesdumpdir "$INFO_DIR/serviceinfo" --outlist "$INFO_DIR/srvinfo/list.txt"
 
 echo "executing: $SCRIPT_DIR/dump_rossrv.sh $INFO_DIR/srvinfo"
-$SCRIPT_DIR/dump_rossrv.sh "$INFO_DIR/srvinfo"
+$SCRIPT_DIR/dump_rossrv.sh "$INFO_DIR/srvinfo" --listprovided
 
 echo -e "\nDone."
