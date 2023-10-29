@@ -43,7 +43,6 @@ geometry_msgs/Twist twist
 bool success
 string status_message
 
-
 ```
 
 

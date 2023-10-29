@@ -18,7 +18,6 @@ bool rendering_enabled
 bool success
 string status_message
 
-
 ```
 
 

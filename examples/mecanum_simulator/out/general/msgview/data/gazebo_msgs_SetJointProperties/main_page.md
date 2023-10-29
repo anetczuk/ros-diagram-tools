@@ -27,7 +27,6 @@ gazebo_msgs/ODEJointProperties ode_joint_config
 bool success
 string status_message
 
-
 ```
 
 

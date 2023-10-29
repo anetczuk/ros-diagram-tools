@@ -17,7 +17,6 @@ Message:
 string joint_name
 ---
 
-
 ```
 
 

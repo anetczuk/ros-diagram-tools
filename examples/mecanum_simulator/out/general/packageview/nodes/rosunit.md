@@ -13,8 +13,9 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (4): | Description: |
+| Graph packages (5): | Description: |
 | ------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
 | [`roslaunch`](roslaunch.md) |  |
 | [`roslib`](roslib.md) |  |
 | [`rostest`](rostest.md) |  |

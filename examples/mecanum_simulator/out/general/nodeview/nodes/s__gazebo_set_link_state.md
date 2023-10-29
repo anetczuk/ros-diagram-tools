@@ -40,7 +40,6 @@ gazebo_msgs/LinkState link_state
 bool success
 string status_message
 
-
 ```
 
 

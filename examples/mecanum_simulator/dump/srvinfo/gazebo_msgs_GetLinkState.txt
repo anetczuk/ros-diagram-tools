@@ -25,4 +25,3 @@ gazebo_msgs/LinkState link_state
   string reference_frame
 bool success
 string status_message
-

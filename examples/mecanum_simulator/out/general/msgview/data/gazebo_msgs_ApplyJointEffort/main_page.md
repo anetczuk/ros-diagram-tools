@@ -19,7 +19,6 @@ duration duration
 bool success
 string status_message
 
-
 ```
 
 

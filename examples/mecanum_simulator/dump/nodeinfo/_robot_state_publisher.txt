@@ -1,4 +1,3 @@
---------------------------------------------------------------------------------
 Node [/robot_state_publisher]
 Publications: 
  * /rosout [rosgraph_msgs/Log]
@@ -12,4 +11,3 @@ Subscriptions:
 Services: 
  * /robot_state_publisher/get_loggers
  * /robot_state_publisher/set_logger_level
-

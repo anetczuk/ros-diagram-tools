@@ -13,8 +13,9 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (3): | Description: |
+| Graph packages (4): | Description: |
 | ------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
 | [`gencpp`](gencpp.md) |  |
 | [`genmsg`](genmsg.md) |  |
 | [`message_generation`](message_generation.md) |  |

@@ -1,4 +1,3 @@
---------------------------------------------------------------------------------
 Node [/rosout]
 Publications: 
  * /rosout_agg [rosgraph_msgs/Log]
@@ -10,4 +9,3 @@ Subscriptions:
 Services: 
  * /rosout/get_loggers
  * /rosout/set_logger_level
-

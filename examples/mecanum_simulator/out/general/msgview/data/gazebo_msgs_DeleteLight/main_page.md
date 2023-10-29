@@ -16,7 +16,6 @@ string light_name
 bool success
 string status_message
 
-
 ```
 
 

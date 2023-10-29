@@ -16,7 +16,6 @@ roscpp/Logger[] loggers
   string name
   string level
 
-
 ```
 
 

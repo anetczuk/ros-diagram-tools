@@ -26,7 +26,6 @@ bool is_static
 bool success
 string status_message
 
-
 ```
 
 

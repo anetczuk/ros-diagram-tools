@@ -36,7 +36,6 @@ gazebo_msgs/ODEPhysics ode_config
 bool success
 string status_message
 
-
 ```
 
 

@@ -12,4 +12,3 @@ float64[] position
 float64[] rate
 bool success
 string status_message
-

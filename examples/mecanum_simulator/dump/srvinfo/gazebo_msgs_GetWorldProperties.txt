@@ -4,4 +4,3 @@ string[] model_names
 bool rendering_enabled
 bool success
 string status_message
-

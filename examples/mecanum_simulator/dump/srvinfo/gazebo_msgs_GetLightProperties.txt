@@ -10,4 +10,3 @@ float64 attenuation_linear
 float64 attenuation_quadratic
 bool success
 string status_message
-

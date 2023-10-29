@@ -13,8 +13,9 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (2): | Description: |
+| Graph packages (3): | Description: |
 | ------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
 | [`rosbag_migration_rule`](rosbag_migration_rule.md) |  |
 | [`trajectory_msgs`](trajectory_msgs.md) |  |
 

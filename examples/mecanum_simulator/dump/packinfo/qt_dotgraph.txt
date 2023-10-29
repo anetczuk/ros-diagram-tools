@@ -1,1 +1,2 @@
 python_qt_binding
+catkin

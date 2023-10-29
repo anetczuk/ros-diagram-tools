@@ -26,7 +26,6 @@ float64[] rate
 bool success
 string status_message
 
-
 ```
 
 

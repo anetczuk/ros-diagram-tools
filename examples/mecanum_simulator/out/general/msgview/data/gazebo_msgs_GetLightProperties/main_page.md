@@ -24,7 +24,6 @@ float64 attenuation_quadratic
 bool success
 string status_message
 
-
 ```
 
 

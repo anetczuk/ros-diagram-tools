@@ -1,6 +1,7 @@
 <map id="rosunit" name="rosunit">
 <area shape="poly" id="node1" href="roslaunch.html" title="node: roslaunch" alt="" coords="167,39,167,19,119,5,53,5,5,19,5,39,53,53,119,53"/>
 <area shape="poly" id="node2" href="rosunit.html" title="node: rosunit" alt="" coords="342,75,342,55,305,41,252,41,215,55,215,75,252,89,305,89"/>
-<area shape="poly" id="node4" href="roslib.html" title="node: roslib" alt="" coords="497,75,497,55,466,41,422,41,390,55,390,75,422,89,466,89"/>
+<area shape="poly" id="node4" href="roslib.html" title="node: roslib" alt="" coords="500,39,500,19,469,5,424,5,393,19,393,39,424,53,469,53"/>
+<area shape="poly" id="node5" href="catkin.html" title="node: catkin" alt="" coords="503,111,503,91,470,77,423,77,390,91,390,111,423,125,470,125"/>
 <area shape="poly" id="node3" href="rostest.html" title="node: rostest" alt="" coords="149,111,149,91,112,77,60,77,23,91,23,111,60,125,112,125"/>
 </map>

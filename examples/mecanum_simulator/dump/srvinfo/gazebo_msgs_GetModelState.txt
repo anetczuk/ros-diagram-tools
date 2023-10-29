@@ -26,4 +26,3 @@ geometry_msgs/Twist twist
     float64 z
 bool success
 string status_message
-

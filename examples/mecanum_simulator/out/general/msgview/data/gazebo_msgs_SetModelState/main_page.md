@@ -37,7 +37,6 @@ gazebo_msgs/ModelState model_state
 bool success
 string status_message
 
-
 ```
 
 

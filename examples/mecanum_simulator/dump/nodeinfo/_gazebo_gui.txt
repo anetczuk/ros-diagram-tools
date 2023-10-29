@@ -1,4 +1,3 @@
---------------------------------------------------------------------------------
 Node [/gazebo_gui]
 Publications: 
  * /rosout [rosgraph_msgs/Log]
@@ -9,4 +8,3 @@ Subscriptions:
 Services: 
  * /gazebo_gui/get_loggers
  * /gazebo_gui/set_logger_level
-

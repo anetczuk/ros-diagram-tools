@@ -19,7 +19,6 @@ string model_name
 bool success
 string status_message
 
-
 ```
 
 

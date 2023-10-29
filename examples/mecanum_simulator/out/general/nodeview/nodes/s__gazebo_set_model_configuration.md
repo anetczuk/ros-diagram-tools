@@ -22,7 +22,6 @@ float64[] joint_positions
 bool success
 string status_message
 
-
 ```
 
 

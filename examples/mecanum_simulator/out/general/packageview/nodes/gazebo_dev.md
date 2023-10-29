@@ -13,8 +13,9 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (2): | Description: |
+| Graph packages (3): | Description: |
 | ------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
 | [`gazebo_dev`](gazebo_dev.md) | Gazebo package |
 | [`gazebo_ros`](gazebo_ros.md) | Gazebo package |
 

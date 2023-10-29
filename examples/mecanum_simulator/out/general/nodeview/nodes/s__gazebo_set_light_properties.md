@@ -47,7 +47,6 @@ geometry_msgs/Pose pose
 bool success
 string status_message
 
-
 ```
 
 

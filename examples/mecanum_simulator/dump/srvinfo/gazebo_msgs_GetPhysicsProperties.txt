@@ -19,4 +19,3 @@ gazebo_msgs/ODEPhysics ode_config
   uint32 max_contacts
 bool success
 string status_message
-

@@ -35,4 +35,3 @@ dynamic_reconfigure/Config config
     bool state
     int32 id
     int32 parent
-

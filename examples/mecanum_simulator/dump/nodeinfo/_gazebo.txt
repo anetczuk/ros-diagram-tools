@@ -1,4 +1,3 @@
---------------------------------------------------------------------------------
 Node [/gazebo]
 Publications: 
  * /clock [rosgraph_msgs/Clock]
@@ -47,4 +46,3 @@ Services:
  * /gazebo/spawn_sdf_model
  * /gazebo/spawn_urdf_model
  * /gazebo/unpause_physics
-
