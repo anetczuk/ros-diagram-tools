@@ -269,7 +269,8 @@ def main():                                                             # pylint
     subparser = subparsers.add_parser('dumpros', help=description)
     subparser.description = description
     subparser.set_defaults( func=dumpros )
-    subparser.add_argument( '--fast', action='store_true', required=False, default="", help="Use Python instead of bash dump" )
+    subparser.add_argument( '--fast', action='store_true', required=False, default="",
+                            help="Use Python instead of bash dump" )
     subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
 
     ## =================================================
@@ -278,7 +279,8 @@ def main():                                                             # pylint
     subparser = subparsers.add_parser('dumprosrelative', help=description)
     subparser.description = description
     subparser.set_defaults( func=dumprosrelative )
-    subparser.add_argument( '--fast', action='store_true', required=False, default="", help="Use Python instead of bash dump" )
+    subparser.add_argument( '--fast', action='store_true', required=False, default="",
+                            help="Use Python instead of bash dump" )
     subparser.add_argument( '--outdir', action='store', required=True, default="", help="Output directory" )
 
     ## =================================================
