@@ -445,11 +445,12 @@ def extractmsgs_process( args ):
         os.makedirs(out_dir, exist_ok=True)
 
     data_dict = read_topics( data_dir )
-    messages_list = extract_topic_messages( data_dict )
+    data_list = extract_topic_messages( data_dict )
+    data_list = sorted( data_list )
     if out_list_path:
-        write_list( out_list_path, messages_list )
+        write_list( out_list_path, data_list )
     else:
-        print( "\n".join(messages_list) )
+        print( "\n".join(data_list) )
 
 
 ## =====================================================
@@ -477,11 +478,12 @@ def extractsrvs_process( args ):
         os.makedirs(out_dir, exist_ok=True)
 
     data_dict = read_services( data_dir )
-    messages_list = extract_service_messages( data_dict )
+    data_list = extract_service_messages( data_dict )
+    data_list = sorted( data_list )
     if out_list_path:
-        write_list( out_list_path, messages_list )
+        write_list( out_list_path, data_list )
     else:
-        print( "\n".join(messages_list) )
+        print( "\n".join(data_list) )
 
 
 ## =====================================================
