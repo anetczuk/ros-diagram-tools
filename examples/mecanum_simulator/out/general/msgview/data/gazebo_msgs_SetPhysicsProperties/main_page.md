@@ -3,12 +3,13 @@ File was automatically generated using 'ros-diagram-tools' project.
 Project is distributed under the BSD 3-Clause license.
 -->
 
-## Main page
+
+## Message details
 
 |     |     |
 | --- | --- |
 | Data type: | `gazebo_msgs/SetPhysicsProperties` |
-| Usage: | `/gazebo/set_physics_properties` |
+| Used by: | `/gazebo/set_physics_properties` |
 
 ```
 float64 time_step

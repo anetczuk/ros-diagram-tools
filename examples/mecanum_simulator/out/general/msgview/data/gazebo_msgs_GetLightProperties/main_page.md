@@ -3,12 +3,13 @@ File was automatically generated using 'ros-diagram-tools' project.
 Project is distributed under the BSD 3-Clause license.
 -->
 
-## Main page
+
+## Message details
 
 |     |     |
 | --- | --- |
 | Data type: | `gazebo_msgs/GetLightProperties` |
-| Usage: | `/gazebo/get_light_properties` |
+| Used by: | `/gazebo/get_light_properties` |
 
 ```
 string light_name

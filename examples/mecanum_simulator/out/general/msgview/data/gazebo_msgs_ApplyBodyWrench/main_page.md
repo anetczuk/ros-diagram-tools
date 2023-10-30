@@ -3,12 +3,13 @@ File was automatically generated using 'ros-diagram-tools' project.
 Project is distributed under the BSD 3-Clause license.
 -->
 
-## Main page
+
+## Message details
 
 |     |     |
 | --- | --- |
 | Data type: | `gazebo_msgs/ApplyBodyWrench` |
-| Usage: | `/gazebo/apply_body_wrench` |
+| Used by: | `/gazebo/apply_body_wrench` |
 
 ```
 string body_name

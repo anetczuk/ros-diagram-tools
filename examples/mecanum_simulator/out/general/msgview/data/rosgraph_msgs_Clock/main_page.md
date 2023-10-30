@@ -3,12 +3,13 @@ File was automatically generated using 'ros-diagram-tools' project.
 Project is distributed under the BSD 3-Clause license.
 -->
 
-## Main page
+
+## Message details
 
 |     |     |
 | --- | --- |
 | Data type: | `rosgraph_msgs/Clock` |
-| Usage: | `/clock` |
+| Used by: | `/clock` |
 
 ```
 time clock

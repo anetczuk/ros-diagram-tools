@@ -3,10 +3,11 @@ File was automatically generated using 'ros-diagram-tools' project.
 Project is distributed under the BSD 3-Clause license.
 -->
 
-## Main page
 
-| **Messages (13):** | **In use:** |
-| ------------------ | ----------- |
+## Messages view
+
+| **Message defs (13):** | **In use:** |
+| ---------------------- | ----------- |
 | [`dynamic_reconfigure/Config`](data/dynamic_reconfigure_Config/main_page.md) | `1` |
 | [`dynamic_reconfigure/ConfigDescription`](data/dynamic_reconfigure_ConfigDescription/main_page.md) | `1` |
 | [`gazebo_msgs/LinkState`](data/gazebo_msgs_LinkState/main_page.md) | `1` |
@@ -22,8 +23,8 @@ Project is distributed under the BSD 3-Clause license.
 | [`tf2_msgs/TFMessage`](data/tf2_msgs_TFMessage/main_page.md) | `2` |
 
 
-| **Services (26):** | **In use:** |
-| ------------------ | ----------- |
+| **Service defs (26):** | **In use:** |
+| ---------------------- | ----------- |
 | [`dynamic_reconfigure/Reconfigure`](data/dynamic_reconfigure_Reconfigure/main_page.md) | `1` |
 | [`gazebo_msgs/ApplyBodyWrench`](data/gazebo_msgs_ApplyBodyWrench/main_page.md) | `1` |
 | [`gazebo_msgs/ApplyJointEffort`](data/gazebo_msgs_ApplyJointEffort/main_page.md) | `1` |

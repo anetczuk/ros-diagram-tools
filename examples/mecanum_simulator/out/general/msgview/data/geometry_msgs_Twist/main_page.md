@@ -3,12 +3,13 @@ File was automatically generated using 'ros-diagram-tools' project.
 Project is distributed under the BSD 3-Clause license.
 -->
 
-## Main page
+
+## Message details
 
 |     |     |
 | --- | --- |
 | Data type: | `geometry_msgs/Twist` |
-| Usage: | `/cmd_vel` |
+| Used by: | `/cmd_vel` |
 
 ```
 geometry_msgs/Vector3 linear

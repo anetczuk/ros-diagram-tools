@@ -3,12 +3,13 @@ File was automatically generated using 'ros-diagram-tools' project.
 Project is distributed under the BSD 3-Clause license.
 -->
 
-## Main page
+
+## Message details
 
 |     |     |
 | --- | --- |
 | Data type: | `dynamic_reconfigure/ConfigDescription` |
-| Usage: | `/gazebo/parameter_descriptions` |
+| Used by: | `/gazebo/parameter_descriptions` |
 
 ```
 dynamic_reconfigure/Group[] groups

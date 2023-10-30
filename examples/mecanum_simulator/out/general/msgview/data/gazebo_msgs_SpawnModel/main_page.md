@@ -3,12 +3,13 @@ File was automatically generated using 'ros-diagram-tools' project.
 Project is distributed under the BSD 3-Clause license.
 -->
 
-## Main page
+
+## Message details
 
 |     |     |
 | --- | --- |
 | Data type: | `gazebo_msgs/SpawnModel` |
-| Usage: | `/gazebo/spawn_sdf_model /gazebo/spawn_urdf_model` |
+| Used by: | `/gazebo/spawn_sdf_model /gazebo/spawn_urdf_model` |
 
 ```
 string model_name

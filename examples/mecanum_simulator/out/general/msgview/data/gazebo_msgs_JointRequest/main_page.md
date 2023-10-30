@@ -3,12 +3,13 @@ File was automatically generated using 'ros-diagram-tools' project.
 Project is distributed under the BSD 3-Clause license.
 -->
 
-## Main page
+
+## Message details
 
 |     |     |
 | --- | --- |
 | Data type: | `gazebo_msgs/JointRequest` |
-| Usage: | `/gazebo/clear_joint_forces` |
+| Used by: | `/gazebo/clear_joint_forces` |
 
 ```
 string joint_name

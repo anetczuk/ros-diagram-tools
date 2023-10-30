@@ -3,12 +3,13 @@ File was automatically generated using 'ros-diagram-tools' project.
 Project is distributed under the BSD 3-Clause license.
 -->
 
-## Main page
+
+## Message details
 
 |     |     |
 | --- | --- |
 | Data type: | `roscpp/GetLoggers` |
-| Usage: | `/gazebo/get_loggers /gazebo_gui/get_loggers /robot_state_publisher/get_loggers /rosout/get_loggers` |
+| Used by: | `/gazebo/get_loggers /gazebo_gui/get_loggers /robot_state_publisher/get_loggers /rosout/get_loggers` |
 
 ```
 ---

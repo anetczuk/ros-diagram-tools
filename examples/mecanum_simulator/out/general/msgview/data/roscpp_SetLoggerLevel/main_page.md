@@ -3,12 +3,13 @@ File was automatically generated using 'ros-diagram-tools' project.
 Project is distributed under the BSD 3-Clause license.
 -->
 
-## Main page
+
+## Message details
 
 |     |     |
 | --- | --- |
 | Data type: | `roscpp/SetLoggerLevel` |
-| Usage: | `/gazebo/set_logger_level /gazebo_gui/set_logger_level /robot_state_publisher/set_logger_level /rosout/set_logger_level` |
+| Used by: | `/gazebo/set_logger_level /gazebo_gui/set_logger_level /robot_state_publisher/set_logger_level /rosout/set_logger_level` |
 
 ```
 string logger
