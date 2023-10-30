@@ -68,7 +68,12 @@ ${DATA_DICT.get('head_css_style', '')}
 </head>
 <body>
     <div class="top_content">
-        Main page
+|{  if not DATA_DICT.get('item_content'):
+        Messages view
+|}
+|{  else:
+        Message details
+|}
         <br />
     </div>
     <div class="center_content">
@@ -102,7 +107,7 @@ ${DATA_DICT.get('head_css_style', '')}
 |}
 |!  item_users = DATA_DICT.get('item_users')
 |{  if item_users:
-|!      data_matrix.append( [ "Usage:", py_utils.code_inline( ' '.join(item_users) ) ] )
+|!      data_matrix.append( [ "Used by:", py_utils.code_inline( ' '.join(item_users) ) ] )
 |}
         $<${ tmpl_utils.insert_table2( [], data_matrix ) }
     </div>
@@ -136,6 +141,7 @@ ${ tmpl_footer.print_footer() }
 |!      data_row = []
 |!      data_row.append( tmpl_utils.ros_link( item_data[0], item_data[1] ) )
 |{      if item_data[2] > 0:
+|*          ** in use
 |!          data_row.append( py_utils.code_inline( item_data[2] ) )
 |}
 |!      data_matrix.append( data_row )

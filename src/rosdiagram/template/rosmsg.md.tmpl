@@ -21,7 +21,13 @@
 |!
 ${ tmpl_footer.print_header() }
 
-## Main page
+
+|{  if not DATA_DICT.get('item_content'):
+## Messages view
+|}
+|{  else:
+## Message details
+|}
 
 |!
 |! msg_items = DATA_DICT.get('msg_items', [])
@@ -50,7 +56,7 @@ ${ tmpl_footer.print_header() }
 |}
 |!  item_users = DATA_DICT.get('item_users')
 |{  if item_users:
-|!      data_matrix.append( [ "Usage:", py_utils.code_inline( ' '.join(item_users) ) ] )
+|!      data_matrix.append( [ "Used by:", py_utils.code_inline( ' '.join(item_users) ) ] )
 |}
 ${ tmpl_utils.insert_table2( [], data_matrix ) }
 

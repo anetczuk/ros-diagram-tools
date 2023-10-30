@@ -67,8 +67,8 @@ def generate_pages( msg_dict, srv_dict, out_dir, outhtml, outmarkdown, topics_di
     main_dict = {   "style": {},
                     "item_type": None,
                     "item_content": None,
-                    "msg_items": ("Messages", messages_list),
-                    "srv_items": ("Services", services_list)
+                    "msg_items": ("Message defs", messages_list),
+                    "srv_items": ("Service defs", services_list)
                     }
 
     if outhtml:
@@ -98,7 +98,7 @@ def generate_subpages( data_dict, out_dir, outhtml, outmarkdown, use_dict ):
 
         data_fullpath = os.path.join( out_dir, data_subdir )
         os.makedirs( data_fullpath, exist_ok=True )
-        data_dict = {   "style": {},
+        page_dict = {   "style": {},
                         "item_type": item,
                         "item_content": content,
                         "item_users": users_list
@@ -106,11 +106,11 @@ def generate_subpages( data_dict, out_dir, outhtml, outmarkdown, use_dict ):
 
         if outhtml:
             template = "rosmsg.html"
-            generate_from_template( data_fullpath, data_dict, template_name=template )
+            generate_from_template( data_fullpath, page_dict, template_name=template )
 
         if outmarkdown:
             template = "rosmsg.md"
-            generate_from_template( data_fullpath, data_dict, template_name=template )
+            generate_from_template( data_fullpath, page_dict, template_name=template )
 
     return messages_list
 
