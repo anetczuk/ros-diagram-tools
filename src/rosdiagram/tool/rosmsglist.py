@@ -81,6 +81,9 @@ def generate_pages( msg_dict, srv_dict, out_dir, outhtml, outmarkdown, topics_di
 
 
 def generate_subpages( data_dict, out_dir, outhtml, outmarkdown, use_dict ):
+    data_fullpath = os.path.join( out_dir, DATA_SUBDIR )
+    os.makedirs( data_fullpath, exist_ok=True )
+
     messages_list = []
     for item, content in data_dict.items():
         ## extract users of items
@@ -91,13 +94,11 @@ def generate_subpages( data_dict, out_dir, outhtml, outmarkdown, use_dict ):
                     users_list.append( user_id )
 
         item_file = prepare_filesystem_name( item )
-        data_subdir  = os.path.join( DATA_SUBDIR, item_file )
-        data_subpath = os.path.join( data_subdir, "main_page.autolink" )
+        item_filename = f"{item_file}.autolink"
+        data_subpath = os.path.join( DATA_SUBDIR, item_filename )
         in_use = len(users_list)
         messages_list.append( (item, data_subpath, in_use) )
 
-        data_fullpath = os.path.join( out_dir, data_subdir )
-        os.makedirs( data_fullpath, exist_ok=True )
         page_dict = {   "style": {},
                         "item_type": item,
                         "item_content": content,
@@ -106,11 +107,11 @@ def generate_subpages( data_dict, out_dir, outhtml, outmarkdown, use_dict ):
 
         if outhtml:
             template = "rosmsg.html"
-            generate_from_template( data_fullpath, page_dict, template_name=template )
+            generate_from_template( data_fullpath, page_dict, template_name=template, page_filename=item_filename )
 
         if outmarkdown:
             template = "rosmsg.md"
-            generate_from_template( data_fullpath, page_dict, template_name=template )
+            generate_from_template( data_fullpath, page_dict, template_name=template, page_filename=item_filename )
 
     return messages_list
 

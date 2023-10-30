@@ -29,22 +29,20 @@ DEFAULT_ACTIVE_NODE_STYLE = { "style": "filled",
 
 
 ## generate graph page
-def generate_from_template( output_dir, params_dict=None, template_name="dotgraph_page.html" ):
+def generate_from_template( output_dir, params_dict=None, template_name="dotgraph_page.html", page_filename="main_page.autolink" ):
     template_id = f"{template_name}.tmpl"
-    generate( output_dir, params_dict, template_id )
+    generate( output_dir, params_dict, template_id, page_filename=page_filename )
 
 
 ## uses keys: "graph", "graph_label", "style", "labels_dict" (deprecated)
-def generate( output_dir, params_dict, template_id="" ):
+def generate( output_dir, params_dict, template_id="", page_filename="main_page.autolink" ):
     page_params = params_dict.copy()
 
-    page_filename = "main_page"
-
-    out_extension = ".html"
+    out_extension = "html"                                  # without dot
     template_extensions = template_id.split(".")
     if len(template_extensions) > 1:
         if template_extensions[-1] == "tmpl":
-            out_extension = f".{template_extensions[-2]}"
+            out_extension = f"{template_extensions[-2]}"
 
     node_graph = page_params.get( "graph" )
     if node_graph:
@@ -71,12 +69,16 @@ def generate( output_dir, params_dict, template_id="" ):
                                 "graph_map":            graph_map
                                 } )
 
+        out_filename = f"{page_filename}.{out_extension}"
+    else:
+        out_filename = convert_autolink(page_filename, out_extension)
+
     style_dict = page_params.get( "style", {} )
     page_params.update( { "body_color": style_dict.get( "body_color", "#bbbbbb" ) } )
     page_params.setdefault( "head_css_style", "" )
 
     template_path    = os.path.join( SCRIPT_DIR, "template", template_id )
-    output_file = os.path.join( output_dir, page_filename + out_extension )
+    output_file = os.path.join( output_dir, out_filename )
     texttemplate.generate( template_path, output_file, INPUT_DICT=page_params )
 
 
@@ -210,3 +212,9 @@ def set_node_html_attribs( graph, node_local_dir, filter_nodes=None ):
         node_filename = prepare_filesystem_name( raw_name )
         node_url = local_dir + node_filename + ".html"
         node_obj.set( "href", node_url )
+
+
+def convert_autolink( file_path, extension ):
+    if not file_path.endswith(".autolink"):
+        return file_path
+    return f"{file_path[:-8]}{extension}"
