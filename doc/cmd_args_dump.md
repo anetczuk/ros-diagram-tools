@@ -187,13 +187,13 @@ optional arguments:
 
 ## <a name="dumpros_help"></a> rosdiagramdump.py dumpros --help
 ```
-usage: rosdiagramdump.py dumpros [-h] [--fast] --outdir OUTDIR
+usage: rosdiagramdump.py dumpros [-h] [--bashdump] --outdir OUTDIR
 
 dump majority of data
 
 optional arguments:
   -h, --help       show this help message and exit
-  --fast           Use Python instead of bash dump
+  --bashdump       Use bash dump instead of Python (slower, but more stable)
   --outdir OUTDIR  Output directory
 ```
 
@@ -201,13 +201,13 @@ optional arguments:
 
 ## <a name="dumprosrelative_help"></a> rosdiagramdump.py dumprosrelative --help
 ```
-usage: rosdiagramdump.py dumprosrelative [-h] [--fast] --outdir OUTDIR
+usage: rosdiagramdump.py dumprosrelative [-h] [--bashdump] --outdir OUTDIR
 
 dump majority of data (related msgs and srvs)
 
 optional arguments:
   -h, --help       show this help message and exit
-  --fast           Use Python instead of bash dump
+  --bashdump       Use bash dump instead of Python (slower, but more stable)
   --outdir OUTDIR  Output directory
 ```
 
