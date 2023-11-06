@@ -29,7 +29,8 @@ DEFAULT_ACTIVE_NODE_STYLE = { "style": "filled",
 
 
 ## generate graph page
-def generate_from_template( output_dir, params_dict=None, template_name="dotgraph_page.html", page_filename="main_page.autolink" ):
+def generate_from_template( output_dir, params_dict=None, template_name="dotgraph_page.html",
+                            page_filename="main_page.autolink" ):
     template_id = f"{template_name}.tmpl"
     generate( output_dir, params_dict, template_id, page_filename=page_filename )
 

@@ -18,4 +18,4 @@ echo "checking links in MD files"
 ./md_check_links.py -d ..
 
 
-echo "everythong fine"
+echo "everything is fine"
