@@ -21,7 +21,7 @@
 <html>
 <head>
 ${ tmpl_footer.print_header() }
-    <title>node graph</title>
+    <title>launch graph</title>
     <style>
         body {  padding: 24;
                 background-color: ${DATA_DICT.get('body_color', '')};
@@ -69,41 +69,14 @@ ${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
     </div>
 
 |!
+|! launch_list = DATA_DICT.get('launch_list', [])
+${ tmpl_utils.ros_link_table( launch_list, "Launch files" ) }$>
+|!
 |! nodes_list = DATA_DICT.get('nodes_list', [])
-${ ros_nodes_table( nodes_list ) }$>
-|!
-|! topics_list = DATA_DICT.get('topics_list', [])
-${ tmpl_utils.ros_link_table( topics_list, "ROS topics" ) }$>
-|!
-|! services_list = DATA_DICT.get('services_list', [])
-${ tmpl_utils.ros_link_table( services_list, "ROS services" ) }$>
+${ tmpl_utils.ros_link_table( nodes_list, "Nodes" ) }$>
 |!
 
 ${ tmpl_footer.print_footer() }
 </body>
 </html>
-|end template
-
-
-|* ======================================================================================
-
-
-|* items_list = [ (<link-name>, <link-url>, <package-name>, <decritpion>) ]
-|template ros_nodes_table( items_list )
-|{ if items_list:
-    <div class="bottom_content">
-|!      header_list = [ f"ROS nodes ({ len(items_list) }):", "Package:", "Description:" ]
-|!      data_matrix = []
-|{      for item_data in items_list:
-|!          data_row = []
-|!          data_row.append( tmpl_utils.ros_link( item_data[0], item_data[1] ) )
-|!          data_row.append( item_data[2] )
-|!          data_row.append( item_data[3] if len(item_data) > 3 else '' )
-|!          data_matrix.append( data_row )
-|}
-        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
-        <br />
-    </div>
-
-|}
 |end template

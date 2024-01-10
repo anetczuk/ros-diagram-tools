@@ -37,32 +37,7 @@ def generate_pages( params_dict, out_dir, outhtml, outmarkdown ):
     fatten_list = flatten_dict( params_dict )
 
     fatten_list.sort( key=lambda item: item[0], reverse=False )
-
-    params_list = []
-    for item in fatten_list:
-        param = item[0]
-        value = item[1]
-        value_type = type(value).__name__
-
-        data_subpath  = prepare_filesystem_name( param )
-        data_subpath  = os.path.join( DATA_SUBDIR, f"{data_subpath}.txt" )
-        data_fullpath = os.path.join( out_dir, data_subpath )
-        write_file( data_fullpath, str(value) )
-
-        value_str = ""
-        if isinstance( value, (dict, list) ):
-            # try to dump by JSON
-            value_str = json.dumps( value, indent=4 )
-        else:
-            value_str = str(value)
-
-        if len(value_str) > 1024 or value_str.count('\n') > 20:
-            pos = find_nth_index( value_str, '\n', 20 )
-            pos = min( pos, 1020 )
-            value_str = value_str[:pos] + "\n..."
-
-        value_str = html.escape( value_str )
-        params_list.append( (param, data_subpath, value_type, value_str) )
+    params_list = prepare_params_list(fatten_list, out_dir, DATA_SUBDIR)
 
     main_dict = {   "style": {},
                     "params_list": params_list
@@ -95,6 +70,43 @@ def find_nth_index( haystack, needle, n ):
         start = haystack.find(needle, start + 1)
         n -= 1
     return start
+
+
+# params_list: [ (<param-name>, <param-value>) ]
+def prepare_params_list(params_data_list, out_dir, out_subdir):
+    params_list = []
+    for item in params_data_list:
+        param = item[0]
+        value = item[1]
+        value_type = type(value).__name__
+
+        data_subpath  = prepare_filesystem_name( param )
+        data_subpath  = os.path.join( out_subdir, f"{data_subpath}.txt" )
+        data_fullpath = os.path.join( out_dir, data_subpath )
+        write_file( data_fullpath, str(value) )
+
+        value_str = convert_to_html(value)
+
+        params_list.append( (param, data_subpath, value_type, value_str) )
+
+    return params_list
+
+
+def convert_to_html(value):
+    value_str = ""
+    if isinstance( value, (dict, list) ):
+        # try to dump by JSON
+        value_str = json.dumps( value, indent=4 )
+    else:
+        value_str = str(value)
+
+    if len(value_str) > 1024 or value_str.count('\n') > 20:
+        pos = find_nth_index( value_str, '\n', 20 )
+        pos = min( pos, 1020 )
+        value_str = value_str[:pos] + "\n..."
+
+    value_str = html.escape( value_str )
+    return value_str
 
 
 ## ===================================================================

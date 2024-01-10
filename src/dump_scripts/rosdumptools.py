@@ -16,12 +16,17 @@ import sys
 import os
 import logging
 import argparse
+import pprint
+import json
+import typing
+from collections.abc import Iterable
 
 import rospkg
 import rosnode
 import rostopic
 import rosservice
 import rosmsg
+import roslaunch
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -299,6 +304,110 @@ def rossrv_process( args ):
 ## =====================================================
 
 
+class ObjRepr:
+
+    def __init__(self):
+        self._visited = set()
+
+    def reprObj(self, obj):
+        self._visited.clear()
+        return self._visit(obj)
+
+    def _visit(self, obj):
+        obj_id = id(obj)
+        if obj_id in self._visited:
+            # print("visited:", type(next_obj), next_obj)
+            return obj
+        self._visited.add(obj_id)
+
+        if isinstance(obj, dict):
+            ret_dict = {}
+            for key, data in obj.items():
+                ret_dict[key] = self._visit(data)
+            return ret_dict
+
+        if hasattr(obj, "__dict__"):
+            ret_dict = {}
+            for key, data in obj.__dict__.items():
+                ret_dict[key] = self._visit(data)
+            return ret_dict
+
+        if hasattr(obj, "__slots__"):
+            ret_dict = {}
+            for key in obj.__slots__:
+                data = getattr(obj, key)
+                ret_dict[key] = self._visit(data)
+            return ret_dict
+
+        if isinstance(obj, str):
+            return obj
+
+        if isinstance(obj, Iterable):
+            ret_list = []
+            for data in obj:
+                ret_list.append( self._visit(data) )
+            return ret_list
+
+        return obj
+
+
+def obj_to_dict(obj):
+    repr_obj = ObjRepr()
+    return repr_obj.reprObj(obj)
+
+
+## =====================================================
+
+
+def roslaunch_configure( parser ):
+    parser.description = 'dump roslaunch data'
+    # parser.add_argument( '--listprovided', action='store_true', required=False, default="",
+    #                      help="Read list of messages from list file" )
+    parser.add_argument( '--launchfile', action='store', required=True, default="",
+                         help="Path to launch file" )
+    parser.add_argument( '--outfile', action='store', required=True, default="",
+                         help="Path to output file" )
+
+
+def get_file_data(launch_path):
+    config = roslaunch.config.ROSLaunchConfig()
+    loader = roslaunch.xmlloader.XmlLoader()
+    loader.load(launch_path, config, verbose=False)
+
+    loader_dict = obj_to_dict(loader)
+    config_dict = obj_to_dict(config)
+    if "logger" in config_dict:
+        del config_dict['logger']
+
+    return {"loader": loader_dict,
+            "config": config_dict}
+
+
+def roslaunch_process( args ):
+    launch_tree = {}
+
+    launch_path = args.launchfile
+    root_data = get_file_data(launch_path)
+    launch_tree[launch_path] = root_data
+
+    included_files = root_data["config"].get("roslaunch_files", [])
+    for sub_file in included_files:
+        sub_data = get_file_data(sub_file)
+        launch_tree[sub_file] = sub_data
+
+    # pprint.pprint( launch_tree )
+
+    outfile = args.outfile
+    print( f"Writing {outfile}" )
+    with open(outfile, 'w', encoding='utf8' ) as fp:
+        json.dump(launch_tree, fp, indent=4)
+
+    print( "Done." )
+
+
+## =====================================================
+
+
 def main():
     parser = argparse.ArgumentParser(description='ROS parse tools')
     parser.add_argument( '-la', '--logall', action='store_true', help='Log all messages' )
@@ -342,6 +451,12 @@ def main():
     subparser = subparsers.add_parser('rossrv', help='dump rossrv data')
     subparser.set_defaults( func=rossrv_process )
     rossrv_configure( subparser )
+
+    ## =================================================
+
+    subparser = subparsers.add_parser('roslaunch', help='dump roslaunch data')
+    subparser.set_defaults( func=roslaunch_process )
+    roslaunch_configure( subparser )
 
     ## =================================================
 

@@ -41,6 +41,7 @@ ${ tmpl_footer.print_footer() }
 |* ======================================================================================
 
 
+|* items_list = [ (<link-name>, <link-url>, <package-name>, <decritpion>) ]
 |template ros_nodes_table( items_list )
 |{  if items_list:
 |!      header_list = [ f"ROS nodes ({ len(items_list) }):", "Package:", "Description:" ]

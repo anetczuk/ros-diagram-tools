@@ -152,6 +152,7 @@ def convert_links_dict( items_lists, sub_items_list, link_subdir, labels_dict, n
     return converted_lists
 
 
+# returns: [ (<link-label>, <link-url>, <description>) ]
 def convert_links_list( items_lists, sub_items_list, link_subdir, labels_dict=None, nodes_description=None ):
     if labels_dict is None:
         labels_dict = {}

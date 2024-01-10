@@ -1,0 +1,133 @@
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
+
+
+|import showgraph.datadict as data_dict
+
+|load "../footer.html.tmpl" as tmpl_footer
+|load "../utils.html.tmpl" as tmpl_utils
+|import rosdiagram.template.utils_html as py_utils
+
+
+|template main( INPUT_DICT )
+|!
+|! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+|!
+<html>
+<head>
+${ tmpl_footer.print_header() }
+    <title>launch graph</title>
+    <style>
+        body {  padding: 24;
+                background-color: ${DATA_DICT.get('body_color', '')};
+             }
+
+        pre {  background-color: rgb(226, 226, 226);
+               margin: 0px;
+               padding: 16px;
+            }
+
+        pre code {  margin: 0px;
+                    padding: 0px;
+                 }
+
+        th { padding: 0 32px 0 0;
+             text-align: left; 
+           }
+        td { padding: 0 32px 0 0; }
+
+        table td, table td * {
+            vertical-align: top;
+        }
+
+        .footer { margin-top:48px;
+                  width: 100%;
+                  margin-right: auto; margin-left: auto;
+                  text-align: center;
+                  font-size: 12px;
+                  color: #444444;
+                }
+
+        .center_content {  width: 100%;
+                           margin-right: auto; margin-left: auto;
+                           text-align: center;
+                           padding-top: 24; padding-bottom: 24;
+                        }
+
+        .info_content { margin-bottom: 36; }
+
+        .data a, .data span, .data tr, .data td { white-space: pre; }
+${DATA_DICT.get('head_css_style', '')}
+    </style>
+</head>
+<body>
+    <div class="top_content">
+${ tmpl_utils.add_default_main_link( DATA_DICT ) }$>
+    </div>
+
+    <div class="top_content" style="margin-top: 20px">
+        <div>Launch file: ${DATA_DICT.get('launch_file', "")}</div>
+    </div>
+
+    <div class="center_content">
+${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
+    </div>
+
+|!
+|!  launch_list = DATA_DICT.get('launch_list', [])
+${  tmpl_utils.ros_link_table( launch_list, "Included launch files" ) }$>
+|!
+|!
+|!  nodes_list = DATA_DICT.get('nodes_list', [])
+|{  if nodes_list:
+
+    <h4>Nodes (${ len(nodes_list) }):</h4>
+|{      for node_item in nodes_list:
+    <div class="info_content">
+|!          data_matrix = []
+|!          data_matrix.append( [ "Node name:", py_utils.code_inline( node_item["name"] ) ] )
+|!          data_matrix.append( [ "Package:", py_utils.code_inline( node_item["package"] ) ] )
+|!          data_matrix.append( [ "Args:", py_utils.code_inline( node_item["args"] ) ] )
+|!          data_matrix.append( [ "Respawn:", py_utils.code_inline( node_item["respawn"] ) ] )
+|!          data_matrix.append( [ "Respawn delay:", py_utils.code_inline( node_item["respawn_delay"] ) ] )
+|!          data_matrix.append( [ "Required:", py_utils.code_inline( node_item["required"] ) ] )
+|!          data_matrix.append( [ "Launch file:", py_utils.code_inline( node_item["filename"] ) ] )
+|!          data_matrix.append( [ "Remap args:", py_utils.code_inline( node_item["remap_args"] ) ] )
+    $<${ tmpl_utils.insert_table2( [], data_matrix ) }
+    </div>
+|}
+|}
+|!
+|!
+|!  params_list = DATA_DICT.get('params_list', [])
+|{  if params_list:
+
+    <div class="bottom_content data">
+|!      header_list = []
+|!      header_list.append( f"Parameters ({ len(params_list) }):" )
+|!      header_list.append( "Type:" )
+|!      header_list.append( "Value:" )
+|!      data_matrix = []
+|{      for item_data in params_list:
+|!          data_row = []
+|!          data_row.append( py_utils.link_simple( item_data[0], item_data[1] ) )
+|!          data_row.append( py_utils.code_inline( item_data[2] ) )
+|!          data_row.append( py_utils.code_inline( item_data[3] ) )
+|!          data_matrix.append( data_row )
+|}
+        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
+        <br />
+    </div>
+|}
+
+
+${ tmpl_footer.print_footer() }
+</body>
+</html>
+|end template

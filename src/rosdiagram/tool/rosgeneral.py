@@ -18,6 +18,7 @@ from rosdiagram.tool import rosparamlist
 from rosdiagram.tool import packagetree
 from rosdiagram.tool import rosmsglist
 from rosdiagram.tool import rosnodegraph
+from rosdiagram.tool import roslaunchgraph
 from rosdiagram.tool import rosindex
 
 
@@ -37,7 +38,7 @@ def configure_parser( parser ):
     parser.add_argument( '--dumprootdir', action='store', required=False, default="",
                          help="Path directory with standard dump directories" )
     parser.add_argument( '--launchdumppath', action='store', required=False, default="",
-                         help="Path fo directory containing dumped 'roslaunch' output" )
+                         help="Path to JSON file containing dumped 'roslaunch' output" )
     parser.add_argument( '--classifynodesfile', action='store', required=False, default="",
                          help="Nodes classification input file" )
     parser.add_argument( '--descriptionjsonfile', action='store', required=False, default="",
@@ -86,6 +87,8 @@ def process_arguments( args ):
     services_info_dir = os.path.join(args.dumprootdir, "serviceinfo")
     msgs_info_dir = os.path.join(args.dumprootdir, "msginfo")
     srv_info_dir = os.path.join(args.dumprootdir, "srvinfo")
+
+    launch_json_file = os.path.join(args.launchdumppath, "launch.json")
 
     nodes_classify_dict = None
     if args.classifynodesfile and os.path.isfile( args.classifynodesfile ):
@@ -221,6 +224,16 @@ def process_arguments( args ):
 
         nodes_out_file = os.path.join(nodes_out_dir, "full_graph.autolink")
         index_items_list.append( ("nodes view", nodes_out_file ) )
+
+    if os.path.isfile( launch_json_file ):
+        _LOGGER.info( "\n\ngenerating roslaunch output" )
+        launch_out_dir = os.path.join(args.outdir, "launchview")
+        launch_dict = roslaunchgraph.read_launch_data(launch_json_file)
+        roslaunchgraph.generate_launch_pages( launch_out_dir, launch_dict, None,
+                                              outhtml=args.outhtml, outmarkdown=args.outmarkdown )
+
+        launch_out_file = os.path.join(launch_out_dir, "full_graph.autolink")
+        index_items_list.append( ("launch view", launch_out_file ) )
 
     if args.customlist:
         customlist = args.customlist

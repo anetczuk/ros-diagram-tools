@@ -21,6 +21,7 @@ from rosdiagram.tool import rosparamlist
 from rosdiagram.tool import rosmsglist
 from rosdiagram.tool import rosnodegraph
 from rosdiagram.tool import rostopicgraph
+from rosdiagram.tool import roslaunchgraph
 from rosdiagram.tool import rosindex
 from rosdiagram.tool import rosgeneral
 from rosdiagram.tool import rosbagflow
@@ -96,6 +97,12 @@ def main():
     subparser = subparsers.add_parser('rostopicgraph', help='rostopic connection graph')
     subparser.set_defaults( func=rostopicgraph.process_arguments )
     rostopicgraph.configure_parser( subparser )
+
+    ## =================================================
+
+    subparser = subparsers.add_parser('roslaunchgraph', help='roslaunch connection graph')
+    subparser.set_defaults( func=roslaunchgraph.process_arguments )
+    roslaunchgraph.configure_parser( subparser )
 
     ## =================================================
 

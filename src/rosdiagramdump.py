@@ -7,6 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 #
 
+##
+## Script managing dump scripts.
+##
+
 import sys
 import os
 import logging
@@ -53,7 +57,7 @@ def execute_script( script_data, args=None ):
 
     args_string = " ".join( args )
     if os.system( f"{script_out_path} {args_string}" ) != 0:
-        raise RuntimeError( f"failed executing script: {script_out_path}" )
+        raise RuntimeError( f"failed executing script: {script_out_path} {args_string}" )
 
 
 def extract_script( script_data, script_out_path ):
@@ -121,6 +125,13 @@ def dumproslaunch( args ):
     args_list.append( args.launchfile )
     args_list.append( args.outdir )
     execute_script( dumpscripts.DUMP_ROSLAUNCH_SH, args_list )
+
+    launch_out_file = os.path.join(args.outdir, "launch.json")
+    args_list = []
+    args_list.append( "roslaunch" )
+    args_list.extend( ["--launchfile", args.launchfile] )
+    args_list.extend( ["--outfile", launch_out_file] )
+    execute_script( dumpscripts.ROSDUMPTOOLS_PY, args_list )
 
 
 def dumprosmsg( args ):

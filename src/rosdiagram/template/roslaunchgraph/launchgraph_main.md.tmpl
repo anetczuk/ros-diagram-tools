@@ -1,0 +1,35 @@
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
+
+
+|import showgraph.datadict as data_dict
+
+|load "../footer.md.tmpl" as tmpl_footer
+|load "../utils.md.tmpl" as tmpl_utils
+
+
+|template main( INPUT_DICT )
+|!
+|! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+|!
+${ tmpl_footer.print_header() }
+
+## Main graph
+
+${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
+
+|! launch_list = DATA_DICT.get('launch_list', [])
+${ tmpl_utils.ros_link_table( launch_list, "Launch files" ) }$>
+|!
+|! nodes_list = DATA_DICT.get('nodes_list', [])
+${ tmpl_utils.ros_link_table( nodes_list, "Nodes" ) }$>
+|!
+
+${ tmpl_footer.print_footer() }
+|end template

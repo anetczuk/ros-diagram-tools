@@ -1,0 +1,71 @@
+|*
+|* Python is accessible by following methods:
+|* - $variable -- printing value of variable to document
+|* - ${ <expression> } -- single expression to evaluate and print to document
+|* - |! -- general purpose line of any Python code
+|* 
+|* Any non-python content and non-template content is treated as text. 
+|* 
+
+
+|import showgraph.datadict as data_dict
+
+|load "../footer.md.tmpl" as tmpl_footer
+|load "../utils.md.tmpl" as tmpl_utils
+|import rosdiagram.template.utils_md as py_utils
+
+
+|template main( INPUT_DICT )
+|!
+|! DATA_DICT = data_dict.DataDict( INPUT_DICT )
+|!
+${ tmpl_footer.print_header() }
+
+## Node
+
+Launch file: ${DATA_DICT.get('launch_file', "")}
+
+${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
+
+|!
+|!
+|!  nodes_list = DATA_DICT.get('nodes_list', [])
+|{  if nodes_list:
+
+Nodes (${ len(nodes_list) }):
+
+|{      for node_item in nodes_list:
+|!          data_matrix = []
+|!          data_matrix.append( [ "Node name:", py_utils.code_inline( node_item["name"] ) ] )
+|!          data_matrix.append( [ "Package:", py_utils.code_inline( node_item["package"] ) ] )
+|!          data_matrix.append( [ "Args:", py_utils.code_inline( node_item["args"] ) ] )
+|!          data_matrix.append( [ "Respawn:", py_utils.code_inline( node_item["respawn"] ) ] )
+|!          data_matrix.append( [ "Respawn delay:", py_utils.code_inline( node_item["respawn_delay"] ) ] )
+|!          data_matrix.append( [ "Required:", py_utils.code_inline( node_item["required"] ) ] )
+|!          data_matrix.append( [ "Launch file:", py_utils.code_inline( node_item["filename"] ) ] )
+|!          data_matrix.append( [ "Remap args:", py_utils.code_inline( node_item["remap_args"] ) ] )
+    $<${ tmpl_utils.insert_table2( [], data_matrix ) }
+|}
+|}
+|!
+|!
+|!  params_list = DATA_DICT.get('params_list', [])
+|{  if params_list:
+
+|!      header_list = []
+|!      header_list.append( f"Parameters ({ len(params_list) }):" )
+|!      header_list.append( "Type:" )
+|!      header_list.append( "Value:" )
+|!      data_matrix = []
+|{      for item_data in params_list:
+|!          data_row = []
+|!          data_row.append( py_utils.link_simple( item_data[0], item_data[1] ) )
+|!          data_row.append( py_utils.code_inline( item_data[2] ) )
+|!          data_row.append( py_utils.code_inline( item_data[3] ) )
+|!          data_matrix.append( data_row )
+|}
+        $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
+|}
+
+${ tmpl_footer.print_footer() }
+|end template
