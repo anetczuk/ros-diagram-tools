@@ -1,8 +1,9 @@
 python_qt_binding
-rosbag
-rosgraph_msgs
 roslib
+catkin
+rqt_gui
 rosnode
 rospy
-rqt_gui
+rosgraph_msgs
+rosbag
 rqt_gui_py

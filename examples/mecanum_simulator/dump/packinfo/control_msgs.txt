@@ -1,5 +1,7 @@
-message_runtime
+catkin
+geometry_msgs
 std_msgs
 trajectory_msgs
-geometry_msgs
 actionlib_msgs
+message_runtime
+message_generation

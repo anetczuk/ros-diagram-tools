@@ -1,2 +1,3 @@
 cpp_common
+catkin
 rosconsole

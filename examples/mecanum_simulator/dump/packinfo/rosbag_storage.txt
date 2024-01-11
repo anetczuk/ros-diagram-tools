@@ -1,6 +1,9 @@
-cpp_common
-pluginlib
-roscpp_serialization
-roscpp_traits
+catkin
 rostime
+std_msgs
+cpp_common
+rostest
+roscpp_serialization
 roslz4
+roscpp_traits
+pluginlib

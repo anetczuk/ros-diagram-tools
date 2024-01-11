@@ -1,5 +1,6 @@
-rosgraph
-roslaunch
 rosmaster
+catkin
 rospy
+rosgraph
 rosunit
+roslaunch

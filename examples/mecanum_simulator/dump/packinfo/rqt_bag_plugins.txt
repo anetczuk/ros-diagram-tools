@@ -1,10 +1,11 @@
-geometry_msgs
-rosbag
 roslib
-rospy
-rqt_bag
 rqt_gui
-rqt_gui_py
-rqt_plot
+catkin
+geometry_msgs
 sensor_msgs
+rospy
 std_msgs
+rqt_bag
+rosbag
+rqt_plot
+rqt_gui_py

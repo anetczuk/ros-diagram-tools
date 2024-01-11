@@ -1,6 +1,7 @@
 python_qt_binding
+catkin
+qt_gui_py_common
 qt_dotgraph
 qt_gui
-qt_gui_py_common
 rqt_graph
 rqt_gui_py

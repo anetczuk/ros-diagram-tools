@@ -1,3 +1,5 @@
-bond
 roscpp
+catkin
+cmake_modules
+bond
 smclib

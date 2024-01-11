@@ -1,7 +1,9 @@
+roscpp
+catkin
+bondcpp
+rospy
+rostest
+bondpy
+xmlrpcpp
 diagnostic_msgs
 pluginlib
-roscpp
-rospy
-xmlrpcpp
-bondcpp
-bondpy

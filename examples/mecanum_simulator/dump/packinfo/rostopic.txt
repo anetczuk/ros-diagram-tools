@@ -1,3 +1,5 @@
-genpy
-rosbag
+catkin
 rospy
+rostest
+rosbag
+genpy

@@ -1,8 +1,9 @@
 python_qt_binding
 roslib
+catkin
+rqt_gui
+rqt_console
 rosmsg
 rospy
-rqt_gui
-rqt_gui_py
 rqt_py_common
-rqt_console
+rqt_gui_py

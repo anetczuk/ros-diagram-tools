@@ -1,5 +1,7 @@
-image_transport
-message_runtime
 roscpp
+catkin
 sensor_msgs
+image_transport
 std_msgs
+message_runtime
+message_generation

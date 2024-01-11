@@ -1,5 +1,6 @@
-geometry_msgs
 python_qt_binding
-rostopic
 rqt_gui
+catkin
+geometry_msgs
+rostopic
 rqt_gui_py

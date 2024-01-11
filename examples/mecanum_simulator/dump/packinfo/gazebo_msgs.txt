@@ -1,6 +1,8 @@
-geometry_msgs
+catkin
 sensor_msgs
-trajectory_msgs
+geometry_msgs
 std_msgs
 message_runtime
+trajectory_msgs
 std_srvs
+message_generation

@@ -1,7 +1,8 @@
 python_qt_binding
 roslib
-rospy
+catkin
 rqt_gui
-rqt_gui_py
+rospy
 rqt_logger_level
 rqt_py_common
+rqt_gui_py

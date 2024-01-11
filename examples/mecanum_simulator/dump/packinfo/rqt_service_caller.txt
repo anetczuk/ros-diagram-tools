@@ -1,4 +1,5 @@
-rosservice
 rqt_gui
-rqt_gui_py
+catkin
 rqt_py_common
+rosservice
+rqt_gui_py

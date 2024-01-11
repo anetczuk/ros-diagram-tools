@@ -1,1 +1,4 @@
+sensor_msgs
+rostest
+catkin
 rosconsole

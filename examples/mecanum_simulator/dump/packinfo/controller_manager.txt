@@ -1,4 +1,10 @@
-std_msgs
-rosparam
-rospy
+hardware_interface
 roscpp
+catkin
+controller_manager_msgs
+std_msgs
+rospy
+rostest
+controller_interface
+rosparam
+pluginlib

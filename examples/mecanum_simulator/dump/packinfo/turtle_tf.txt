@@ -1,6 +1,7 @@
-geometry_msgs
 roscpp
-rospy
-std_msgs
-tf
+catkin
 turtlesim
+geometry_msgs
+tf
+std_msgs
+rospy

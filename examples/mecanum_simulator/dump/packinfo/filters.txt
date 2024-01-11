@@ -1,4 +1,6 @@
 roslib
-rosconsole
 roscpp
+catkin
+rostest
+rosconsole
 pluginlib

@@ -1,5 +1,7 @@
-joint_state_publisher
-joint_state_publisher_gui
-robot_state_publisher
-rviz
 xacro
+catkin
+joint_state_publisher_gui
+rviz
+joint_state_publisher
+roslaunch
+robot_state_publisher

@@ -1,3 +1,5 @@
 diagnostic_updater
-rospy
+catkin
 tf
+rospy
+rostest

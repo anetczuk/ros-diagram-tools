@@ -1,3 +1,4 @@
 cpp_common
-roscpp_traits
+catkin
 rostime
+roscpp_traits

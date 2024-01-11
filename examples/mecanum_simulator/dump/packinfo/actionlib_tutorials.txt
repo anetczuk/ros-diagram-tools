@@ -1,3 +1,7 @@
 roscpp
+catkin
+std_msgs
 actionlib
+actionlib_msgs
 message_runtime
+message_generation

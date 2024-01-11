@@ -1,8 +1,10 @@
-rospy
-rostopic
+catkin
+smach
 std_msgs
-std_srvs
+rostopic
+rospy
+rostest
 actionlib
 actionlib_msgs
-smach
 smach_msgs
+std_srvs

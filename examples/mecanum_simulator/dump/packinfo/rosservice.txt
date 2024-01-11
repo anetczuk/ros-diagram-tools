@@ -1,5 +1,6 @@
-genpy
-rosgraph
 roslib
-rospy
+catkin
 rosmsg
+rospy
+rosgraph
+genpy

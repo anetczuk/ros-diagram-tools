@@ -1,7 +1,10 @@
-dynamic_reconfigure
+roslint
 python_qt_binding
-rospy
-rqt_console
 rqt_gui
-rqt_gui_py
+catkin
+dynamic_reconfigure
+rqt_console
+rospy
 rqt_py_common
+rostest
+rqt_gui_py

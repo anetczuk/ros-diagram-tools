@@ -1,3 +1,7 @@
-message_runtime
-rospy
+catkin
 std_msgs
+rospy
+rostest
+roscpp_tutorials
+message_runtime
+message_generation

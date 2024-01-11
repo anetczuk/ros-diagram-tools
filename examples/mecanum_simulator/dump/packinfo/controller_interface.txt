@@ -1,1 +1,3 @@
+hardware_interface
 roscpp
+catkin

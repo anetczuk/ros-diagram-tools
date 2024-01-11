@@ -1,6 +1,12 @@
-message_runtime
-rosconsole
 roscpp
+catkin
 rostime
 std_msgs
+cpp_common
+rostest
+rosbash
+rosconsole
+rosunit
 xmlrpcpp
+message_runtime
+message_generation

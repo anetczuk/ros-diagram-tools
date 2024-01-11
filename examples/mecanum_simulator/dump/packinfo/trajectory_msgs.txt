@@ -1,4 +1,6 @@
-message_runtime
+catkin
 geometry_msgs
 std_msgs
 rosbag_migration_rule
+message_runtime
+message_generation

@@ -1,2 +1,3 @@
 roscpp
+catkin
 rviz

@@ -1,3 +1,4 @@
-catkin
 ros_environment
+catkin
+rosmake
 rospack

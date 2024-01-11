@@ -1,3 +1,4 @@
-python_qt_binding
-qt_gui
 rospy
+python_qt_binding
+catkin
+qt_gui

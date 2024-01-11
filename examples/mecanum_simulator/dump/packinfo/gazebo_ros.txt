@@ -1,10 +1,12 @@
 gazebo_dev
-gazebo_msgs
 roslib
+catkin
 roscpp
-tf
-std_srvs
-rosgraph_msgs
+cmake_modules
 dynamic_reconfigure
-std_msgs
 geometry_msgs
+tf
+std_msgs
+rosgraph_msgs
+gazebo_msgs
+std_srvs

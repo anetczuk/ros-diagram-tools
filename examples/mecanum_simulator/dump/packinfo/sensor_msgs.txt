@@ -1,3 +1,7 @@
+catkin
 geometry_msgs
-message_runtime
 std_msgs
+rosbag
+rosunit
+message_runtime
+message_generation

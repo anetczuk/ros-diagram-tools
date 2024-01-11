@@ -1,0 +1,5 @@
+roslib
+catkin
+cmake_modules
+class_loader
+rosconsole

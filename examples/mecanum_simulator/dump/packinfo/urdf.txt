@@ -1,3 +1,7 @@
-rosconsole_bridge
 roscpp
+catkin
+cmake_modules
+rosconsole_bridge
+urdf_parser_plugin
+rostest
 pluginlib

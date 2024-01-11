@@ -1,3 +1,4 @@
-actionlib_msgs
 geometry_msgs
+catkin
+actionlib_msgs
 message_generation

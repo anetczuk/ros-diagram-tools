@@ -1,6 +1,7 @@
+rqt_gui
+catkin
 cv_bridge
 geometry_msgs
-image_transport
-rqt_gui
-rqt_gui_cpp
 sensor_msgs
+image_transport
+rqt_gui_cpp

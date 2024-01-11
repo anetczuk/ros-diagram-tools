@@ -1,4 +1,6 @@
+catkin
 geometry_msgs
-message_runtime
 std_msgs
 actionlib_msgs
+message_runtime
+message_generation

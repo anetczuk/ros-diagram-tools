@@ -1,2 +1,6 @@
-rosconsole
+roscpp
+catkin
+cmake_modules
 urdf
+rostest
+rosconsole

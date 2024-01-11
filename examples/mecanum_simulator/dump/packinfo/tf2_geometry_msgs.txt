@@ -1,3 +1,6 @@
-geometry_msgs
-tf2
 tf2_ros
+catkin
+geometry_msgs
+ros_environment
+rostest
+tf2

@@ -1,8 +1,11 @@
-genpy
 python_qt_binding
-qt_gui
 roslib
+catkin
+std_msgs
 rospy
 rostopic
+qt_gui
 actionlib
 rosbag
+genpy
+genmsg

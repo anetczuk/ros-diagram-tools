@@ -1,6 +1,7 @@
-message_filters
-pluginlib
-rosconsole
-roscpp
 roslib
+roscpp
+catkin
 sensor_msgs
+message_filters
+rosconsole
+pluginlib

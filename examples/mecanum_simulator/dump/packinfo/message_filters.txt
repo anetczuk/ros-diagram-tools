@@ -1,2 +1,5 @@
-rosconsole
 roscpp
+catkin
+rostest
+rosconsole
+rosunit

@@ -1,4 +1,6 @@
-pluginlib
 rqt_gui
-rqt_gui_cpp
+catkin
+class_loader
 rviz
+rqt_gui_cpp
+pluginlib

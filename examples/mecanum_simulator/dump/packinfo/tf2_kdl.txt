@@ -1,2 +1,6 @@
-tf2
 tf2_ros
+catkin
+cmake_modules
+ros_environment
+rostest
+tf2

@@ -1,2 +1,2 @@
-catkin
 geometry_msgs
+catkin

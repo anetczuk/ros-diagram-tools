@@ -1,2 +1,4 @@
+rostest
+catkin
 rosgraph
 rostopic

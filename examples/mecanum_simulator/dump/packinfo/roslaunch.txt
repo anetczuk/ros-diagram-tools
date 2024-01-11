@@ -1,7 +1,9 @@
+rosmaster
+roslib
+catkin
+rosout
 rosclean
 rosgraph_msgs
-roslib
-rosmaster
-rosout
-rosparam
 rosunit
+rosbuild
+rosparam

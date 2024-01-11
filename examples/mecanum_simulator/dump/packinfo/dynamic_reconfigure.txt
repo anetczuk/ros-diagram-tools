@@ -1,6 +1,11 @@
-message_runtime
 roslib
-rospy
-rosservice
 roscpp
+catkin
 std_msgs
+rospy
+cpp_common
+rostest
+roscpp_serialization
+rosservice
+message_runtime
+message_generation

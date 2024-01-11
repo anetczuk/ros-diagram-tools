@@ -1,9 +1,10 @@
-geometry_msgs
-nav_msgs
 python_qt_binding
-qt_gui
-rospy
+nav_msgs
+catkin
 rqt_gui
-rqt_gui_py
-rqt_py_common
+geometry_msgs
 tf
+rospy
+qt_gui
+rqt_py_common
+rqt_gui_py

@@ -1,7 +1,10 @@
-message_runtime
-rospy
-bondcpp
-pluginlib
-rosconsole
 roscpp
+catkin
+cmake_modules
+bondcpp
 std_msgs
+rospy
+message_generation
+rosconsole
+message_runtime
+pluginlib

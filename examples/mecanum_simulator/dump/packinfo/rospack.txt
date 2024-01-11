@@ -1,1 +1,3 @@
 ros_environment
+catkin
+cmake_modules

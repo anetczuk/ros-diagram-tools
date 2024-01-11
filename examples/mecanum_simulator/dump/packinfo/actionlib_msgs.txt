@@ -1,3 +1,4 @@
-message_generation
-message_runtime
 std_msgs
+message_runtime
+catkin
+message_generation

@@ -1,8 +1,9 @@
+tf2_ros
 python_qt_binding
-qt_dotgraph
-rospy
-rqt_graph
 rqt_gui
+catkin
+rospy
+qt_dotgraph
+rqt_graph
 rqt_gui_py
 tf2_msgs
-tf2_ros

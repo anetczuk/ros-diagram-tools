@@ -1,4 +1,5 @@
-roscpp
 interactive_markers
-visualization_msgs
+roscpp
+catkin
 tf
+visualization_msgs

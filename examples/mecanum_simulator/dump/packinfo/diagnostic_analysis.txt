@@ -1,3 +1,5 @@
-diagnostic_msgs
-rosbag
 roslib
+catkin
+rostest
+rosbag
+diagnostic_msgs

@@ -1,3 +1,4 @@
-qt_gui
-rqt_gui
 rospy
+rqt_gui
+catkin
+qt_gui

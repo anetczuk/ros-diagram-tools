@@ -1,2 +1,4 @@
-rospy
 sensor_msgs
+rostest
+catkin
+rospy

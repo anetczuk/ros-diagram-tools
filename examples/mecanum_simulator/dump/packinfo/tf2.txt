@@ -1,3 +1,4 @@
-geometry_msgs
 rostime
+geometry_msgs
+catkin
 tf2_msgs

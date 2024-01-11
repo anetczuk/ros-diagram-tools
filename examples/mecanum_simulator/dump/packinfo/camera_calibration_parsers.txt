@@ -1,3 +1,7 @@
-sensor_msgs
 roscpp
+catkin
+sensor_msgs
+rosbash
 roscpp_serialization
+rosconsole
+rosunit

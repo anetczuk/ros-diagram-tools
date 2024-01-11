@@ -1,6 +1,7 @@
+catkin
 gencpp
 geneus
-gennodejs
 genlisp
-genmsg
+gennodejs
 genpy
+genmsg

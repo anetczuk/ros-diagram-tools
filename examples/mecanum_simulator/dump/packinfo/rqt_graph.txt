@@ -1,11 +1,12 @@
 python_qt_binding
-qt_dotgraph
-rosgraph
-rosgraph_msgs
 roslib
+catkin
+rqt_gui
 rosnode
 rospy
-rosservice
+qt_dotgraph
 rostopic
-rqt_gui
+rosgraph
+rosgraph_msgs
+rosservice
 rqt_gui_py

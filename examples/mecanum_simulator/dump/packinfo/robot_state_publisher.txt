@@ -1,8 +1,11 @@
+tf2_ros
 kdl_parser
-rosconsole
 roscpp
+catkin
 rostime
 sensor_msgs
 tf
-tf2_ros
+rostest
+rosconsole
+rosbag
 tf2_kdl

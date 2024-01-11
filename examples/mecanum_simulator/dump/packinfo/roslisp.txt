@@ -1,5 +1,6 @@
-roslang
+catkin
 rospack
+ros_environment
+roslang
 rosgraph_msgs
 std_srvs
-ros_environment

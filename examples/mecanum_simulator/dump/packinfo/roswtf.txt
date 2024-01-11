@@ -1,6 +1,12 @@
-rosbuild
-rosgraph
-roslaunch
 roslib
+catkin
+cmake_modules
 rosnode
+roslang
+rostest
+rosgraph
 rosservice
+rosbag
+roslaunch
+rosbuild
+std_srvs

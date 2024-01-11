@@ -1,3 +1,5 @@
-diagnostic_msgs
 roscpp
+catkin
 std_msgs
+rostest
+diagnostic_msgs

@@ -1,6 +1,8 @@
-message_runtime
-rosconsole
 roscpp
-roscpp_serialization
+catkin
 rostime
 std_msgs
+roscpp_serialization
+rosconsole
+message_runtime
+message_generation

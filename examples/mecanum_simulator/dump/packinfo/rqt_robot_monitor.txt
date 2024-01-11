@@ -1,9 +1,10 @@
-diagnostic_msgs
 python_qt_binding
-qt_gui
+rqt_gui
+catkin
 qt_gui_py_common
 rospy
-rqt_py_common
-rqt_gui
-rqt_gui_py
+qt_gui
 rqt_bag
+rqt_py_common
+diagnostic_msgs
+rqt_gui_py

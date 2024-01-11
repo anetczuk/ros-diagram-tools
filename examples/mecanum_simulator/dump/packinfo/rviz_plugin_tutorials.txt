@@ -1,1 +1,2 @@
+catkin
 rviz

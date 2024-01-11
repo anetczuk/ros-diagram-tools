@@ -1,5 +1,6 @@
+rqt_gui
+catkin
 rosmsg
 rospy
-rqt_gui
 rqt_gui_py
 rqt_msg

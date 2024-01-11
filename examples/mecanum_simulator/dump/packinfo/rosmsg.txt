@@ -1,5 +1,9 @@
-catkin
-genmsg
-genpy
-rosbag
 roslib
+catkin
+std_msgs
+rostest
+rosbag
+diagnostic_msgs
+std_srvs
+genpy
+genmsg

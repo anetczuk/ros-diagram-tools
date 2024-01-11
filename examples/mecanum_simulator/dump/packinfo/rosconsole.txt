@@ -1,3 +1,5 @@
-cpp_common
-rosbuild
+catkin
 rostime
+cpp_common
+rosunit
+rosbuild

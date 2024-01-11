@@ -1,1 +1,6 @@
+roscpp
 dynamic_reconfigure
+catkin
+message_filters
+nodelet
+pluginlib

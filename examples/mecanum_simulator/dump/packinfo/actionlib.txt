@@ -1,6 +1,10 @@
-message_runtime
-actionlib_msgs
 roscpp
+catkin
+rosnode
 rospy
-rostest
 std_msgs
+rostest
+actionlib_msgs
+rosunit
+message_runtime
+message_generation

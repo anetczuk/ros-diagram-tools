@@ -1,2 +1,5 @@
-pluginlib
+python_qt_binding
+catkin
+cmake_modules
 qt_gui
+pluginlib
