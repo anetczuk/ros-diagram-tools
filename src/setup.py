@@ -39,7 +39,7 @@ install_reqs.extend( ["showgraph"] )
 ## every time setup info changes then version number should be increased
 
 setup( name='ros-diagram-tools',
-       version='2.1.0',
+       version='2.2.0',
        description='generate various aspects of ROS workspace in form of diagrams and views',
        url='https://github.com/anetczuk/ros-diagram-tools',
        author='anetczuk',
