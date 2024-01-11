@@ -19,4 +19,4 @@ $SCRIPT_DIR/mecanum_simulator/generate-all.sh
 
 
 ## generate small images
-$SCRIPT_DIR/generate_small.sh
+# $SCRIPT_DIR/generate_small.sh

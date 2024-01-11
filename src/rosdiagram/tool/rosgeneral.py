@@ -38,7 +38,7 @@ def configure_parser( parser ):
     parser.add_argument( '--dumprootdir', action='store', required=False, default="",
                          help="Path directory with standard dump directories" )
     parser.add_argument( '--launchdumppath', action='store', required=False, default="",
-                         help="Path to JSON file containing dumped 'roslaunch' output" )
+                         help="Path to directory containing dumped 'roslaunch' output" )
     parser.add_argument( '--classifynodesfile', action='store', required=False, default="",
                          help="Nodes classification input file" )
     parser.add_argument( '--descriptionjsonfile', action='store', required=False, default="",

@@ -22,8 +22,9 @@ Main motivation for the project was to present variuos aspects of *ROS* workspac
 
 1. [How to use?](#how_to_use)
 2. [Requirements](#Requirements)
-3. [Examples](#Examples)
-4. [The Tools](#tools)
+3. [Installation](#installation)
+4. [Examples](#Examples)
+5. [The Tools](#tools)
     1. [codedistribution](#codedistribution)
     2. [packagetree](#packagetree)
     3. [classifynodes](#classifynodes)
@@ -37,10 +38,10 @@ Main motivation for the project was to present variuos aspects of *ROS* workspac
     11. [rosindex](#rosindex)
     12. [rosgeneral](#rosgeneral)
     13. [rosbagflow](#rosbagflow)
-5. [Comparison with ROS tools](#comparison_ros)
-6. [Dumping information](#dumping_info)
-7. [References](#References)
-8. [License](#License)
+6. [Comparison with ROS tools](#comparison_ros)
+7. [Dumping information](#dumping_info)
+8. [References](#References)
+9. [License](#license)
 
 
 

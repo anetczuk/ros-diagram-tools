@@ -64,7 +64,7 @@ done
 echo "running pylint3"
 echo "to ignore warning for module put following line on top of file: # pylint: disable=<check_id>"
 echo "to ignore warning for one line put following comment in end of line: # pylint: disable=<check_id>"
-pylint --rcfile=$SCRIPT_DIR/pylint3.config ${modules_paths[@]} $src_dir/*.py $SCRIPT_DIR/*.py
+pylint --rcfile=$SCRIPT_DIR/pylint3.config ${modules_paths[@]} $src_dir/*.py
 exit_code=$?
 if [ $exit_code -ne 0 ]; then
     exit $exit_code

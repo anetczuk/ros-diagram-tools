@@ -1,7 +1,7 @@
 ## <a name="main_help"></a> rosdiagramtools.py --help
 ```
 usage: rosdiagramtools.py [-h] [-la] [--listtools]
-                          {codedistribution,packagetree,classifynodes,buildtime,maketime,rosparamlist,rosmsglist,rosnodegraph,rostopicgraph,rosindex,rosgeneral,rosbagflow,rosverify}
+                          {codedistribution,packagetree,classifynodes,buildtime,maketime,rosparamlist,rosmsglist,rosnodegraph,rostopicgraph,roslaunchgraph,rosindex,rosgeneral,rosbagflow,rosverify}
                           ...
 
 ROS diagram tools
@@ -14,7 +14,7 @@ optional arguments:
 subcommands:
   use one of tools
 
-  {codedistribution,packagetree,classifynodes,buildtime,maketime,rosparamlist,rosmsglist,rosnodegraph,rostopicgraph,rosindex,rosgeneral,rosbagflow,rosverify}
+  {codedistribution,packagetree,classifynodes,buildtime,maketime,rosparamlist,rosmsglist,rosnodegraph,rostopicgraph,roslaunchgraph,rosindex,rosgeneral,rosbagflow,rosverify}
                         one of tools
     codedistribution    source code distribution over packages
     packagetree         packages graph
@@ -25,6 +25,7 @@ subcommands:
     rosmsglist          rosmsg and rossrv messages list
     rosnodegraph        rosnode connection graph
     rostopicgraph       rostopic connection graph
+    roslaunchgraph      roslaunch connection graph
     rosindex            index of diagrams
     rosgeneral          generate diagrams from provided data
     rosbagflow          generate sequence diagram based on messages from
@@ -294,6 +295,29 @@ optional arguments:
 
 
 
+## <a name="roslaunchgraph_help"></a> rosdiagramtools.py roslaunchgraph --help
+```
+usage: rosdiagramtools.py roslaunchgraph [-h] [-la] [--launchfile LAUNCHFILE]
+                                         [--outraw OUTRAW] [--outpng OUTPNG]
+                                         [--outhtml] [--outmarkdown]
+                                         [--outdir OUTDIR]
+
+roslaunch connection graph
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -la, --logall         Log all messages
+  --launchfile LAUNCHFILE
+                        Path to file containing dumped JSON data
+  --outraw OUTRAW       Graph RAW output
+  --outpng OUTPNG       Graph PNG output
+  --outhtml             Output HTML
+  --outmarkdown         Output Markdown
+  --outdir OUTDIR       Output directory
+```
+
+
+
 ## <a name="rosindex_help"></a> rosdiagramtools.py rosindex --help
 ```
 usage: rosdiagramtools.py rosindex [-h] [-la] [--packagesview PACKAGESVIEW]
@@ -348,7 +372,7 @@ optional arguments:
   --dumprootdir DUMPROOTDIR
                         Path directory with standard dump directories
   --launchdumppath LAUNCHDUMPPATH
-                        Path fo directory containing dumped 'roslaunch' output
+                        Path to directory containing dumped 'roslaunch' output
   --classifynodesfile CLASSIFYNODESFILE
                         Nodes classification input file
   --descriptionjsonfile DESCRIPTIONJSONFILE

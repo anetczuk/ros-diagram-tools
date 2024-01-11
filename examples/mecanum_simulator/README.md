@@ -150,6 +150,21 @@ Generated service graph view:
 [![ROS nodes and topics graph](out/topictree/graph-small.png "ROS nodes and topics graph")](out/topictree/graph.png)
 
 
+## `roslaunchgraph`
+
+Generated main view:
+
+[![launch main graph view](out/general/launchview-main-page-small.png "launch main graph view")](out/general/launchview-main-page.png)
+
+Generated file view:
+
+[![launch file graph view](out/general/launchview-file-page-small.png "launch file graph view")](out/general/launchview-file-page.png)
+
+*HTML* [output](out/general/launchview/full_graph.html).
+
+*Markdown* [output](out/general/launchview/full_graph.md).
+
+
 ## `rosgeneral`
 
 *HTML* [output](out/general/main_page.html).

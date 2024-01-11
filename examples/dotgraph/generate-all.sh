@@ -15,3 +15,6 @@ mkdir -p "$OUT_ROOT_DIR"
 
 
 $SCRIPT_DIR/simple.py
+
+
+$SCRIPT_DIR/../generate_small.sh

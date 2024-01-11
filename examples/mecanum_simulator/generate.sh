@@ -161,6 +161,14 @@ if [ -f "$GENERAL_OUT_DIR/packageview/full_graph.html" ]; then
     cutycapt --url=file://$GENERAL_OUT_DIR/packageview/full_graph.html --out=$GENERAL_OUT_DIR/packageview-main-page.png
 fi
 
+if [ -f "$GENERAL_OUT_DIR/launchview/full_graph.html" ]; then
+    cutycapt --url=file://$GENERAL_OUT_DIR/launchview/full_graph.html --out=$GENERAL_OUT_DIR/launchview-main-page.png
+fi
+launch_hml_file="$GENERAL_OUT_DIR/launchview/launches/_home_vbox_rosdiagrams_mecanum_catkin_ws_src_nexus_4wd_mecanum_gazebo_launch_nexus_4wd_mecanum_world.launch.html"
+if [ -f "$launch_hml_file" ]; then
+    cutycapt --url=file://$launch_hml_file --out=$GENERAL_OUT_DIR/launchview-file-page.png
+fi
+
 #### rosbagflow requires rosbag file
 
 

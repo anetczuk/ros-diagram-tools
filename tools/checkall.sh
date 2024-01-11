@@ -14,8 +14,7 @@ cd $SCRIPT_DIR
 ./codecheck.sh
 ./doccheck.sh
 
-echo "checking links in MD files"
-./md_check_links.py -d ..
+./mdcheck.sh
 
 
-echo "everything is fine"
+echo -e "\neverything is fine"

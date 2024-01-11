@@ -12,3 +12,6 @@ $SCRIPT_DIR/catkinschedule/generate.sh
 $SCRIPT_DIR/nodegraph/generate.sh
 
 $SCRIPT_DIR/rosbag/generate.sh
+
+
+$SCRIPT_DIR/../generate_small.sh

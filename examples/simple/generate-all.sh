@@ -14,3 +14,6 @@ $SCRIPT_DIR/catkinlist/generate.sh
 $SCRIPT_DIR/rostopiclist/generate.sh
 
 $SCRIPT_DIR/rosnodelist/generate.sh
+
+
+$SCRIPT_DIR/../generate_small.sh
