@@ -7,7 +7,8 @@ Package can produce following diagrams:
 - source code distribution chart
 - source packages dependency tree
 - `catkin` packages build schedule
-- *ROS* nodes and topics graphs
+- *ROS* nodes, topics and messages graphs
+- *ROS* launch files tree
 - *rosbag* sequence graph
 
 In addition there is `rosverifier` tool detecting packages overlay in *catkin* workspace.
@@ -35,9 +36,10 @@ Main motivation for the project was to present variuos aspects of *ROS* workspac
     8. [rosmsglist](#rosmsglist)
     9. [rosnodegraph](#rosnodegraph)
     10. [rostopicgraph](#rostopicgraph)
-    11. [rosindex](#rosindex)
-    12. [rosgeneral](#rosgeneral)
-    13. [rosbagflow](#rosbagflow)
+    11. [roslaunchgraph](#roslaunchgraph)
+    12. [rosindex](#rosindex)
+    13. [rosgeneral](#rosgeneral)
+    14. [rosbagflow](#rosbagflow)
 6. [Comparison with ROS tools](#comparison_ros)
 7. [Dumping information](#dumping_info)
 8. [References](#References)
@@ -261,6 +263,17 @@ Help [output](doc/cmd_args_tools.md#rostopicgraph_help).
 Note: tool is considered deprecated, so please use `rosnodegraph` tool.
 
 
+### <a name="roslaunchgraph"></a> `rosdiagramtools.py roslaunchgraph`
+
+Present include tree of *ROS* launch files with nodes, parameters and topic mappings among other things.
+
+Help: `./src/rosdiagramtools.py roslaunchgraph --help`
+
+Help [output](doc/cmd_args_tools.md#roslaunchgraph_help).
+
+[![Launch files page](examples/mecanum_simulator/out/general/launchview-main-page-small.png "Launch files page")](examples/mecanum_simulator/out/general/launchview-main-page.png)
+
+
 ### <a name="rosindex"></a> `rosdiagramtools.py rosindex`
 
 Generates simple index page containing links to any content.
@@ -348,7 +361,7 @@ Dump tools:
 - `dumprosnode` - dump nodes info
 - `dumprostopic` - dump topics info
 - `dumprosservice` - dump services info
-- `dumproslaunch` - dump node names of launch file
+- `dumproslaunch` - dump launch file info
 - `dumpros` - dump majority of data (uses above mentioned dump tools)
 - `extractscripts` - extract embedded scripts to files
 
