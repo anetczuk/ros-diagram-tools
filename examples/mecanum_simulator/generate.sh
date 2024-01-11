@@ -124,6 +124,7 @@ echo "running general script"
 GENERAL_OUT_DIR="$OUT_ROOT_DIR/general"
 mkdir -p $GENERAL_OUT_DIR
 $TOOL_PATH/rosdiagramtools.py rosgeneral --dumprootdir $DUMP_DIR \
+                                         --launchdumppath $DUMP_DIR/roslaunch \
                                          --classifynodesfile $CLASSIFY_NODES_OUT_FILE \
                                          --pkgsfilterlist $DUMP_DIR/catkindeps/packages.txt \
                                          --includerosinternals \

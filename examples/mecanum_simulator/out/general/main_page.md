@@ -6,7 +6,7 @@ Project is distributed under the BSD 3-Clause license.
 ## Diagrams index
 
 
-Content (8):
+Content (9):
  - [`code distribution graph`](clockpackview/full_graph.md)
  - [`catkin build deps view`](catkinbuildview/full_graph.md)
  - [`catkin run deps view`](catkinrunview/full_graph.md)
@@ -14,6 +14,7 @@ Content (8):
  - [`parameters view`](paramview/main_page.md)
  - [`messages view`](msgview/main_page.md)
  - [`nodes view`](nodeview/full_graph.md)
+ - [`launch view`](launchview/full_graph.md)
  - [`catkin build view`](../catkinschedule/full_graph.md)
 
 
