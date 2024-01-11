@@ -8,7 +8,7 @@
 #
 
 ##
-## Script managing dump scripts.
+## Script wrapping dump scripts.
 ##
 
 import sys
@@ -126,11 +126,10 @@ def dumproslaunch( args ):
     args_list.append( args.outdir )
     execute_script( dumpscripts.DUMP_ROSLAUNCH_SH, args_list )
 
-    launch_out_file = os.path.join(args.outdir, "launch.json")
     args_list = []
     args_list.append( "roslaunch" )
     args_list.extend( ["--launchfile", args.launchfile] )
-    args_list.extend( ["--outfile", launch_out_file] )
+    args_list.extend( ["--outdir", args.outdir] )
     execute_script( dumpscripts.ROSDUMPTOOLS_PY, args_list )
 
 

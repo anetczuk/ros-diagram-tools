@@ -192,7 +192,7 @@ def generate_subpages( sub_output_dir, launch_dict, main_page_link, outhtml, out
         nodes_list = config_data["nodes"]
         for node_item in nodes_list:
             remap_args = node_item["remap_args"]
-            remap_args = convert_to_html(remap_args)
+            remap_args = convert_to_html(remap_args, shorten=False)
             node_item["remap_args"] = remap_args
 
         graph: Graph = generate_full_graph(launch_dict)

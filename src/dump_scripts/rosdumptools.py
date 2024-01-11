@@ -365,13 +365,14 @@ def roslaunch_configure( parser ):
     #                      help="Read list of messages from list file" )
     parser.add_argument( '--launchfile', action='store', required=True, default="",
                          help="Path to launch file" )
-    parser.add_argument( '--outfile', action='store', required=True, default="",
-                         help="Path to output file" )
+    parser.add_argument( '--outdir', action='store', required=True, default="",
+                         help="Path to output directory" )
 
 
 def get_file_data(launch_path):
     config = roslaunch.config.ROSLaunchConfig()
     loader = roslaunch.xmlloader.XmlLoader()
+    loader.ignore_unset_args = False    # workaround for XmlLoader crash (missing attribute)
     loader.load(launch_path, config, verbose=False)
 
     loader_dict = obj_to_dict(loader)
@@ -392,14 +393,17 @@ def roslaunch_process( args ):
 
     included_files = root_data["config"].get("roslaunch_files", [])
     for sub_file in included_files:
-        sub_data = get_file_data(sub_file)
-        launch_tree[sub_file] = sub_data
+        try:
+            sub_data = get_file_data(sub_file)
+            launch_tree[sub_file] = sub_data
+        except roslaunch.xmlloader.XmlParseException as exc:
+            print("unable to parse subfile:", exc)
 
     # pprint.pprint( launch_tree )
 
-    outfile = args.outfile
-    print( f"Writing {outfile}" )
-    with open(outfile, 'w', encoding='utf8' ) as fp:
+    launch_out_file = os.path.join(args.outdir, "launch.json")
+    print( f"Writing {launch_out_file}" )
+    with open(launch_out_file, 'w', encoding='utf8' ) as fp:
         json.dump(launch_tree, fp, indent=4)
 
     print( "Done." )

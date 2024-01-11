@@ -92,7 +92,7 @@ def prepare_params_list(params_data_list, out_dir, out_subdir):
     return params_list
 
 
-def convert_to_html(value):
+def convert_to_html(value, shorten=True):
     value_str = ""
     if isinstance( value, (dict, list) ):
         # try to dump by JSON
@@ -100,10 +100,11 @@ def convert_to_html(value):
     else:
         value_str = str(value)
 
-    if len(value_str) > 1024 or value_str.count('\n') > 20:
-        pos = find_nth_index( value_str, '\n', 20 )
-        pos = min( pos, 1020 )
-        value_str = value_str[:pos] + "\n..."
+    if shorten:
+        if len(value_str) > 1024 or value_str.count('\n') > 20:
+            pos = find_nth_index( value_str, '\n', 20 )
+            pos = min( pos, 1020 )
+            value_str = value_str[:pos] + "\n..."
 
     value_str = html.escape( value_str )
     return value_str
