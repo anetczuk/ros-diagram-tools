@@ -13,11 +13,13 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (8): | Description: |
-| ------------------- | ------------ |
+| Graph packages (10): | Description: |
+| -------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
 | [`gazebo_msgs`](gazebo_msgs.md) | Gazebo package |
 | [`gazebo_ros`](gazebo_ros.md) | Gazebo package |
 | [`geometry_msgs`](geometry_msgs.md) |  |
+| [`message_generation`](message_generation.md) |  |
 | [`message_runtime`](message_runtime.md) |  |
 | [`sensor_msgs`](sensor_msgs.md) |  |
 | [`std_msgs`](std_msgs.md) |  |

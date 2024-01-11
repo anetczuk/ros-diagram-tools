@@ -30,7 +30,6 @@ dynamic_reconfigure/GroupState[] groups
   int32 id
   int32 parent
 
-
 ```
 
 

@@ -13,8 +13,9 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (8): | Description: |
-| ------------------- | ------------ |
+| Graph packages (11): | Description: |
+| -------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
 | [`cpp_common`](cpp_common.md) |  |
 | [`pluginlib`](pluginlib.md) |  |
 | [`rosbag`](rosbag.md) |  |
@@ -22,7 +23,9 @@ Project is distributed under the BSD 3-Clause license.
 | [`roscpp_serialization`](roscpp_serialization.md) |  |
 | [`roscpp_traits`](roscpp_traits.md) |  |
 | [`roslz4`](roslz4.md) |  |
+| [`rostest`](rostest.md) |  |
 | [`rostime`](rostime.md) |  |
+| [`std_msgs`](std_msgs.md) |  |
 
 
 </br>

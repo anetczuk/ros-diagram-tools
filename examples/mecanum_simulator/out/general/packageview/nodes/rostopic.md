@@ -13,12 +13,14 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (5): | Description: |
+| Graph packages (7): | Description: |
 | ------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
 | [`genpy`](genpy.md) |  |
 | [`rosbag`](rosbag.md) |  |
 | [`rosnode`](rosnode.md) |  |
 | [`rospy`](rospy.md) |  |
+| [`rostest`](rostest.md) |  |
 | [`rostopic`](rostopic.md) |  |
 
 

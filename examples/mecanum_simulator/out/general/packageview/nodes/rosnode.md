@@ -13,10 +13,13 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (4): | Description: |
+| Graph packages (7): | Description: |
 | ------------------- | ------------ |
+| [`actionlib`](actionlib.md) |  |
+| [`catkin`](catkin.md) |  |
 | [`rosgraph`](rosgraph.md) |  |
 | [`rosnode`](rosnode.md) |  |
+| [`rostest`](rostest.md) |  |
 | [`rostopic`](rostopic.md) |  |
 | [`roswtf`](roswtf.md) |  |
 

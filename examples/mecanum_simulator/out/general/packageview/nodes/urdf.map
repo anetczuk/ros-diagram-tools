@@ -1,8 +1,12 @@
 <map id="urdf" name="urdf">
-<area shape="poly" id="node1" href="kdl_parser.html" title="node: kdl_parser" alt="" coords="334,75,334,55,283,41,212,41,161,55,161,75,212,89,283,89"/>
-<area shape="poly" id="node2" href="urdf.html" title="node: urdf" alt="" coords="626,111,626,91,600,77,563,77,537,91,537,111,563,125,600,125"/>
-<area shape="poly" id="node4" href="rosconsole_bridge.html" title="node: rosconsole_bridge" alt="" coords="947,39,947,19,867,5,754,5,674,19,674,39,754,53,867,53"/>
-<area shape="poly" id="node5" href="roscpp.html" title="node: roscpp" alt="" coords="871,111,871,91,836,77,785,77,749,91,749,111,785,125,836,125"/>
-<area shape="poly" id="node6" href="pluginlib.html" title="node: pluginlib" alt="" coords="885,183,885,163,842,149,779,149,735,163,735,183,779,197,842,197"/>
-<area shape="poly" id="node3" href="nexus_4wd_mecanum_description.html" title="node: nexus_4wd_mecanum_description" alt="" coords="489,147,489,127,348,113,147,113,5,127,5,147,147,161,348,161"/>
+<area shape="poly" id="node1" href="kdl_parser.html" title="node: kdl_parser" alt="" coords="334,219,334,199,283,185,212,185,161,199,161,219,212,233,283,233"/>
+<area shape="poly" id="node2" href="urdf.html" title="node: urdf" alt="" coords="626,255,626,235,600,221,563,221,537,235,537,255,563,269,600,269"/>
+<area shape="poly" id="node4" href="roscpp.html" title="node: roscpp" alt="" coords="877,39,877,19,841,5,791,5,755,19,755,39,791,53,841,53"/>
+<area shape="poly" id="node5" href="catkin.html" title="node: catkin" alt="" coords="872,111,872,91,839,77,793,77,760,91,760,111,793,125,839,125"/>
+<area shape="poly" id="node6" href="cmake_modules.html" title="node: cmake_modules" alt="" coords="937,183,937,163,866,149,766,149,695,163,695,183,766,197,866,197"/>
+<area shape="poly" id="node7" href="rosconsole_bridge.html" title="node: rosconsole_bridge" alt="" coords="953,255,953,235,873,221,759,221,679,235,679,255,759,269,873,269"/>
+<area shape="poly" id="node8" href="urdf_parser_plugin.html" title="node: urdf_parser_plugin" alt="" coords="959,327,959,307,875,293,757,293,674,307,674,327,757,341,875,341"/>
+<area shape="poly" id="node9" href="rostest.html" title="node: rostest" alt="" coords="879,399,879,379,842,365,790,365,753,379,753,399,790,413,842,413"/>
+<area shape="poly" id="node10" href="pluginlib.html" title="node: pluginlib" alt="" coords="891,471,891,451,847,437,785,437,741,451,741,471,785,485,847,485"/>
+<area shape="poly" id="node3" href="nexus_4wd_mecanum_description.html" title="node: nexus_4wd_mecanum_description" alt="" coords="489,291,489,271,348,257,147,257,5,271,5,291,147,305,348,305"/>
 </map>

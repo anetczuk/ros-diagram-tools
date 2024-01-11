@@ -41,7 +41,6 @@ geometry_msgs/TwistWithCovariance twist
       float64 z
   float64[36] covariance
 
-
 ```
 
 

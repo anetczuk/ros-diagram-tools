@@ -13,15 +13,17 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (13): | Description: |
+| Graph packages (15): | Description: |
 | -------------------- | ------------ |
 | [`catkin`](catkin.md) |  |
 | [`dynamic_reconfigure`](dynamic_reconfigure.md) |  |
 | [`gazebo_ros`](gazebo_ros.md) | Gazebo package |
+| [`pluginlib`](pluginlib.md) |  |
 | [`ros_environment`](ros_environment.md) |  |
 | [`rosbag`](rosbag.md) |  |
 | [`roslaunch`](roslaunch.md) |  |
 | [`roslib`](roslib.md) |  |
+| [`rosmake`](rosmake.md) |  |
 | [`rosmsg`](rosmsg.md) |  |
 | [`rospack`](rospack.md) |  |
 | [`rospy`](rospy.md) |  |

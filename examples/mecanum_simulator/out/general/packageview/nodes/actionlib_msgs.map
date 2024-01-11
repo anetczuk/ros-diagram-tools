@@ -1,10 +1,11 @@
 <map id="actionlib_msgs" name="actionlib_msgs">
 <area shape="poly" id="node1" href="actionlib.html" title="node: actionlib" alt="" coords="159,39,159,19,116,5,56,5,13,19,13,39,56,53,116,53"/>
 <area shape="poly" id="node2" href="actionlib_msgs.html" title="node: actionlib_msgs" alt="" coords="444,147,444,127,377,113,282,113,215,127,215,147,282,161,377,161"/>
-<area shape="poly" id="node3" href="message_generation.html" title="node: message_generation" alt="" coords="797,75,797,55,708,41,581,41,492,55,492,75,581,89,708,89"/>
-<area shape="poly" id="node4" href="message_runtime.html" title="node: message_runtime" alt="" coords="779,147,779,127,700,113,589,113,510,127,510,147,589,161,700,161"/>
-<area shape="poly" id="node5" href="std_msgs.html" title="node: std_msgs" alt="" coords="722,219,722,199,677,185,612,185,567,199,567,219,612,233,677,233"/>
-<area shape="poly" id="node6" href="nav_msgs.html" title="node: nav_msgs" alt="" coords="167,111,167,91,119,77,53,77,5,91,5,111,53,125,119,125"/>
-<area shape="poly" id="node7" href="tf2_msgs.html" title="node: tf2_msgs" alt="" coords="162,183,162,163,117,149,55,149,10,163,10,183,55,197,117,197"/>
-<area shape="poly" id="node8" href="tf2_ros.html" title="node: tf2_ros" alt="" coords="148,255,148,235,112,221,60,221,24,235,24,255,60,269,112,269"/>
+<area shape="poly" id="node3" href="std_msgs.html" title="node: std_msgs" alt="" coords="722,39,722,19,677,5,612,5,567,19,567,39,612,53,677,53"/>
+<area shape="poly" id="node4" href="message_runtime.html" title="node: message_runtime" alt="" coords="779,111,779,91,700,77,589,77,510,91,510,111,589,125,700,125"/>
+<area shape="poly" id="node5" href="catkin.html" title="node: catkin" alt="" coords="701,183,701,163,668,149,621,149,588,163,588,183,621,197,668,197"/>
+<area shape="poly" id="node6" href="message_generation.html" title="node: message_generation" alt="" coords="797,255,797,235,708,221,581,221,492,235,492,255,581,269,708,269"/>
+<area shape="poly" id="node7" href="nav_msgs.html" title="node: nav_msgs" alt="" coords="167,111,167,91,119,77,53,77,5,91,5,111,53,125,119,125"/>
+<area shape="poly" id="node8" href="tf2_msgs.html" title="node: tf2_msgs" alt="" coords="162,183,162,163,117,149,55,149,10,163,10,183,55,197,117,197"/>
+<area shape="poly" id="node9" href="tf2_ros.html" title="node: tf2_ros" alt="" coords="148,255,148,235,112,221,60,221,24,235,24,255,60,269,112,269"/>
 </map>

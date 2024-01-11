@@ -1,0 +1,5 @@
+<map id="urdf_parser_plugin" name="urdf_parser_plugin">
+<area shape="poly" id="node1" href="urdf.html" title="node: urdf" alt="" coords="94,39,94,19,68,5,31,5,5,19,5,39,31,53,68,53"/>
+<area shape="poly" id="node2" href="urdf_parser_plugin.html" title="node: urdf_parser_plugin" alt="" coords="427,39,427,19,343,5,225,5,142,19,142,39,225,53,343,53"/>
+<area shape="poly" id="node3" href="catkin.html" title="node: catkin" alt="" coords="587,39,587,19,554,5,508,5,475,19,475,39,508,53,554,53"/>
+</map>

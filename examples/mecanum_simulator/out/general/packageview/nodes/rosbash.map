@@ -1,0 +1,6 @@
+<map id="rosbash" name="rosbash">
+<area shape="poly" id="node1" href="rosbash.html" title="node: rosbash" alt="" coords="365,75,365,55,325,41,268,41,228,55,228,75,268,89,325,89"/>
+<area shape="poly" id="node2" href="catkin.html" title="node: catkin" alt="" coords="537,39,537,19,504,5,457,5,424,19,424,39,457,53,504,53"/>
+<area shape="poly" id="node3" href="rospack.html" title="node: rospack" alt="" coords="548,111,548,91,508,77,452,77,413,91,413,111,452,125,508,125"/>
+<area shape="poly" id="node4" href="topic_tools.html" title="node: topic_tools" alt="" coords="180,75,180,55,129,41,56,41,5,55,5,75,56,89,129,89"/>
+</map>

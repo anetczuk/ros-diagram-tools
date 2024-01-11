@@ -8,12 +8,16 @@ Project is distributed under the BSD 3-Clause license.
 [![full_graph](full_graph.png "full_graph")](full_graph.png)
 
 
-| Graph packages (66): | Description: |
+| Graph packages (74): | Description: |
 | -------------------- | ------------ |
 | [`actionlib`](nodes/actionlib.md) |  |
 | [`actionlib_msgs`](nodes/actionlib_msgs.md) |  |
+| [`angles`](nodes/angles.md) |  |
 | [`catkin`](nodes/catkin.md) |  |
+| [`class_loader`](nodes/class_loader.md) |  |
+| [`cmake_modules`](nodes/cmake_modules.md) |  |
 | [`cpp_common`](nodes/cpp_common.md) |  |
+| [`diagnostic_msgs`](nodes/diagnostic_msgs.md) |  |
 | [`dynamic_reconfigure`](nodes/dynamic_reconfigure.md) |  |
 | [`gazebo_dev`](nodes/gazebo_dev.md) | Gazebo package |
 | [`gazebo_msgs`](nodes/gazebo_msgs.md) | Gazebo package |
@@ -38,6 +42,7 @@ Project is distributed under the BSD 3-Clause license.
 | [`rosbag`](nodes/rosbag.md) |  |
 | [`rosbag_migration_rule`](nodes/rosbag_migration_rule.md) |  |
 | [`rosbag_storage`](nodes/rosbag_storage.md) |  |
+| [`rosbash`](nodes/rosbash.md) |  |
 | [`rosbuild`](nodes/rosbuild.md) |  |
 | [`rosclean`](nodes/rosclean.md) |  |
 | [`rosconsole`](nodes/rosconsole.md) |  |
@@ -47,9 +52,11 @@ Project is distributed under the BSD 3-Clause license.
 | [`roscpp_traits`](nodes/roscpp_traits.md) |  |
 | [`rosgraph`](nodes/rosgraph.md) |  |
 | [`rosgraph_msgs`](nodes/rosgraph_msgs.md) |  |
+| [`roslang`](nodes/roslang.md) |  |
 | [`roslaunch`](nodes/roslaunch.md) |  |
 | [`roslib`](nodes/roslib.md) |  |
 | [`roslz4`](nodes/roslz4.md) |  |
+| [`rosmake`](nodes/rosmake.md) |  |
 | [`rosmaster`](nodes/rosmaster.md) |  |
 | [`rosmsg`](nodes/rosmsg.md) |  |
 | [`rosnode`](nodes/rosnode.md) |  |
@@ -75,6 +82,7 @@ Project is distributed under the BSD 3-Clause license.
 | [`topic_tools`](nodes/topic_tools.md) |  |
 | [`trajectory_msgs`](nodes/trajectory_msgs.md) |  |
 | [`urdf`](nodes/urdf.md) |  |
+| [`urdf_parser_plugin`](nodes/urdf_parser_plugin.md) |  |
 | [`xmlrpcpp`](nodes/xmlrpcpp.md) |  |
 
 

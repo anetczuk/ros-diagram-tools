@@ -1,8 +1,9 @@
 <map id="roscpp_traits" name="roscpp_traits">
 <area shape="poly" id="node1" href="message_runtime.html" title="node: message_runtime" alt="" coords="289,39,289,19,210,5,99,5,20,19,20,39,99,53,210,53"/>
 <area shape="poly" id="node2" href="roscpp_traits.html" title="node: roscpp_traits" alt="" coords="558,147,558,127,498,113,412,113,352,127,352,147,412,161,498,161"/>
-<area shape="poly" id="node6" href="cpp_common.html" title="node: cpp_common" alt="" coords="810,111,810,91,751,77,666,77,606,91,606,111,666,125,751,125"/>
-<area shape="poly" id="node7" href="rostime.html" title="node: rostime" alt="" coords="775,183,775,163,736,149,681,149,642,163,642,183,681,197,736,197"/>
+<area shape="poly" id="node6" href="cpp_common.html" title="node: cpp_common" alt="" coords="810,75,810,55,751,41,666,41,606,55,606,75,666,89,751,89"/>
+<area shape="poly" id="node7" href="catkin.html" title="node: catkin" alt="" coords="764,147,764,127,732,113,685,113,652,127,652,147,685,161,732,161"/>
+<area shape="poly" id="node8" href="rostime.html" title="node: rostime" alt="" coords="775,219,775,199,736,185,681,185,642,199,642,219,681,233,736,233"/>
 <area shape="poly" id="node3" href="rosbag_storage.html" title="node: rosbag_storage" alt="" coords="273,111,273,91,203,77,106,77,36,91,36,111,106,125,203,125"/>
 <area shape="poly" id="node4" href="roscpp.html" title="node: roscpp" alt="" coords="215,183,215,163,180,149,129,149,94,163,94,183,129,197,180,197"/>
 <area shape="poly" id="node5" href="roscpp_serialization.html" title="node: roscpp_serialization" alt="" coords="304,255,304,235,216,221,93,221,5,235,5,255,93,269,216,269"/>

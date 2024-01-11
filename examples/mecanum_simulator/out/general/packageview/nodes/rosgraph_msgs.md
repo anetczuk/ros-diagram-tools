@@ -13,9 +13,11 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (8): | Description: |
-| ------------------- | ------------ |
+| Graph packages (10): | Description: |
+| -------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
 | [`gazebo_ros`](gazebo_ros.md) | Gazebo package |
+| [`message_generation`](message_generation.md) |  |
 | [`message_runtime`](message_runtime.md) |  |
 | [`roscpp`](roscpp.md) |  |
 | [`rosgraph_msgs`](rosgraph_msgs.md) |  |

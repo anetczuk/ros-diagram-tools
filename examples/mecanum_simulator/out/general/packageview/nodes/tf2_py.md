@@ -13,8 +13,9 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (4): | Description: |
+| Graph packages (5): | Description: |
 | ------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
 | [`rospy`](rospy.md) |  |
 | [`tf2`](tf2.md) |  |
 | [`tf2_py`](tf2_py.md) |  |

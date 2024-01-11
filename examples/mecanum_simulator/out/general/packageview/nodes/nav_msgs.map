@@ -1,8 +1,10 @@
 <map id="nav_msgs" name="nav_msgs">
-<area shape="poly" id="node1" href="nav_msgs.html" title="node: nav_msgs" alt="" coords="642,147,642,127,595,113,528,113,481,127,481,147,528,161,595,161"/>
-<area shape="poly" id="node2" href="geometry_msgs.html" title="node: geometry_msgs" alt="" coords="946,39,946,19,875,5,774,5,704,19,704,39,774,53,875,53"/>
-<area shape="poly" id="node3" href="message_runtime.html" title="node: message_runtime" alt="" coords="959,111,959,91,880,77,769,77,690,91,690,111,769,125,880,125"/>
-<area shape="poly" id="node4" href="std_msgs.html" title="node: std_msgs" alt="" coords="902,183,902,163,857,149,792,149,747,163,747,183,792,197,857,197"/>
-<area shape="poly" id="node5" href="actionlib_msgs.html" title="node: actionlib_msgs" alt="" coords="939,255,939,235,872,221,777,221,710,235,710,255,777,269,872,269"/>
-<area shape="poly" id="node6" href="nexus_4wd_mecanum_gazebo.html" title="node: nexus_4wd_mecanum_gazebo" alt="" coords="433,147,433,127,308,113,131,113,5,127,5,147,131,161,308,161"/>
+<area shape="poly" id="node1" href="nav_msgs.html" title="node: nav_msgs" alt="" coords="642,219,642,199,595,185,528,185,481,199,481,219,528,233,595,233"/>
+<area shape="poly" id="node2" href="catkin.html" title="node: catkin" alt="" coords="900,39,900,19,867,5,820,5,787,19,787,39,820,53,867,53"/>
+<area shape="poly" id="node3" href="geometry_msgs.html" title="node: geometry_msgs" alt="" coords="964,111,964,91,893,77,793,77,722,91,722,111,793,125,893,125"/>
+<area shape="poly" id="node4" href="std_msgs.html" title="node: std_msgs" alt="" coords="921,183,921,163,876,149,811,149,765,163,765,183,811,197,876,197"/>
+<area shape="poly" id="node5" href="actionlib_msgs.html" title="node: actionlib_msgs" alt="" coords="958,255,958,235,891,221,796,221,729,235,729,255,796,269,891,269"/>
+<area shape="poly" id="node6" href="message_runtime.html" title="node: message_runtime" alt="" coords="977,327,977,307,899,293,788,293,709,307,709,327,788,341,899,341"/>
+<area shape="poly" id="node7" href="message_generation.html" title="node: message_generation" alt="" coords="996,399,996,379,907,365,780,365,690,379,690,399,780,413,907,413"/>
+<area shape="poly" id="node8" href="nexus_4wd_mecanum_gazebo.html" title="node: nexus_4wd_mecanum_gazebo" alt="" coords="433,219,433,199,308,185,131,185,5,199,5,219,131,233,308,233"/>
 </map>

@@ -13,8 +13,9 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (7): | Description: |
+| Graph packages (8): | Description: |
 | ------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
 | [`cpp_common`](cpp_common.md) |  |
 | [`message_runtime`](message_runtime.md) |  |
 | [`rosbag_storage`](rosbag_storage.md) |  |

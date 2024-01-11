@@ -29,7 +29,6 @@ string function
 uint32 line
 string[] topics
 
-
 ```
 
 

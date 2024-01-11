@@ -13,14 +13,18 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (8): | Description: |
-| ------------------- | ------------ |
+| Graph packages (12): | Description: |
+| -------------------- | ------------ |
 | [`actionlib`](actionlib.md) |  |
 | [`actionlib_msgs`](actionlib_msgs.md) |  |
+| [`catkin`](catkin.md) |  |
+| [`message_generation`](message_generation.md) |  |
 | [`message_runtime`](message_runtime.md) |  |
 | [`roscpp`](roscpp.md) |  |
+| [`rosnode`](rosnode.md) |  |
 | [`rospy`](rospy.md) |  |
 | [`rostest`](rostest.md) |  |
+| [`rosunit`](rosunit.md) |  |
 | [`std_msgs`](std_msgs.md) |  |
 | [`tf2_ros`](tf2_ros.md) |  |
 

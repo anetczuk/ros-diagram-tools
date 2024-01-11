@@ -13,10 +13,13 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (7): | Description: |
-| ------------------- | ------------ |
+| Graph packages (10): | Description: |
+| -------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
 | [`cpp_common`](cpp_common.md) |  |
+| [`dynamic_reconfigure`](dynamic_reconfigure.md) |  |
 | [`message_runtime`](message_runtime.md) |  |
+| [`rosbag`](rosbag.md) |  |
 | [`rosbag_storage`](rosbag_storage.md) |  |
 | [`roscpp`](roscpp.md) |  |
 | [`roscpp_serialization`](roscpp_serialization.md) |  |

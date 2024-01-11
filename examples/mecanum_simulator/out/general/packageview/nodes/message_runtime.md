@@ -13,11 +13,13 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (22): | Description: |
+| Graph packages (24): | Description: |
 | -------------------- | ------------ |
 | [`actionlib`](actionlib.md) |  |
 | [`actionlib_msgs`](actionlib_msgs.md) |  |
+| [`catkin`](catkin.md) |  |
 | [`cpp_common`](cpp_common.md) |  |
+| [`diagnostic_msgs`](diagnostic_msgs.md) |  |
 | [`dynamic_reconfigure`](dynamic_reconfigure.md) |  |
 | [`gazebo_msgs`](gazebo_msgs.md) | Gazebo package |
 | [`genpy`](genpy.md) |  |

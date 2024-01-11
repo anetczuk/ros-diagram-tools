@@ -13,9 +13,10 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (15): | Description: |
+| Graph packages (16): | Description: |
 | -------------------- | ------------ |
 | [`actionlib`](actionlib.md) |  |
+| [`catkin`](catkin.md) |  |
 | [`dynamic_reconfigure`](dynamic_reconfigure.md) |  |
 | [`genpy`](genpy.md) |  |
 | [`rosbag`](rosbag.md) |  |

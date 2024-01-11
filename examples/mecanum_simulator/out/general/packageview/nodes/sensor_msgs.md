@@ -13,12 +13,16 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (7): | Description: |
-| ------------------- | ------------ |
+| Graph packages (11): | Description: |
+| -------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
 | [`gazebo_msgs`](gazebo_msgs.md) | Gazebo package |
 | [`geometry_msgs`](geometry_msgs.md) |  |
+| [`message_generation`](message_generation.md) |  |
 | [`message_runtime`](message_runtime.md) |  |
 | [`robot_state_publisher`](robot_state_publisher.md) |  |
+| [`rosbag`](rosbag.md) |  |
+| [`rosunit`](rosunit.md) |  |
 | [`sensor_msgs`](sensor_msgs.md) |  |
 | [`std_msgs`](std_msgs.md) |  |
 | [`tf`](tf.md) |  |

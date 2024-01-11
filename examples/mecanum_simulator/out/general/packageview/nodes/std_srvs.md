@@ -13,13 +13,17 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (6): | Description: |
-| ------------------- | ------------ |
+| Graph packages (10): | Description: |
+| -------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
 | [`gazebo_msgs`](gazebo_msgs.md) | Gazebo package |
 | [`gazebo_ros`](gazebo_ros.md) | Gazebo package |
+| [`message_generation`](message_generation.md) |  |
 | [`message_runtime`](message_runtime.md) |  |
 | [`nexus_4wd_mecanum_gazebo`](nexus_4wd_mecanum_gazebo.md) |  |
 | [`rosbag`](rosbag.md) |  |
+| [`rosmsg`](rosmsg.md) |  |
+| [`roswtf`](roswtf.md) |  |
 | [`std_srvs`](std_srvs.md) |  |
 
 

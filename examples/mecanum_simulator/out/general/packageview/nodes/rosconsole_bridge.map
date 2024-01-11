@@ -1,6 +1,7 @@
 <map id="rosconsole_bridge" name="rosconsole_bridge">
-<area shape="poly" id="node1" href="rosconsole_bridge.html" title="node: rosconsole_bridge" alt="" coords="415,75,415,55,335,41,222,41,142,55,142,75,222,89,335,89"/>
+<area shape="poly" id="node1" href="rosconsole_bridge.html" title="node: rosconsole_bridge" alt="" coords="415,111,415,91,335,77,222,77,142,91,142,111,222,125,335,125"/>
 <area shape="poly" id="node2" href="cpp_common.html" title="node: cpp_common" alt="" coords="668,39,668,19,608,5,523,5,463,19,463,39,523,53,608,53"/>
-<area shape="poly" id="node3" href="rosconsole.html" title="node: rosconsole" alt="" coords="652,111,652,91,601,77,530,77,479,91,479,111,530,125,601,125"/>
-<area shape="poly" id="node4" href="urdf.html" title="node: urdf" alt="" coords="94,75,94,55,68,41,31,41,5,55,5,75,31,89,68,89"/>
+<area shape="poly" id="node3" href="catkin.html" title="node: catkin" alt="" coords="622,111,622,91,589,77,542,77,509,91,509,111,542,125,589,125"/>
+<area shape="poly" id="node4" href="rosconsole.html" title="node: rosconsole" alt="" coords="652,183,652,163,601,149,530,149,479,163,479,183,530,197,601,197"/>
+<area shape="poly" id="node5" href="urdf.html" title="node: urdf" alt="" coords="94,111,94,91,68,77,31,77,5,91,5,111,31,125,68,125"/>
 </map>

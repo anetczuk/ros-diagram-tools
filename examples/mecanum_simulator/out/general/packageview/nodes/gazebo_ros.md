@@ -13,8 +13,10 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `/gazebo /gazebo_gui` |
 
 
-| Graph packages (12): | Description: |
+| Graph packages (14): | Description: |
 | -------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
+| [`cmake_modules`](cmake_modules.md) |  |
 | [`dynamic_reconfigure`](dynamic_reconfigure.md) |  |
 | [`gazebo_dev`](gazebo_dev.md) | Gazebo package |
 | [`gazebo_msgs`](gazebo_msgs.md) | Gazebo package |

@@ -1,6 +1,6 @@
 <map id="gennodejs" name="gennodejs">
 <area shape="poly" id="node1" href="gennodejs.html" title="node: gennodejs" alt="" coords="526,75,526,55,477,41,408,41,359,55,359,75,408,89,477,89"/>
-<area shape="poly" id="node2" href="genmsg.html" title="node: genmsg" alt="" coords="711,39,711,19,671,5,614,5,574,19,574,39,614,53,671,53"/>
-<area shape="poly" id="node3" href="catkin.html" title="node: catkin" alt="" coords="699,111,699,91,666,77,619,77,586,91,586,111,619,125,666,125"/>
+<area shape="poly" id="node2" href="catkin.html" title="node: catkin" alt="" coords="699,39,699,19,666,5,619,5,586,19,586,39,619,53,666,53"/>
+<area shape="poly" id="node3" href="genmsg.html" title="node: genmsg" alt="" coords="711,111,711,91,671,77,614,77,574,91,574,111,614,125,671,125"/>
 <area shape="poly" id="node4" href="message_generation.html" title="node: message_generation" alt="" coords="311,75,311,55,222,41,95,41,5,55,5,75,95,89,222,89"/>
 </map>

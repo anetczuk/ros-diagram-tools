@@ -13,13 +13,16 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (10): | Description: |
+| Graph packages (13): | Description: |
 | -------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
 | [`kdl_parser`](kdl_parser.md) |  |
 | [`nexus_4wd_mecanum_description`](nexus_4wd_mecanum_description.md) |  |
 | [`robot_state_publisher`](robot_state_publisher.md) |  |
+| [`rosbag`](rosbag.md) |  |
 | [`rosconsole`](rosconsole.md) |  |
 | [`roscpp`](roscpp.md) |  |
+| [`rostest`](rostest.md) |  |
 | [`rostime`](rostime.md) |  |
 | [`sensor_msgs`](sensor_msgs.md) |  |
 | [`tf`](tf.md) |  |

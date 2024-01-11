@@ -13,11 +13,13 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (12): | Description: |
+| Graph packages (15): | Description: |
 | -------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
 | [`cpp_common`](cpp_common.md) |  |
 | [`kdl_parser`](kdl_parser.md) |  |
 | [`message_filters`](message_filters.md) |  |
+| [`pluginlib`](pluginlib.md) |  |
 | [`robot_state_publisher`](robot_state_publisher.md) |  |
 | [`rosbag`](rosbag.md) |  |
 | [`rosbuild`](rosbuild.md) |  |
@@ -25,6 +27,7 @@ Project is distributed under the BSD 3-Clause license.
 | [`rosconsole_bridge`](rosconsole_bridge.md) |  |
 | [`roscpp`](roscpp.md) |  |
 | [`rostime`](rostime.md) |  |
+| [`rosunit`](rosunit.md) |  |
 | [`tf`](tf.md) |  |
 | [`topic_tools`](topic_tools.md) |  |
 

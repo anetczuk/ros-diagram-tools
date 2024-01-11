@@ -13,13 +13,16 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (23): | Description: |
+| Graph packages (27): | Description: |
 | -------------------- | ------------ |
 | [`actionlib`](actionlib.md) |  |
+| [`catkin`](catkin.md) |  |
 | [`cpp_common`](cpp_common.md) |  |
 | [`dynamic_reconfigure`](dynamic_reconfigure.md) |  |
 | [`gazebo_ros`](gazebo_ros.md) | Gazebo package |
+| [`kdl_parser`](kdl_parser.md) |  |
 | [`message_filters`](message_filters.md) |  |
+| [`message_generation`](message_generation.md) |  |
 | [`message_runtime`](message_runtime.md) |  |
 | [`nexus_4wd_mecanum_gazebo`](nexus_4wd_mecanum_gazebo.md) |  |
 | [`robot_state_publisher`](robot_state_publisher.md) |  |
@@ -29,6 +32,7 @@ Project is distributed under the BSD 3-Clause license.
 | [`roscpp_serialization`](roscpp_serialization.md) |  |
 | [`roscpp_traits`](roscpp_traits.md) |  |
 | [`rosgraph_msgs`](rosgraph_msgs.md) |  |
+| [`roslang`](roslang.md) |  |
 | [`rosout`](rosout.md) |  |
 | [`rospy`](rospy.md) |  |
 | [`rostime`](rostime.md) |  |

@@ -13,10 +13,12 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (6): | Description: |
+| Graph packages (8): | Description: |
 | ------------------- | ------------ |
 | [`actionlib_msgs`](actionlib_msgs.md) |  |
+| [`catkin`](catkin.md) |  |
 | [`geometry_msgs`](geometry_msgs.md) |  |
+| [`message_generation`](message_generation.md) |  |
 | [`message_runtime`](message_runtime.md) |  |
 | [`nav_msgs`](nav_msgs.md) |  |
 | [`nexus_4wd_mecanum_gazebo`](nexus_4wd_mecanum_gazebo.md) |  |

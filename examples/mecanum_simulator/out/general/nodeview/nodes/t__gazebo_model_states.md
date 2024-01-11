@@ -37,7 +37,6 @@ geometry_msgs/Twist[] twist
     float64 y
     float64 z
 
-
 ```
 
 

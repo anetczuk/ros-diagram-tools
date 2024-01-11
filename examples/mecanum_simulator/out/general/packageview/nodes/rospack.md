@@ -13,9 +13,12 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (3): | Description: |
+| Graph packages (6): | Description: |
 | ------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
+| [`cmake_modules`](cmake_modules.md) |  |
 | [`ros_environment`](ros_environment.md) |  |
+| [`rosbash`](rosbash.md) |  |
 | [`roslib`](roslib.md) |  |
 | [`rospack`](rospack.md) |  |
 

@@ -1,10 +1,11 @@
 <map id="rosservice" name="rosservice">
-<area shape="poly" id="node1" href="dynamic_reconfigure.html" title="node: dynamic_reconfigure" alt="" coords="317,147,317,127,226,113,97,113,5,127,5,147,97,161,226,161"/>
-<area shape="poly" id="node2" href="rosservice.html" title="node: rosservice" alt="" coords="534,183,534,163,484,149,414,149,365,163,365,183,414,197,484,197"/>
-<area shape="poly" id="node3" href="genpy.html" title="node: genpy" alt="" coords="714,39,714,19,681,5,634,5,601,19,601,39,634,53,681,53"/>
-<area shape="poly" id="node4" href="rosgraph.html" title="node: rosgraph" alt="" coords="734,111,734,91,689,77,626,77,582,91,582,111,626,125,689,125"/>
-<area shape="poly" id="node5" href="roslib.html" title="node: roslib" alt="" coords="711,183,711,163,680,149,635,149,604,163,604,183,635,197,680,197"/>
+<area shape="poly" id="node1" href="dynamic_reconfigure.html" title="node: dynamic_reconfigure" alt="" coords="317,183,317,163,226,149,97,149,5,163,5,183,97,197,226,197"/>
+<area shape="poly" id="node2" href="rosservice.html" title="node: rosservice" alt="" coords="534,219,534,199,484,185,414,185,365,199,365,219,414,233,484,233"/>
+<area shape="poly" id="node3" href="roslib.html" title="node: roslib" alt="" coords="711,39,711,19,680,5,635,5,604,19,604,39,635,53,680,53"/>
+<area shape="poly" id="node4" href="catkin.html" title="node: catkin" alt="" coords="714,111,714,91,681,77,634,77,601,91,601,111,634,125,681,125"/>
+<area shape="poly" id="node5" href="rosmsg.html" title="node: rosmsg" alt="" coords="722,183,722,163,684,149,631,149,593,163,593,183,631,197,684,197"/>
 <area shape="poly" id="node6" href="rospy.html" title="node: rospy" alt="" coords="710,255,710,235,679,221,636,221,605,235,605,255,636,269,679,269"/>
-<area shape="poly" id="node7" href="rosmsg.html" title="node: rosmsg" alt="" coords="722,327,722,307,684,293,631,293,593,307,593,327,631,341,684,341"/>
-<area shape="poly" id="node8" href="roswtf.html" title="node: roswtf" alt="" coords="219,219,219,199,185,185,137,185,103,199,103,219,137,233,185,233"/>
+<area shape="poly" id="node7" href="rosgraph.html" title="node: rosgraph" alt="" coords="734,327,734,307,689,293,626,293,582,307,582,327,626,341,689,341"/>
+<area shape="poly" id="node8" href="genpy.html" title="node: genpy" alt="" coords="714,399,714,379,681,365,634,365,601,379,601,399,634,413,681,413"/>
+<area shape="poly" id="node9" href="roswtf.html" title="node: roswtf" alt="" coords="219,255,219,235,185,221,137,221,103,235,103,255,137,269,185,269"/>
 </map>

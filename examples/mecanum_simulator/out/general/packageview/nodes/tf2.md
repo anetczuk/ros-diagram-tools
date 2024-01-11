@@ -13,8 +13,9 @@ Project is distributed under the BSD 3-Clause license.
 | Nodes: | `` |
 
 
-| Graph packages (7): | Description: |
+| Graph packages (8): | Description: |
 | ------------------- | ------------ |
+| [`catkin`](catkin.md) |  |
 | [`geometry_msgs`](geometry_msgs.md) |  |
 | [`rostime`](rostime.md) |  |
 | [`tf2`](tf2.md) |  |

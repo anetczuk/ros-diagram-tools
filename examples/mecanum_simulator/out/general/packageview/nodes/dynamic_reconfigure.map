@@ -1,10 +1,15 @@
 <map id="dynamic_reconfigure" name="dynamic_reconfigure">
-<area shape="poly" id="node1" href="dynamic_reconfigure.html" title="node: dynamic_reconfigure" alt="" coords="545,219,545,199,454,185,325,185,233,199,233,219,325,233,454,233"/>
-<area shape="poly" id="node2" href="message_runtime.html" title="node: message_runtime" alt="" coords="861,39,861,19,783,5,671,5,593,19,593,39,671,53,783,53"/>
-<area shape="poly" id="node3" href="roslib.html" title="node: roslib" alt="" coords="780,111,780,91,749,77,705,77,674,91,674,111,705,125,749,125"/>
-<area shape="poly" id="node4" href="rospy.html" title="node: rospy" alt="" coords="780,183,780,163,749,149,705,149,674,163,674,183,705,197,749,197"/>
-<area shape="poly" id="node5" href="rosservice.html" title="node: rosservice" alt="" coords="811,255,811,235,762,221,692,221,643,235,643,255,692,269,762,269"/>
-<area shape="poly" id="node6" href="roscpp.html" title="node: roscpp" alt="" coords="788,327,788,307,752,293,702,293,666,307,666,327,702,341,752,341"/>
-<area shape="poly" id="node7" href="std_msgs.html" title="node: std_msgs" alt="" coords="805,399,805,379,759,365,695,365,649,379,649,399,695,413,759,413"/>
-<area shape="poly" id="node8" href="gazebo_ros.html" title="node: gazebo_ros" alt="" coords="185,219,185,199,133,185,58,185,5,199,5,219,58,233,133,233"/>
+<area shape="poly" id="node1" href="dynamic_reconfigure.html" title="node: dynamic_reconfigure" alt="" coords="545,399,545,379,454,365,325,365,233,379,233,399,325,413,454,413"/>
+<area shape="poly" id="node2" href="roslib.html" title="node: roslib" alt="" coords="799,39,799,19,768,5,724,5,692,19,692,39,724,53,768,53"/>
+<area shape="poly" id="node3" href="roscpp.html" title="node: roscpp" alt="" coords="807,111,807,91,771,77,720,77,685,91,685,111,720,125,771,125"/>
+<area shape="poly" id="node4" href="catkin.html" title="node: catkin" alt="" coords="802,183,802,163,769,149,722,149,689,163,689,183,722,197,769,197"/>
+<area shape="poly" id="node5" href="std_msgs.html" title="node: std_msgs" alt="" coords="824,255,824,235,778,221,713,221,668,235,668,255,713,269,778,269"/>
+<area shape="poly" id="node6" href="rospy.html" title="node: rospy" alt="" coords="798,327,798,307,767,293,724,293,693,307,693,327,724,341,767,341"/>
+<area shape="poly" id="node7" href="cpp_common.html" title="node: cpp_common" alt="" coords="848,399,848,379,788,365,703,365,643,379,643,399,703,413,788,413"/>
+<area shape="poly" id="node8" href="rostest.html" title="node: rostest" alt="" coords="809,471,809,451,772,437,720,437,683,451,683,471,720,485,772,485"/>
+<area shape="poly" id="node9" href="roscpp_serialization.html" title="node: roscpp_serialization" alt="" coords="895,543,895,523,808,509,684,509,597,523,597,543,684,557,808,557"/>
+<area shape="poly" id="node10" href="rosservice.html" title="node: rosservice" alt="" coords="830,615,830,595,781,581,711,581,661,595,661,615,711,629,781,629"/>
+<area shape="poly" id="node11" href="message_runtime.html" title="node: message_runtime" alt="" coords="880,687,880,667,801,653,690,653,612,667,612,687,690,701,801,701"/>
+<area shape="poly" id="node12" href="message_generation.html" title="node: message_generation" alt="" coords="899,759,899,739,809,725,682,725,593,739,593,759,682,773,809,773"/>
+<area shape="poly" id="node13" href="gazebo_ros.html" title="node: gazebo_ros" alt="" coords="185,399,185,379,133,365,58,365,5,379,5,399,58,413,133,413"/>
 </map>

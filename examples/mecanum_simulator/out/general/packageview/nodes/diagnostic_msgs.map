@@ -1,0 +1,8 @@
+<map id="diagnostic_msgs" name="diagnostic_msgs">
+<area shape="poly" id="node1" href="diagnostic_msgs.html" title="node: diagnostic_msgs" alt="" coords="434,147,434,127,361,113,256,113,183,127,183,147,256,161,361,161"/>
+<area shape="poly" id="node2" href="std_msgs.html" title="node: std_msgs" alt="" coords="713,39,713,19,667,5,603,5,557,19,557,39,603,53,667,53"/>
+<area shape="poly" id="node3" href="message_runtime.html" title="node: message_runtime" alt="" coords="769,111,769,91,691,77,579,77,501,91,501,111,579,125,691,125"/>
+<area shape="poly" id="node4" href="catkin.html" title="node: catkin" alt="" coords="691,183,691,163,658,149,612,149,579,163,579,183,612,197,658,197"/>
+<area shape="poly" id="node5" href="message_generation.html" title="node: message_generation" alt="" coords="788,255,788,235,698,221,572,221,482,235,482,255,572,269,698,269"/>
+<area shape="poly" id="node6" href="rosmsg.html" title="node: rosmsg" alt="" coords="135,147,135,127,97,113,43,113,5,127,5,147,43,161,97,161"/>
+</map>

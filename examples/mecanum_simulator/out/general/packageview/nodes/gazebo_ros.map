@@ -1,14 +1,16 @@
 <map id="gazebo_ros" name="gazebo_ros">
-<area shape="poly" id="node1" href="gazebo_ros.html" title="node: gazebo_ros" alt="" coords="661,363,661,343,608,329,534,329,481,343,481,363,534,377,608,377"/>
+<area shape="poly" id="node1" href="gazebo_ros.html" title="node: gazebo_ros" alt="" coords="661,435,661,415,608,401,534,401,481,415,481,435,534,449,608,449"/>
 <area shape="poly" id="node2" href="gazebo_dev.html" title="node: gazebo_dev" alt="" coords="958,39,958,19,903,5,826,5,772,19,772,39,826,53,903,53"/>
-<area shape="poly" id="node3" href="gazebo_msgs.html" title="node: gazebo_msgs" alt="" coords="969,111,969,91,908,77,822,77,761,91,761,111,822,125,908,125"/>
-<area shape="poly" id="node4" href="roslib.html" title="node: roslib" alt="" coords="918,183,918,163,887,149,843,149,811,163,811,183,843,197,887,197"/>
+<area shape="poly" id="node3" href="roslib.html" title="node: roslib" alt="" coords="918,111,918,91,887,77,843,77,811,91,811,111,843,125,887,125"/>
+<area shape="poly" id="node4" href="catkin.html" title="node: catkin" alt="" coords="921,183,921,163,888,149,842,149,809,163,809,183,842,197,888,197"/>
 <area shape="poly" id="node5" href="roscpp.html" title="node: roscpp" alt="" coords="926,255,926,235,890,221,840,221,804,235,804,255,840,269,890,269"/>
-<area shape="poly" id="node6" href="tf.html" title="node: tf" alt="" coords="901,327,901,307,880,293,850,293,829,307,829,327,850,341,880,341"/>
-<area shape="poly" id="node7" href="std_srvs.html" title="node: std_srvs" alt="" coords="936,399,936,379,894,365,835,365,794,379,794,399,835,413,894,413"/>
-<area shape="poly" id="node8" href="rosgraph_msgs.html" title="node: rosgraph_msgs" alt="" coords="982,471,982,451,913,437,816,437,748,451,748,471,816,485,913,485"/>
-<area shape="poly" id="node9" href="dynamic_reconfigure.html" title="node: dynamic_reconfigure" alt="" coords="1021,543,1021,523,929,509,800,509,709,523,709,543,800,557,929,557"/>
+<area shape="poly" id="node6" href="cmake_modules.html" title="node: cmake_modules" alt="" coords="986,327,986,307,915,293,815,293,744,307,744,327,815,341,915,341"/>
+<area shape="poly" id="node7" href="dynamic_reconfigure.html" title="node: dynamic_reconfigure" alt="" coords="1021,399,1021,379,929,365,800,365,709,379,709,399,800,413,929,413"/>
+<area shape="poly" id="node8" href="geometry_msgs.html" title="node: geometry_msgs" alt="" coords="986,471,986,451,915,437,815,437,744,451,744,471,815,485,915,485"/>
+<area shape="poly" id="node9" href="tf.html" title="node: tf" alt="" coords="901,543,901,523,880,509,850,509,829,523,829,543,850,557,880,557"/>
 <area shape="poly" id="node10" href="std_msgs.html" title="node: std_msgs" alt="" coords="943,615,943,595,897,581,833,581,787,595,787,615,833,629,897,629"/>
-<area shape="poly" id="node11" href="geometry_msgs.html" title="node: geometry_msgs" alt="" coords="986,687,986,667,915,653,815,653,744,667,744,687,815,701,915,701"/>
-<area shape="poly" id="node12" href="nexus_4wd_mecanum_gazebo.html" title="node: nexus_4wd_mecanum_gazebo" alt="" coords="433,363,433,343,308,329,131,329,5,343,5,363,131,377,308,377"/>
+<area shape="poly" id="node11" href="rosgraph_msgs.html" title="node: rosgraph_msgs" alt="" coords="982,687,982,667,913,653,816,653,748,667,748,687,816,701,913,701"/>
+<area shape="poly" id="node12" href="gazebo_msgs.html" title="node: gazebo_msgs" alt="" coords="969,759,969,739,908,725,822,725,761,739,761,759,822,773,908,773"/>
+<area shape="poly" id="node13" href="std_srvs.html" title="node: std_srvs" alt="" coords="936,831,936,811,894,797,835,797,794,811,794,831,835,845,894,845"/>
+<area shape="poly" id="node14" href="nexus_4wd_mecanum_gazebo.html" title="node: nexus_4wd_mecanum_gazebo" alt="" coords="433,435,433,415,308,401,131,401,5,415,5,435,131,449,308,449"/>
 </map>

@@ -1,6 +1,9 @@
 <map id="rosnode" name="rosnode">
-<area shape="poly" id="node1" href="rosnode.html" title="node: rosnode" alt="" coords="308,75,308,55,268,41,210,41,170,55,170,75,210,89,268,89"/>
-<area shape="poly" id="node2" href="rosgraph.html" title="node: rosgraph" alt="" coords="508,39,508,19,464,5,401,5,356,19,356,39,401,53,464,53"/>
-<area shape="poly" id="node3" href="rostopic.html" title="node: rostopic" alt="" coords="502,111,502,91,461,77,404,77,363,91,363,111,404,125,461,125"/>
-<area shape="poly" id="node4" href="roswtf.html" title="node: roswtf" alt="" coords="122,75,122,55,88,41,39,41,5,55,5,75,39,89,88,89"/>
+<area shape="poly" id="node1" href="actionlib.html" title="node: actionlib" alt="" coords="152,111,152,91,109,77,48,77,5,91,5,111,48,125,109,125"/>
+<area shape="poly" id="node2" href="rosnode.html" title="node: rosnode" alt="" coords="338,147,338,127,298,113,240,113,200,127,200,147,240,161,298,161"/>
+<area shape="poly" id="node3" href="rostest.html" title="node: rostest" alt="" coords="525,39,525,19,488,5,436,5,400,19,400,39,436,53,488,53"/>
+<area shape="poly" id="node4" href="catkin.html" title="node: catkin" alt="" coords="519,111,519,91,486,77,439,77,406,91,406,111,439,125,486,125"/>
+<area shape="poly" id="node5" href="rosgraph.html" title="node: rosgraph" alt="" coords="538,183,538,163,494,149,431,149,386,163,386,183,431,197,494,197"/>
+<area shape="poly" id="node6" href="rostopic.html" title="node: rostopic" alt="" coords="532,255,532,235,491,221,434,221,393,235,393,255,434,269,491,269"/>
+<area shape="poly" id="node7" href="roswtf.html" title="node: roswtf" alt="" coords="137,183,137,163,103,149,54,149,20,163,20,183,54,197,103,197"/>
 </map>

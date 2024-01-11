@@ -1,10 +1,12 @@
 <map id="gazebo_msgs" name="gazebo_msgs">
-<area shape="poly" id="node1" href="gazebo_msgs.html" title="node: gazebo_msgs" alt="" coords="442,219,442,199,381,185,294,185,233,199,233,219,294,233,381,233"/>
-<area shape="poly" id="node2" href="geometry_msgs.html" title="node: geometry_msgs" alt="" coords="745,39,745,19,674,5,574,5,503,19,503,39,574,53,674,53"/>
-<area shape="poly" id="node3" href="sensor_msgs.html" title="node: sensor_msgs" alt="" coords="725,111,725,91,666,77,582,77,522,91,522,111,582,125,666,125"/>
-<area shape="poly" id="node4" href="trajectory_msgs.html" title="node: trajectory_msgs" alt="" coords="747,183,747,163,675,149,573,149,501,163,501,183,573,197,675,197"/>
-<area shape="poly" id="node5" href="std_msgs.html" title="node: std_msgs" alt="" coords="702,255,702,235,656,221,592,221,546,235,546,255,592,269,656,269"/>
-<area shape="poly" id="node6" href="message_runtime.html" title="node: message_runtime" alt="" coords="758,327,758,307,679,293,568,293,490,307,490,327,568,341,679,341"/>
-<area shape="poly" id="node7" href="std_srvs.html" title="node: std_srvs" alt="" coords="695,399,695,379,653,365,594,365,553,379,553,399,594,413,653,413"/>
-<area shape="poly" id="node8" href="gazebo_ros.html" title="node: gazebo_ros" alt="" coords="185,219,185,199,133,185,58,185,5,199,5,219,58,233,133,233"/>
+<area shape="poly" id="node1" href="gazebo_msgs.html" title="node: gazebo_msgs" alt="" coords="442,291,442,271,381,257,294,257,233,271,233,291,294,305,381,305"/>
+<area shape="poly" id="node2" href="catkin.html" title="node: catkin" alt="" coords="699,39,699,19,666,5,619,5,586,19,586,39,619,53,666,53"/>
+<area shape="poly" id="node3" href="sensor_msgs.html" title="node: sensor_msgs" alt="" coords="744,111,744,91,685,77,601,77,541,91,541,111,601,125,685,125"/>
+<area shape="poly" id="node4" href="geometry_msgs.html" title="node: geometry_msgs" alt="" coords="764,183,764,163,693,149,592,149,522,163,522,183,592,197,693,197"/>
+<area shape="poly" id="node5" href="std_msgs.html" title="node: std_msgs" alt="" coords="720,255,720,235,675,221,610,221,565,235,565,255,610,269,675,269"/>
+<area shape="poly" id="node6" href="message_runtime.html" title="node: message_runtime" alt="" coords="777,327,777,307,698,293,587,293,508,307,508,327,587,341,698,341"/>
+<area shape="poly" id="node7" href="trajectory_msgs.html" title="node: trajectory_msgs" alt="" coords="765,399,765,379,693,365,592,365,520,379,520,399,592,413,693,413"/>
+<area shape="poly" id="node8" href="std_srvs.html" title="node: std_srvs" alt="" coords="714,471,714,451,672,437,613,437,571,451,571,471,613,485,672,485"/>
+<area shape="poly" id="node9" href="message_generation.html" title="node: message_generation" alt="" coords="795,543,795,523,706,509,579,509,490,523,490,543,579,557,706,557"/>
+<area shape="poly" id="node10" href="gazebo_ros.html" title="node: gazebo_ros" alt="" coords="185,291,185,271,133,257,58,257,5,271,5,291,58,305,133,305"/>
 </map>

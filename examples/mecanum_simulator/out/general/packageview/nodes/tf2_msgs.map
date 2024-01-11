@@ -1,8 +1,9 @@
 <map id="tf2_msgs" name="tf2_msgs">
-<area shape="poly" id="node1" href="tf2.html" title="node: tf2" alt="" coords="103,75,103,55,82,41,52,41,31,55,31,75,52,89,82,89"/>
-<area shape="poly" id="node2" href="tf2_msgs.html" title="node: tf2_msgs" alt="" coords="329,111,329,91,285,77,222,77,177,91,177,111,222,125,285,125"/>
-<area shape="poly" id="node3" href="actionlib_msgs.html" title="node: actionlib_msgs" alt="" coords="644,39,644,19,577,5,483,5,416,19,416,39,483,53,577,53"/>
-<area shape="poly" id="node4" href="geometry_msgs.html" title="node: geometry_msgs" alt="" coords="651,111,651,91,580,77,480,77,409,91,409,111,480,125,580,125"/>
-<area shape="poly" id="node5" href="message_generation.html" title="node: message_generation" alt="" coords="683,183,683,163,593,149,467,149,377,163,377,183,467,197,593,197"/>
-<area shape="poly" id="node6" href="tf2_ros.html" title="node: tf2_ros" alt="" coords="129,147,129,127,93,113,42,113,5,127,5,147,42,161,93,161"/>
+<area shape="poly" id="node1" href="tf2.html" title="node: tf2" alt="" coords="103,111,103,91,82,77,52,77,31,91,31,111,52,125,82,125"/>
+<area shape="poly" id="node2" href="tf2_msgs.html" title="node: tf2_msgs" alt="" coords="329,147,329,127,285,113,222,113,177,127,177,147,222,161,285,161"/>
+<area shape="poly" id="node3" href="geometry_msgs.html" title="node: geometry_msgs" alt="" coords="651,39,651,19,580,5,480,5,409,19,409,39,480,53,580,53"/>
+<area shape="poly" id="node4" href="catkin.html" title="node: catkin" alt="" coords="586,111,586,91,553,77,507,77,474,91,474,111,507,125,553,125"/>
+<area shape="poly" id="node5" href="actionlib_msgs.html" title="node: actionlib_msgs" alt="" coords="644,183,644,163,577,149,483,149,416,163,416,183,483,197,577,197"/>
+<area shape="poly" id="node6" href="message_generation.html" title="node: message_generation" alt="" coords="683,255,683,235,593,221,467,221,377,235,377,255,467,269,593,269"/>
+<area shape="poly" id="node7" href="tf2_ros.html" title="node: tf2_ros" alt="" coords="129,183,129,163,93,149,42,149,5,163,5,183,42,197,93,197"/>
 </map>

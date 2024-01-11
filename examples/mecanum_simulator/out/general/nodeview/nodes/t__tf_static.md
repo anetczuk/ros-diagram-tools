@@ -33,7 +33,6 @@ geometry_msgs/TransformStamped[] transforms
       float64 z
       float64 w
 
-
 ```
 
 

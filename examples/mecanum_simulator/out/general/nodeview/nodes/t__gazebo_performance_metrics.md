@@ -27,7 +27,6 @@ gazebo_msgs/SensorPerformanceMetric[] sensors
   float64 real_update_rate
   float64 fps
 
-
 ```
 
 

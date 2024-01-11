@@ -1,9 +1,13 @@
 <map id="sensor_msgs" name="sensor_msgs">
-<area shape="poly" id="node1" href="gazebo_msgs.html" title="node: gazebo_msgs" alt="" coords="271,39,271,19,210,5,124,5,63,19,63,39,124,53,210,53"/>
-<area shape="poly" id="node2" href="sensor_msgs.html" title="node: sensor_msgs" alt="" coords="579,111,579,91,519,77,435,77,376,91,376,111,435,125,519,125"/>
-<area shape="poly" id="node4" href="geometry_msgs.html" title="node: geometry_msgs" alt="" coords="882,39,882,19,811,5,711,5,640,19,640,39,711,53,811,53"/>
-<area shape="poly" id="node5" href="message_runtime.html" title="node: message_runtime" alt="" coords="895,111,895,91,816,77,705,77,627,91,627,111,705,125,816,125"/>
-<area shape="poly" id="node6" href="std_msgs.html" title="node: std_msgs" alt="" coords="839,183,839,163,793,149,728,149,683,163,683,183,728,197,793,197"/>
-<area shape="poly" id="node3" href="robot_state_publisher.html" title="node: robot_state_publisher" alt="" coords="328,111,328,91,233,77,100,77,5,91,5,111,100,125,233,125"/>
-<area shape="poly" id="node7" href="tf.html" title="node: tf" alt="" coords="203,183,203,163,182,149,152,149,131,163,131,183,152,197,182,197"/>
+<area shape="poly" id="node1" href="gazebo_msgs.html" title="node: gazebo_msgs" alt="" coords="271,183,271,163,210,149,124,149,63,163,63,183,124,197,210,197"/>
+<area shape="poly" id="node2" href="sensor_msgs.html" title="node: sensor_msgs" alt="" coords="579,255,579,235,519,221,435,221,376,235,376,255,435,269,519,269"/>
+<area shape="poly" id="node4" href="catkin.html" title="node: catkin" alt="" coords="836,39,836,19,803,5,756,5,723,19,723,39,756,53,803,53"/>
+<area shape="poly" id="node5" href="geometry_msgs.html" title="node: geometry_msgs" alt="" coords="901,111,901,91,830,77,729,77,658,91,658,111,729,125,830,125"/>
+<area shape="poly" id="node6" href="std_msgs.html" title="node: std_msgs" alt="" coords="857,183,857,163,812,149,747,149,702,163,702,183,747,197,812,197"/>
+<area shape="poly" id="node7" href="rosbag.html" title="node: rosbag" alt="" coords="840,255,840,235,805,221,754,221,719,235,719,255,754,269,805,269"/>
+<area shape="poly" id="node8" href="rosunit.html" title="node: rosunit" alt="" coords="843,327,843,307,806,293,753,293,716,307,716,327,753,341,806,341"/>
+<area shape="poly" id="node9" href="message_runtime.html" title="node: message_runtime" alt="" coords="914,399,914,379,835,365,724,365,645,379,645,399,724,413,835,413"/>
+<area shape="poly" id="node10" href="message_generation.html" title="node: message_generation" alt="" coords="932,471,932,451,843,437,716,437,627,451,627,471,716,485,843,485"/>
+<area shape="poly" id="node3" href="robot_state_publisher.html" title="node: robot_state_publisher" alt="" coords="328,255,328,235,233,221,100,221,5,235,5,255,100,269,233,269"/>
+<area shape="poly" id="node11" href="tf.html" title="node: tf" alt="" coords="203,327,203,307,182,293,152,293,131,307,131,327,152,341,182,341"/>
 </map>

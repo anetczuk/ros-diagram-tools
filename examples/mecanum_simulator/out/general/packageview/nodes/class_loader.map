@@ -1,0 +1,6 @@
+<map id="class_loader" name="class_loader">
+<area shape="poly" id="node1" href="class_loader.html" title="node: class_loader" alt="" coords="399,75,399,55,341,41,261,41,203,55,203,75,261,89,341,89"/>
+<area shape="poly" id="node2" href="catkin.html" title="node: catkin" alt="" coords="624,39,624,19,591,5,544,5,511,19,511,39,544,53,591,53"/>
+<area shape="poly" id="node3" href="cmake_modules.html" title="node: cmake_modules" alt="" coords="689,111,689,91,618,77,517,77,447,91,447,111,517,125,618,125"/>
+<area shape="poly" id="node4" href="pluginlib.html" title="node: pluginlib" alt="" coords="155,75,155,55,111,41,49,41,5,55,5,75,49,89,111,89"/>
+</map>

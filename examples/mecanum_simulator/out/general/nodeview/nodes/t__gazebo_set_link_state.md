@@ -38,7 +38,6 @@ geometry_msgs/Twist twist
     float64 z
 string reference_frame
 
-
 ```
 
 
