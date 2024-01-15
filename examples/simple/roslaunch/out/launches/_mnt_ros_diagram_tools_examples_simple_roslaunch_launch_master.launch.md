@@ -12,8 +12,8 @@ Launch file: /mnt/ros-diagram-tools/examples/simple/roslaunch/launch_master.laun
 
 | Included launch files (2): | Description: |
 | -------------------------- | ------------ |
-| [`/launch_slave.launch`](_launch_slave.launch_arg_slave_req_ssss1.md) |  |
-| [`/launch_slave.launch`](_launch_slave.launch_arg_slave_req_ssss2.md) |  |
+| [`/launch_slave.launch`](_launch_slave.launch_67b1b1a2821af662343163c31e5601b3.md) |  |
+| [`/launch_slave.launch`](_launch_slave.launch_99e4e131e042aee7dfcca1181a2721ad.md) |  |
 
 
 #### Resolved arguments (1):

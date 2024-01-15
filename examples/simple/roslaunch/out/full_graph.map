@@ -1,7 +1,7 @@
 <map id="full_graph" name="full_graph">
 <area shape="rect" id="node1" href="launches/_mnt_ros_diagram_tools_examples_simple_roslaunch_launch_master.launch.html" title="node: launch_master.launch" alt="" coords="5,41,233,89"/>
-<area shape="rect" id="node2" href="launches/_launch_slave.launch_arg_slave_req_ssss1.html" title="node: launch_slave.launch" alt="" coords="281,5,493,53"/>
-<area shape="rect" id="node3" href="launches/_launch_slave.launch_arg_slave_req_ssss2.html" title="node: launch_slave.launch" alt="" coords="281,77,493,125"/>
-<area shape="rect" id="node4" href="launches/_launch_node.launch_arg_node_req_node_ssss1.html" title="node: launch_node.launch" alt="" coords="541,5,751,53"/>
-<area shape="rect" id="node5" href="launches/_launch_node.launch_arg_node_req_node_ssss2.html" title="node: launch_node.launch" alt="" coords="541,77,751,125"/>
+<area shape="rect" id="node2" href="launches/_launch_slave.launch_99e4e131e042aee7dfcca1181a2721ad.html" title="node: launch_slave.launch" alt="" coords="281,5,493,53"/>
+<area shape="rect" id="node3" href="launches/_launch_slave.launch_67b1b1a2821af662343163c31e5601b3.html" title="node: launch_slave.launch" alt="" coords="281,77,493,125"/>
+<area shape="rect" id="node4" href="launches/_launch_node.launch_4c219f625bfd304a54b3b8829ebef515.html" title="node: launch_node.launch" alt="" coords="541,5,751,53"/>
+<area shape="rect" id="node5" href="launches/_launch_node.launch_258a078bb8f25870c21bec1fcb601efe.html" title="node: launch_node.launch" alt="" coords="541,77,751,125"/>
 </map>

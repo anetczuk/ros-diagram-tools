@@ -9,6 +9,8 @@ import os
 import logging
 
 import argparse
+import hashlib
+
 import json
 
 from typing import Set, List, Any
@@ -257,6 +259,9 @@ def get_launch_id(launch_item):
     master_key = get_launch_args_string(launch_item)
     if not master_key:
         return launch_file
+    # use hash instead of direct args to prevent "File name too long" exception
+    encoded_args = master_key.encode('utf-8')
+    master_key = hashlib.md5(encoded_args).hexdigest()
     return f"{launch_file}_{master_key}"
 
 

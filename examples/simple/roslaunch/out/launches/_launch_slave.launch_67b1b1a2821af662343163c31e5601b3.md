@@ -5,17 +5,23 @@ Project is distributed under the BSD 3-Clause license.
 
 ## Node
 
-Launch file: /launch_node.launch
+Launch file: /launch_slave.launch
 
-[![_launch_node.launch_arg_node_req_node_ssss2](_launch_node.launch_arg_node_req_node_ssss2.png "_launch_node.launch_arg_node_req_node_ssss2")](_launch_node.launch_arg_node_req_node_ssss2.png)
+[![_launch_slave.launch_67b1b1a2821af662343163c31e5601b3](_launch_slave.launch_67b1b1a2821af662343163c31e5601b3.png "_launch_slave.launch_67b1b1a2821af662343163c31e5601b3")](_launch_slave.launch_67b1b1a2821af662343163c31e5601b3.png)
 
 
-#### Resolved arguments (2):
+| Included launch files (1): | Description: |
+| -------------------------- | ------------ |
+| [`/launch_node.launch`](_launch_node.launch_258a078bb8f25870c21bec1fcb601efe.md) |  |
+
+
+#### Resolved arguments (3):
 
 | Argument | Value |
 | -------- | ----- |
-| arg_node_def | `aaa` |
-| arg_node_req | `node_ssss2` |
+| arg_other | `aaa_ssss2` |
+| arg_slave_def | `aaa` |
+| arg_slave_req | `ssss2` |
 
 
 #### Nodes (1):

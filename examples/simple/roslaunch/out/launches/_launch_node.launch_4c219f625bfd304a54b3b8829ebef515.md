@@ -7,7 +7,7 @@ Project is distributed under the BSD 3-Clause license.
 
 Launch file: /launch_node.launch
 
-[![_launch_node.launch_arg_node_req_node_ssss1](_launch_node.launch_arg_node_req_node_ssss1.png "_launch_node.launch_arg_node_req_node_ssss1")](_launch_node.launch_arg_node_req_node_ssss1.png)
+[![_launch_node.launch_4c219f625bfd304a54b3b8829ebef515](_launch_node.launch_4c219f625bfd304a54b3b8829ebef515.png "_launch_node.launch_4c219f625bfd304a54b3b8829ebef515")](_launch_node.launch_4c219f625bfd304a54b3b8829ebef515.png)
 
 
 #### Resolved arguments (2):
