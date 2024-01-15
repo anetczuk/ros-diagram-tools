@@ -16,4 +16,4 @@ $SCRIPT_DIR/rostopiclist/generate.sh
 $SCRIPT_DIR/rosnodelist/generate.sh
 
 
-$SCRIPT_DIR/../generate_small.sh
+source $SCRIPT_DIR/../../doc/generate_small.sh

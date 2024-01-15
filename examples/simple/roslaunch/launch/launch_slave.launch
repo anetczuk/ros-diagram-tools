@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="arg_slave_def" default="aaa" />
+    <arg name="arg_slave_req" />
+    <arg name="arg_other" default="$(arg arg_slave_def)_$(arg arg_slave_req)" />
+
+    <include file="launch_node.launch" >
+        <arg name="arg_node_req" value="node_$(arg arg_slave_req)" />
+    </include>
+</launch>

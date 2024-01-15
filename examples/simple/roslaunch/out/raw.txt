@@ -1,0 +1,12 @@
+digraph launch_graph {
+rankdir=LR;
+"/mnt/ros-diagram-tools/examples/simple/roslaunch/launch_master.launch" [label="launch_master.launch", shape=box];
+"/launch_slave.launch_arg_slave_req_ssss1" [label="launch_slave.launch", shape=box];
+"/mnt/ros-diagram-tools/examples/simple/roslaunch/launch_master.launch" -> "/launch_slave.launch_arg_slave_req_ssss1"  [color=firebrick];
+"/launch_slave.launch_arg_slave_req_ssss2" [label="launch_slave.launch", shape=box];
+"/mnt/ros-diagram-tools/examples/simple/roslaunch/launch_master.launch" -> "/launch_slave.launch_arg_slave_req_ssss2"  [color=blue];
+"/launch_node.launch_arg_node_req_node_ssss1" [label="launch_node.launch", shape=box];
+"/launch_slave.launch_arg_slave_req_ssss1" -> "/launch_node.launch_arg_node_req_node_ssss1"  [color=darkslategrey];
+"/launch_node.launch_arg_node_req_node_ssss2" [label="launch_node.launch", shape=box];
+"/launch_slave.launch_arg_slave_req_ssss2" -> "/launch_node.launch_arg_node_req_node_ssss2"  [color=blue];
+}

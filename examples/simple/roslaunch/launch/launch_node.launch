@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="arg_node_def" default="aaa" />
+    <arg name="arg_node_req" />
+
+    <node name="node_$(arg arg_node_req)" pkg="rospy_tutorials" type="listener.py" args="--test" respawn="true" />
+</launch>

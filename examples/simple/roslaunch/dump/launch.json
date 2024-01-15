@@ -1,0 +1,276 @@
+{
+    "___type___": "LaunchDumpData",
+    "___id___": 139793227026784,
+    "file": "/mnt/ros-diagram-tools/examples/simple/roslaunch/launch_master.launch",
+    "launch_args": [],
+    "resolve_dict": {
+        "arg": {
+            "arg_master_def": "xxx"
+        },
+        "arg_doc": {
+            "arg_master_def": [
+                null,
+                "xxx"
+            ]
+        }
+    },
+    "nodes": [
+        {
+            "___type___": "Node",
+            "___id___": 139793227208304,
+            "package": "rospy_tutorials",
+            "type": "listener.py",
+            "name": "node_node_ssss1",
+            "namespace": "/",
+            "machine_name": null,
+            "machine": null,
+            "args": "--test",
+            "respawn": true,
+            "respawn_delay": 0.0,
+            "remap_args": [],
+            "env_args": [],
+            "process_name": null,
+            "output": null,
+            "cwd": null,
+            "launch_prefix": null,
+            "required": false,
+            "filename": "/launch_node.launch"
+        },
+        {
+            "___type___": "Node",
+            "___id___": 139793227216848,
+            "package": "rospy_tutorials",
+            "type": "listener.py",
+            "name": "node_node_ssss2",
+            "namespace": "/",
+            "machine_name": null,
+            "machine": null,
+            "args": "--test",
+            "respawn": true,
+            "respawn_delay": 0.0,
+            "remap_args": [],
+            "env_args": [],
+            "process_name": null,
+            "output": null,
+            "cwd": null,
+            "launch_prefix": null,
+            "required": false,
+            "filename": "/launch_node.launch"
+        }
+    ],
+    "params": {},
+    "included": [
+        {
+            "___type___": "LaunchDumpData",
+            "___id___": 139793227027024,
+            "file": "/launch_slave.launch",
+            "launch_args": [
+                "arg_slave_req"
+            ],
+            "resolve_dict": {
+                "arg": {
+                    "arg_slave_req": "ssss1",
+                    "arg_slave_def": "aaa",
+                    "arg_other": "aaa_ssss1"
+                },
+                "arg_doc": {
+                    "arg_slave_def": [
+                        null,
+                        "aaa"
+                    ],
+                    "arg_slave_req": [
+                        null,
+                        null
+                    ],
+                    "arg_other": [
+                        null,
+                        "aaa_ssss1"
+                    ]
+                },
+                "filename": "/launch_slave.launch"
+            },
+            "nodes": [
+                {
+                    "___type___": "Node",
+                    "___id___": 139793226729776,
+                    "package": "rospy_tutorials",
+                    "type": "listener.py",
+                    "name": "node_node_ssss1",
+                    "namespace": "/",
+                    "machine_name": null,
+                    "machine": null,
+                    "args": "--test",
+                    "respawn": true,
+                    "respawn_delay": 0.0,
+                    "remap_args": [],
+                    "env_args": [],
+                    "process_name": null,
+                    "output": null,
+                    "cwd": null,
+                    "launch_prefix": null,
+                    "required": false,
+                    "filename": "/launch_node.launch"
+                }
+            ],
+            "params": {},
+            "included": [
+                {
+                    "___type___": "LaunchDumpData",
+                    "___id___": 139793227484368,
+                    "file": "/launch_node.launch",
+                    "launch_args": [
+                        "arg_node_req"
+                    ],
+                    "resolve_dict": {
+                        "arg": {
+                            "arg_node_req": "node_ssss1",
+                            "arg_node_def": "aaa"
+                        },
+                        "arg_doc": {
+                            "arg_node_def": [
+                                null,
+                                "aaa"
+                            ],
+                            "arg_node_req": [
+                                null,
+                                null
+                            ]
+                        },
+                        "filename": "/launch_node.launch"
+                    },
+                    "nodes": [
+                        {
+                            "___type___": "Node",
+                            "___id___": 139793226730304,
+                            "package": "rospy_tutorials",
+                            "type": "listener.py",
+                            "name": "node_node_ssss1",
+                            "namespace": "/",
+                            "machine_name": null,
+                            "machine": null,
+                            "args": "--test",
+                            "respawn": true,
+                            "respawn_delay": 0.0,
+                            "remap_args": [],
+                            "env_args": [],
+                            "process_name": null,
+                            "output": null,
+                            "cwd": null,
+                            "launch_prefix": null,
+                            "required": false,
+                            "filename": "/launch_node.launch"
+                        }
+                    ],
+                    "params": {},
+                    "included": []
+                }
+            ]
+        },
+        {
+            "___type___": "LaunchDumpData",
+            "___id___": 139793227484704,
+            "file": "/launch_slave.launch",
+            "launch_args": [
+                "arg_slave_req"
+            ],
+            "resolve_dict": {
+                "arg": {
+                    "arg_slave_req": "ssss2",
+                    "arg_slave_def": "aaa",
+                    "arg_other": "aaa_ssss2"
+                },
+                "arg_doc": {
+                    "arg_slave_def": [
+                        null,
+                        "aaa"
+                    ],
+                    "arg_slave_req": [
+                        null,
+                        null
+                    ],
+                    "arg_other": [
+                        null,
+                        "aaa_ssss2"
+                    ]
+                },
+                "filename": "/launch_slave.launch"
+            },
+            "nodes": [
+                {
+                    "___type___": "Node",
+                    "___id___": 139793226730480,
+                    "package": "rospy_tutorials",
+                    "type": "listener.py",
+                    "name": "node_node_ssss2",
+                    "namespace": "/",
+                    "machine_name": null,
+                    "machine": null,
+                    "args": "--test",
+                    "respawn": true,
+                    "respawn_delay": 0.0,
+                    "remap_args": [],
+                    "env_args": [],
+                    "process_name": null,
+                    "output": null,
+                    "cwd": null,
+                    "launch_prefix": null,
+                    "required": false,
+                    "filename": "/launch_node.launch"
+                }
+            ],
+            "params": {},
+            "included": [
+                {
+                    "___type___": "LaunchDumpData",
+                    "___id___": 139793227484176,
+                    "file": "/launch_node.launch",
+                    "launch_args": [
+                        "arg_node_req"
+                    ],
+                    "resolve_dict": {
+                        "arg": {
+                            "arg_node_req": "node_ssss2",
+                            "arg_node_def": "aaa"
+                        },
+                        "arg_doc": {
+                            "arg_node_def": [
+                                null,
+                                "aaa"
+                            ],
+                            "arg_node_req": [
+                                null,
+                                null
+                            ]
+                        },
+                        "filename": "/launch_node.launch"
+                    },
+                    "nodes": [
+                        {
+                            "___type___": "Node",
+                            "___id___": 139793226731008,
+                            "package": "rospy_tutorials",
+                            "type": "listener.py",
+                            "name": "node_node_ssss2",
+                            "namespace": "/",
+                            "machine_name": null,
+                            "machine": null,
+                            "args": "--test",
+                            "respawn": true,
+                            "respawn_delay": 0.0,
+                            "remap_args": [],
+                            "env_args": [],
+                            "process_name": null,
+                            "output": null,
+                            "cwd": null,
+                            "launch_prefix": null,
+                            "required": false,
+                            "filename": "/launch_node.launch"
+                        }
+                    ],
+                    "params": {},
+                    "included": []
+                }
+            ]
+        }
+    ]
+}

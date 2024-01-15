@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="arg_master_def" default="xxx" />
+
+    <include file="launch_slave.launch" >
+        <arg name="arg_slave_req" value="ssss1" />
+    </include>
+
+    <include file="launch_slave.launch" >
+        <arg name="arg_slave_req" value="ssss2" />
+    </include>
+
+</launch>

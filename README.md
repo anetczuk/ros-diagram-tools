@@ -271,6 +271,8 @@ Help: `./src/rosdiagramtools.py roslaunchgraph --help`
 
 Help [output](doc/cmd_args_tools.md#roslaunchgraph_help).
 
+[![Launch graph example](examples/simple/roslaunch/out/full_graph-small.png "Launch graph example")](examples/simple/roslaunch/out/full_graph.png)
+
 [![Launch files page](examples/mecanum_simulator/out/general/launchview-main-page-small.png "Launch files page")](examples/mecanum_simulator/out/general/launchview-main-page.png)
 
 
