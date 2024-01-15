@@ -17,7 +17,7 @@ from showgraph.io import prepare_filesystem_name
 from showgraph.graphviz import Graph, set_nodes_style
 
 from rosdiagram.graphviztohtml import generate_from_template, \
-    DEFAULT_ACTIVE_NODE_STYLE, prepare_item_link, set_node_html_attribs, convert_links_list
+    DEFAULT_ACTIVE_NODE_STYLE, prepare_item_link, set_node_html_attribs
 from rosdiagram.tool.rosparamlist import convert_to_html, prepare_params_list
 
 
@@ -32,49 +32,36 @@ OUTPUT_LAUNCHES_REL_DIR = os.path.join( "launches" )
 ## ===================================================================
 
 
-def generate_full_graph( launch_dict ) -> Graph:
+def generate_full_graph( flat_launch_dict ) -> Graph:
     dot_graph = Graph()
     dot_graph.setName( "launch_graph" )
     base_graph = dot_graph.base_graph
     base_graph.set_type( 'digraph' )
     base_graph.set_rankdir( 'LR' )
 
-    launch_deps_dict = get_launch_files_deps(launch_dict)
-
     ## add nodes
-    for launch_item, sub_files in launch_deps_dict.items():
-        node_obj = dot_graph.addNode( launch_item, shape="box" )
+    for launch_id, launch_data in flat_launch_dict.items():
+        launch_file = launch_data["file"]
+
+        node_obj = dot_graph.addNode( launch_id, shape="box" )
         if node_obj:
-            node_label = os.path.basename(launch_item)
+            node_label = os.path.basename(launch_file)
             node_obj.set( "label", node_label )
 
-        for sub_item in sub_files:
-            if sub_item == launch_item:
+        launch_includes = launch_data["included"]
+        for include_item in launch_includes:
+            sub_id = get_launch_id(include_item)
+            sub_file = include_item["file"]
+            if sub_id == launch_id:
                 continue
-            sub_obj = dot_graph.addNode( sub_item, shape="box" )
+            sub_obj = dot_graph.addNode( sub_id, shape="box" )
             if sub_obj:
-                sub_label = os.path.basename(sub_item)
+                sub_label = os.path.basename(sub_file)
                 sub_obj.set( "label", sub_label )
-            print("adding edge:", launch_item, sub_item)
-            dot_graph.addEdge( launch_item, sub_item )
+            print("adding edge:", launch_id, sub_id)
+            dot_graph.addEdge( launch_id, sub_id )
 
     return dot_graph
-
-
-def get_launch_files_deps(launch_dict):
-    launch_deps = {}
-
-    for launch_item in launch_dict:
-        sub_files = get_deps(launch_dict, launch_item)
-
-        sub_deps = get_all_deps(launch_dict, sub_files)
-        sub_files = sub_files - sub_deps
-        if launch_item in sub_files:
-            sub_files.remove(launch_item)
-
-        launch_deps[launch_item] = sub_files
-
-    return launch_deps
 
 
 class LaunchDeps:
@@ -102,7 +89,10 @@ def get_all_deps(launch_dict, launch_list):
 
 
 def get_deps(launch_dict, launch_item) -> Set[str]:
-    launch_data = launch_dict[launch_item]
+    launch_data = launch_dict.get(launch_item)
+    if not launch_data:
+        _LOGGER.warning("unable to find item: %s", launch_item)
+        return set()
     launch_config = launch_data.get("config", {})
     sub_files = launch_config.get("roslaunch_files", [])
     sub_files = set(sub_files)
@@ -124,10 +114,15 @@ def generate_launch_pages( launch_output_dir, launch_dict, main_graph: Graph, ou
 
     _LOGGER.info( "generating main graph" )
 
+    flat_launch_dict = get_flat_dict(launch_dict)
+
     if main_graph is None:
-        main_graph = generate_full_graph(launch_dict)
+        main_graph = generate_full_graph(flat_launch_dict)
     main_graph.setName( main_graph_name )
     set_node_html_attribs( main_graph, OUTPUT_LAUNCHES_REL_DIR )
+
+    ## generate main
+    generate_main_page(launch_output_dir, launch_dict, main_graph, outhtml, outmarkdown)
 
     ## generate sup pages
     sub_launch_output_dir = os.path.join( launch_output_dir, OUTPUT_LAUNCHES_REL_DIR )
@@ -137,19 +132,22 @@ def generate_launch_pages( launch_output_dir, launch_dict, main_graph: Graph, ou
     main_page_link = os.path.join( os.pardir, item_filename + ".autolink" )
 
     _LOGGER.info( "generating subpages" )
-    generate_subpages( sub_launch_output_dir, launch_dict, main_page_link, outhtml, outmarkdown )
+    generate_subpages( sub_launch_output_dir, flat_launch_dict, main_page_link, outhtml, outmarkdown )
 
-    launch_files = list( launch_dict.keys() )
-    launch_data_list = get_launch_files_list( launch_files, OUTPUT_LAUNCHES_REL_DIR )
 
-    nodes_data_list: List[Any] = []
-    nodes_added: Set[str] = set()
-    for launch_item in launch_files:
-        launch_data = launch_dict[launch_item]
-        config_data = launch_data["config"]
-        data_list = get_config_nodes_list(config_data, OUTPUT_LAUNCHES_REL_DIR, nodes_added)
-        nodes_data_list.extend( data_list )
-    nodes_data_list.sort()
+## generate page with list of all includes and all nodes
+def generate_main_page(launch_output_dir, launch_dict, main_graph, outhtml=True, outmarkdown=False):
+    flat_launch_dict = get_flat_dict(launch_dict)
+
+    launch_data_list = []
+    for launch_id, launch_data in flat_launch_dict.items():
+        launch_file = launch_data["file"]
+        launch_file = os.path.abspath(launch_file)
+        item_link = prepare_item_link( launch_id, launch_file, True, OUTPUT_LAUNCHES_REL_DIR )
+        launch_data_list.append(item_link)
+    launch_data_list.sort()
+
+    nodes_data_list: List[Any] = get_nodes_files_deps(launch_dict, OUTPUT_LAUNCHES_REL_DIR)
 
     _LOGGER.info( "generating main page" )
     main_dict = {   "style": {},
@@ -168,18 +166,22 @@ def generate_launch_pages( launch_output_dir, launch_dict, main_graph: Graph, ou
 
 
 ## returns dict: { <item_id>: <item_data_dict> }
-def generate_subpages( sub_output_dir, launch_dict, main_page_link, outhtml, outmarkdown ):
-    for launch_file, launch_data in launch_dict.items():
-        _LOGGER.info( "preparing page for item %s", launch_file )
-        config_data = launch_data["config"]
+def generate_subpages( sub_output_dir, flat_launch_dict, main_page_link, outhtml, outmarkdown ):
+    for launch_id, launch_data in flat_launch_dict.items():
+        launch_file = launch_data["file"]
+        _LOGGER.info( "preparing page for item %s", launch_id )
 
-        launch_files = config_data["roslaunch_files"]
-        launch_files = set(launch_files)
-        launch_files.remove(launch_file)
-        launch_files = list(launch_files)
-        launch_list = get_launch_files_list(launch_files)
+        launch_list = []
+        launch_includes = launch_data["included"]
+        for include_data in launch_includes:
+            include_id = get_launch_id(include_data)
+            include_file = include_data["file"]
+            include_file = os.path.abspath(include_file)
+            item_link = prepare_item_link( include_id, include_file, True, "" )
+            launch_list.append(item_link)
+        launch_list.sort()
 
-        params_data = config_data["params"]
+        params_data = launch_data["params"]
 
         fatten_list = []
         for param_data in params_data.values():
@@ -189,22 +191,28 @@ def generate_subpages( sub_output_dir, launch_dict, main_page_link, outhtml, out
         fatten_list.sort( key=lambda item: item[0], reverse=False )
         params_list = prepare_params_list(fatten_list, sub_output_dir, "")
 
-        nodes_list = config_data["nodes"]
+        nodes_list = launch_data["nodes"]
         for node_item in nodes_list:
+            node_item["filename"] = os.path.abspath(node_item["filename"])
             remap_args = node_item["remap_args"]
             remap_args = convert_to_html(remap_args, shorten=False)
             node_item["remap_args"] = remap_args
 
-        graph: Graph = generate_full_graph(launch_dict)
+        graph: Graph = generate_full_graph(flat_launch_dict)
         set_node_html_attribs( graph, "" )
-        set_nodes_style( graph, [launch_file], style_dict=DEFAULT_ACTIVE_NODE_STYLE )
-        item_out_path = prepare_filesystem_name( launch_file )
+        set_nodes_style( graph, [launch_id], style_dict=DEFAULT_ACTIVE_NODE_STYLE )
+        item_out_path = prepare_filesystem_name( launch_id )
         graph.setName(item_out_path)
 
-        item_dict = { "launch_file": launch_file,
+        resolve_dict = launch_data["resolve_dict"]
+        args_dict = resolve_dict.get("arg", {})
+        args_dict = dict(sorted(args_dict.items()))     # sort dict by keys
+
+        item_dict = { "launch_file": os.path.abspath(launch_file),
                       "main_page_link": main_page_link,
                       "graph": graph,
                       "launch_list": launch_list,
+                      "resolved_args": args_dict,
                       "nodes_list": nodes_list,
                       "params_list": params_list
                       }
@@ -218,28 +226,52 @@ def generate_subpages( sub_output_dir, launch_dict, main_page_link, outhtml, out
             generate_from_template( sub_output_dir, item_dict, template_name=template_item )
 
 
-def get_launch_files_list(launch_files, out_subdir=""):
-    launch_files.sort()
-    launch_data_list = convert_links_list( launch_files, launch_files, out_subdir )
-    return launch_data_list
+def get_nodes_files_deps(launch_dict, out_subdir):
+    ret_list = []
+
+    launch_id = get_launch_id(launch_dict)
+    nodes_list = launch_dict["nodes"]
+    for node_data in nodes_list:
+        node_name = node_data["name"]
+        node_link_data = prepare_item_link( launch_id, node_name, True, out_subdir )
+        ret_list.append( node_link_data )
+
+    ret_list.sort()
+    return ret_list
 
 
-def get_config_nodes_list(config_data, out_subdir, nodes_added=None):
-    nodes_data_list = []
-    nodes_list = config_data["nodes"]
-    for node_dict in nodes_list:
-        node_name = node_dict["name"]
+def get_flat_dict(launch_dict):
+    launch_id = get_launch_id(launch_dict)
+    ret_dict = { launch_id: launch_dict }
 
-        if nodes_added is not None:
-            if node_name in nodes_added:
-                continue
-            nodes_added.add(node_name)
+    included_list = launch_dict["included"]
+    for included_item in included_list:
+        sub_dict = get_flat_dict(included_item)
+        ret_dict.update(sub_dict)
 
-        node_filename = node_dict["filename"]
-        node_data = prepare_item_link( node_filename, node_name, True, out_subdir )
-        nodes_data_list.append( node_data )
-    nodes_data_list.sort()
-    return nodes_data_list
+    return ret_dict
+
+
+def get_launch_id(launch_item):
+    launch_file = launch_item["file"]
+    master_key = get_launch_args_string(launch_item)
+    if not master_key:
+        return launch_file
+    return f"{launch_file}_{master_key}"
+
+
+def get_launch_args_string(launch_item):
+    launch_args = launch_item["launch_args"]
+    if not launch_args:
+        return ""
+    params_list = []
+    resolved_args = launch_item["resolve_dict"]["arg"]
+    for arg in launch_args:
+        val = resolved_args[arg]
+        params_list.append(f"{arg}_{val}")
+    ret_string = "_".join(params_list)
+    ret_string = ret_string.replace(" ", "_")
+    return ret_string
 
 
 ## ===================================================================
@@ -268,8 +300,9 @@ def process_arguments( args ):
     launch_dump_file = args.launchfile
     launch_output_dir = args.outdir
     launch_dict = read_launch_data(launch_dump_file)
+    flat_launch_dict = get_flat_dict(launch_dict)
 
-    main_graph: Graph = generate_full_graph(launch_dict)
+    main_graph: Graph = generate_full_graph(flat_launch_dict)
     if args.outraw:
         main_graph.writeRAW( args.outraw )
     if args.outpng:

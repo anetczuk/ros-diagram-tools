@@ -327,13 +327,13 @@ class ObjRepr:
             return ret_dict
 
         if hasattr(obj, "__dict__"):
-            ret_dict = {}
+            ret_dict = {"___type___": type(obj).__name__, "___id___": id(obj)}
             for key, data in obj.__dict__.items():
                 ret_dict[key] = self._visit(data)
             return ret_dict
 
         if hasattr(obj, "__slots__"):
-            ret_dict = {}
+            ret_dict = {"___type___": type(obj).__name__, "___id___": id(obj)}
             for key in obj.__slots__:
                 data = getattr(obj, key)
                 ret_dict[key] = self._visit(data)
@@ -369,44 +369,166 @@ def roslaunch_configure( parser ):
                          help="Path to output directory" )
 
 
-def get_file_data(launch_path):
-    config = roslaunch.config.ROSLaunchConfig()
-    loader = roslaunch.xmlloader.XmlLoader()
-    loader.ignore_unset_args = False    # workaround for XmlLoader crash (missing attribute)
-    loader.load(launch_path, config, verbose=False)
-
-    loader_dict = obj_to_dict(loader)
-    config_dict = obj_to_dict(config)
-    if "logger" in config_dict:
-        del config_dict['logger']
-
-    return {"loader": loader_dict,
-            "config": config_dict}
-
-
+## included files (ROSLaunchConfig.roslaunch_files)
+## nodes (ROSLaunchConfig.nodes)
+## parameters (ROSLaunchConfig.params)
+## store struct: LaunchDumpData
 def roslaunch_process( args ):
-    launch_tree = {}
-
     launch_path = args.launchfile
-    root_data = get_file_data(launch_path)
-    launch_tree[launch_path] = root_data
 
-    included_files = root_data["config"].get("roslaunch_files", [])
-    for sub_file in included_files:
-        try:
-            sub_data = get_file_data(sub_file)
-            launch_tree[sub_file] = sub_data
-        except roslaunch.xmlloader.XmlParseException as exc:
-            print("unable to parse subfile:", exc)
+    master_dict = load_launch(launch_path)
+    loader_master = master_dict["loader"]
 
-    # pprint.pprint( launch_tree )
+    # pprint.pprint( obj_to_dict(master_dict) )
+
+    launch_tree = LanuchDataTree()
+    launch_tree.set_by_lunch_dict(master_dict)
+
+    for child_ctx in loader_master.children:
+        child_parent_id = child_ctx.parent_id
+        child_dict = load_launch_by_context(child_ctx)
+        conf = child_dict["config"]
+        launch_tree.add_lunch_dict(child_parent_id, child_ctx, conf)
+
+    dump_data = launch_tree.get_dump_data()
+    output_data = obj_to_dict(dump_data)
+    # pprint.pprint( output_data, sort_dicts=False )
 
     launch_out_file = os.path.join(args.outdir, "launch.json")
+    launch_out_file = os.path.abspath(launch_out_file)
     print( f"Writing {launch_out_file}" )
     with open(launch_out_file, 'w', encoding='utf8' ) as fp:
-        json.dump(launch_tree, fp, indent=4)
+        json.dump(output_data, fp, indent=4)
 
     print( "Done." )
+
+
+class LaunchDumpData:
+    def __init__(self):
+        self.file: str = None
+        self.launch_args = []                               # LoaderContext.args_passed
+        self.resolve_dict: {} = None                        # LoaderContext.resolve_dict
+        self.nodes = None                                   # ROSLaunchConfig.nodes
+        self.params = None                                  # ROSLaunchConfig.params
+        # self.machines = None                                # ROSLaunchConfig.machines
+        self.included: typing.List[LaunchDumpData] = []
+
+    def append(self, item):
+        self.included.append(item)
+
+
+class LanuchDataTree:
+    def __init__(self):
+        self.context = None                                 # LoaderContext
+        self.config = None                                  # ROSLaunchConfig
+        self.included: typing.List[LanuchDataTree] = []
+
+    def set_by_lunch_dict(self, data_dict):
+        self.context = data_dict["loader"].root_context
+        self.config = data_dict["config"]
+
+    def append_lunch_dict(self, context, config):
+        item = LanuchDataTree()
+        item.context = context
+        item.config = config
+        self.included.append(item)
+
+    def add_lunch_dict(self, parent_id, context, config) -> bool:
+        parent_item = self.get_item_by_contex_id(parent_id)
+        if parent_item is None:
+            _LOGGER.warning("unable to find item by id: %s", parent_id)
+            return False
+        parent_item.append_lunch_dict(context, config)
+        return True
+
+    def get_item_by_contex_id(self, context_id):
+        if self.is_match_context_id(context_id):
+            return self
+        for item in self.included:
+            found = item.get_item_by_contex_id(context_id)
+            if found:
+                return found
+        return None
+
+    def is_match_context_id(self, context_id):
+        return id(self.context) == context_id
+
+    def get_dump_data(self) -> LaunchDumpData:
+        ret_item = LaunchDumpData()
+        ret_item.file: str = self.config.roslaunch_files[0]
+        if hasattr(self.context, "args_passed"):
+            ret_item.launch_args = self.context.args_passed
+        ret_item.resolve_dict = self.context.resolve_dict
+        ret_item.nodes = self.config.nodes
+        ret_item.params = self.config.params
+        # ret_item.machines = self.config.machines
+
+        for item in self.included:
+            dump_item: LaunchDumpData = item.get_dump_data()
+            ret_item.append(dump_item)
+        return ret_item
+
+
+class LaunchLoader(roslaunch.xmlloader.XmlLoader):
+
+    def __init__(self):
+        super().__init__()
+        self.ignore_unset_args = False    # workaround for XmlLoader crash (missing attribute)
+
+        self.children = []
+
+    def _ns_clear_params_attr(self, tag_name, tag, context, ros_config, node_name=None, include_filename=None):
+        child_context = super()._ns_clear_params_attr( tag_name, tag, context, ros_config, node_name, include_filename )
+        if tag_name != "include":
+            return child_context
+        self.children.append(child_context)
+        return child_context
+
+
+def load_launch(launch_path, argv=None):
+    _LOGGER.info("parsing launch file: %s %s", launch_path, argv)
+    config = roslaunch.config.ROSLaunchConfig()
+    loader = LaunchLoader()
+    # loader = roslaunch.xmlloader.XmlLoader()
+
+    # loader -- contains input data for launch file
+    # config -- contains result data of launch file
+    loader.load(launch_path, config, argv=argv, verbose=False)
+
+    config.logger = None
+    config.machines = None                              # causes serialization problems
+    for child in loader.children:
+        child.parent_id = id(child.parent)
+        child.parent = None                             # causes serialization problems
+
+    return {"file": os.path.abspath(launch_path),
+            "loader": loader,
+            "config": config}
+
+
+def load_launch_by_context(context):
+    launch_file = context.filename
+    context_args = get_passed_args(context)
+    return load_launch(launch_file, context_args)
+
+
+def get_passed_args(context: roslaunch.loader.LoaderContext):
+    ret_list = []
+    passed_args = context.args_passed
+    resolved_args = context.resolve_dict.get("arg", {})
+    for passed in passed_args:
+        value = resolved_args[passed]
+        ret_list.append(f"{passed}:={value}")
+    return ret_list
+
+
+def get_data_from_config(config: roslaunch.config.ROSLaunchConfig):
+    ret_dict = { "file": config.roslaunch_files[0],
+                 "nodes": obj_to_dict(config.nodes),
+                 "params": obj_to_dict(config.params),
+                 "machines": obj_to_dict(config.machines)
+                 }
+    return ret_dict
 
 
 ## =====================================================
