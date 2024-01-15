@@ -377,18 +377,17 @@ def roslaunch_process( args ):
     launch_path = args.launchfile
 
     master_dict = load_launch(launch_path)
-    loader_master = master_dict["loader"]
+    loader_master: LaunchLoader = master_dict["loader"]
 
-    # pprint.pprint( obj_to_dict(master_dict) )
+    # pprint.pprint( obj_to_dict(loader_master) )
 
     launch_tree = LanuchDataTree()
     launch_tree.set_by_lunch_dict(master_dict)
 
-    for child_ctx in loader_master.children:
-        child_parent_id = child_ctx.parent_id
-        child_dict = load_launch_by_context(child_ctx)
-        conf = child_dict["config"]
-        launch_tree.add_lunch_dict(child_parent_id, child_ctx, conf)
+    for child_ctx in loader_master.root_context.children:
+        generate_launch_tree( child_ctx, launch_tree )
+
+    # pprint.pprint( obj_to_dict(launch_tree) )
 
     dump_data = launch_tree.get_dump_data()
     output_data = obj_to_dict(dump_data)
@@ -401,6 +400,9 @@ def roslaunch_process( args ):
         json.dump(output_data, fp, indent=4)
 
     print( "Done." )
+
+
+# =========================================================
 
 
 class LaunchDumpData:
@@ -418,14 +420,20 @@ class LaunchDumpData:
 
 
 class LanuchDataTree:
-    def __init__(self):
-        self.context = None                                 # LoaderContext
-        self.config = None                                  # ROSLaunchConfig
+    def __init__(self, context=None, config=None):
+        self.context = context                                # LoaderContext
+        self.config = config                                  # ROSLaunchConfig
         self.included: typing.List[LanuchDataTree] = []
+
+    def is_empty(self):
+        return len(self.included) < 1
 
     def set_by_lunch_dict(self, data_dict):
         self.context = data_dict["loader"].root_context
         self.config = data_dict["config"]
+
+    def append(self, data_tree):
+        self.included.append(data_tree)
 
     def append_lunch_dict(self, context, config):
         item = LanuchDataTree()
@@ -436,7 +444,7 @@ class LanuchDataTree:
     def add_lunch_dict(self, parent_id, context, config) -> bool:
         parent_item = self.get_item_by_contex_id(parent_id)
         if parent_item is None:
-            _LOGGER.warning("unable to find item by id: %s", parent_id)
+            _LOGGER.warning("unable to find item by id: %s %s", parent_id, context.filename)
             return False
         parent_item.append_lunch_dict(context, config)
         return True
@@ -469,20 +477,42 @@ class LanuchDataTree:
         return ret_item
 
 
+def generate_launch_tree(context, parent_tree: LanuchDataTree):
+    if not hasattr(context, "children"):
+        # node case
+        return
+
+    parent = parent_tree
+    if context.tag_name == "include":
+        child_dict = load_launch_by_context(context)
+        conf = child_dict["config"]
+        child_tree = LanuchDataTree(context, conf)
+        parent.append(child_tree)
+        parent = child_tree
+
+    for child_ctx in context.children:
+        generate_launch_tree( child_ctx, parent )
+
+
 class LaunchLoader(roslaunch.xmlloader.XmlLoader):
 
     def __init__(self):
         super().__init__()
         self.ignore_unset_args = False    # workaround for XmlLoader crash (missing attribute)
 
-        self.children = []
+        self.all_children = []
 
     def _ns_clear_params_attr(self, tag_name, tag, context, ros_config, node_name=None, include_filename=None):
         child_context = super()._ns_clear_params_attr( tag_name, tag, context, ros_config, node_name, include_filename )
-        if tag_name != "include":
-            return child_context
-        self.children.append(child_context)
+        child_context.tag_name = tag_name
+        self.all_children.append(child_context)
         return child_context
+
+    def build_include_tree(self):
+        for child in self.all_children:
+            if not hasattr(child.parent, "children"):
+                child.parent.children = []
+            child.parent.children.append(child)
 
 
 def load_launch(launch_path, argv=None):
@@ -494,12 +524,16 @@ def load_launch(launch_path, argv=None):
     # loader -- contains input data for launch file
     # config -- contains result data of launch file
     loader.load(launch_path, config, argv=argv, verbose=False)
+    loader.build_include_tree()
 
     config.logger = None
     config.machines = None                              # causes serialization problems
-    for child in loader.children:
+    for child in loader.all_children:
         child.parent_id = id(child.parent)
         child.parent = None                             # causes serialization problems
+    del loader.all_children
+
+    pprint.pprint( obj_to_dict(loader) )
 
     return {"file": os.path.abspath(launch_path),
             "loader": loader,
@@ -513,6 +547,8 @@ def load_launch_by_context(context):
 
 
 def get_passed_args(context: roslaunch.loader.LoaderContext):
+    if not hasattr(context, "args_passed"):
+        return []
     ret_list = []
     passed_args = context.args_passed
     resolved_args = context.resolve_dict.get("arg", {})
