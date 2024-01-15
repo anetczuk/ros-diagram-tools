@@ -10,7 +10,22 @@ Launch file: /home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_gaze
 [![_home_vbox_rosdiagrams_mecanum_catkin_ws_src_nexus_4wd_mecanum_gazebo_launch_nexus_4wd_mecanum_world.launch](_home_vbox_rosdiagrams_mecanum_catkin_ws_src_nexus_4wd_mecanum_gazebo_launch_nexus_4wd_mecanum_world.launch.png "_home_vbox_rosdiagrams_mecanum_catkin_ws_src_nexus_4wd_mecanum_gazebo_launch_nexus_4wd_mecanum_world.launch")](_home_vbox_rosdiagrams_mecanum_catkin_ws_src_nexus_4wd_mecanum_gazebo_launch_nexus_4wd_mecanum_world.launch.png)
 
 
-Nodes (4):
+| Included launch files (2): | Description: |
+| -------------------------- | ------------ |
+| [`/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/launch/nexus_4wd_mecanum_description.launch`](_home_vbox_rosdiagrams_mecanum_catkin_ws_src_nexus_4wd_mecanum_description_launch_nexus_4wd_mecanum_description.launch.md) |  |
+| [`/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch`](_opt_ros_noetic_share_gazebo_ros_launch_empty_world.launch_debug_0_gui_true_use_sim_time_true_headless_false_paused_false.md) |  |
+
+
+#### Resolved arguments (3):
+
+| Argument | Value |
+| -------- | ----- |
+| gui | `true` |
+| headless | `false` |
+| use_sim_time | `true` |
+
+
+#### Nodes (4):
 
 |     |     |
 | --- | --- |
@@ -23,6 +38,7 @@ Nodes (4):
 | Launch file: | `/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch` |
 | Remap args: | `[]` |
 
+
 |     |     |
 | --- | --- |
 | Node name: | `gazebo_gui` |
@@ -34,6 +50,7 @@ Nodes (4):
 | Launch file: | `/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch` |
 | Remap args: | `[]` |
 
+
 |     |     |
 | --- | --- |
 | Node name: | `robot_state_publisher` |
@@ -44,6 +61,7 @@ Nodes (4):
 | Required: | `False` |
 | Launch file: | `/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/launch/nexus_4wd_mecanum_description.launch` |
 | Remap args: | `[]` |
+
 
 |     |     |
 | --- | --- |
@@ -82,6 +100,7 @@ Nodes (4):
   &lt;joint name=&quot;base_link_joint&quot; type=&quot;fixed&quot;&gt;
 ...` |
 | [/use_sim_time](_use_sim_time.txt) | `bool` | `True` |
+
 
 </br>
 <font size="1">

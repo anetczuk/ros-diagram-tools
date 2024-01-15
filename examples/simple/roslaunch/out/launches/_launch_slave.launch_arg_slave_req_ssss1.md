@@ -10,7 +10,21 @@ Launch file: /launch_slave.launch
 [![_launch_slave.launch_arg_slave_req_ssss1](_launch_slave.launch_arg_slave_req_ssss1.png "_launch_slave.launch_arg_slave_req_ssss1")](_launch_slave.launch_arg_slave_req_ssss1.png)
 
 
-Nodes (1):
+| Included launch files (1): | Description: |
+| -------------------------- | ------------ |
+| [`/launch_node.launch`](_launch_node.launch_arg_node_req_node_ssss1.md) |  |
+
+
+#### Resolved arguments (3):
+
+| Argument | Value |
+| -------- | ----- |
+| arg_other | `aaa_ssss1` |
+| arg_slave_def | `aaa` |
+| arg_slave_req | `ssss1` |
+
+
+#### Nodes (1):
 
 |     |     |
 | --- | --- |

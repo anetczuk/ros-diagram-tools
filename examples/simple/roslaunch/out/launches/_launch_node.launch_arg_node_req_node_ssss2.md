@@ -10,7 +10,15 @@ Launch file: /launch_node.launch
 [![_launch_node.launch_arg_node_req_node_ssss2](_launch_node.launch_arg_node_req_node_ssss2.png "_launch_node.launch_arg_node_req_node_ssss2")](_launch_node.launch_arg_node_req_node_ssss2.png)
 
 
-Nodes (1):
+#### Resolved arguments (2):
+
+| Argument | Value |
+| -------- | ----- |
+| arg_node_def | `aaa` |
+| arg_node_req | `node_ssss2` |
+
+
+#### Nodes (1):
 
 |     |     |
 | --- | --- |

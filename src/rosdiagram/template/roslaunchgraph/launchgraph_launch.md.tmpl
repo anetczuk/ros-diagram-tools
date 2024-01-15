@@ -27,12 +27,33 @@ Launch file: ${DATA_DICT.get('launch_file', "")}
 
 ${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
 
+
+|!
+|!  launch_list = DATA_DICT.get('launch_list', [])
+|{  if launch_list:
+|!
+    $<${  tmpl_utils.ros_link_table( launch_list, "Included launch files" ) }$>
+
+|}
+|!
+|!
+|!  resolved_args = DATA_DICT.get('resolved_args', [])
+|{  if resolved_args:
+#### Resolved arguments (${ len(resolved_args) }):
+
+|!      data_matrix = []
+|{      for arg, val in resolved_args.items():
+|!          data_matrix.append( [ arg, py_utils.code_inline( val ) ] )
+|}
+    $<${ tmpl_utils.insert_table2( ["Argument", "Value"], data_matrix ) }
+
+
+|}
 |!
 |!
 |!  nodes_list = DATA_DICT.get('nodes_list', [])
 |{  if nodes_list:
-
-Nodes (${ len(nodes_list) }):
+#### Nodes (${ len(nodes_list) }):
 
 |{      for node_item in nodes_list:
 |!          data_matrix = []
@@ -46,13 +67,13 @@ Nodes (${ len(nodes_list) }):
 |!          data_matrix.append( [ "Remap args:", py_utils.code_inline( node_item["remap_args"] ) ] )
     $<${ tmpl_utils.insert_table2( [], data_matrix ) }
 
+
 |}
 |}
 |!
 |!
 |!  params_list = DATA_DICT.get('params_list', [])
 |{  if params_list:
-
 |!      header_list = []
 |!      header_list.append( f"Parameters ({ len(params_list) }):" )
 |!      header_list.append( "Type:" )
@@ -66,7 +87,9 @@ Nodes (${ len(nodes_list) }):
 |!          data_matrix.append( data_row )
 |}
         $<${ tmpl_utils.insert_table2( header_list, data_matrix ) }
-|}
 
+
+|}
+|!
 ${ tmpl_footer.print_footer() }
 |end template

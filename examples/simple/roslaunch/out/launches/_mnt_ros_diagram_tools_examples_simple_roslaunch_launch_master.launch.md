@@ -10,7 +10,20 @@ Launch file: /mnt/ros-diagram-tools/examples/simple/roslaunch/launch_master.laun
 [![_mnt_ros_diagram_tools_examples_simple_roslaunch_launch_master.launch](_mnt_ros_diagram_tools_examples_simple_roslaunch_launch_master.launch.png "_mnt_ros_diagram_tools_examples_simple_roslaunch_launch_master.launch")](_mnt_ros_diagram_tools_examples_simple_roslaunch_launch_master.launch.png)
 
 
-Nodes (2):
+| Included launch files (2): | Description: |
+| -------------------------- | ------------ |
+| [`/launch_slave.launch`](_launch_slave.launch_arg_slave_req_ssss1.md) |  |
+| [`/launch_slave.launch`](_launch_slave.launch_arg_slave_req_ssss2.md) |  |
+
+
+#### Resolved arguments (1):
+
+| Argument | Value |
+| -------- | ----- |
+| arg_master_def | `xxx` |
+
+
+#### Nodes (2):
 
 |     |     |
 | --- | --- |
@@ -22,6 +35,7 @@ Nodes (2):
 | Required: | `False` |
 | Launch file: | `/launch_node.launch` |
 | Remap args: | `[]` |
+
 
 |     |     |
 | --- | --- |
