@@ -7,7 +7,7 @@ Project is distributed under the BSD 3-Clause license.
 
 Launch file: /opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch
 
-[![_opt_ros_noetic_share_gazebo_ros_launch_empty_world.launch](_opt_ros_noetic_share_gazebo_ros_launch_empty_world.launch.png "_opt_ros_noetic_share_gazebo_ros_launch_empty_world.launch")](_opt_ros_noetic_share_gazebo_ros_launch_empty_world.launch.png)
+[![_opt_ros_noetic_share_gazebo_ros_launch_empty_world.launch_debug_0_gui_true_use_sim_time_true_headless_false_paused_false](_opt_ros_noetic_share_gazebo_ros_launch_empty_world.launch_debug_0_gui_true_use_sim_time_true_headless_false_paused_false.png "_opt_ros_noetic_share_gazebo_ros_launch_empty_world.launch_debug_0_gui_true_use_sim_time_true_headless_false_paused_false")](_opt_ros_noetic_share_gazebo_ros_launch_empty_world.launch_debug_0_gui_true_use_sim_time_true_headless_false_paused_false.png)
 
 
 Nodes (2):
@@ -22,6 +22,7 @@ Nodes (2):
 | Required: | `False` |
 | Launch file: | `/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch` |
 | Remap args: | `[]` |
+
 |     |     |
 | --- | --- |
 | Node name: | `gazebo_gui` |
@@ -32,6 +33,7 @@ Nodes (2):
 | Required: | `False` |
 | Launch file: | `/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch` |
 | Remap args: | `[]` |
+
 
 | Parameters (2): | Type: | Value: |
 | --------------- | ----- | ------ |

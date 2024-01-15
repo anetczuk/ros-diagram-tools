@@ -84,12 +84,26 @@ ${ tmpl_utils.add_graph_default_image( DATA_DICT ) }$>
 ${  tmpl_utils.ros_link_table( launch_list, "Included launch files" ) }$>
 |!
 |!
+|!  resolved_args = DATA_DICT.get('resolved_args', [])
+|{  if resolved_args:
+
+    <h4>Resolved arguments (${ len(resolved_args) }):</h4>
+    <div class="info_content data">
+|!      data_matrix = []
+|{      for arg, val in resolved_args.items():
+|!          data_matrix.append( [ arg, py_utils.code_inline( val ) ] )
+|}
+    $<${ tmpl_utils.insert_table2( ["Argument", "Value"], data_matrix ) }
+    </div>
+|}
+|!
+|!
 |!  nodes_list = DATA_DICT.get('nodes_list', [])
 |{  if nodes_list:
 
     <h4>Nodes (${ len(nodes_list) }):</h4>
 |{      for node_item in nodes_list:
-    <div class="info_content">
+    <div class="info_content data">
 |!          data_matrix = []
 |!          data_matrix.append( [ "Node name:", py_utils.code_inline( node_item["name"] ) ] )
 |!          data_matrix.append( [ "Package:", py_utils.code_inline( node_item["package"] ) ] )

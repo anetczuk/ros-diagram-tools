@@ -22,6 +22,7 @@ Nodes (4):
 | Required: | `False` |
 | Launch file: | `/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch` |
 | Remap args: | `[]` |
+
 |     |     |
 | --- | --- |
 | Node name: | `gazebo_gui` |
@@ -32,6 +33,7 @@ Nodes (4):
 | Required: | `False` |
 | Launch file: | `/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch` |
 | Remap args: | `[]` |
+
 |     |     |
 | --- | --- |
 | Node name: | `robot_state_publisher` |
@@ -42,6 +44,7 @@ Nodes (4):
 | Required: | `False` |
 | Launch file: | `/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/launch/nexus_4wd_mecanum_description.launch` |
 | Remap args: | `[]` |
+
 |     |     |
 | --- | --- |
 | Node name: | `urdf_spawner` |
@@ -52,6 +55,7 @@ Nodes (4):
 | Required: | `False` |
 | Launch file: | `/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_gazebo/launch/nexus_4wd_mecanum_world.launch` |
 | Remap args: | `[]` |
+
 
 | Parameters (3): | Type: | Value: |
 | --------------- | ----- | ------ |

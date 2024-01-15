@@ -23,6 +23,7 @@ Nodes (1):
 | Launch file: | `/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/launch/nexus_4wd_mecanum_description.launch` |
 | Remap args: | `[]` |
 
+
 | Parameters (1): | Type: | Value: |
 | --------------- | ----- | ------ |
 | [/robot_description](_robot_description.txt) | `str` | `&lt;?xml version=&quot;1.0&quot; ?&gt;

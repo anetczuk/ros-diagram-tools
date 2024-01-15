@@ -1,55 +1,260 @@
 {
-    "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_gazebo/launch/nexus_4wd_mecanum_world.launch": {
-        "loader": {
-            "root_context": {
-                "parent": null,
-                "ns": "/",
-                "_remap_args": [],
-                "params": [],
-                "env_args": [],
-                "filename": "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_gazebo/launch/nexus_4wd_mecanum_world.launch",
-                "resolve_dict": {
-                    "arg": {
-                        "use_sim_time": "true",
-                        "gui": "true",
-                        "headless": "false"
-                    },
-                    "arg_doc": {
-                        "use_sim_time": [
-                            null,
-                            "true"
-                        ],
-                        "gui": [
-                            null,
-                            "true"
-                        ],
-                        "headless": [
-                            null,
-                            "false"
-                        ]
-                    },
-                    "filename": "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_gazebo/launch/nexus_4wd_mecanum_world.launch"
-                },
-                "arg_names": [
-                    "use_sim_time",
-                    "gui",
-                    "headless"
-                ],
-                "include_resolve_dict": null,
-                "pass_all_args": false
-            },
-            "resolve_anon": true,
-            "args_only": false
+    "___type___": "LaunchDumpData",
+    "___id___": 140597292755984,
+    "file": "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_gazebo/launch/nexus_4wd_mecanum_world.launch",
+    "launch_args": [],
+    "resolve_dict": {
+        "arg": {
+            "use_sim_time": "true",
+            "gui": "true",
+            "headless": "false"
         },
-        "config": {
-            "master": {
-                "type": "rosmaster",
-                "auto": null,
-                "uri": "http://localhost:11311"
+        "arg_doc": {
+            "use_sim_time": [
+                null,
+                "true"
+            ],
+            "gui": [
+                null,
+                "true"
+            ],
+            "headless": [
+                null,
+                "false"
+            ]
+        },
+        "filename": "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_gazebo/launch/nexus_4wd_mecanum_world.launch"
+    },
+    "nodes": [
+        {
+            "___type___": "Node",
+            "___id___": 140597292146752,
+            "package": "gazebo_ros",
+            "type": "gzserver",
+            "name": "gazebo",
+            "namespace": "/",
+            "machine_name": null,
+            "machine": null,
+            "args": "   -e ode  worlds/empty.world",
+            "respawn": false,
+            "respawn_delay": 0.0,
+            "remap_args": [],
+            "env_args": [],
+            "process_name": null,
+            "output": "screen",
+            "cwd": null,
+            "launch_prefix": null,
+            "required": false,
+            "filename": "/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch"
+        },
+        {
+            "___type___": "Node",
+            "___id___": 140597292147104,
+            "package": "gazebo_ros",
+            "type": "gzclient",
+            "name": "gazebo_gui",
+            "namespace": "/",
+            "machine_name": null,
+            "machine": null,
+            "args": "",
+            "respawn": false,
+            "respawn_delay": 0.0,
+            "remap_args": [],
+            "env_args": [],
+            "process_name": null,
+            "output": "screen",
+            "cwd": null,
+            "launch_prefix": null,
+            "required": false,
+            "filename": "/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch"
+        },
+        {
+            "___type___": "Node",
+            "___id___": 140597292108960,
+            "package": "robot_state_publisher",
+            "type": "robot_state_publisher",
+            "name": "robot_state_publisher",
+            "namespace": "/",
+            "machine_name": null,
+            "machine": null,
+            "args": "",
+            "respawn": false,
+            "respawn_delay": 0.0,
+            "remap_args": [],
+            "env_args": [],
+            "process_name": null,
+            "output": null,
+            "cwd": null,
+            "launch_prefix": null,
+            "required": false,
+            "filename": "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/launch/nexus_4wd_mecanum_description.launch"
+        },
+        {
+            "___type___": "Node",
+            "___id___": 140597292147456,
+            "package": "gazebo_ros",
+            "type": "spawn_model",
+            "name": "urdf_spawner",
+            "namespace": "/",
+            "machine_name": null,
+            "machine": null,
+            "args": "-urdf -model nexus_4wd_mecanum -param robot_description -x 0 -y 0 -z 0.5",
+            "respawn": false,
+            "respawn_delay": 0.0,
+            "remap_args": [],
+            "env_args": [],
+            "process_name": null,
+            "output": null,
+            "cwd": null,
+            "launch_prefix": null,
+            "required": false,
+            "filename": "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_gazebo/launch/nexus_4wd_mecanum_world.launch"
+        }
+    ],
+    "params": {
+        "/use_sim_time": {
+            "___type___": "Param",
+            "___id___": 140597292359488,
+            "key": "/use_sim_time",
+            "value": true
+        },
+        "/gazebo/enable_ros_network": {
+            "___type___": "Param",
+            "___id___": 140597292356368,
+            "key": "/gazebo/enable_ros_network",
+            "value": true
+        },
+        "/robot_description": {
+            "___type___": "Param",
+            "___id___": 140597292356512,
+            "key": "/robot_description",
+            "value": "<?xml version=\"1.0\" ?>\n<!-- =================================================================================== -->\n<!-- |    This document was autogenerated by xacro from /home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/urdf/nexus_4wd_mecanum.xacro | -->\n<!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->\n<!-- =================================================================================== -->\n<robot name=\"nexus_4wd_mecanum\">\n  <material name=\"yellow\">\n    <color rgba=\"0.8 0.8 0.0 1.0\"/>\n  </material>\n  <material name=\"black\">\n    <color rgba=\"0.15 0.15 0.15 1.0\"/>\n  </material>\n  <material name=\"dark_grey\">\n    <color rgba=\"0.2 0.2 0.2 1.0\"/>\n  </material>\n  <material name=\"light_grey\">\n    <color rgba=\"0.4 0.4 0.4 1.0\"/>\n  </material>\n  <link name=\"base_footprint\"/>\n  <joint name=\"base_link_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 0\" xyz=\"0 0 0.05\"/>\n    <parent link=\"base_footprint\"/>\n    <child link=\"base_link\"/>\n  </joint>\n  <link name=\"base_link\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/nexus_base_link.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"yellow\"/>\n    </visual>\n    <collision>\n      <origin xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/nexus_base_link_collision.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <!-- Inertia from CAD model, filled box assumption -->\n      <origin rpy=\"0 0 0\" xyz=\"-0.01103 0 0.002\"/>\n      <mass value=\"2.844\"/>\n      <inertia ixx=\"0.018819942\" ixy=\"0\" ixz=\"-0.000101519\" iyy=\"0.057333716\" iyz=\"0\" izz=\"0.074201740\"/>\n    </inertial>\n  </link>\n  <joint name=\"upper_left_wheel_shaft_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 0\" xyz=\"0.150 0.108 0.0\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"upper_left_wheel_shaft\"/>\n  </joint>\n  <link name=\"upper_left_wheel_shaft\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n    <collision>\n      <origin xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0 0.01221 0\"/>\n      <mass value=\"0.055\"/>\n      <inertia ixx=\"0.000021370\" ixy=\"0\" ixz=\"0\" iyy=\"0.000009966\" iyz=\"0\" izz=\"0.000021370\"/>\n    </inertial>\n  </link>\n  <joint name=\"lower_left_wheel_shaft_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 0\" xyz=\"-0.150 0.108 0.0\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"lower_left_wheel_shaft\"/>\n  </joint>\n  <link name=\"lower_left_wheel_shaft\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n    <collision>\n      <origin xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0 0.01221 0\"/>\n      <mass value=\"0.055\"/>\n      <inertia ixx=\"0.000021370\" ixy=\"0\" ixz=\"0\" iyy=\"0.000009966\" iyz=\"0\" izz=\"0.000021370\"/>\n    </inertial>\n  </link>\n  <joint name=\"upper_right_wheel_shaft_joint\" type=\"fixed\">\n    <origin rpy=\"3.141592653589793 0 0\" xyz=\"0.150 -0.108 0.0\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"upper_right_wheel_shaft\"/>\n  </joint>\n  <link name=\"upper_right_wheel_shaft\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n    <collision>\n      <origin xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0 0.01221 0\"/>\n      <mass value=\"0.055\"/>\n      <inertia ixx=\"0.000021370\" ixy=\"0\" ixz=\"0\" iyy=\"0.000009966\" iyz=\"0\" izz=\"0.000021370\"/>\n    </inertial>\n  </link>\n  <joint name=\"lower_right_wheel_shaft_joint\" type=\"fixed\">\n    <origin rpy=\"3.141592653589793 0 0\" xyz=\"-0.150 -0.108 0.0\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"lower_right_wheel_shaft\"/>\n  </joint>\n  <link name=\"lower_right_wheel_shaft\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n    <collision>\n      <origin xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0 0.01221 0\"/>\n      <mass value=\"0.055\"/>\n      <inertia ixx=\"0.000021370\" ixy=\"0\" ixz=\"0\" iyy=\"0.000009966\" iyz=\"0\" izz=\"0.000021370\"/>\n    </inertial>\n  </link>\n  <joint name=\"upper_left_wheel_joint\" type=\"continuous\">\n    <origin rpy=\"0 0 0\" xyz=\"0 0.042 0\"/>\n    <parent link=\"upper_left_wheel_shaft\"/>\n    <child link=\"upper_left_wheel\"/>\n    <axis xyz=\"0 1 0\"/>\n  </joint>\n  <link name=\"upper_left_wheel\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/mecanum_wheel_left.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"light_grey\"/>\n    </visual>\n    <collision>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <cylinder length=\"0.0505\" radius=\"0.05\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0.0 0.0 0.0\"/>\n      <mass value=\"0.3844\"/>\n      <!-- Inertia based on cylinder -->\n      <inertia ixx=\"0.000324824\" ixy=\"0\" ixz=\"0\" iyy=\"0.000480000\" iyz=\"0\" izz=\"0.000324824\"/>\n    </inertial>\n  </link>\n  <joint name=\"lower_left_wheel_joint\" type=\"continuous\">\n    <origin rpy=\"0 0 0\" xyz=\"0 0.042 0\"/>\n    <parent link=\"lower_left_wheel_shaft\"/>\n    <child link=\"lower_left_wheel\"/>\n    <axis xyz=\"0 1 0\"/>\n  </joint>\n  <link name=\"lower_left_wheel\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/mecanum_wheel_right.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"light_grey\"/>\n    </visual>\n    <collision>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <cylinder length=\"0.0505\" radius=\"0.05\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0.0 0.0 0.0\"/>\n      <mass value=\"0.3844\"/>\n      <!-- Inertia based on cylinder -->\n      <inertia ixx=\"0.000324824\" ixy=\"0\" ixz=\"0\" iyy=\"0.000480000\" iyz=\"0\" izz=\"0.000324824\"/>\n    </inertial>\n  </link>\n  <joint name=\"upper_right_wheel_joint\" type=\"continuous\">\n    <origin rpy=\"0 0 0\" xyz=\"0 0.042 0\"/>\n    <parent link=\"upper_right_wheel_shaft\"/>\n    <child link=\"upper_right_wheel\"/>\n    <axis xyz=\"0 1 0\"/>\n  </joint>\n  <link name=\"upper_right_wheel\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/mecanum_wheel_right.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"light_grey\"/>\n    </visual>\n    <collision>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <cylinder length=\"0.0505\" radius=\"0.05\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0.0 0.0 0.0\"/>\n      <mass value=\"0.3844\"/>\n      <!-- Inertia based on cylinder -->\n      <inertia ixx=\"0.000324824\" ixy=\"0\" ixz=\"0\" iyy=\"0.000480000\" iyz=\"0\" izz=\"0.000324824\"/>\n    </inertial>\n  </link>\n  <joint name=\"lower_right_wheel_joint\" type=\"continuous\">\n    <origin rpy=\"0 0 0\" xyz=\"0 0.042 0\"/>\n    <parent link=\"lower_right_wheel_shaft\"/>\n    <child link=\"lower_right_wheel\"/>\n    <axis xyz=\"0 1 0\"/>\n  </joint>\n  <link name=\"lower_right_wheel\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/mecanum_wheel_left.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"light_grey\"/>\n    </visual>\n    <collision>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <cylinder length=\"0.0505\" radius=\"0.05\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0.0 0.0 0.0\"/>\n      <mass value=\"0.3844\"/>\n      <!-- Inertia based on cylinder -->\n      <inertia ixx=\"0.000324824\" ixy=\"0\" ixz=\"0\" iyy=\"0.000480000\" iyz=\"0\" izz=\"0.000324824\"/>\n    </inertial>\n  </link>\n  <joint name=\"left_sensor_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 1.5707963267948966\" xyz=\"0 0.108 0.010\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"left_sensor\"/>\n  </joint>\n  <link name=\"left_sensor\">\n    <visual>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/urm04.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n  </link>\n  <joint name=\"front_sensor_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 0\" xyz=\"0.205 0 0.010\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"front_sensor\"/>\n  </joint>\n  <link name=\"front_sensor\">\n    <visual>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/urm04.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n  </link>\n  <joint name=\"right_sensor_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 -1.5707963267948966\" xyz=\"0 -0.108 0.010\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"right_sensor\"/>\n  </joint>\n  <link name=\"right_sensor\">\n    <visual>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/urm04.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n  </link>\n  <joint name=\"rear_sensor_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 3.141592653589793\" xyz=\"-0.201 0 0.010\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"rear_sensor\"/>\n  </joint>\n  <link name=\"rear_sensor\">\n    <visual>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/urm04.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n  </link>\n  <gazebo>\n    <!--<plugin name=\"gazebo_ros_control\" filename=\"libgazebo_ros_control.so\">\n      <robotNamespace>/</robotNamespace>\n    </plugin>-->\n    <plugin filename=\"libnexus_ros_force_based_move.so\" name=\"nexus_ros_force_based_move\">\n      <commandTopic>cmd_vel</commandTopic>\n      <odometryTopic>odom</odometryTopic>\n      <odometryFrame>odom</odometryFrame>\n      <odometryRate>25.0</odometryRate>\n      <robotBaseFrame>base_footprint</robotBaseFrame>\n      <cmdVelTimeOut>0.25</cmdVelTimeOut>\n      <publishOdometryTf>0</publishOdometryTf>\n      <yaw_velocity_p_gain>1.0</yaw_velocity_p_gain>\n      <x_velocity_p_gain>15.0</x_velocity_p_gain>\n      <y_velocity_p_gain>15.0</y_velocity_p_gain>\n      <max_x_velocity>0.6</max_x_velocity>\n      <max_y_velocity>0.6</max_y_velocity>\n      <max_yaw_velocity>0.5</max_yaw_velocity>\n    </plugin>\n  </gazebo>\n  <!-- All static links get collapsed down to base_link in Gazebo, so that's\n       the one to apply the colour to (in Gazebo 5+). -->\n  <gazebo reference=\"base_footprint\">\n    <material>Gazebo/Yellow</material>\n    <gravity>true</gravity>\n  </gazebo>\n  <gazebo reference=\"base_link\">\n    <material>Gazebo/Yellow</material>\n  </gazebo>\n  <gazebo reference=\"left_sensor\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"front_sensor\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"right_sensor\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"rear_sensor\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"upper_left_wheel_shaft\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"lower_left_wheel_shaft\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"upper_right_wheel_shaft\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"lower_right_wheel_shaft\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <!-- Wheel friction to zero, as movement is handled by applying forces at the body level. -->\n  <gazebo reference=\"upper_left_wheel\">\n    <material>Gazebo/Grey</material>\n    <mu1>0.0</mu1>\n    <mu2>0.0</mu2>\n  </gazebo>\n  <gazebo reference=\"lower_left_wheel\">\n    <material>Gazebo/Grey</material>\n    <mu1>0.0</mu1>\n    <mu2>0.0</mu2>\n  </gazebo>\n  <gazebo reference=\"upper_right_wheel\">\n    <material>Gazebo/Grey</material>\n    <mu1>0.0</mu1>\n    <mu2>0.0</mu2>\n  </gazebo>\n  <gazebo reference=\"lower_right_wheel\">\n    <material>Gazebo/Grey</material>\n    <mu1>0.0</mu1>\n    <mu2>0.0</mu2>\n  </gazebo>\n  <gazebo reference=\"front_sensor\">\n    <sensor name=\"front_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n      <update_rate>10</update_rate>\n      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n      <ray>\n        <scan>\n          <horizontal>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.52</min_angle>\n            <max_angle> 0.52</max_angle>\n          </horizontal>\n          <vertical>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.02</min_angle>\n            <max_angle> 0.02</max_angle>\n          </vertical>\n        </scan>\n        <range>\n          <min>0.04</min>\n          <max>2.5</max>\n          <resolution>0.01</resolution>\n        </range>\n      </ray>\n      <plugin filename=\"libhector_gazebo_ros_sonar.so\" name=\"gazebo_ros_front_sensor\">\n        <gaussianNoise>0.005</gaussianNoise>\n        <topicName>front_sensor</topicName>\n        <frameId>front_sensor</frameId>\n      </plugin>\n    </sensor>\n  </gazebo>\n  <gazebo reference=\"left_sensor\">\n    <sensor name=\"left_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n      <update_rate>10</update_rate>\n      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n      <ray>\n        <scan>\n          <horizontal>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.52</min_angle>\n            <max_angle> 0.52</max_angle>\n          </horizontal>\n          <vertical>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.02</min_angle>\n            <max_angle> 0.02</max_angle>\n          </vertical>\n        </scan>\n        <range>\n          <min>0.04</min>\n          <max>2.5</max>\n          <resolution>0.01</resolution>\n        </range>\n      </ray>\n      <plugin filename=\"libhector_gazebo_ros_sonar.so\" name=\"gazebo_ros_left_sensor\">\n        <gaussianNoise>0.005</gaussianNoise>\n        <topicName>left_sensor</topicName>\n        <frameId>left_sensor</frameId>\n      </plugin>\n    </sensor>\n  </gazebo>\n  <gazebo reference=\"right_sensor\">\n    <sensor name=\"right_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n      <update_rate>10</update_rate>\n      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n      <ray>\n        <scan>\n          <horizontal>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.52</min_angle>\n            <max_angle> 0.52</max_angle>\n          </horizontal>\n          <vertical>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.02</min_angle>\n            <max_angle> 0.02</max_angle>\n          </vertical>\n        </scan>\n        <range>\n          <min>0.04</min>\n          <max>2.5</max>\n          <resolution>0.01</resolution>\n        </range>\n      </ray>\n      <plugin filename=\"libhector_gazebo_ros_sonar.so\" name=\"gazebo_ros_right_sensor\">\n        <gaussianNoise>0.005</gaussianNoise>\n        <topicName>right_sensor</topicName>\n        <frameId>right_sensor</frameId>\n      </plugin>\n    </sensor>\n  </gazebo>\n  <gazebo reference=\"rear_sensor\">\n    <sensor name=\"rear_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n      <update_rate>10</update_rate>\n      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n      <ray>\n        <scan>\n          <horizontal>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.52</min_angle>\n            <max_angle> 0.52</max_angle>\n          </horizontal>\n          <vertical>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.02</min_angle>\n            <max_angle> 0.02</max_angle>\n          </vertical>\n        </scan>\n        <range>\n          <min>0.04</min>\n          <max>2.5</max>\n          <resolution>0.01</resolution>\n        </range>\n      </ray>\n      <plugin filename=\"libhector_gazebo_ros_sonar.so\" name=\"gazebo_ros_rear_sensor\">\n        <gaussianNoise>0.005</gaussianNoise>\n        <topicName>rear_sensor</topicName>\n        <frameId>rear_sensor</frameId>\n      </plugin>\n    </sensor>\n  </gazebo>\n</robot>\n\n"
+        }
+    },
+    "included": [
+        {
+            "___type___": "LaunchDumpData",
+            "___id___": 140597292142896,
+            "file": "/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch",
+            "launch_args": [
+                "debug",
+                "gui",
+                "use_sim_time",
+                "headless",
+                "paused"
+            ],
+            "resolve_dict": {
+                "arg": {
+                    "debug": "0",
+                    "gui": "true",
+                    "use_sim_time": "true",
+                    "headless": "false",
+                    "paused": "false",
+                    "extra_gazebo_args": "",
+                    "recording": "false",
+                    "physics": "ode",
+                    "verbose": "false",
+                    "output": "screen",
+                    "world_name": "worlds/empty.world",
+                    "respawn_gazebo": "false",
+                    "use_clock_frequency": "false",
+                    "pub_clock_frequency": "100",
+                    "enable_ros_network": "true",
+                    "server_required": "false",
+                    "gui_required": "false",
+                    "command_arg1": "",
+                    "command_arg2": "",
+                    "command_arg3": "",
+                    "script_type": "gzserver"
+                },
+                "arg_doc": {
+                    "paused": [
+                        null,
+                        "false"
+                    ],
+                    "use_sim_time": [
+                        null,
+                        "true"
+                    ],
+                    "extra_gazebo_args": [
+                        null,
+                        ""
+                    ],
+                    "gui": [
+                        null,
+                        "true"
+                    ],
+                    "recording": [
+                        null,
+                        "false"
+                    ],
+                    "headless": [
+                        null,
+                        "false"
+                    ],
+                    "debug": [
+                        null,
+                        "false"
+                    ],
+                    "physics": [
+                        null,
+                        "ode"
+                    ],
+                    "verbose": [
+                        null,
+                        "false"
+                    ],
+                    "output": [
+                        null,
+                        "screen"
+                    ],
+                    "world_name": [
+                        null,
+                        "worlds/empty.world"
+                    ],
+                    "respawn_gazebo": [
+                        null,
+                        "false"
+                    ],
+                    "use_clock_frequency": [
+                        null,
+                        "false"
+                    ],
+                    "pub_clock_frequency": [
+                        null,
+                        "100"
+                    ],
+                    "enable_ros_network": [
+                        null,
+                        "true"
+                    ],
+                    "server_required": [
+                        null,
+                        "false"
+                    ],
+                    "gui_required": [
+                        null,
+                        "false"
+                    ],
+                    "command_arg1": [
+                        null,
+                        null
+                    ],
+                    "command_arg2": [
+                        null,
+                        null
+                    ],
+                    "command_arg3": [
+                        null,
+                        null
+                    ]
+                },
+                "filename": "/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch"
             },
-            "nodes_core": [],
             "nodes": [
                 {
+                    "___type___": "Node",
+                    "___id___": 140597292228672,
                     "package": "gazebo_ros",
                     "type": "gzserver",
                     "name": "gazebo",
@@ -69,282 +274,8 @@
                     "filename": "/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch"
                 },
                 {
-                    "package": "gazebo_ros",
-                    "type": "gzclient",
-                    "name": "gazebo_gui",
-                    "namespace": "/",
-                    "machine_name": null,
-                    "machine": null,
-                    "args": "",
-                    "respawn": false,
-                    "respawn_delay": 0.0,
-                    "remap_args": [],
-                    "env_args": [],
-                    "process_name": null,
-                    "output": "screen",
-                    "cwd": null,
-                    "launch_prefix": null,
-                    "required": false,
-                    "filename": "/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch"
-                },
-                {
-                    "package": "robot_state_publisher",
-                    "type": "robot_state_publisher",
-                    "name": "robot_state_publisher",
-                    "namespace": "/",
-                    "machine_name": null,
-                    "machine": null,
-                    "args": "",
-                    "respawn": false,
-                    "respawn_delay": 0.0,
-                    "remap_args": [],
-                    "env_args": [],
-                    "process_name": null,
-                    "output": null,
-                    "cwd": null,
-                    "launch_prefix": null,
-                    "required": false,
-                    "filename": "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/launch/nexus_4wd_mecanum_description.launch"
-                },
-                {
-                    "package": "gazebo_ros",
-                    "type": "spawn_model",
-                    "name": "urdf_spawner",
-                    "namespace": "/",
-                    "machine_name": null,
-                    "machine": null,
-                    "args": "-urdf -model nexus_4wd_mecanum -param robot_description -x 0 -y 0 -z 0.5",
-                    "respawn": false,
-                    "respawn_delay": 0.0,
-                    "remap_args": [],
-                    "env_args": [],
-                    "process_name": null,
-                    "output": null,
-                    "cwd": null,
-                    "launch_prefix": null,
-                    "required": false,
-                    "filename": "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_gazebo/launch/nexus_4wd_mecanum_world.launch"
-                }
-            ],
-            "roslaunch_files": [
-                "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_gazebo/launch/nexus_4wd_mecanum_world.launch",
-                "/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch",
-                "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/launch/nexus_4wd_mecanum_description.launch"
-            ],
-            "resolved_node_names": [
-                "/gazebo",
-                "/gazebo_gui",
-                "/robot_state_publisher",
-                "/urdf_spawner"
-            ],
-            "tests": [],
-            "machines": {
-                "": {
-                    "name": "",
-                    "address": "localhost",
-                    "ssh_port": 22,
-                    "user": null,
-                    "password": null,
-                    "assignable": true,
-                    "env_loader": null,
-                    "timeout": 10.0
-                }
-            },
-            "params": {
-                "/use_sim_time": {
-                    "key": "/use_sim_time",
-                    "value": true
-                },
-                "/gazebo/enable_ros_network": {
-                    "key": "/gazebo/enable_ros_network",
-                    "value": true
-                },
-                "/robot_description": {
-                    "key": "/robot_description",
-                    "value": "<?xml version=\"1.0\" ?>\n<!-- =================================================================================== -->\n<!-- |    This document was autogenerated by xacro from /home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/urdf/nexus_4wd_mecanum.xacro | -->\n<!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->\n<!-- =================================================================================== -->\n<robot name=\"nexus_4wd_mecanum\">\n  <material name=\"yellow\">\n    <color rgba=\"0.8 0.8 0.0 1.0\"/>\n  </material>\n  <material name=\"black\">\n    <color rgba=\"0.15 0.15 0.15 1.0\"/>\n  </material>\n  <material name=\"dark_grey\">\n    <color rgba=\"0.2 0.2 0.2 1.0\"/>\n  </material>\n  <material name=\"light_grey\">\n    <color rgba=\"0.4 0.4 0.4 1.0\"/>\n  </material>\n  <link name=\"base_footprint\"/>\n  <joint name=\"base_link_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 0\" xyz=\"0 0 0.05\"/>\n    <parent link=\"base_footprint\"/>\n    <child link=\"base_link\"/>\n  </joint>\n  <link name=\"base_link\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/nexus_base_link.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"yellow\"/>\n    </visual>\n    <collision>\n      <origin xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/nexus_base_link_collision.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <!-- Inertia from CAD model, filled box assumption -->\n      <origin rpy=\"0 0 0\" xyz=\"-0.01103 0 0.002\"/>\n      <mass value=\"2.844\"/>\n      <inertia ixx=\"0.018819942\" ixy=\"0\" ixz=\"-0.000101519\" iyy=\"0.057333716\" iyz=\"0\" izz=\"0.074201740\"/>\n    </inertial>\n  </link>\n  <joint name=\"upper_left_wheel_shaft_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 0\" xyz=\"0.150 0.108 0.0\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"upper_left_wheel_shaft\"/>\n  </joint>\n  <link name=\"upper_left_wheel_shaft\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n    <collision>\n      <origin xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0 0.01221 0\"/>\n      <mass value=\"0.055\"/>\n      <inertia ixx=\"0.000021370\" ixy=\"0\" ixz=\"0\" iyy=\"0.000009966\" iyz=\"0\" izz=\"0.000021370\"/>\n    </inertial>\n  </link>\n  <joint name=\"lower_left_wheel_shaft_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 0\" xyz=\"-0.150 0.108 0.0\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"lower_left_wheel_shaft\"/>\n  </joint>\n  <link name=\"lower_left_wheel_shaft\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n    <collision>\n      <origin xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0 0.01221 0\"/>\n      <mass value=\"0.055\"/>\n      <inertia ixx=\"0.000021370\" ixy=\"0\" ixz=\"0\" iyy=\"0.000009966\" iyz=\"0\" izz=\"0.000021370\"/>\n    </inertial>\n  </link>\n  <joint name=\"upper_right_wheel_shaft_joint\" type=\"fixed\">\n    <origin rpy=\"3.141592653589793 0 0\" xyz=\"0.150 -0.108 0.0\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"upper_right_wheel_shaft\"/>\n  </joint>\n  <link name=\"upper_right_wheel_shaft\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n    <collision>\n      <origin xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0 0.01221 0\"/>\n      <mass value=\"0.055\"/>\n      <inertia ixx=\"0.000021370\" ixy=\"0\" ixz=\"0\" iyy=\"0.000009966\" iyz=\"0\" izz=\"0.000021370\"/>\n    </inertial>\n  </link>\n  <joint name=\"lower_right_wheel_shaft_joint\" type=\"fixed\">\n    <origin rpy=\"3.141592653589793 0 0\" xyz=\"-0.150 -0.108 0.0\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"lower_right_wheel_shaft\"/>\n  </joint>\n  <link name=\"lower_right_wheel_shaft\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n    <collision>\n      <origin xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0 0.01221 0\"/>\n      <mass value=\"0.055\"/>\n      <inertia ixx=\"0.000021370\" ixy=\"0\" ixz=\"0\" iyy=\"0.000009966\" iyz=\"0\" izz=\"0.000021370\"/>\n    </inertial>\n  </link>\n  <joint name=\"upper_left_wheel_joint\" type=\"continuous\">\n    <origin rpy=\"0 0 0\" xyz=\"0 0.042 0\"/>\n    <parent link=\"upper_left_wheel_shaft\"/>\n    <child link=\"upper_left_wheel\"/>\n    <axis xyz=\"0 1 0\"/>\n  </joint>\n  <link name=\"upper_left_wheel\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/mecanum_wheel_left.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"light_grey\"/>\n    </visual>\n    <collision>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <cylinder length=\"0.0505\" radius=\"0.05\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0.0 0.0 0.0\"/>\n      <mass value=\"0.3844\"/>\n      <!-- Inertia based on cylinder -->\n      <inertia ixx=\"0.000324824\" ixy=\"0\" ixz=\"0\" iyy=\"0.000480000\" iyz=\"0\" izz=\"0.000324824\"/>\n    </inertial>\n  </link>\n  <joint name=\"lower_left_wheel_joint\" type=\"continuous\">\n    <origin rpy=\"0 0 0\" xyz=\"0 0.042 0\"/>\n    <parent link=\"lower_left_wheel_shaft\"/>\n    <child link=\"lower_left_wheel\"/>\n    <axis xyz=\"0 1 0\"/>\n  </joint>\n  <link name=\"lower_left_wheel\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/mecanum_wheel_right.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"light_grey\"/>\n    </visual>\n    <collision>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <cylinder length=\"0.0505\" radius=\"0.05\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0.0 0.0 0.0\"/>\n      <mass value=\"0.3844\"/>\n      <!-- Inertia based on cylinder -->\n      <inertia ixx=\"0.000324824\" ixy=\"0\" ixz=\"0\" iyy=\"0.000480000\" iyz=\"0\" izz=\"0.000324824\"/>\n    </inertial>\n  </link>\n  <joint name=\"upper_right_wheel_joint\" type=\"continuous\">\n    <origin rpy=\"0 0 0\" xyz=\"0 0.042 0\"/>\n    <parent link=\"upper_right_wheel_shaft\"/>\n    <child link=\"upper_right_wheel\"/>\n    <axis xyz=\"0 1 0\"/>\n  </joint>\n  <link name=\"upper_right_wheel\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/mecanum_wheel_right.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"light_grey\"/>\n    </visual>\n    <collision>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <cylinder length=\"0.0505\" radius=\"0.05\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0.0 0.0 0.0\"/>\n      <mass value=\"0.3844\"/>\n      <!-- Inertia based on cylinder -->\n      <inertia ixx=\"0.000324824\" ixy=\"0\" ixz=\"0\" iyy=\"0.000480000\" iyz=\"0\" izz=\"0.000324824\"/>\n    </inertial>\n  </link>\n  <joint name=\"lower_right_wheel_joint\" type=\"continuous\">\n    <origin rpy=\"0 0 0\" xyz=\"0 0.042 0\"/>\n    <parent link=\"lower_right_wheel_shaft\"/>\n    <child link=\"lower_right_wheel\"/>\n    <axis xyz=\"0 1 0\"/>\n  </joint>\n  <link name=\"lower_right_wheel\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/mecanum_wheel_left.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"light_grey\"/>\n    </visual>\n    <collision>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <cylinder length=\"0.0505\" radius=\"0.05\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0.0 0.0 0.0\"/>\n      <mass value=\"0.3844\"/>\n      <!-- Inertia based on cylinder -->\n      <inertia ixx=\"0.000324824\" ixy=\"0\" ixz=\"0\" iyy=\"0.000480000\" iyz=\"0\" izz=\"0.000324824\"/>\n    </inertial>\n  </link>\n  <joint name=\"left_sensor_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 1.5707963267948966\" xyz=\"0 0.108 0.010\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"left_sensor\"/>\n  </joint>\n  <link name=\"left_sensor\">\n    <visual>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/urm04.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n  </link>\n  <joint name=\"front_sensor_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 0\" xyz=\"0.205 0 0.010\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"front_sensor\"/>\n  </joint>\n  <link name=\"front_sensor\">\n    <visual>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/urm04.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n  </link>\n  <joint name=\"right_sensor_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 -1.5707963267948966\" xyz=\"0 -0.108 0.010\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"right_sensor\"/>\n  </joint>\n  <link name=\"right_sensor\">\n    <visual>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/urm04.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n  </link>\n  <joint name=\"rear_sensor_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 3.141592653589793\" xyz=\"-0.201 0 0.010\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"rear_sensor\"/>\n  </joint>\n  <link name=\"rear_sensor\">\n    <visual>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/urm04.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n  </link>\n  <gazebo>\n    <!--<plugin name=\"gazebo_ros_control\" filename=\"libgazebo_ros_control.so\">\n      <robotNamespace>/</robotNamespace>\n    </plugin>-->\n    <plugin filename=\"libnexus_ros_force_based_move.so\" name=\"nexus_ros_force_based_move\">\n      <commandTopic>cmd_vel</commandTopic>\n      <odometryTopic>odom</odometryTopic>\n      <odometryFrame>odom</odometryFrame>\n      <odometryRate>25.0</odometryRate>\n      <robotBaseFrame>base_footprint</robotBaseFrame>\n      <cmdVelTimeOut>0.25</cmdVelTimeOut>\n      <publishOdometryTf>0</publishOdometryTf>\n      <yaw_velocity_p_gain>1.0</yaw_velocity_p_gain>\n      <x_velocity_p_gain>15.0</x_velocity_p_gain>\n      <y_velocity_p_gain>15.0</y_velocity_p_gain>\n      <max_x_velocity>0.6</max_x_velocity>\n      <max_y_velocity>0.6</max_y_velocity>\n      <max_yaw_velocity>0.5</max_yaw_velocity>\n    </plugin>\n  </gazebo>\n  <!-- All static links get collapsed down to base_link in Gazebo, so that's\n       the one to apply the colour to (in Gazebo 5+). -->\n  <gazebo reference=\"base_footprint\">\n    <material>Gazebo/Yellow</material>\n    <gravity>true</gravity>\n  </gazebo>\n  <gazebo reference=\"base_link\">\n    <material>Gazebo/Yellow</material>\n  </gazebo>\n  <gazebo reference=\"left_sensor\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"front_sensor\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"right_sensor\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"rear_sensor\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"upper_left_wheel_shaft\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"lower_left_wheel_shaft\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"upper_right_wheel_shaft\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"lower_right_wheel_shaft\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <!-- Wheel friction to zero, as movement is handled by applying forces at the body level. -->\n  <gazebo reference=\"upper_left_wheel\">\n    <material>Gazebo/Grey</material>\n    <mu1>0.0</mu1>\n    <mu2>0.0</mu2>\n  </gazebo>\n  <gazebo reference=\"lower_left_wheel\">\n    <material>Gazebo/Grey</material>\n    <mu1>0.0</mu1>\n    <mu2>0.0</mu2>\n  </gazebo>\n  <gazebo reference=\"upper_right_wheel\">\n    <material>Gazebo/Grey</material>\n    <mu1>0.0</mu1>\n    <mu2>0.0</mu2>\n  </gazebo>\n  <gazebo reference=\"lower_right_wheel\">\n    <material>Gazebo/Grey</material>\n    <mu1>0.0</mu1>\n    <mu2>0.0</mu2>\n  </gazebo>\n  <gazebo reference=\"front_sensor\">\n    <sensor name=\"front_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n      <update_rate>10</update_rate>\n      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n      <ray>\n        <scan>\n          <horizontal>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.52</min_angle>\n            <max_angle> 0.52</max_angle>\n          </horizontal>\n          <vertical>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.02</min_angle>\n            <max_angle> 0.02</max_angle>\n          </vertical>\n        </scan>\n        <range>\n          <min>0.04</min>\n          <max>2.5</max>\n          <resolution>0.01</resolution>\n        </range>\n      </ray>\n      <plugin filename=\"libhector_gazebo_ros_sonar.so\" name=\"gazebo_ros_front_sensor\">\n        <gaussianNoise>0.005</gaussianNoise>\n        <topicName>front_sensor</topicName>\n        <frameId>front_sensor</frameId>\n      </plugin>\n    </sensor>\n  </gazebo>\n  <gazebo reference=\"left_sensor\">\n    <sensor name=\"left_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n      <update_rate>10</update_rate>\n      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n      <ray>\n        <scan>\n          <horizontal>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.52</min_angle>\n            <max_angle> 0.52</max_angle>\n          </horizontal>\n          <vertical>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.02</min_angle>\n            <max_angle> 0.02</max_angle>\n          </vertical>\n        </scan>\n        <range>\n          <min>0.04</min>\n          <max>2.5</max>\n          <resolution>0.01</resolution>\n        </range>\n      </ray>\n      <plugin filename=\"libhector_gazebo_ros_sonar.so\" name=\"gazebo_ros_left_sensor\">\n        <gaussianNoise>0.005</gaussianNoise>\n        <topicName>left_sensor</topicName>\n        <frameId>left_sensor</frameId>\n      </plugin>\n    </sensor>\n  </gazebo>\n  <gazebo reference=\"right_sensor\">\n    <sensor name=\"right_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n      <update_rate>10</update_rate>\n      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n      <ray>\n        <scan>\n          <horizontal>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.52</min_angle>\n            <max_angle> 0.52</max_angle>\n          </horizontal>\n          <vertical>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.02</min_angle>\n            <max_angle> 0.02</max_angle>\n          </vertical>\n        </scan>\n        <range>\n          <min>0.04</min>\n          <max>2.5</max>\n          <resolution>0.01</resolution>\n        </range>\n      </ray>\n      <plugin filename=\"libhector_gazebo_ros_sonar.so\" name=\"gazebo_ros_right_sensor\">\n        <gaussianNoise>0.005</gaussianNoise>\n        <topicName>right_sensor</topicName>\n        <frameId>right_sensor</frameId>\n      </plugin>\n    </sensor>\n  </gazebo>\n  <gazebo reference=\"rear_sensor\">\n    <sensor name=\"rear_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n      <update_rate>10</update_rate>\n      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n      <ray>\n        <scan>\n          <horizontal>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.52</min_angle>\n            <max_angle> 0.52</max_angle>\n          </horizontal>\n          <vertical>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.02</min_angle>\n            <max_angle> 0.02</max_angle>\n          </vertical>\n        </scan>\n        <range>\n          <min>0.04</min>\n          <max>2.5</max>\n          <resolution>0.01</resolution>\n        </range>\n      </ray>\n      <plugin filename=\"libhector_gazebo_ros_sonar.so\" name=\"gazebo_ros_rear_sensor\">\n        <gaussianNoise>0.005</gaussianNoise>\n        <topicName>rear_sensor</topicName>\n        <frameId>rear_sensor</frameId>\n      </plugin>\n    </sensor>\n  </gazebo>\n</robot>\n\n"
-                }
-            },
-            "clear_params": [],
-            "executables": [],
-            "config_errors": [],
-            "_assign_machines_complete": false,
-            "_remote_nodes_present": null
-        }
-    },
-    "/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch": {
-        "loader": {
-            "root_context": {
-                "parent": null,
-                "ns": "/",
-                "_remap_args": [],
-                "params": [],
-                "env_args": [],
-                "filename": "/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch",
-                "resolve_dict": {
-                    "arg": {
-                        "paused": "false",
-                        "use_sim_time": "true",
-                        "extra_gazebo_args": "",
-                        "gui": "true",
-                        "recording": "false",
-                        "headless": "false",
-                        "debug": "false",
-                        "physics": "ode",
-                        "verbose": "false",
-                        "output": "screen",
-                        "world_name": "worlds/empty.world",
-                        "respawn_gazebo": "false",
-                        "use_clock_frequency": "false",
-                        "pub_clock_frequency": "100",
-                        "enable_ros_network": "true",
-                        "server_required": "false",
-                        "gui_required": "false",
-                        "command_arg1": "",
-                        "command_arg2": "",
-                        "command_arg3": "",
-                        "script_type": "gzserver"
-                    },
-                    "arg_doc": {
-                        "paused": [
-                            null,
-                            "false"
-                        ],
-                        "use_sim_time": [
-                            null,
-                            "true"
-                        ],
-                        "extra_gazebo_args": [
-                            null,
-                            ""
-                        ],
-                        "gui": [
-                            null,
-                            "true"
-                        ],
-                        "recording": [
-                            null,
-                            "false"
-                        ],
-                        "headless": [
-                            null,
-                            "false"
-                        ],
-                        "debug": [
-                            null,
-                            "false"
-                        ],
-                        "physics": [
-                            null,
-                            "ode"
-                        ],
-                        "verbose": [
-                            null,
-                            "false"
-                        ],
-                        "output": [
-                            null,
-                            "screen"
-                        ],
-                        "world_name": [
-                            null,
-                            "worlds/empty.world"
-                        ],
-                        "respawn_gazebo": [
-                            null,
-                            "false"
-                        ],
-                        "use_clock_frequency": [
-                            null,
-                            "false"
-                        ],
-                        "pub_clock_frequency": [
-                            null,
-                            "100"
-                        ],
-                        "enable_ros_network": [
-                            null,
-                            "true"
-                        ],
-                        "server_required": [
-                            null,
-                            "false"
-                        ],
-                        "gui_required": [
-                            null,
-                            "false"
-                        ],
-                        "command_arg1": [
-                            null,
-                            null
-                        ],
-                        "command_arg2": [
-                            null,
-                            null
-                        ],
-                        "command_arg3": [
-                            null,
-                            null
-                        ]
-                    },
-                    "filename": "/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch"
-                },
-                "arg_names": [
-                    "paused",
-                    "use_sim_time",
-                    "extra_gazebo_args",
-                    "gui",
-                    "recording",
-                    "headless",
-                    "debug",
-                    "physics",
-                    "verbose",
-                    "output",
-                    "world_name",
-                    "respawn_gazebo",
-                    "use_clock_frequency",
-                    "pub_clock_frequency",
-                    "enable_ros_network",
-                    "server_required",
-                    "gui_required",
-                    "command_arg1",
-                    "command_arg2",
-                    "command_arg3",
-                    "script_type"
-                ],
-                "include_resolve_dict": null,
-                "pass_all_args": false
-            },
-            "resolve_anon": true,
-            "args_only": false
-        },
-        "config": {
-            "master": {
-                "type": "rosmaster",
-                "auto": null,
-                "uri": "http://localhost:11311"
-            },
-            "nodes_core": [],
-            "nodes": [
-                {
-                    "package": "gazebo_ros",
-                    "type": "gzserver",
-                    "name": "gazebo",
-                    "namespace": "/",
-                    "machine_name": null,
-                    "machine": null,
-                    "args": "   -e ode  worlds/empty.world",
-                    "respawn": false,
-                    "respawn_delay": 0.0,
-                    "remap_args": [],
-                    "env_args": [],
-                    "process_name": null,
-                    "output": "screen",
-                    "cwd": null,
-                    "launch_prefix": null,
-                    "required": false,
-                    "filename": "/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch"
-                },
-                {
+                    "___type___": "Node",
+                    "___id___": 140597292228848,
                     "package": "gazebo_ros",
                     "type": "gzclient",
                     "name": "gazebo_gui",
@@ -364,72 +295,34 @@
                     "filename": "/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch"
                 }
             ],
-            "roslaunch_files": [
-                "/opt/ros/noetic/share/gazebo_ros/launch/empty_world.launch"
-            ],
-            "resolved_node_names": [
-                "/gazebo",
-                "/gazebo_gui"
-            ],
-            "tests": [],
-            "machines": {
-                "": {
-                    "name": "",
-                    "address": "localhost",
-                    "ssh_port": 22,
-                    "user": null,
-                    "password": null,
-                    "assignable": true,
-                    "env_loader": null,
-                    "timeout": 10.0
-                }
-            },
             "params": {
                 "/use_sim_time": {
+                    "___type___": "Param",
+                    "___id___": 140597292142848,
                     "key": "/use_sim_time",
                     "value": true
                 },
                 "/gazebo/enable_ros_network": {
+                    "___type___": "Param",
+                    "___id___": 140597292142752,
                     "key": "/gazebo/enable_ros_network",
                     "value": true
                 }
             },
-            "clear_params": [],
-            "executables": [],
-            "config_errors": [],
-            "_assign_machines_complete": false,
-            "_remote_nodes_present": null
-        }
-    },
-    "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/launch/nexus_4wd_mecanum_description.launch": {
-        "loader": {
-            "root_context": {
-                "parent": null,
-                "ns": "/",
-                "_remap_args": [],
-                "params": [],
-                "env_args": [],
-                "filename": "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/launch/nexus_4wd_mecanum_description.launch",
-                "resolve_dict": {
-                    "arg": {},
-                    "filename": "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/launch/nexus_4wd_mecanum_description.launch"
-                },
-                "arg_names": [],
-                "include_resolve_dict": null,
-                "pass_all_args": false
-            },
-            "resolve_anon": true,
-            "args_only": false
+            "included": []
         },
-        "config": {
-            "master": {
-                "type": "rosmaster",
-                "auto": null,
-                "uri": "http://localhost:11311"
+        {
+            "___type___": "LaunchDumpData",
+            "___id___": 140597292143712,
+            "file": "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/launch/nexus_4wd_mecanum_description.launch",
+            "launch_args": [],
+            "resolve_dict": {
+                "filename": "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/launch/nexus_4wd_mecanum_description.launch"
             },
-            "nodes_core": [],
             "nodes": [
                 {
+                    "___type___": "Node",
+                    "___id___": 140597292229200,
                     "package": "robot_state_publisher",
                     "type": "robot_state_publisher",
                     "name": "robot_state_publisher",
@@ -449,36 +342,15 @@
                     "filename": "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/launch/nexus_4wd_mecanum_description.launch"
                 }
             ],
-            "roslaunch_files": [
-                "/home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/launch/nexus_4wd_mecanum_description.launch"
-            ],
-            "resolved_node_names": [
-                "/robot_state_publisher"
-            ],
-            "tests": [],
-            "machines": {
-                "": {
-                    "name": "",
-                    "address": "localhost",
-                    "ssh_port": 22,
-                    "user": null,
-                    "password": null,
-                    "assignable": true,
-                    "env_loader": null,
-                    "timeout": 10.0
-                }
-            },
             "params": {
                 "/robot_description": {
+                    "___type___": "Param",
+                    "___id___": 140597292143424,
                     "key": "/robot_description",
                     "value": "<?xml version=\"1.0\" ?>\n<!-- =================================================================================== -->\n<!-- |    This document was autogenerated by xacro from /home/vbox/rosdiagrams/mecanum/catkin_ws/src/nexus_4wd_mecanum_description/urdf/nexus_4wd_mecanum.xacro | -->\n<!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->\n<!-- =================================================================================== -->\n<robot name=\"nexus_4wd_mecanum\">\n  <material name=\"yellow\">\n    <color rgba=\"0.8 0.8 0.0 1.0\"/>\n  </material>\n  <material name=\"black\">\n    <color rgba=\"0.15 0.15 0.15 1.0\"/>\n  </material>\n  <material name=\"dark_grey\">\n    <color rgba=\"0.2 0.2 0.2 1.0\"/>\n  </material>\n  <material name=\"light_grey\">\n    <color rgba=\"0.4 0.4 0.4 1.0\"/>\n  </material>\n  <link name=\"base_footprint\"/>\n  <joint name=\"base_link_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 0\" xyz=\"0 0 0.05\"/>\n    <parent link=\"base_footprint\"/>\n    <child link=\"base_link\"/>\n  </joint>\n  <link name=\"base_link\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/nexus_base_link.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"yellow\"/>\n    </visual>\n    <collision>\n      <origin xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/nexus_base_link_collision.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <!-- Inertia from CAD model, filled box assumption -->\n      <origin rpy=\"0 0 0\" xyz=\"-0.01103 0 0.002\"/>\n      <mass value=\"2.844\"/>\n      <inertia ixx=\"0.018819942\" ixy=\"0\" ixz=\"-0.000101519\" iyy=\"0.057333716\" iyz=\"0\" izz=\"0.074201740\"/>\n    </inertial>\n  </link>\n  <joint name=\"upper_left_wheel_shaft_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 0\" xyz=\"0.150 0.108 0.0\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"upper_left_wheel_shaft\"/>\n  </joint>\n  <link name=\"upper_left_wheel_shaft\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n    <collision>\n      <origin xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0 0.01221 0\"/>\n      <mass value=\"0.055\"/>\n      <inertia ixx=\"0.000021370\" ixy=\"0\" ixz=\"0\" iyy=\"0.000009966\" iyz=\"0\" izz=\"0.000021370\"/>\n    </inertial>\n  </link>\n  <joint name=\"lower_left_wheel_shaft_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 0\" xyz=\"-0.150 0.108 0.0\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"lower_left_wheel_shaft\"/>\n  </joint>\n  <link name=\"lower_left_wheel_shaft\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n    <collision>\n      <origin xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0 0.01221 0\"/>\n      <mass value=\"0.055\"/>\n      <inertia ixx=\"0.000021370\" ixy=\"0\" ixz=\"0\" iyy=\"0.000009966\" iyz=\"0\" izz=\"0.000021370\"/>\n    </inertial>\n  </link>\n  <joint name=\"upper_right_wheel_shaft_joint\" type=\"fixed\">\n    <origin rpy=\"3.141592653589793 0 0\" xyz=\"0.150 -0.108 0.0\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"upper_right_wheel_shaft\"/>\n  </joint>\n  <link name=\"upper_right_wheel_shaft\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n    <collision>\n      <origin xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0 0.01221 0\"/>\n      <mass value=\"0.055\"/>\n      <inertia ixx=\"0.000021370\" ixy=\"0\" ixz=\"0\" iyy=\"0.000009966\" iyz=\"0\" izz=\"0.000021370\"/>\n    </inertial>\n  </link>\n  <joint name=\"lower_right_wheel_shaft_joint\" type=\"fixed\">\n    <origin rpy=\"3.141592653589793 0 0\" xyz=\"-0.150 -0.108 0.0\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"lower_right_wheel_shaft\"/>\n  </joint>\n  <link name=\"lower_right_wheel_shaft\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n    <collision>\n      <origin xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/wheel_shaft.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0 0.01221 0\"/>\n      <mass value=\"0.055\"/>\n      <inertia ixx=\"0.000021370\" ixy=\"0\" ixz=\"0\" iyy=\"0.000009966\" iyz=\"0\" izz=\"0.000021370\"/>\n    </inertial>\n  </link>\n  <joint name=\"upper_left_wheel_joint\" type=\"continuous\">\n    <origin rpy=\"0 0 0\" xyz=\"0 0.042 0\"/>\n    <parent link=\"upper_left_wheel_shaft\"/>\n    <child link=\"upper_left_wheel\"/>\n    <axis xyz=\"0 1 0\"/>\n  </joint>\n  <link name=\"upper_left_wheel\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/mecanum_wheel_left.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"light_grey\"/>\n    </visual>\n    <collision>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <cylinder length=\"0.0505\" radius=\"0.05\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0.0 0.0 0.0\"/>\n      <mass value=\"0.3844\"/>\n      <!-- Inertia based on cylinder -->\n      <inertia ixx=\"0.000324824\" ixy=\"0\" ixz=\"0\" iyy=\"0.000480000\" iyz=\"0\" izz=\"0.000324824\"/>\n    </inertial>\n  </link>\n  <joint name=\"lower_left_wheel_joint\" type=\"continuous\">\n    <origin rpy=\"0 0 0\" xyz=\"0 0.042 0\"/>\n    <parent link=\"lower_left_wheel_shaft\"/>\n    <child link=\"lower_left_wheel\"/>\n    <axis xyz=\"0 1 0\"/>\n  </joint>\n  <link name=\"lower_left_wheel\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/mecanum_wheel_right.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"light_grey\"/>\n    </visual>\n    <collision>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <cylinder length=\"0.0505\" radius=\"0.05\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0.0 0.0 0.0\"/>\n      <mass value=\"0.3844\"/>\n      <!-- Inertia based on cylinder -->\n      <inertia ixx=\"0.000324824\" ixy=\"0\" ixz=\"0\" iyy=\"0.000480000\" iyz=\"0\" izz=\"0.000324824\"/>\n    </inertial>\n  </link>\n  <joint name=\"upper_right_wheel_joint\" type=\"continuous\">\n    <origin rpy=\"0 0 0\" xyz=\"0 0.042 0\"/>\n    <parent link=\"upper_right_wheel_shaft\"/>\n    <child link=\"upper_right_wheel\"/>\n    <axis xyz=\"0 1 0\"/>\n  </joint>\n  <link name=\"upper_right_wheel\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/mecanum_wheel_right.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"light_grey\"/>\n    </visual>\n    <collision>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <cylinder length=\"0.0505\" radius=\"0.05\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0.0 0.0 0.0\"/>\n      <mass value=\"0.3844\"/>\n      <!-- Inertia based on cylinder -->\n      <inertia ixx=\"0.000324824\" ixy=\"0\" ixz=\"0\" iyy=\"0.000480000\" iyz=\"0\" izz=\"0.000324824\"/>\n    </inertial>\n  </link>\n  <joint name=\"lower_right_wheel_joint\" type=\"continuous\">\n    <origin rpy=\"0 0 0\" xyz=\"0 0.042 0\"/>\n    <parent link=\"lower_right_wheel_shaft\"/>\n    <child link=\"lower_right_wheel\"/>\n    <axis xyz=\"0 1 0\"/>\n  </joint>\n  <link name=\"lower_right_wheel\">\n    <visual>\n      <origin rpy=\"0 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/mecanum_wheel_left.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"light_grey\"/>\n    </visual>\n    <collision>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <cylinder length=\"0.0505\" radius=\"0.05\"/>\n      </geometry>\n    </collision>\n    <inertial>\n      <origin rpy=\"0 0 0\" xyz=\"0.0 0.0 0.0\"/>\n      <mass value=\"0.3844\"/>\n      <!-- Inertia based on cylinder -->\n      <inertia ixx=\"0.000324824\" ixy=\"0\" ixz=\"0\" iyy=\"0.000480000\" iyz=\"0\" izz=\"0.000324824\"/>\n    </inertial>\n  </link>\n  <joint name=\"left_sensor_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 1.5707963267948966\" xyz=\"0 0.108 0.010\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"left_sensor\"/>\n  </joint>\n  <link name=\"left_sensor\">\n    <visual>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/urm04.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n  </link>\n  <joint name=\"front_sensor_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 0\" xyz=\"0.205 0 0.010\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"front_sensor\"/>\n  </joint>\n  <link name=\"front_sensor\">\n    <visual>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/urm04.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n  </link>\n  <joint name=\"right_sensor_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 -1.5707963267948966\" xyz=\"0 -0.108 0.010\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"right_sensor\"/>\n  </joint>\n  <link name=\"right_sensor\">\n    <visual>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/urm04.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n  </link>\n  <joint name=\"rear_sensor_joint\" type=\"fixed\">\n    <origin rpy=\"0 0 3.141592653589793\" xyz=\"-0.201 0 0.010\"/>\n    <parent link=\"base_link\"/>\n    <child link=\"rear_sensor\"/>\n  </joint>\n  <link name=\"rear_sensor\">\n    <visual>\n      <origin rpy=\"1.5707963267948966 0 0\" xyz=\"0 0 0\"/>\n      <geometry>\n        <mesh filename=\"package://nexus_4wd_mecanum_description/meshes/urm04.STL\" scale=\"0.001 0.001 0.001\"/>\n      </geometry>\n      <material name=\"black\"/>\n    </visual>\n  </link>\n  <gazebo>\n    <!--<plugin name=\"gazebo_ros_control\" filename=\"libgazebo_ros_control.so\">\n      <robotNamespace>/</robotNamespace>\n    </plugin>-->\n    <plugin filename=\"libnexus_ros_force_based_move.so\" name=\"nexus_ros_force_based_move\">\n      <commandTopic>cmd_vel</commandTopic>\n      <odometryTopic>odom</odometryTopic>\n      <odometryFrame>odom</odometryFrame>\n      <odometryRate>25.0</odometryRate>\n      <robotBaseFrame>base_footprint</robotBaseFrame>\n      <cmdVelTimeOut>0.25</cmdVelTimeOut>\n      <publishOdometryTf>0</publishOdometryTf>\n      <yaw_velocity_p_gain>1.0</yaw_velocity_p_gain>\n      <x_velocity_p_gain>15.0</x_velocity_p_gain>\n      <y_velocity_p_gain>15.0</y_velocity_p_gain>\n      <max_x_velocity>0.6</max_x_velocity>\n      <max_y_velocity>0.6</max_y_velocity>\n      <max_yaw_velocity>0.5</max_yaw_velocity>\n    </plugin>\n  </gazebo>\n  <!-- All static links get collapsed down to base_link in Gazebo, so that's\n       the one to apply the colour to (in Gazebo 5+). -->\n  <gazebo reference=\"base_footprint\">\n    <material>Gazebo/Yellow</material>\n    <gravity>true</gravity>\n  </gazebo>\n  <gazebo reference=\"base_link\">\n    <material>Gazebo/Yellow</material>\n  </gazebo>\n  <gazebo reference=\"left_sensor\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"front_sensor\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"right_sensor\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"rear_sensor\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"upper_left_wheel_shaft\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"lower_left_wheel_shaft\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"upper_right_wheel_shaft\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <gazebo reference=\"lower_right_wheel_shaft\">\n    <material>Gazebo/Black</material>\n  </gazebo>\n  <!-- Wheel friction to zero, as movement is handled by applying forces at the body level. -->\n  <gazebo reference=\"upper_left_wheel\">\n    <material>Gazebo/Grey</material>\n    <mu1>0.0</mu1>\n    <mu2>0.0</mu2>\n  </gazebo>\n  <gazebo reference=\"lower_left_wheel\">\n    <material>Gazebo/Grey</material>\n    <mu1>0.0</mu1>\n    <mu2>0.0</mu2>\n  </gazebo>\n  <gazebo reference=\"upper_right_wheel\">\n    <material>Gazebo/Grey</material>\n    <mu1>0.0</mu1>\n    <mu2>0.0</mu2>\n  </gazebo>\n  <gazebo reference=\"lower_right_wheel\">\n    <material>Gazebo/Grey</material>\n    <mu1>0.0</mu1>\n    <mu2>0.0</mu2>\n  </gazebo>\n  <gazebo reference=\"front_sensor\">\n    <sensor name=\"front_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n      <update_rate>10</update_rate>\n      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n      <ray>\n        <scan>\n          <horizontal>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.52</min_angle>\n            <max_angle> 0.52</max_angle>\n          </horizontal>\n          <vertical>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.02</min_angle>\n            <max_angle> 0.02</max_angle>\n          </vertical>\n        </scan>\n        <range>\n          <min>0.04</min>\n          <max>2.5</max>\n          <resolution>0.01</resolution>\n        </range>\n      </ray>\n      <plugin filename=\"libhector_gazebo_ros_sonar.so\" name=\"gazebo_ros_front_sensor\">\n        <gaussianNoise>0.005</gaussianNoise>\n        <topicName>front_sensor</topicName>\n        <frameId>front_sensor</frameId>\n      </plugin>\n    </sensor>\n  </gazebo>\n  <gazebo reference=\"left_sensor\">\n    <sensor name=\"left_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n      <update_rate>10</update_rate>\n      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n      <ray>\n        <scan>\n          <horizontal>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.52</min_angle>\n            <max_angle> 0.52</max_angle>\n          </horizontal>\n          <vertical>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.02</min_angle>\n            <max_angle> 0.02</max_angle>\n          </vertical>\n        </scan>\n        <range>\n          <min>0.04</min>\n          <max>2.5</max>\n          <resolution>0.01</resolution>\n        </range>\n      </ray>\n      <plugin filename=\"libhector_gazebo_ros_sonar.so\" name=\"gazebo_ros_left_sensor\">\n        <gaussianNoise>0.005</gaussianNoise>\n        <topicName>left_sensor</topicName>\n        <frameId>left_sensor</frameId>\n      </plugin>\n    </sensor>\n  </gazebo>\n  <gazebo reference=\"right_sensor\">\n    <sensor name=\"right_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n      <update_rate>10</update_rate>\n      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n      <ray>\n        <scan>\n          <horizontal>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.52</min_angle>\n            <max_angle> 0.52</max_angle>\n          </horizontal>\n          <vertical>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.02</min_angle>\n            <max_angle> 0.02</max_angle>\n          </vertical>\n        </scan>\n        <range>\n          <min>0.04</min>\n          <max>2.5</max>\n          <resolution>0.01</resolution>\n        </range>\n      </ray>\n      <plugin filename=\"libhector_gazebo_ros_sonar.so\" name=\"gazebo_ros_right_sensor\">\n        <gaussianNoise>0.005</gaussianNoise>\n        <topicName>right_sensor</topicName>\n        <frameId>right_sensor</frameId>\n      </plugin>\n    </sensor>\n  </gazebo>\n  <gazebo reference=\"rear_sensor\">\n    <sensor name=\"rear_sensor\" type=\"ray\">\n      <always_on>true</always_on>\n      <update_rate>10</update_rate>\n      <pose>0 0 0 0 0 0</pose>\n      <visualize>false</visualize>\n      <ray>\n        <scan>\n          <horizontal>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.52</min_angle>\n            <max_angle> 0.52</max_angle>\n          </horizontal>\n          <vertical>\n            <samples>2</samples>\n            <resolution>1</resolution>\n            <min_angle>-0.02</min_angle>\n            <max_angle> 0.02</max_angle>\n          </vertical>\n        </scan>\n        <range>\n          <min>0.04</min>\n          <max>2.5</max>\n          <resolution>0.01</resolution>\n        </range>\n      </ray>\n      <plugin filename=\"libhector_gazebo_ros_sonar.so\" name=\"gazebo_ros_rear_sensor\">\n        <gaussianNoise>0.005</gaussianNoise>\n        <topicName>rear_sensor</topicName>\n        <frameId>rear_sensor</frameId>\n      </plugin>\n    </sensor>\n  </gazebo>\n</robot>\n\n"
                 }
             },
-            "clear_params": [],
-            "executables": [],
-            "config_errors": [],
-            "_assign_machines_complete": false,
-            "_remote_nodes_present": null
+            "included": []
         }
-    }
+    ]
 }
