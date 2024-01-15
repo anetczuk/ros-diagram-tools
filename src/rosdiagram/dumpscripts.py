@@ -9,6 +9,7 @@
 # LICENSE file in the root directory of this source tree.
 #
 
+# pylint: disable=C0302
 
 ## dump_catkindeps.sh
 DUMP_CATKINDEPS_SH = ( "dump_catkindeps.sh", """\

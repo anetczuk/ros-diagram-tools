@@ -26,6 +26,7 @@ cat > $OUTPUT_PATH << EOF
 # LICENSE file in the root directory of this source tree.
 #
 
+# pylint: disable=C0302
 
 EOF
 
