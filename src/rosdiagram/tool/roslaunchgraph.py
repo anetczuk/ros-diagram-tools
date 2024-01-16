@@ -44,6 +44,7 @@ def generate_full_graph( flat_launch_dict ) -> Graph:
     ## add nodes
     for launch_id, launch_data in flat_launch_dict.items():
         launch_file = launch_data["file"]
+        launch_file = os.path.normpath(launch_file)
 
         node_obj = dot_graph.addNode( launch_id, shape="box" )
         if node_obj:
@@ -54,13 +55,13 @@ def generate_full_graph( flat_launch_dict ) -> Graph:
         for include_item in launch_includes:
             sub_id = get_launch_id(include_item)
             sub_file = include_item["file"]
+            sub_file = os.path.normpath(sub_file)
             if sub_id == launch_id:
                 continue
             sub_obj = dot_graph.addNode( sub_id, shape="box" )
             if sub_obj:
                 sub_label = os.path.basename(sub_file)
                 sub_obj.set( "label", sub_label )
-            print("adding edge:", launch_id, sub_id)
             dot_graph.addEdge( launch_id, sub_id )
 
     return dot_graph
@@ -144,7 +145,7 @@ def generate_main_page(launch_output_dir, launch_dict, main_graph, outhtml=True,
     launch_data_list = []
     for launch_id, launch_data in flat_launch_dict.items():
         launch_file = launch_data["file"]
-        launch_file = os.path.abspath(launch_file)
+        launch_file = os.path.normpath(launch_file)
         item_link = prepare_item_link( launch_id, launch_file, True, OUTPUT_LAUNCHES_REL_DIR )
         launch_data_list.append(item_link)
     launch_data_list.sort()
@@ -171,6 +172,7 @@ def generate_main_page(launch_output_dir, launch_dict, main_graph, outhtml=True,
 def generate_subpages( sub_output_dir, flat_launch_dict, main_page_link, outhtml, outmarkdown ):
     for launch_id, launch_data in flat_launch_dict.items():
         launch_file = launch_data["file"]
+        launch_file = os.path.normpath(launch_file)
         _LOGGER.info( "preparing page for item %s", launch_id )
 
         launch_list = []
@@ -178,7 +180,7 @@ def generate_subpages( sub_output_dir, flat_launch_dict, main_page_link, outhtml
         for include_data in launch_includes:
             include_id = get_launch_id(include_data)
             include_file = include_data["file"]
-            include_file = os.path.abspath(include_file)
+            include_file = os.path.normpath(include_file)
             item_link = prepare_item_link( include_id, include_file, True, "" )
             launch_list.append(item_link)
         launch_list.sort()
@@ -210,7 +212,7 @@ def generate_subpages( sub_output_dir, flat_launch_dict, main_page_link, outhtml
         args_dict = resolve_dict.get("arg", {})
         args_dict = dict(sorted(args_dict.items()))     # sort dict by keys
 
-        item_dict = { "launch_file": os.path.abspath(launch_file),
+        item_dict = { "launch_file": launch_file,
                       "main_page_link": main_page_link,
                       "graph": graph,
                       "launch_list": launch_list,
@@ -256,6 +258,7 @@ def get_flat_dict(launch_dict):
 
 def get_launch_id(launch_item):
     launch_file = launch_item["file"]
+    launch_file = os.path.normpath(launch_file)
     master_key = get_launch_args_string(launch_item)
     if not master_key:
         return launch_file
