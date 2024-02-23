@@ -320,10 +320,17 @@ def get_build_timestamp( content ):
 
     total_seconds = 0.0
     if len(numbers) == 1:
+        # only seconds
         total_seconds += float( numbers[0] )
     elif len(numbers) == 2:
+        # minutes and seconds
         total_seconds += float( numbers[0] ) * 60
         total_seconds += float( numbers[1] )
+    elif len(numbers) == 3:
+        # hours, minutes and seconds
+        total_seconds += float( numbers[0] ) * 60 * 60
+        total_seconds += float( numbers[1] ) * 60
+        total_seconds += float( numbers[2] )
     else:
         raise ValueError( f"unhandled case: {content}" )
 
